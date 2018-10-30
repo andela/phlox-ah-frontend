@@ -1,9 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
 
-const Index = () => (
-    <div>
-      <h1>Hello! Welcome to Authors Haven</h1>
-    </div>
+const app = (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 );
-render(<Index/>, document.getElementById('root'));
+
+render(app, document.getElementById('root'));
