@@ -1,16 +1,13 @@
 import React from 'react';
-import {
-  Link, Route
-} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import LoginForm from './components/Login';
-import Home from './components/Home';
+import Navbar from './components/Navbar/Navbar';
+import LoginForm from './components/Pages/LoginPage';
+import Home from './components/Pages/HomePage';
 
 const App = () => (
   <div>
-    <div>
-      <Link to='/'>Home</Link> | <Link to='/login'>Login</Link>
-    </div>
+    <Navbar />
     <div>
       <Route path="/" exact component={Home} />
       <Route path="/login" component={LoginForm} />
