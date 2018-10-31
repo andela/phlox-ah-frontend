@@ -10,8 +10,8 @@ import { render } from 'react-dom';
  */
 class Home extends Component {
   /**
-   * @description -This method renders
-   * @returns {view} -
+   * @description - This method renders the jsx for this component
+   * @returns {jsx} -
    */
   // eslint-disable-next-line
   render() {

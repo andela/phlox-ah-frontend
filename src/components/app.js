@@ -14,28 +14,22 @@ import { allArticles } from '../actions/demoArticleActions';
  */
 class App extends Component {
   /**
-   * @description -This method renders
-   * @returns {view} -
+   * @description - This method renders the jsx for this component
+   * @returns {jsx} -
    */
-
   // eslint-disable-next-line
   render() {
     return (
       <div>
         <h1>Hello! Welcome to Authors Haven</h1>
         This is the app component
-        <button onClick={ () => this.props.allArticles({ title: 'awesome', body: 'The body' }) }>Click to test redux</button>
+        <button onClick={ () => this.props.allArticles({ title: 'The second title', body: 'The second body' }) }>Tap to test redux in dev tools</button>
         <br /> <br />
         <Home />
       </div>
     );
   }
 }
-
-App.propTypes = {
-  articles: PropTypes.object,
-  allArticles: PropTypes.func
-};
 
 const mapStateToProps = state => ({
   articles: state.articles,
@@ -46,5 +40,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(allArticles(articles));
   }
 });
+
+App.propTypes = {
+  articles: PropTypes.object,
+  allArticles: PropTypes.func
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
