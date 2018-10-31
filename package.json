@@ -11,7 +11,7 @@
     "build": "webpack --mode production",
     "eslint": "eslint . --fix --ignore-path .gitignore",
     "watch": "npm-watch",
-    "test": "jest",
+    "test": "jest \"-u\"",
     "test-watch": "jest --watchAll"
   },
   "jest": {
