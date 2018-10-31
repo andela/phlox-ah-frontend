@@ -1,9 +1,11 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import App from './app';
 
-test('<App/>', () => {
-  const component = renderer.create(<App />);
-  const tree = component.toJSON();
-  expect(tree).toMatchSnapshot();// eslint-disable-line 
+import React from 'react';
+import { shallow } from 'enzyme';
+import App from './App';
+
+describe('<App/>', () => {
+  it('should render correctly', () => {
+    const component = shallow(<App />);
+    expect(component).toMatchSnapshot();// eslint-disable-line 
+  });
 });
