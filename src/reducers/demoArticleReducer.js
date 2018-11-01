@@ -3,7 +3,7 @@ import { asyncActionName } from '../util/AsyncUtil';
 
 const initialState = { articles: [{ title: 'The first article', body: 'The body' }] };
 
-const demoArticleReducer = (state = initialState, action) => {
+const DemoArticleReducer = (state = initialState, action) => {
   switch (action.type) {
     case asyncActionName(ALL_ARTICLES).loading:
       return { ...state, loading: action.payload };
@@ -22,4 +22,4 @@ const demoArticleReducer = (state = initialState, action) => {
   }
 };
 
-export default demoArticleReducer;
+export default DemoArticleReducer;

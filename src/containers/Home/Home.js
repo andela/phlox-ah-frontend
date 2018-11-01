@@ -50,7 +50,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  articles: state.demoArticleReducer.articles,
+  articles: state.DemoArticleReducer.articles,
 });
 
 Home.propTypes = {

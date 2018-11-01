@@ -18,7 +18,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Hello! Welcome to Authors Haven</h1>
+        <h1 className="theme-color">Hello! Welcome to Authors Haven</h1>
         This is the app component
         <Home />
       </div>
