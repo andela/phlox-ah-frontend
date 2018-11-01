@@ -9,13 +9,14 @@
   "scripts": {
     "start": "npm run eslint && webpack-dev-server --mode development --hot",
     "build": "webpack --mode production",
-    "eslint": "eslint . --fix --ignore-path .gitignore",
+    "eslint": "eslint . --ignore-path .gitignore",
     "watch": "npm-watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-preset-react": "^6.24.1",
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",

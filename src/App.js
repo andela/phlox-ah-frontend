@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 // eslint-disable-next-line
 import { render } from 'react-dom';
+import Home from './containers/Home/Home';
 
 /**
  *
  *
- * @class Home
+ * @class App
  * @extends {Component}
  */
-class Home extends Component {
+class App extends Component {
   /**
    * @description - This method renders the jsx for this component
    * @returns {jsx} -
@@ -16,9 +17,13 @@ class Home extends Component {
   // eslint-disable-next-line
   render() {
     return (
-      <div>This is the home component</div>
+      <div>
+        <h1>Hello! Welcome to Authors Haven</h1>
+        This is the app component
+        <Home />
+      </div>
     );
   }
 }
 
-export default Home;
+export default App;
