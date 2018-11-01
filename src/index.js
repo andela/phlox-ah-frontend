@@ -7,9 +7,9 @@ import { createLogger } from 'redux-logger';
 import './styles/style.scss';
 
 import App from './App';
-import RootReducer from './reducers/Index';
+import rootReducer from './reducers/Index';
 
-const store = createStore(RootReducer, applyMiddleware(createLogger(), thunk));
+const store = createStore(rootReducer, applyMiddleware(createLogger(), thunk));
 const Index = () => (
     <Provider store={ store }>
       <div>

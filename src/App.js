@@ -11,8 +11,11 @@ import Home from './containers/Home/Home';
  */
 class App extends Component {
   /**
+   *
+   *
    * @description - This method renders the jsx for this component
-   * @returns {jsx} -
+   * @returns {jsx} - jsx
+   * @memberof App
    */
   // eslint-disable-next-line
   render() {
