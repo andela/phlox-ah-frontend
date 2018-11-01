@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// eslint-disable-next-line
-import { render } from 'react-dom';
 import Home from './containers/Home/Home';
 
 /**
