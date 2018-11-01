@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button/ExampleButton';
-import { addArticle, getArticles } from '../../requests/ArticleRequests';
+import { AddArticle, GetArticles } from '../../requests/ArticleRequests';
 
 /**
  *
@@ -17,15 +17,15 @@ class Home extends Component {
    */
   // eslint-disable-next-line
   componentDidMount() {
-    this.props.getArticles();
+    this.props.GetArticles();
   }
   // eslint-disable-next-line
   addToArticles(article) {
-    this.props.addArticle(article);
+    this.props.AddArticle(article);
   }
   // eslint-disable-next-line
   getAllArticles() {
-    this.props.getArticles();
+    this.props.GetArticles();
   }
 
   listArticles() {
@@ -55,9 +55,8 @@ const mapStateToProps = state => ({
 
 Home.propTypes = {
   articles: PropTypes.array,
-  allArticles: PropTypes.func,
-  addArticle: PropTypes.func,
-  getArticles: PropTypes.func
+  AddArticle: PropTypes.func,
+  GetArticles: PropTypes.func
 };
 
-export default connect(mapStateToProps, { addArticle, getArticles })(Home);
+export default connect(mapStateToProps, { AddArticle, GetArticles })(Home);

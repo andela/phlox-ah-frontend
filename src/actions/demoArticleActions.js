@@ -1,4 +1,4 @@
 import constant from '../constants/Constants';
 
 // eslint-disable-next-line
-export const UserArticle = () => { constant.USER_ARTICLES; };
+export const AllArticles = () => { constant.ALL_ARTICLES; };
