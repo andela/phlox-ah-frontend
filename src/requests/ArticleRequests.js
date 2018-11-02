@@ -9,9 +9,9 @@ export const addArticle = article => (dispatch) => {
   dispatch(asyncActions(ADD_ARTICLE).success(article));
 };
 
-export const getAllArticles = () => (dispatch) => {
+export const getArticles = () => (dispatch) => {
   dispatch(asyncActions(ALL_ARTICLES).loading(true));
-  axios.get(articleConstant.GET_ALL_ARTICLES)
+  axios.get(articleConstant.ALL_ARTICLES)
     .then((response) => {
       if (response.status === 200) {
         dispatch(asyncActions(ALL_ARTICLES).success(response.data.articles));

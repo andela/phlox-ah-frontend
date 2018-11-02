@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button/ExampleButton';
-import { addArticle, getAllArticles } from '../../requests/ArticleRequests';
+import { addArticle, getArticles } from '../../requests/ArticleRequests';
 
 /**
  *
@@ -52,7 +52,7 @@ class Home extends Component {
    * @returns {array} article
    */
   getAllArticles() {
-    this.props.getAllArticles();
+    this.props.getArticles();
   }
 
   /**
@@ -95,7 +95,7 @@ const mapStateToProps = state => ({
 Home.propTypes = {
   articles: PropTypes.array,
   addArticle: PropTypes.func,
-  getAllArticles: PropTypes.func
+  getArticles: PropTypes.func
 };
 
-export default connect(mapStateToProps, { addArticle, getAllArticles })(Home);
+export default connect(mapStateToProps, { addArticle, getArticles })(Home);

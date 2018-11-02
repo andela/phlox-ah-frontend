@@ -15,8 +15,12 @@
     "test-watch": "jest --watchAll"
   },
   "jest": {
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
-    "setupFiles": ["./SetupTests.js"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "./SetupTests.js"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -54,8 +58,6 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^23.6.0",
     "css-loader": "^1.0.1",
-    "eslint-plugin-react": "^7.11.1",
-    "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.9.4",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
