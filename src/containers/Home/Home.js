@@ -15,8 +15,24 @@ class Home extends Component {
    * @returns {array} article
    * @memberof Home
    */
+
+  /**
+   * @description - This method runs first in the class
+   * @returns {object} articles
+   * @memberof Home
+   */
+  constructor() {
+    super();
+    this.getAllArticles = this.getAllArticles.bind(this);
+  }
+
+  /**
+   * @description - This method runs after component has been mounted
+   * @returns {object} articles
+   * @memberof Home
+   */
   componentDidMount() {
-    this.props.getArticles();
+    this.getAllArticles();
   }
 
   /**

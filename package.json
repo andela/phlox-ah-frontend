@@ -9,7 +9,8 @@
   "scripts": {
     "start": "npm run eslint && webpack-dev-server --mode development --hot",
     "build": "webpack --mode production",
-    "eslint": "eslint . --fix --ignore-path .gitignore",
+    "eslint-fix": "eslint . --fix --ignore-path .gitignore",
+    "eslint": "eslint . --ignore-path .gitignore",
     "watch": "npm-watch",
     "start-dev": "webpack-dev-server --mode development --hot",
     "test": "jest \"-u\"",
@@ -43,6 +44,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "react-router-dom": "^4.3.1",
     "regenerator-runtime": "^0.12.1"
   },
   "devDependencies": {

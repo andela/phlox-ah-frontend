@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-// eslint-disable-next-line
-// import { render } from 'react-dom';
+import { Route } from 'react-router-dom';
 import Header from './containers/Header/Header';
-import Home from './containers/Home/Home';
 import Login from './containers/Login/Login';
+import Home from './containers/Home/Home';
+import Navbar from './components/Navbar/Navbar';
+import LoginForm from './components/Pages/LoginPage';
+import HomePage from './components/Pages/HomePage';
 
 import './App.scss';
 /**
@@ -30,6 +32,13 @@ class App extends Component {
         This is the app component
         <Login />
         <Home />
+        <div>
+          <Navbar />
+          <div>
+            <Route path="/" exact component={HomePage} />
+            <Route path="/login" component={LoginForm} />
+          </div>
+        </div>
       </div>
     );
   }
