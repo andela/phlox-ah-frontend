@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button/ExampleButton';
-import { addArticle, getArticles } from '../../requests/ArticleRequests';
+import { addArticle, getAllArticles } from '../../requests/ArticleRequests';
 
 /**
  *
@@ -15,8 +15,24 @@ class Home extends Component {
    * @returns {array} article
    * @memberof Home
    */
+
+  /**
+   * @description - This method runs first in the class
+   * @returns {object} articles
+   * @memberof Home
+   */
+  constructor() {
+    super();
+    this.getAllArticles = this.getAllArticles.bind(this);
+  }
+
+  /**
+   * @description - This method runs after component has been mounted
+   * @returns {object} articles
+   * @memberof Home
+   */
   componentDidMount() {
-    this.props.getArticles();
+    this.getAllArticles();
   }
 
   /**
@@ -36,7 +52,7 @@ class Home extends Component {
    * @returns {array} article
    */
   getAllArticles() {
-    this.props.getArticles();
+    this.props.getAllArticles();
   }
 
   /**
@@ -79,7 +95,7 @@ const mapStateToProps = state => ({
 Home.propTypes = {
   articles: PropTypes.array,
   addArticle: PropTypes.func,
-  getArticles: PropTypes.func
+  getAllArticles: PropTypes.func
 };
 
-export default connect(mapStateToProps, { addArticle, getArticles })(Home);
+export default connect(mapStateToProps, { addArticle, getAllArticles })(Home);
