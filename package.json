@@ -8,11 +8,11 @@
   },
   "scripts": {
     "start": "npm run eslint && webpack-dev-server --mode development --hot",
+    "start-dev": "webpack-dev-server --mode development --hot",
     "build": "webpack --mode production",
     "eslint-fix": "eslint . --fix --ignore-path .gitignore",
     "eslint": "eslint . --ignore-path .gitignore",
     "watch": "npm-watch",
-    "start-dev": "webpack-dev-server --mode development --hot",
     "test": "jest \"-u\"",
     "test-watch": "jest --watchAll"
   },

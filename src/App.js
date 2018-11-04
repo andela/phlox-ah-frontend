@@ -15,7 +15,6 @@ import './App.scss';
  * @extends {Component}
  */
 class App extends Component {
-
   /**
    *
    *
