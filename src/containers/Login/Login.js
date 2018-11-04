@@ -4,7 +4,8 @@ import {
 } from 'react-materialize';
 import './Login.scss';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
+import { login } from './BasePath';
 /**
  *
  *
@@ -15,6 +16,35 @@ class Login extends Component {
   /**
    * @member of Login
    */
+
+  /**
+   * @description - This method runs first in the class
+   * @param {object} props
+   * @returns {object} articles
+   * @memberof Login
+   */
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      emailOrUsername: '',
+      password: '',
+    };
+
+    this.onChange = this.onChange.bind(this);
+  }
+
+  /**
+   * @description - This method sets the input values
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof Login
+   */
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
 
   /**
    * @description - This method hides the login modal
@@ -28,12 +58,25 @@ class Login extends Component {
   }
 
   /**
+   * @description - This method makes login request
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof Login
+   */
+  onSubmit(e) {
+    e.preventDefault();
+    this.props.login(this.state);
+  }
+
+  /**
    *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
    * @memberof Login
    */
   render() {
+    const { emailOrUsername, password } = this.state;
+
     return (
       <Modal
         id='login-modal'
@@ -45,11 +88,26 @@ class Login extends Component {
           </a>
         </div>
         <h5>Authors Haven</h5>
-        <form className="col s12">
+        <form className="col s12" onSubmit={this.onSubmit.bind(this)}>
           <Row>
-            <Input type="text" label="username / email" s={12} />
-            <Input type="password" label="password" s={12} />
+            <Input
+              type="text"
+              label="username / email"
+              s={12}
+              name="emailOrUsername"
+              value={emailOrUsername}
+              onChange={this.onChange}
+            />
+            <Input
+              type="password"
+              label="password"
+              s={12}
+              name="password"
+              value={password}
+              onChange={this.onChange}
+            />
             <Button
+              type="submit"
               id="login-button" waves='light'>
               Login
               <i className="fas fa-sign-in-alt"></i>
@@ -88,7 +146,7 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  showLoginForm: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
-export default Login;
+export default connect(null, { login })(Login);

@@ -25,7 +25,7 @@ class DropDrown extends Component {
    * @memberofDropDrown
    */
   componentDidMount() {
-    this.DropDrownWrapper.current.focus();
+    this.dropDrownWrapper.current.focus();
   }
 
   /**
