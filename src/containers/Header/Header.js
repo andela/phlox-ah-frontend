@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-// eslint disable next line
-// import { connect } from 'react-redux';
-import DropDrown from '../../components/DropDown/DropDown';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import DropDown from '../../components/DropDown/DropDown';
 import './Header.scss';
 import Logo from '../../assets/images/phlox-logo.png';
-// import { Dropdown, Button, NavItem } from 'react-materialize';
 
 /**
  *
@@ -28,9 +27,24 @@ class Header extends Component {
 
     this.state = {
       showDropDown: false,
+      isAuth: false,
     };
 
     this.timeoutID = null;
+  }
+
+  /**
+   * @description - This method runs whenever redux state changes
+   * @returns {object} state
+   * @param {object} props
+   * @param {object} state
+   * @memberof Header
+   */
+  // eslint-disable-next-line
+  getDerivedStateFromProps(props, state) {
+    return {
+      ...props.user,
+    };
   }
 
   /**
@@ -104,7 +118,7 @@ class Header extends Component {
    * @memberof Header
    */
   render() {
-    const { showDropDown } = this.state;
+    const { showDropDown, isAuth } = this.state;
 
     return (
       <nav className="main-header">
@@ -123,7 +137,7 @@ class Header extends Component {
               </span>
               {
                 showDropDown
-                && <DropDrown onBlur={this.onBlur.bind(this)} />
+                && <DropDown onBlur={this.onBlur.bind(this)} />
               }
             </div>
             <div className="input">
@@ -131,24 +145,50 @@ class Header extends Component {
               <i className="fas fa-search"></i>
             </div>
           </div>
-          <ul id="nav-button"
-            className="right hide-on-med-and-down">
-            <li>
-              <a
-                onClick={this.onLoginClicked.bind(this)}
-                href="#"
-                className="login">
-                Login
-              </a>
-            </li>
-            <li><a href="#" className="sign-up">Sign Up</a></li>
-          </ul>
+          {
+            !isAuth
+              && <ul
+                className="right hide-on-med-and-down nav-button">
+                <li>
+                  <a
+                    onClick={this.onLoginClicked.bind(this)}
+                    href="#"
+                    className="login">
+                    Login
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="sign-up">Sign Up</a>
+                </li>
+              </ul>
+          }
+          {
+            isAuth
+              && <ul
+                className="right hide-on-med-and-down nav-button">
+                <li>
+                  <a className="notification-bell" href="#">
+                    <i className="fas fa-bell"></i>
+                  </a>
+                </li>
+                <li>
+                  <a className="user-photo" href="#"></a>
+                </li>
+              </ul>
+          }
         </div>
       </nav>
     );
   }
 }
 
+Header.propTypes = {
+  user: PropTypes.object,
+};
 
-// export default connect(mapStateToProps, { addArticle, getArticles })(Header);
-export default Header;
+const mapStateToProps = state => ({
+  user: state.User,
+});
+
+
+export default connect(mapStateToProps, {})(Header);

@@ -88,7 +88,7 @@ class Login extends Component {
           </a>
         </div>
         <h5>Authors Haven</h5>
-        <form className="col s12" onSubmit={this.onSubmit.bind(this)}>
+        <form id="test" className="col s12" onSubmit={this.onSubmit.bind(this)}>
           <Row>
             <Input
               type="text"

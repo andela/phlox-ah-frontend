@@ -99,11 +99,11 @@ div.search-wrapper i.fa-search {
   font-size: 18px;
 }
 
-div.nav-wrapper ul#nav-button {
+div.nav-wrapper ul.nav-button {
   display: flex;
 }
 
-div.nav-wrapper ul#nav-button li {
+div.nav-wrapper ul.nav-button li {
   line-height: 30px;
   padding: 0;
   margin: auto 10px !important;
@@ -123,4 +123,24 @@ div.nav-wrapper ul li a:hover {
 div.nav-wrapper ul li a.login {
   color: #fff;
   background: $primary-color;
+}
+
+div.nav-wrapper ul li a.notification-bell {
+  border: none; 
+  position: relative;
+  bottom: 5px;
+}
+
+div.nav-wrapper ul li a.notification-bell:hover {
+  background: none;
+}
+
+div.nav-wrapper ul li a.user-photo {
+  border-radius: 50%;
+  font-size: 6px;
+  width: 40px;
+  height: 40px;
+  background: #ddd;
+  border-color: #bbb;
+
 }
