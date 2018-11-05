@@ -52,7 +52,7 @@ class Login extends Component {
    * @memberof Login
    */
   // eslint-disable-next-line
-  onCloseClicked() {
+  onHideModal() {
     // eslint-disable-next-line
     $("#login-modal").modal("close");
   }
@@ -83,7 +83,7 @@ class Login extends Component {
         className="center-align">
         <div>
           <a className="close-modal" href="#"
-            onClick={this.onCloseClicked}>
+            onClick={this.onHideModal}>
             <i className="fas fa-times fa-lg black-text"></i>
           </a>
         </div>

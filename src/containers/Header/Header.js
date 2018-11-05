@@ -41,7 +41,7 @@ class Header extends Component {
    * @memberof Header
    */
   // eslint-disable-next-line
-  getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props, state) {
     return {
       ...props.user,
     };
@@ -85,7 +85,7 @@ class Header extends Component {
    */
   // eslint-disable-next-line
   onLoginClicked() {
-  // eslint-disable-next-line
+    // eslint-disable-next-line
     $('#login-modal').modal('open');
   }
 
@@ -147,34 +147,34 @@ class Header extends Component {
           </div>
           {
             !isAuth
-              && <ul
-                className="right hide-on-med-and-down nav-button">
-                <li>
-                  <a
-                    onClick={this.onLoginClicked.bind(this)}
-                    href="#"
-                    className="login">
-                    Login
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="sign-up">Sign Up</a>
-                </li>
-              </ul>
+            && <ul
+              className="right hide-on-med-and-down nav-button">
+              <li>
+                <a
+                  onClick={this.onLoginClicked.bind(this)}
+                  href="#"
+                  className="login">
+                  Login
+                </a>
+              </li>
+              <li>
+                <a href="#" className="sign-up">Sign Up</a>
+              </li>
+            </ul>
           }
           {
             isAuth
-              && <ul
-                className="right hide-on-med-and-down nav-button">
-                <li>
-                  <a className="notification-bell" href="#">
-                    <i className="fas fa-bell"></i>
-                  </a>
-                </li>
-                <li>
-                  <a className="user-photo" href="#"></a>
-                </li>
-              </ul>
+            && <ul
+              className="right hide-on-med-and-down nav-button">
+              <li>
+                <a className="notification-bell" href="#">
+                  <i className="fas fa-bell"></i>
+                </a>
+              </li>
+              <li>
+                <a className="user-photo" href="#"></a>
+              </li>
+            </ul>
           }
         </div>
       </nav>

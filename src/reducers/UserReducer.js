@@ -9,7 +9,9 @@ const initialState = {
 const userReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case asyncActionName(USER).success:
-      return { ...state, payload: action.payload, isAuth: true };
+      return { ...state, ...action.payload.user, isAuth: true };
+    case asyncActionName(USER).reset:
+      return { ...initialState };
     default:
       return state;
   }
