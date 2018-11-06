@@ -12,8 +12,8 @@ const formatError = (error) => {
   }
   if (error.message) {
     return [error.message]
-  } else 
-    return ['Error occurred'];
+  }
+  return ['Error occurred'];
 };
 
 

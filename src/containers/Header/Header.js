@@ -62,7 +62,7 @@ class Header extends Component {
    */
   clearTimeout() {
     if (this.timeoutID) {
-      clearTimeout(this.toggleDropDown);
+      clearTimeout(this.timeoutID);
       this.timeoutID = null;
     }
   }
@@ -139,7 +139,7 @@ class Header extends Component {
     const { 
       showDropDown, 
       showSettingsOption, 
-      isAuth,
+      isAuth
     } = this.state;
 
     return (
