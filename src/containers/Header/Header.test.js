@@ -20,12 +20,12 @@ describe('<Header/>', () => {
     myComponent = component.dive({ context: { store } }).dive();
   });
   it('should render without throwing an error', () => {
-    expect(component).toMatchSnapshot();// eslint-disable-line 
+    expect(component).toMatchSnapshot()
   });
   it('should have a img tag', () => {
-    expect(myComponent.find('img').exists()).toBe(true)// eslint-disable-line 
+    expect(myComponent.find('img').exists()).toBe(true);
   });
   it('should have a category dropdown', () => {
-    expect(myComponent.find('div.categories').exists()).toBe(true)// eslint-disable-line 
+    expect(myComponent.find('div.categories').exists()).toBe(true); 
   });
 });

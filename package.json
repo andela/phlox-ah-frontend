@@ -40,6 +40,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "jwt-decode": "^2.2.0",
+    "materialize-css": "^1.0.0-rc.2",
     "npm-watch": "^0.4.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",

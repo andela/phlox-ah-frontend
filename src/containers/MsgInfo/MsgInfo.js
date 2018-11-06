@@ -13,7 +13,7 @@ import './MsgInfo.scss';
  */
 class MsgInfo extends Component {
   /**
-   * @member of MsgInfo
+   * @memberof MsgInfo
    */
 
   /**
@@ -22,12 +22,12 @@ class MsgInfo extends Component {
    * @param {object} props
    * @memberof MsgInfo
    */
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       info: [],
-      success: false,
+      success: false
     };
 
     this.close = this.close.bind(this);
@@ -40,12 +40,8 @@ class MsgInfo extends Component {
    * @param {object} state
    * @memberof MsgInfo
    */
-  // eslint-disable-next-line
-  // eslint-disable-next-line
   static getDerivedStateFromProps(props, state) {
-    return {
-      ...props.info,
-    };
+    return props.info
   }
 
   /**
@@ -64,14 +60,14 @@ class MsgInfo extends Component {
    * @memberof MsgInfo
    */
   render() {
-    const { success, info } = this.state;
+    let { success, info } = this.state;
 
     const messages = info.map((data, index) => (<li key={index} className="info">{data}</li>));
 
     return (
       <div className={info.length ? '_show' : '_hide'}>
         <div className={success
-          ? 'msg-info clean' : 'msg-info error'}>
+          ? 'msg-info success' : 'msg-info error'}>
             <div className="close-btn">
               <span onClick={this.close}
                 className="x-btn">
@@ -89,14 +85,14 @@ class MsgInfo extends Component {
 
 
 MsgInfo.propTypes = {
-  clearMsgInfo: PropTypes.func,
+  clearMsgInfo: PropTypes.func
 };
 
 
 const mapStateToProps = state => ({
-  info: state.Info,
+  info: state.Info
 });
 
 export default connect(mapStateToProps, {
-  clearMsgInfo: msgInfoActions.clear,
+  clearMsgInfo: msgInfoActions.clear
 })(MsgInfo);

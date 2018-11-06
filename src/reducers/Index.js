@@ -7,7 +7,7 @@ import msgInfoReducer from './MsgInfoReducer';
 const rootReducer = combineReducers({
   demoArticleReducer,
   User: userReducer,
-  Info: msgInfoReducer,
+  Info: msgInfoReducer
 });
 
 export default rootReducer;

@@ -23,7 +23,6 @@ class App extends Component {
    * @returns {jsx} - jsx
    * @memberof App
    */
-  // eslint-disable-next-line
   render() {
     return (
       <div>

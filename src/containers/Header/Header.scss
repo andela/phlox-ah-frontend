@@ -106,7 +106,7 @@ div.nav-wrapper ul.nav-button {
 div.nav-wrapper ul.nav-button li {
   line-height: 30px;
   padding: 0;
-  margin: auto 10px !important;
+  margin: auto 10px;
 }
 
 div.nav-wrapper ul li a {
@@ -142,5 +142,47 @@ div.nav-wrapper ul li a.user-photo {
   height: 40px;
   background: #ddd;
   border-color: #bbb;
-
+  position: relative;
+  bottom: 5px;
 }
+
+
+ul li#settings-dropdown {
+  position: relative;
+  top: 5px;
+}
+
+li#settings-dropdown div.sd-wrapper {
+  border: 1px solid #ccc;
+  min-height: 42px;
+  position: absolute;
+  top: 46px;
+  width: 148px;
+  right: 4px;
+}
+
+div.sd-wrapper ul {
+  padding: 0px;
+  margin: 0px;
+  line-height: 0;
+  position: relative;
+  left: 11px;
+  top: 19px;
+}
+
+div.sd-wrapper ul li.s-list {
+  line-height: 0px;
+  margin: 0px;
+  float: none;
+  height: 20px;
+  display: flex;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+ul li.s-list i{
+  height: inherit;
+  line-height: inherit;
+  font-size: 20px;
+}
+

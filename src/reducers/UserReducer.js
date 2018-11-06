@@ -1,17 +1,17 @@
-import { USER } from '../actionTypes/UserConstants';
+import { LOGIN, LOGOUT } from '../actionTypes/UserConstants';
 import { asyncActionName } from '../util/AsyncUtil';
 
 
 const initialState = {
-  isAuth: false,
+  isAuth: false
 };
 
 const userReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case asyncActionName(USER).success:
+    case asyncActionName(LOGIN).success:
       return { ...state, ...action.payload.user, isAuth: true };
-    case asyncActionName(USER).reset:
-      return { ...initialState };
+    case asyncActionName(LOGOUT).success:
+      return initialState;
     default:
       return state;
   }

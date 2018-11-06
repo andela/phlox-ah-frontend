@@ -23,8 +23,8 @@ class Login extends Component {
    * @returns {object} articles
    * @memberof Login
    */
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       emailOrUsername: '',
@@ -51,9 +51,7 @@ class Login extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  // eslint-disable-next-line
   onHideModal() {
-    // eslint-disable-next-line
     $("#login-modal").modal("close");
   }
 

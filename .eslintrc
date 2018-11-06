@@ -11,6 +11,9 @@
     "mocha": true,
     "browser": true
   },
+  "globals": {
+    "$": false
+  },
   "parser": "babel-eslint",
   "ecmaFeatures": {
     "jsx": true,
@@ -35,11 +38,11 @@
       "requireReturnDescription": true
     }],
     "require-jsdoc": ["error", {
-        "require": {
-            "FunctionDeclaration": true,
-            "MethodDefinition": true,
-            "ClassDeclaration": true
-        }
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": true,
+        "ClassDeclaration": true
+      }
     }]
   }
 }
