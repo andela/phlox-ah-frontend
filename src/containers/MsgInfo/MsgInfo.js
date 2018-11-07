@@ -41,7 +41,7 @@ class MsgInfo extends Component {
    * @memberof MsgInfo
    */
   static getDerivedStateFromProps(props, state) {
-    return props.info
+    return props.info;
   }
 
   /**
@@ -60,7 +60,7 @@ class MsgInfo extends Component {
    * @memberof MsgInfo
    */
   render() {
-    let { success, info } = this.state;
+    const { success, info } = this.state;
 
     const messages = info.map((data, index) => (<li key={index} className="info">{data}</li>));
 

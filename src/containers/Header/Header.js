@@ -136,9 +136,9 @@ class Header extends Component {
    * @memberof Header
    */
   render() {
-    const { 
-      showDropDown, 
-      showSettingsOption, 
+    const {
+      showDropDown,
+      showSettingsOption,
       isAuth
     } = this.state;
 
@@ -193,13 +193,13 @@ class Header extends Component {
                   <i className="fas fa-bell"></i>
                 </a>
               </li>
-              <li 
+              <li
                 onClick={this.toggleSettingsOptions.bind(this)}
                 id="settings-dropdown">
                 <a className="user-photo" href="#"></a>
                 {
-                  showSettingsOption && 
-                    <div className="sd-wrapper">
+                  showSettingsOption
+                    && <div className="sd-wrapper">
                       <ul>
                         <li
                           onClick={this.logout.bind(this)}
@@ -220,7 +220,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  logout: PropTypes.func
 };
 
 const mapStateToProps = state => ({
