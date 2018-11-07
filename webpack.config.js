@@ -14,8 +14,22 @@ module.exports = {
       {
         test: /\.(css|scss|sass)$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {}
+          }
+        ]
       }
     ]
+  },
+  devServer: {
+    historyApiFallback: true,
+    contentBase: './',
+    hot: true
   },
   entry: [
     path.resolve(__dirname, 'src', 'index.js')

@@ -11,12 +11,24 @@
     "mocha": true,
     "browser": true
   },
+  "globals": {
+    "$": false,
+    "expect": false
+  },
   "parser": "babel-eslint",
   "ecmaFeatures": {
     "jsx": true,
     "modules": true
   },
+  "plugins": [
+    "react"
+  ],
   "rules": {
+    "class-methods-use-this": [0, { "exceptMethods": [] }],
+    "no-unused-vars": [0, {"vars": "all", "args": "after-used"}],
+    "import/prefer-default-export": "off",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error", 
     "arrow-body-style":2,
     "one-var": 0,
     "one-var-declaration-per-line": 0,
@@ -27,7 +39,7 @@
     "curly": ["error", "multi-line"],
     "import/no-unresolved": [2, { "commonjs": true }],
     "import/extensions": 0,
-    "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
+    "no-shadow": ["error", { "allow": ["req", "res", "err", "state", "props"] }],
     "valid-jsdoc": ["error", {
       "requireReturn": true,
       "requireReturnType": true,
@@ -35,11 +47,11 @@
       "requireReturnDescription": true
     }],
     "require-jsdoc": ["error", {
-        "require": {
-            "FunctionDeclaration": true,
-            "MethodDefinition": true,
-            "ClassDeclaration": true
-        }
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": true,
+        "ClassDeclaration": true
+      }
     }]
   }
 }
