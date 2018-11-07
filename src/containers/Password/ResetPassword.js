@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Modal, Row, Button, Input
 } from 'react-materialize';
-import './Password.scss';
+import '../Login/Login.scss';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { sendResetPassword } from '../../requests/PasswordRequests';
@@ -48,7 +48,6 @@ class ResetPassword extends Component {
    * @param {*} e
    * @memberof ForgotPassword
    */
-  // eslint-disable-next-line
   onSubmit(e) {
     e.preventDefault();
   }
@@ -58,7 +57,6 @@ class ResetPassword extends Component {
    * @returns {object} null
    * @memberof ForgotPassword
    */
-  // eslint-disable-next-line
   onCloseClicked() {
     $('#reset-password-modal').modal('close');
   }
@@ -68,17 +66,20 @@ class ResetPassword extends Component {
    * @returns {object} null
    * @memberof ForgotPassword
    */
-  // eslint-disable-next-line
   onClickResetPassword() {
     const password = $('#password').val();
     const confirmPassword = $('#confirmPassword').val();
     const { token } = this.props.match.params;
-    if (password === confirmPassword) {
-      this.props.sendResetPassword(token, password);
-    } else {
+    if (password.length < 6) {
+      $('.response-message').text('Password must be at least 6 characters');
+      $('.response-message').addClass('red-text');
+      $('.response-message').show();
+    } else if (password !== confirmPassword) {
       $('.response-message').text('The passwords do not match');
       $('.response-message').addClass('red-text');
       $('.response-message').show();
+    } else if (password === confirmPassword) {
+      this.props.sendResetPassword(token, password);
     }
   }
 
@@ -88,7 +89,6 @@ class ResetPassword extends Component {
    * @memberof ForgotPassword
    */
   onLoginClicked() {
-    // eslint-disable-next-line
     this.onCloseClicked();
     $('#login-modal').modal('open');
   }
@@ -123,9 +123,10 @@ class ResetPassword extends Component {
           </Row>
         </form>
         <h6>
-        <a href="#" onClick={this.onLoginClicked.bind(this)}>
+          Have an account?
+          <a href="#" onClick={this.onLoginClicked.bind(this)}>
             <span className="theme-color">
-              &nbsp; Have an account? Log in
+              &nbsp; Log in
             </span>
           </a> |
           <a href="#">

@@ -8,7 +8,8 @@ import { createLogger } from 'redux-logger';
 import jwtDecode from 'jwt-decode';
 import setAuthToken from './util/AuthTokenUtil';
 import { asyncActions } from './util/AsyncUtil';
-import { USER } from './actionTypes/UserConstants';
+import { LOGIN } from './actionTypes/UserConstants';
+import 'materialize-css/dist/css/materialize.min.css';
 import './styles/style.scss';
 
 import App from './App';
@@ -21,7 +22,7 @@ if (localStorage.token) {
   // setting token to request headers for authentication
   setAuthToken(localStorage.token);
   // adding user object to User's store
-  store.dispatch(asyncActions(USER).success(jwtDecode(localStorage.token)));
+  store.dispatch(asyncActions(LOGIN).success(jwtDecode(localStorage.token)));
 }
 
 

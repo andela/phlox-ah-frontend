@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import DropDown from '../../components/DropDown/DropDown';
 import './Header.scss';
 import Logo from '../../assets/images/phlox-logo.png';
+import { asyncActions, LOGOUT } from './BasePath';
 
 /**
  *
@@ -22,11 +23,12 @@ class Header extends Component {
    * @param {object} props
    * @memberof Header
    */
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       showDropDown: false,
+      showSettingsOption: false,
       isAuth: false,
     };
 
@@ -40,11 +42,8 @@ class Header extends Component {
    * @param {object} state
    * @memberof Header
    */
-  // eslint-disable-next-line
   static getDerivedStateFromProps(props, state) {
-    return {
-      ...props.user,
-    };
+    return props.user;
   }
 
   /**
@@ -63,7 +62,7 @@ class Header extends Component {
    */
   clearTimeout() {
     if (this.timeoutID) {
-      clearTimeout(this.toggleDropDown);
+      clearTimeout(this.timeoutID);
       this.timeoutID = null;
     }
   }
@@ -83,10 +82,18 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  // eslint-disable-next-line
   onLoginClicked() {
-    // eslint-disable-next-line
     $('#login-modal').modal('open');
+  }
+
+  /**
+   * @description - This method logs the user out of the application
+   * @returns {object} null
+   * @memberof Header
+   */
+  logout() {
+    this.props.logout();
+    localStorage.removeItem('token');
   }
 
   /**
@@ -101,14 +108,25 @@ class Header extends Component {
   }
 
   /**
+   * @description - This method displays the settings dropdown
+   * @returns {object} null
+   * @memberof Header
+   */
+  toggleSettingsOptions() {
+    this.setState({
+      showSettingsOption: !this.state.showSettingsOption,
+    });
+  }
+
+  /**
    * @description - This method toggles the categories dropdown
    * @returns {object} null
    * @memberof Header
    */
   toggleDropDown() {
-    this.setState(state => ({
-      showDropDown: !state.showDropDown,
-    }));
+    this.setState({
+      showDropDown: !this.state.showDropDown,
+    });
   }
 
   /**
@@ -118,7 +136,11 @@ class Header extends Component {
    * @memberof Header
    */
   render() {
-    const { showDropDown, isAuth } = this.state;
+    const {
+      showDropDown,
+      showSettingsOption,
+      isAuth
+    } = this.state;
 
     return (
       <nav className="main-header">
@@ -171,8 +193,23 @@ class Header extends Component {
                   <i className="fas fa-bell"></i>
                 </a>
               </li>
-              <li>
+              <li
+                onClick={this.toggleSettingsOptions.bind(this)}
+                id="settings-dropdown">
                 <a className="user-photo" href="#"></a>
+                {
+                  showSettingsOption
+                    && <div className="sd-wrapper">
+                      <ul>
+                        <li
+                          onClick={this.logout.bind(this)}
+                          className="s-list">
+                          <i className="fas fa-sign-out-alt"></i>
+                          &nbsp; Sign out
+                        </li>
+                      </ul>
+                    </div>
+                }
               </li>
             </ul>
           }
@@ -184,11 +221,14 @@ class Header extends Component {
 
 Header.propTypes = {
   user: PropTypes.object,
+  logout: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-  user: state.User,
+  user: state.User
 });
 
 
-export default connect(mapStateToProps, {})(Header);
+export default connect(mapStateToProps, {
+  logout: asyncActions(LOGOUT).success
+})(Header);

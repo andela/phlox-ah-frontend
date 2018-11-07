@@ -23,15 +23,29 @@ class Login extends Component {
    * @returns {object} articles
    * @memberof Login
    */
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       emailOrUsername: '',
-      password: '',
+      password: ''
     };
 
     this.onChange = this.onChange.bind(this);
+  }
+
+  /**
+   * @description - This method runs whenever redux state changes
+   * @returns {object} state
+   * @param {object} props
+   * @param {object} state
+   * @memberof Login
+   */
+  static getDerivedStateFromProps(props, state) {
+    return {
+      emailOrUsername: '',
+      password: ''
+    };
   }
 
   /**
@@ -42,7 +56,7 @@ class Login extends Component {
    */
   onChange(e) {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
 
@@ -51,10 +65,8 @@ class Login extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  // eslint-disable-next-line
   onHideModal() {
-    // eslint-disable-next-line
-    $("#login-modal").modal("close");
+    $('#login-modal').modal('close');
   }
 
   /**
@@ -159,6 +171,12 @@ class Login extends Component {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  logout: PropTypes.func
 };
 
-export default connect(null, { login })(Login);
+const mapStateToProps = state => ({
+  user: state.User
+});
+
+export default connect(mapStateToProps, { login })(Login);

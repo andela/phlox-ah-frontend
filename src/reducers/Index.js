@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   demoArticleReducer,
   passwordReducer,
   User: userReducer,
-  Info: msgInfoReducer,
+  Info: msgInfoReducer
 });
 
 export default rootReducer;

@@ -1,21 +1,18 @@
 import axios from 'axios';
 import { asyncActions } from '../util/AsyncUtil';
 import setAuthToken from '../util/AuthTokenUtil';
-import { USER } from '../actionTypes/UserConstants';
+import { LOGIN } from '../actionTypes/UserConstants';
 import { loginConstant } from '../constants/Constants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
 
-
-// eslint-disable-next-line
 const formatError = (error) => {
   if (Array.isArray(error.message)) {
     return error.message;
-    // eslint-disable-next-line
-  } else if (error.message) {
-    return [error.message];
-  } else {
-    return ['Error occured'];
   }
+  if (error.message) {
+    return [error.message];
+  }
+  return ['Error occurred'];
 };
 
 // eslint-disable-next-line
@@ -27,10 +24,9 @@ export const login = payload => (dispatch) => {
         localStorage.setItem('token', response.data.token);
         // setting token to request headers for authentication
         setAuthToken(response.data.token);
-        dispatch(asyncActions(USER).success(response.data.user));
+        dispatch(asyncActions(LOGIN).success(response.data.user));
         dispatch(msgInfoActions.success([response.data.message]));
-        // eslint-disable-next-line
-        $("#login-modal").modal("close");
+        $('#login-modal').modal('close');
       }
     })
     .catch((error) => {

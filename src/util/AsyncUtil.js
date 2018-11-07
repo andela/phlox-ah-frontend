@@ -1,8 +1,7 @@
 export const asyncActionName = basename => ({
   loading: `${basename}_LOADING`,
   failure: `${basename}_FAILING`,
-  success: `${basename}_SUCCESS`,
-  reset: `${basename}_RESET`
+  success: `${basename}_SUCCESS`
 });
 
 export const asyncActions = actionName => ({
@@ -12,10 +11,6 @@ export const asyncActions = actionName => ({
   }),
   success: payload => ({
     type: asyncActionName(actionName).success,
-    payload
-  }),
-  reset: payload => ({
-    type: asyncActionName(actionName).reset,
     payload
   }),
   failure: (bool, error) => ({

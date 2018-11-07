@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import Login from './Login';
-import { asyncActions, USER } from './BasePath';
+import { asyncActions, LOGIN } from './BasePath';
 
 const mockStore = configureMockStore();
 const store = mockStore({});
@@ -21,16 +21,16 @@ describe('<Login/>', () => {
     myComponent = component.dive({ context: { store } }).dive();
   });
   it('should render without throwing an error', () => {
-    expect(component).toMatchSnapshot();// eslint-disable-line 
+    expect(component).toMatchSnapshot();
   });
   it('should have a form tag with class col', () => {
-    expect(myComponent.find('form').hasClass('col')).toBe(true)// eslint-disable-line 
+    expect(myComponent.find('form').hasClass('col')).toBe(true);
   });
   it('should have a login button', () => {
-    expect(myComponent.find('Button#login-button').exists()).toBe(true)// eslint-disable-line 
+    expect(myComponent.find('Button#login-button').exists()).toBe(true);
   });
   it('should have a input field', () => {
-    expect(myComponent.find('Input').exists()).toBe(true)// eslint-disable-line 
+    expect(myComponent.find('Input').exists()).toBe(true);
   });
   it('should create an action to set user object on the store', () => {
     const payload = {
@@ -38,9 +38,9 @@ describe('<Login/>', () => {
       email: 'dimeji@email.com',
     };
     const expectedAction = {
-      type: 'USER_SUCCESS',
+      type: 'LOGIN_SUCCESS',
       payload
     };
-    expect(asyncActions(USER).success(payload)).toEqual(expectedAction);// eslint-disable-line
+    expect(asyncActions(LOGIN).success(payload)).toEqual(expectedAction);
   });
 });

@@ -26,9 +26,9 @@ div.dropdown-wrapper ul.r-wing {
   margin-right: 2px;
 }
 
-div.dropdown-wrapper ul li {
+div.dropdown-wrapper ul li.dropdown-list {
   padding: 0px;
-  margin: 0px !important;
+  margin: 0px;
   width: 100%;
   height: auto;
   font-size: 15px;
@@ -37,7 +37,7 @@ div.dropdown-wrapper ul li {
   line-height: 26px;
 }
 
-div.dropdown-wrapper ul li a {
-  border: none !important;
-  border-radius: 0px !important;
+div.dropdown-wrapper ul li.dropdown-list a {
+  border: none;
+  border-radius: 0px;
 }

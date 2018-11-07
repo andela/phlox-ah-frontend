@@ -4,7 +4,6 @@ import Header from './containers/Header/Header';
 import Login from './containers/Login/Login';
 import MsgInfo from './containers/MsgInfo/MsgInfo';
 import Home from './containers/Home/Home';
-import Navbar from './components/Navbar/Navbar';
 import ForgotPassword from './containers/Password/ForgotPassword';
 import ResetPassword from './containers/Password/ResetPassword';
 
@@ -23,19 +22,15 @@ class App extends Component {
    * @returns {jsx} - jsx
    * @memberof App
    */
-  // eslint-disable-next-line
   render() {
     return (
       <div>
         <Header />
-        <h1 className="theme-color">Hello! Welcome to Authors Haven</h1>
-        This is the app component
+        <h1 className="theme-color center">Hello! Welcome to Authors Haven</h1>
         <Login />
         <MsgInfo />
         <ForgotPassword />
-        <Home />
         <div>
-          <Navbar />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/forgot/password" component={ForgotPassword} />

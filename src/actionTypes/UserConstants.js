@@ -1,2 +1,2 @@
-// eslint-disable-next-line
-export const USER = 'USER';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';

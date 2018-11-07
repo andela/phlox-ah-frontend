@@ -11,15 +11,21 @@
     "mocha": true,
     "browser": true
   },
+  "globals": {
+    "$": false,
+    "expect": false
+  },
   "parser": "babel-eslint",
   "ecmaFeatures": {
     "jsx": true,
     "modules": true
   },
-  "globals": {
-    "$": false
-  },
   "rules": {
+    "no-unused-vars": [0, {"vars": "all", "args": "after-used"}],
+    "import/prefer-default-export": "off",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "class-methods-use-this": "off",
     "arrow-body-style":2,
     "one-var": 0,
     "one-var-declaration-per-line": 0,
@@ -38,11 +44,11 @@
       "requireReturnDescription": true
     }],
     "require-jsdoc": ["error", {
-        "require": {
-            "FunctionDeclaration": true,
-            "MethodDefinition": true,
-            "ClassDeclaration": true
-        }
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": true,
+        "ClassDeclaration": true
+      }
     }]
   }
 }

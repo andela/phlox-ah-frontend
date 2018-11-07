@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Modal, Row, Button, Input
 } from 'react-materialize';
-import './Password.scss';
+import '../Login/Login.scss';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { sendForgotPassword } from '../../requests/PasswordRequests';
@@ -31,7 +31,11 @@ class ForgotPassword extends Component {
    */
   componentDidUpdate() {
     if (this.props.loading) {
-      $('.response-message').text(`${this.props.errorMessage}`);
+      if (this.props.errorMessage) {
+        $('.response-message').text(`${this.props.errorMessage}`);
+      } else {
+        $('.response-message').text('Cannot connect to server right now!');
+      }
       $('.response-message').removeClass('theme-color');
       $('.response-message').addClass('red-text');
     } else {
@@ -48,7 +52,6 @@ class ForgotPassword extends Component {
    * @param {*} e
    * @memberof ForgotPassword
    */
-  // eslint-disable-next-line
   onSubmit(e) {
     e.preventDefault();
   }
@@ -58,7 +61,6 @@ class ForgotPassword extends Component {
    * @returns {object} null
    * @memberof ForgotPassword
    */
-  // eslint-disable-next-line
   onCloseClicked() {
     $('#forgot-password-modal').modal('close');
   }
@@ -79,7 +81,6 @@ class ForgotPassword extends Component {
    * @memberof ForgotPassword
    */
   onLoginClicked() {
-    // eslint-disable-next-line
     this.onCloseClicked();
     $('#login-modal').modal('open');
   }
@@ -108,14 +109,15 @@ class ForgotPassword extends Component {
             <Input type="text" id="emailText" label="enter email" s={12} /> <br /> <br />
             <Button
               id="forgot-button" waves='light' onClick={this.onClickForgotPassword.bind(this)}>
-              Forgot Password
+              Send Email
             </Button>
           </Row>
         </form>
         <h6>
+          Have an account?
           <a href="#" onClick={this.onLoginClicked.bind(this)}>
             <span className="theme-color">
-              &nbsp; Have an account? Log in
+              &nbsp; Log in
             </span>
           </a> |
           <a href="#">

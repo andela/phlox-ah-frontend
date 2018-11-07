@@ -14,15 +14,15 @@ class DropDrown extends Component {
    * @param {props} props
    * @memberof DropDrown
    */
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.dropDrownWrapper = React.createRef();
   }
 
   /**
    * @description - This method runs after component has been mounted
    * @returns {object} articles
-   * @memberofDropDrown
+   * @memberof DropDrown
    */
   componentDidMount() {
     this.dropDrownWrapper.current.focus();
@@ -52,20 +52,20 @@ class DropDrown extends Component {
         ref={this.dropDrownWrapper}
         className="dropdown-wrapper">
         <ul className="l-wing">
-          <li><a href="#">Religion</a></li>
-          <li><a href="#">Arts</a></li>
-          <li><a href="#">Technology</a></li>
-          <li><a href="#">Animals</a></li>
-          <li><a href="#">Culture</a></li>
-          <li><a href="#">Finance</a></li>
+          <li className="dropdown-list"><a href="#">Religion</a></li>
+          <li className="dropdown-list"><a href="#">Arts</a></li>
+          <li className="dropdown-list"><a href="#">Technology</a></li>
+          <li className="dropdown-list"><a href="#">Animals</a></li>
+          <li className="dropdown-list"><a href="#">Culture</a></li>
+          <li className="dropdown-list"><a href="#">Finance</a></li>
         </ul>
         <ul className="r-wing">
-          <li><a href="#">Sport</a></li>
-          <li><a href="#">Medicine</a></li>
-          <li><a href="#">Gadget</a></li>
-          <li><a href="#">Programming</a></li>
-          <li><a href="#">History</a></li>
-          <li><a href="#">Fashion</a></li>
+          <li className="dropdown-list"><a href="#">Sport</a></li>
+          <li className="dropdown-list"><a href="#">Medicine</a></li>
+          <li className="dropdown-list"><a href="#">Gadget</a></li>
+          <li className="dropdown-list"><a href="#">Programming</a></li>
+          <li className="dropdown-list"><a href="#">History</a></li>
+          <li className="dropdown-list"><a href="#">Fashion</a></li>
         </ul>
       </div>
     );

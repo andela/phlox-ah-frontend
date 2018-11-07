@@ -26,17 +26,17 @@ module.exports = {
       }
     ]
   },
+  devServer: {
+    historyApiFallback: true,
+    contentBase: './',
+    hot: true
+  },
   entry: [
     path.resolve(__dirname, 'src', 'index.js')
   ],
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js',
-  },
-  devServer: {
-    historyApiFallback: true,
-    contentBase: './',
-    hot: true
   },
   plugins: [
     new HtmlWebPackPlugin({
