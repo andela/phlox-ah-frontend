@@ -5,6 +5,7 @@ import {
 import './Login.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { loginConstant } from '../../constants/Constants';
 import { login } from './BasePath';
 /**
  *
@@ -129,17 +130,17 @@ class Login extends Component {
         <h6>Login Using</h6>
         <Row>
           <Col s={4} >
-            <a href="#">
+            <a href={loginConstant.FACEBOOK_LOGIN_URL}>
               <i className="fab fa-facebook fa-3x"></i>
             </a>
           </Col>
           <Col s={4}>
-            <a href="#">
+            <a href={loginConstant.GOOGLE_LOGIN_URL}>
               <i className="fab fa-google-plus-square fa-3x"></i>
             </a>
           </Col>
           <Col s={4}>
-            <a href="#">
+            <a href={loginConstant.TWITTER_LOGIN_URL}>
               <i className="fab fa-twitter-square fa-3x"></i>
             </a>
           </Col>
