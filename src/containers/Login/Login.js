@@ -6,7 +6,8 @@ import './Login.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginConstant } from '../../constants/Constants';
-import { login } from './BasePath';
+import { login, msgInfoActions } from './BasePath';
+
 /**
  *
  *
@@ -36,20 +37,6 @@ class Login extends Component {
   }
 
   /**
-   * @description - This method runs whenever redux state changes
-   * @returns {object} state
-   * @param {object} props
-   * @param {object} state
-   * @memberof Login
-   */
-  static getDerivedStateFromProps(props, state) {
-    return {
-      emailOrUsername: '',
-      password: ''
-    };
-  }
-
-  /**
    * @description - This method sets the input values
    * @param {objecj} e
    * @returns {object} null
@@ -67,7 +54,7 @@ class Login extends Component {
    * @memberof Login
    */
   onHideModal() {
-    $("#login-modal").modal("close");
+    $('#login-modal').modal('close');
   }
 
   /**
@@ -78,7 +65,40 @@ class Login extends Component {
    */
   onSubmit(e) {
     e.preventDefault();
-    this.props.login(this.state);
+
+
+    const errors = this.validateData(this.state);
+
+    if (errors.length) {
+      this.props.displayErrorMsg(errors);
+      return;
+    }
+
+    this.props.login(this.state)
+      .then((response) => {
+        this.setState({
+          emailOrUsername: '',
+          password: ''
+        });
+      });
+  }
+
+  /**
+   * @description - This method validates the input values
+   * @param {objecj} data
+   * @returns {array} errors
+   * @memberof Login
+   */
+  validateData(data) {
+    let errors = [];
+    if (!data.emailOrUsername) {
+      errors = [...errors, 'email or username is required'];
+    }
+    if (!data.password) {
+      errors = [...errors, 'password is required'];
+    }
+
+    return errors;
   }
 
   /**
@@ -101,34 +121,31 @@ class Login extends Component {
           </a>
         </div>
         <h5>Authors Haven</h5>
-        <form id="test" className="col s12" onSubmit={this.onSubmit.bind(this)}>
-          <Row>
-            <Input
-              type="text"
-              label="username / email"
-              s={12}
-              name="emailOrUsername"
-              value={emailOrUsername}
-              onChange={this.onChange}
-            />
-            <Input
-              type="password"
-              label="password"
-              s={12}
-              name="password"
-              value={password}
-              onChange={this.onChange}
-            />
-            <Button
-              type="submit"
-              id="login-button" waves='light'>
-              Login
-              <i className="fas fa-sign-in-alt"></i>
-            </Button>
-          </Row>
-        </form>
-        <h6>Login Using</h6>
+      <form id="test" className="col s12" onSubmit={this.onSubmit.bind(this)}>
         <Row>
+          <Input
+            type="text"
+            label="username / email"
+            s={12}
+            name="emailOrUsername"
+            value={emailOrUsername}
+            onChange={this.onChange}
+          />
+          <Input
+            type="password"
+            label="password"
+            s={12}
+            name="password"
+            value={password}
+            onChange={this.onChange}
+          />
+          <Button
+            type="submit"
+            id="login-button" waves='light'>
+            Login
+            <i className="fas fa-sign-in-alt"></i>
+          </Button>
+          <h6>Login Using</h6>
           <Col s={4} >
             <a href={loginConstant.FACEBOOK_LOGIN_URL}>
               <i className="fab fa-facebook fa-3x"></i>
@@ -145,21 +162,23 @@ class Login extends Component {
             </a>
           </Col>
         </Row>
-        <h6>
-          No account yet?
-          <a href="#">
-            <span className="theme-color">
-              &nbsp; Sign Up
-            </span>
-          </a>
-        </h6>
-      </Modal>
+      </form>
+      <h6>
+        No account yet?
+        <a href="#">
+          <span className="theme-color">
+            &nbsp; Sign Up
+          </span>
+        </a>
+      </h6>
+    </Modal>
     );
   }
 }
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  displayErrorMsg: PropTypes.func.isRequired,
   user: PropTypes.object
 };
 
@@ -167,4 +186,7 @@ const mapStateToProps = state => ({
   user: state.User
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, {
+  login,
+  displayErrorMsg: msgInfoActions.failure
+})(Login);

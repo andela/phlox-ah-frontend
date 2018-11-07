@@ -26,8 +26,8 @@ if (localStorage.getItem('token') === null) {
   if (parsedToken.token) {
     localStorage.setItem('token', parsedToken.token);
     setTimeout(() => {
-      window.location.href = window.location.origin + window.location.pathname; 
-    }, 1000);
+      window.location.href = window.location.origin + window.location.pathname;
+    }, 2000);
     store.dispatch(msgInfoActions.success(['succesfully logged in!']));
   }
 }

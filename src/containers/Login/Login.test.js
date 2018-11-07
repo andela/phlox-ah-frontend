@@ -21,7 +21,7 @@ describe('<Login/>', () => {
     myComponent = component.dive({ context: { store } }).dive();
   });
   it('should render without throwing an error', () => {
-    expect(component).toMatchSnapshot(); 
+    expect(component).toMatchSnapshot();
   });
   it('should have a form tag with class col', () => {
     expect(myComponent.find('form').hasClass('col')).toBe(true);
