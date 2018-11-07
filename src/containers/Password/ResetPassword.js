@@ -6,6 +6,7 @@ import '../Login/Login.scss';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { sendResetPassword } from '../../requests/PasswordRequests';
+import { msgInfoActions } from '../../actions/MsgInfoActions';
 
 /**
  *
@@ -70,14 +71,12 @@ class ResetPassword extends Component {
     const password = $('#password').val();
     const confirmPassword = $('#confirmPassword').val();
     const { token } = this.props.match.params;
-    if (password.length < 6) {
-      $('.response-message').text('Password must be at least 6 characters');
-      $('.response-message').addClass('red-text');
-      $('.response-message').show();
+    if (password.length < 6 && password !== confirmPassword) {
+      this.props.displayErrorMsg(['Password must be at least 6 characters', 'The passwords do not match']);
+    } else if (password.length < 6) {
+      this.props.displayErrorMsg(['Password must be at least 6 characters']);
     } else if (password !== confirmPassword) {
-      $('.response-message').text('The passwords do not match');
-      $('.response-message').addClass('red-text');
-      $('.response-message').show();
+      this.props.displayErrorMsg(['The passwords do not match']);
     } else if (password === confirmPassword) {
       this.props.sendResetPassword(token, password);
     }
@@ -111,13 +110,12 @@ class ResetPassword extends Component {
           </a>
         </div>
         <h5>Authors Haven</h5>
-        <p className="theme-color response-message"></p>
         <form className="col s12" onSubmit={this.onSubmit.bind(this)}>
           <Row>
             <Input type="password" id="password" label="Password" s={12} />
             <Input type="password" id="confirmPassword" label="Confirm Password" s={12} />
             <Button
-              id="forgot-button" waves='light' onClick={this.onClickResetPassword.bind(this)}>
+              id="reset-button" waves='light' onClick={this.onClickResetPassword.bind(this)}>
               Reset Password
             </Button>
           </Row>
@@ -152,6 +150,9 @@ ResetPassword.propTypes = {
   errorMessage: PropTypes.string,
   successMessage: PropTypes.string,
   match: PropTypes.object,
+  displayErrorMsg: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { sendResetPassword })(ResetPassword);
+export default connect(mapStateToProps, {
+  sendResetPassword, displayErrorMsg: msgInfoActions.failure
+})(ResetPassword);

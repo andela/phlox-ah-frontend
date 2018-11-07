@@ -4,17 +4,7 @@ import setAuthToken from '../util/AuthTokenUtil';
 import { LOGIN } from '../actionTypes/UserConstants';
 import { loginConstant } from '../constants/Constants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
-
-const formatError = (error) => {
-  if (Array.isArray(error.message)) {
-    return error.message;
-  }
-  if (error.message) {
-    return [error.message];
-  }
-  return ['Error occurred'];
-};
-
+import { formatError } from '../helpers/Errors';
 
 export const login = payload => dispatch => axios.post(loginConstant.LOGIN_URL, payload)
   .then((response) => {

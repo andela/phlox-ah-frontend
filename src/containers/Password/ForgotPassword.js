@@ -25,28 +25,6 @@ class ForgotPassword extends Component {
    */
 
   /**
-   * @description - This method runs when the component upodates
-   * @returns {string} response
-   * @memberof ForgotPassword
-   */
-  componentDidUpdate() {
-    if (this.props.loading) {
-      if (this.props.errorMessage) {
-        $('.response-message').text(`${this.props.errorMessage}`);
-      } else {
-        $('.response-message').text('Cannot connect to server right now!');
-      }
-      $('.response-message').removeClass('theme-color');
-      $('.response-message').addClass('red-text');
-    } else {
-      $('.response-message').text(`${this.props.successMessage}`);
-      $('.response-message').removeClass('red-text');
-      $('.response-message').addClass('theme-color');
-    }
-    $('.response-message').show();
-  }
-
-  /**
    * @description - This method prevents the form from reloading the page
    * @returns {func} preventDefault
    * @param {*} e
@@ -103,7 +81,6 @@ class ForgotPassword extends Component {
           </a>
         </div>
         <h5>Authors Haven</h5>
-        <p className="theme-color response-message"></p>
         <form className="col s12" onSubmit={this.onSubmit.bind(this)}>
           <Row>
             <Input type="text" id="emailText" label="enter email" s={12} /> <br /> <br />
@@ -133,15 +110,13 @@ class ForgotPassword extends Component {
 
 const mapStateToProps = state => ({
   loading: state.passwordReducer.loading,
-  errorMessage: state.passwordReducer.errorMessage,
-  successMessage: state.passwordReducer.successMessage,
 });
 
 ForgotPassword.propTypes = {
   sendForgotPassword: PropTypes.func,
   loading: PropTypes.bool,
-  errorMessage: PropTypes.string,
-  successMessage: PropTypes.string
 };
 
-export default connect(mapStateToProps, { sendForgotPassword })(ForgotPassword);
+export default connect(mapStateToProps, {
+  sendForgotPassword
+})(ForgotPassword);
