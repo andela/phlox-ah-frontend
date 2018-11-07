@@ -7,3 +7,8 @@ export const articleConstant = {
 export const loginConstant = {
   LOGIN: `${BASE_URL}/api/v1/login`
 };
+
+export const passwordConstant = {
+  FORGOT_PASSWORD_URL: `${BASE_URL}/api/v1/forgetPassword`,
+  RESET_PASSWORD_URL: `${BASE_URL}/api/v1/reset_password`
+};

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { asyncActions } from '../util/AsyncUtil';
 import setAuthToken from '../util/AuthTokenUtil';
-import { LOGIN } from '../actionTypes/LoginConstants';
 import { USER } from '../actionTypes/UserConstants';
 import { loginConstant } from '../constants/Constants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
@@ -11,12 +10,13 @@ import { msgInfoActions } from '../actions/MsgInfoActions';
 const formatError = (error) => {
   if (Array.isArray(error.message)) {
     return error.message;
+    // eslint-disable-next-line
   } else if (error.message) {
-    return [error.message]
-  } else 
+    return [error.message];
+  } else {
     return ['Error occured'];
+  }
 };
-
 
 // eslint-disable-next-line
 export const login = payload => (dispatch) => {

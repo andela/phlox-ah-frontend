@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Button from '../../components/Button/ExampleButton';
 import { addArticle, getArticles } from '../../requests/ArticleRequests';
 
 /**
@@ -77,7 +76,6 @@ class Home extends Component {
       <div>
         This is the home component
         <br /> <br />
-        <Button text='This button is from a component'></Button> <br /> <br />
         <button onClick={ () => this.addToArticles({ title: 'The second title', body: 'awesome too' }) }>Demo add an article</button>
         <button onClick={ () => this.getAllArticles() }>Get all articles</button>
         <ul>

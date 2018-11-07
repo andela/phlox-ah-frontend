@@ -33,6 +33,11 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js',
   },
+  devServer: {
+    historyApiFallback: true,
+    contentBase: './',
+    hot: true
+  },
   plugins: [
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, './public/index.html')

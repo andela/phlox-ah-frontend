@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Header from './containers/Header/Header';
 import Login from './containers/Login/Login';
+import MsgInfo from './containers/MsgInfo/MsgInfo';
 import Home from './containers/Home/Home';
 import Navbar from './components/Navbar/Navbar';
-import LoginForm from './components/Pages/LoginPage';
-import HomePage from './components/Pages/HomePage';
-import MsgInfo from './containers/MsgInfo/MsgInfo';
+import ForgotPassword from './containers/Password/ForgotPassword';
+import ResetPassword from './containers/Password/ResetPassword';
 
 import './App.scss';
 /**
@@ -32,13 +32,15 @@ class App extends Component {
         This is the app component
         <Login />
         <MsgInfo />
+        <ForgotPassword />
         <Home />
         <div>
           <Navbar />
-          <div>
-            <Route path="/" exact component={HomePage} />
-            <Route path="/login" component={LoginForm} />
-          </div>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/forgot/password" component={ForgotPassword} />
+            <Route path="/reset_password/:token" component={ResetPassword} />
+          </Switch>
         </div>
       </div>
     );

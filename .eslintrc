@@ -16,6 +16,9 @@
     "jsx": true,
     "modules": true
   },
+  "globals": {
+    "$": false
+  },
   "rules": {
     "arrow-body-style":2,
     "one-var": 0,

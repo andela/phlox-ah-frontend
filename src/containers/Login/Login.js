@@ -69,6 +69,17 @@ class Login extends Component {
   }
 
   /**
+   * @description - This runs when forgot password is clicked
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof Login
+   */
+  onResetPasswordClicked() {
+    this.onHideModal();
+    $('#forgot-password-modal').modal('open');
+  }
+
+  /**
    *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
@@ -140,6 +151,7 @@ class Login extends Component {
             </span>
           </a>
         </h6>
+        <p className="theme-color forgot-password-link" onClick={this.onResetPasswordClicked.bind(this)}>Forgot password?</p>
       </Modal>
     );
   }
