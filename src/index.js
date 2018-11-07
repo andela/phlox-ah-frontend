@@ -9,6 +9,11 @@ import './styles/style.scss';
 
 import App from './App';
 import rootReducer from './reducers/Index';
+import setAuthToken from './util/AuthTokenUtil';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const store = createStore(rootReducer, applyMiddleware(createLogger(), thunk));
 const Index = () => (

@@ -10,7 +10,7 @@ const LoginForm = () => (
       <label>Password: </label>
       <input type='password' />
 
-      <input type='submit' name='Login'/>
+      <input type='submit' name='Login' />
     </form>
   </div>
 );
