@@ -5,7 +5,8 @@ import {
 import './Login.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login } from './BasePath';
+import { login, msgInfoActions } from './BasePath';
+
 /**
  *
  *
@@ -32,20 +33,6 @@ class Login extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
-  }
-
-  /**
-   * @description - This method runs whenever redux state changes
-   * @returns {object} state
-   * @param {object} props
-   * @param {object} state
-   * @memberof Login
-   */
-  static getDerivedStateFromProps(props, state) {
-    return {
-      emailOrUsername: '',
-      password: ''
-    };
   }
 
   /**
@@ -77,7 +64,40 @@ class Login extends Component {
    */
   onSubmit(e) {
     e.preventDefault();
-    this.props.login(this.state);
+
+
+    const errors = this.validateData(this.state);
+
+    if (errors.length) {
+      this.props.displayErrorMsg(errors);
+      return;
+    }
+
+    this.props.login(this.state)
+      .then((response) => {
+        this.setState({
+          emailOrUsername: '',
+          password: ''
+        });
+      });
+  }
+
+  /**
+   * @description - This method validates the input values
+   * @param {objecj} data
+   * @returns {array} errors
+   * @memberof Login
+   */
+  validateData(data) {
+    let errors = [];
+    if (!data.emailOrUsername) {
+      errors = [...errors, 'email or username is required'];
+    }
+    if (!data.password) {
+      errors = [...errors, 'password is required'];
+    }
+
+    return errors;
   }
 
   /**
@@ -111,60 +131,60 @@ class Login extends Component {
           </a>
         </div>
         <h5>Authors Haven</h5>
-        <form id="test" className="col s12" onSubmit={this.onSubmit.bind(this)}>
-          <Row>
-            <Input
-              type="text"
-              label="username / email"
-              s={12}
-              name="emailOrUsername"
-              value={emailOrUsername}
-              onChange={this.onChange}
-            />
-            <Input
-              type="password"
-              label="password"
-              s={12}
-              name="password"
-              value={password}
-              onChange={this.onChange}
-            />
-            <Button
-              type="submit"
-              id="login-button" waves='light'>
-              Login
-              <i className="fas fa-sign-in-alt"></i>
-            </Button>
-          </Row>
-        </form>
-        <h6>Login Using</h6>
+      <form id="test" className="col s12" onSubmit={this.onSubmit.bind(this)}>
         <Row>
-          <Col s={4} >
-            <a href="#">
-              <i className="fab fa-facebook fa-3x"></i>
-            </a>
-          </Col>
-          <Col s={4}>
-            <a href="#">
-              <i className="fab fa-google-plus-square fa-3x"></i>
-            </a>
-          </Col>
-          <Col s={4}>
-            <a href="#">
-              <i className="fab fa-twitter-square fa-3x"></i>
-            </a>
-          </Col>
+          <Input
+            type="text"
+            label="username / email"
+            s={12}
+            name="emailOrUsername"
+            value={emailOrUsername}
+            onChange={this.onChange}
+          />
+          <Input
+            type="password"
+            label="password"
+            s={12}
+            name="password"
+            value={password}
+            onChange={this.onChange}
+          />
+          <Button
+            type="submit"
+            id="login-button" waves='light'>
+            Login
+            <i className="fas fa-sign-in-alt"></i>
+          </Button>
         </Row>
-        <h6>
-          No account yet?
+      </form>
+      <h6>Login Using</h6>
+      <Row>
+        <Col s={4} >
           <a href="#">
-            <span className="theme-color">
-              &nbsp; Sign Up
-            </span>
+            <i className="fab fa-facebook fa-3x"></i>
           </a>
-        </h6>
-        <p className="theme-color forgot-password-link" onClick={this.onResetPasswordClicked.bind(this)}>Forgot password?</p>
-      </Modal>
+        </Col>
+        <Col s={4}>
+          <a href="#">
+            <i className="fab fa-google-plus-square fa-3x"></i>
+          </a>
+        </Col>
+        <Col s={4}>
+          <a href="#">
+            <i className="fab fa-twitter-square fa-3x"></i>
+          </a>
+        </Col>
+      </Row>
+      <h6>
+        No account yet?
+        <a href="#">
+          <span className="theme-color">
+            &nbsp; Sign Up
+          </span>
+        </a>
+      </h6>
+      <p className="theme-color forgot-password-link" onClick={this.onResetPasswordClicked.bind(this)}>Forgot password?</p>
+    </Modal>
     );
   }
 }
@@ -172,11 +192,15 @@ class Login extends Component {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   user: PropTypes.object,
-  logout: PropTypes.func
+  logout: PropTypes.func,
+  displayErrorMsg: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   user: state.User
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, {
+  login,
+  displayErrorMsg: msgInfoActions.failure
+})(Login);
