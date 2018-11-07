@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Home from './containers/Home/Home';
 import Navbar from './components/Navbar/Navbar';
 import LoginForm from './components/Pages/LoginPage';
 import HomePage from './components/Pages/HomePage';
+import Profile from './containers/Profile/Profile';
 
 /**
  *
@@ -28,10 +29,11 @@ class App extends Component {
         <Home />
         <div>
           <Navbar />
-          <div>
+          <Switch>
             <Route path="/" exact component={HomePage} />
             <Route path="/login" component={LoginForm} />
-          </div>
+            <Route path="/profile" component={Profile} />
+          </Switch>
         </div>
       </div>
     );
