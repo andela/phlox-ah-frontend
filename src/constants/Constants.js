@@ -6,3 +6,7 @@ export const articleConstant = {
 export const loginConstant = {
   LOGIN_URL: `${BASE_URL}/api/v1/login`
 };
+
+export const signupConstant = {
+  SIGNUP_URL: `${BASE_URL}/api/v1/signup`
+};

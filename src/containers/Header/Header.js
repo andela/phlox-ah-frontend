@@ -78,6 +78,15 @@ class Header extends Component {
   }
 
   /**
+   * @description - This method displays the signup modal
+   * @returns {object} null
+   * @memberof Header
+   */
+  onSignupClicked() {
+    $('#signupModal').modal('open');
+  }
+
+  /**
    * @description - This method displays the login modal
    * @returns {object} null
    * @memberof Header
@@ -180,7 +189,11 @@ class Header extends Component {
                 </a>
               </li>
               <li>
-                <a href="#" className="sign-up">Sign Up</a>
+                <a
+                  onClick={this.onSignupClicked.bind(this)}
+                  href="#" className="sign-up">
+                  Sign Up
+                </a>
               </li>
             </ul>
           }
