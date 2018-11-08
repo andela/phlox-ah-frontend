@@ -86,7 +86,7 @@ class Signup extends Component {
           </a>
         </div>
         <h5>Authors Haven.</h5>
-        <form className="col s12" onSubmit={this.submit.bind(this)}>
+        <form className="col s12" onSubmit={this.submit}>
           <Row>
             <Input
               type="text"
