@@ -20,12 +20,13 @@ export const signup = payload => (dispatch) => {
   dispatch(msgInfoActions.clear());
   axios.post(signupConstant.SIGNUP_URL, payload)
     .then((response) => {
+      dispatch(asyncActions(SIGNUP).loading(false));
       if (response.status === 201) {
-        dispatch(asyncActions(SIGNUP).success());
+        dispatch(asyncActions(SIGNUP).success(true));
       }
     })
     .catch((error) => {
-      dispatch(asyncActions(SIGNUP).failure(true));
+      dispatch(asyncActions(SIGNUP).loading(false));
       dispatch(msgInfoActions.failure(formatError(error.response.data.message)));
     });
 };

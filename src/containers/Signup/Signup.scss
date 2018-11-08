@@ -1,4 +1,4 @@
-#signupModal{
+.signupModal{
     width:340px;
     input{
         margin-bottom:15px;
@@ -21,7 +21,7 @@
     .theme-color{
         color:#06576D;
     }
-    #signupButton{
+    .signupButton{
         width:100%;
         border-radius: 25px;
         background-color: #06576D;
@@ -32,7 +32,7 @@
     .mb-2{
       margin-bottom: 0.5rem;
     }
-    #signupSuccessCard{
+    .signupSuccessCard{
         i{
             color:#3CBF98;
             margin-bottom:10px;
@@ -51,12 +51,12 @@
     }
 }
 @media only screen and (min-width: 601px) {
-    #signupModal{
+    .signupModal{
         width:360px;
     }
 }
 @media only screen and (min-width: 993px) {
-    #signupModal{
+    .signupModal{
         width:380px;
     }
 }

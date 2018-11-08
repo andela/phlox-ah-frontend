@@ -13,22 +13,16 @@ const signupReducer = (state = initialState, action = {}) => {
     case asyncActionName(SIGNUP).loading:
       return {
         ...state,
-        loading: true,
-        success: false,
-        failure: false
+        loading: action.payload,
       };
     case asyncActionName(SIGNUP).success:
       return {
         ...state,
-        loading: false,
-        success: true,
-        failure: false
+        success: action.payload,
       };
     case asyncActionName(SIGNUP).failure:
       return {
         ...state,
-        loading: false,
-        success: false,
         failure: true
       };
     default:

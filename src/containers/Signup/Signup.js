@@ -18,10 +18,11 @@ class Signup extends Component {
    * @constructor function
    * @param {*} props React properties
    */
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = { email: '', username: '', password: '' };
     this.onChange = this.onChange.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   /**
@@ -67,10 +68,10 @@ class Signup extends Component {
     const { email, username, password } = this.state;
     const { loading, success } = this.props;
     return (
-    <Modal id='signupModal' className="center-align">
+    <Modal id='signupModal' className="center-align signupModal">
       {
         success
-        && <div id="signupSuccessCard">
+        && <div className="signupSuccessCard">
           <i className="fas fa-check-circle fa-5x"></i>
           <h5>Registration was successful</h5>
           <p>To proceed, Please check your email and verify your account</p>
@@ -86,7 +87,7 @@ class Signup extends Component {
           </a>
         </div>
         <h5>Authors Haven.</h5>
-        <form className="col s12" onSubmit={this.submit.bind(this)}>
+        <form className="col s12" onSubmit={this.submit}>
           <Row>
             <Input
               type="text"
@@ -115,7 +116,7 @@ class Signup extends Component {
               onChange={this.onChange}
               required
             />
-            <Button typr="submit" id="signupButton" waves='light'>Sign Up  {!loading && <i className="fas fa-sign-in-alt"></i>} {loading && <i className="fas fa-spinner fa-pulse"></i>}</Button>
+            <Button typr="submit" className="signupButton" waves='light'>Sign Up  {!loading && <i className="fas fa-sign-in-alt"></i>} {loading && <i className="fas fa-spinner fa-pulse"></i>}</Button>
           </Row>
         </form>
         <h6>Sign Up Using</h6>

@@ -31,7 +31,7 @@ class Header extends Component {
       showSettingsOption: false,
       isAuth: false,
     };
-
+    this.onSignupClicked = this.onSignupClicked.bind(this);
     this.timeoutID = null;
   }
 
@@ -190,7 +190,7 @@ class Header extends Component {
               </li>
               <li>
                 <a
-                  onClick={this.onSignupClicked.bind(this)}
+                  onClick={this.onSignupClicked}
                   href="#" className="sign-up">
                   Sign Up
                 </a>
