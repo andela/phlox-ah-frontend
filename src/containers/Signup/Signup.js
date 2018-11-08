@@ -136,14 +136,11 @@ Signup.propTypes = {
   signup: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   success: PropTypes.bool,
-  failure: PropTypes.bool,
-  signupErrors: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
 };
 
 const mapStateToProps = state => ({
   loading: state.Signup.loading,
   success: state.Signup.success,
-  failure: state.Signup.failure,
 });
 
 export default connect(mapStateToProps, { signup })(Signup);

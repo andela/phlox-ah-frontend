@@ -5,8 +5,7 @@ import { asyncActionName } from '../util/AsyncUtil';
 const initialState = {
   loading: false,
   success: false,
-  failure: false,
-  errors: []
+  failure: false
 };
 
 const signupReducer = (state = initialState, action = {}) => {
@@ -16,24 +15,21 @@ const signupReducer = (state = initialState, action = {}) => {
         ...state,
         loading: true,
         success: false,
-        failure: false,
-        errors: []
+        failure: false
       };
     case asyncActionName(SIGNUP).success:
       return {
         ...state,
         loading: false,
         success: true,
-        failure: false,
-        errors: []
+        failure: false
       };
     case asyncActionName(SIGNUP).failure:
       return {
         ...state,
         loading: false,
         success: false,
-        failure: true,
-        errors: action.payload.error
+        failure: true
       };
     default:
       return state;

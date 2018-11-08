@@ -25,7 +25,7 @@ export const signup = payload => (dispatch) => {
       }
     })
     .catch((error) => {
-      dispatch(asyncActions(SIGNUP).failure(true, error.response.data.message));
+      dispatch(asyncActions(SIGNUP).failure(true));
       dispatch(msgInfoActions.failure(formatError(error.response.data)));
     });
 };
