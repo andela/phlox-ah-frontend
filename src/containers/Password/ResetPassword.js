@@ -6,7 +6,7 @@ import '../Login/Login.scss';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { sendResetPassword } from '../../requests/PasswordRequests';
-import { msgInfoActions } from '../../actions/MsgInfoActions';
+import { msgInfoActions } from '../BasePath';
 
 /**
  *
@@ -24,24 +24,6 @@ class ResetPassword extends Component {
    * @returns {object} null
    * @memberof Login
    */
-
-  /**
-   * @description - This method runs when the component upodates
-   * @returns {string} response
-   * @memberof ResetPassword
-   */
-  componentDidUpdate() {
-    if (this.props.loading) {
-      $('.response-message').text(`${this.props.errorMessage}`);
-      $('.response-message').removeClass('theme-color');
-      $('.response-message').addClass('red-text');
-    } else {
-      $('.response-message').text(`${this.props.successMessage}`);
-      $('.response-message').removeClass('red-text');
-      $('.response-message').addClass('theme-color');
-    }
-    $('.response-message').show();
-  }
 
   /**
    * @description - This method prevents the form from reloading the page
@@ -139,16 +121,12 @@ class ResetPassword extends Component {
 }
 
 const mapStateToProps = state => ({
-  loading: state.passwordReducer.loading,
-  errorMessage: state.passwordReducer.errorMessage,
-  successMessage: state.passwordReducer.successMessage,
+  loading: state.loading
 });
 
 ResetPassword.propTypes = {
   sendResetPassword: PropTypes.func,
   loading: PropTypes.bool,
-  errorMessage: PropTypes.string,
-  successMessage: PropTypes.string,
   match: PropTypes.object,
   displayErrorMsg: PropTypes.func.isRequired,
 };

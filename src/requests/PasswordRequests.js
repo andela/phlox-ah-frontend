@@ -34,7 +34,11 @@ export const sendForgotPassword = email => (dispatch) => {
       }
     })
     .catch((error) => {
-      dispatch(msgInfoActions.failure(formatError(error.response.data)));
+      if (!error.response) {
+        dispatch(msgInfoActions.failure(formatError(error)));
+      } else {
+        dispatch(msgInfoActions.failure(formatError(error.response.data)));
+      }
       dispatch(asyncActions(FORGOT_PASSWORD).failure(true, error));
       throw error;
     });

@@ -109,7 +109,7 @@ class ForgotPassword extends Component {
 }
 
 const mapStateToProps = state => ({
-  loading: state.passwordReducer.loading,
+  loading: state.loading,
 });
 
 ForgotPassword.propTypes = {

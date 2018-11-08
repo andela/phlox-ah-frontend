@@ -5,7 +5,7 @@ import {
 import './Login.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login, msgInfoActions } from './BasePath';
+import { login, msgInfoActions } from '../BasePath';
 
 /**
  *
