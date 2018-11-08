@@ -7,10 +7,10 @@ import { msgInfoActions } from '../actions/MsgInfoActions';
 
 const formatError = (error) => {
   if (Array.isArray(error)) {
-    return error.message;
+    return error;
   }
-  if (error.message) {
-    return [error.message];
+  if (error) {
+    return [error];
   }
   return ['Error occurred'];
 };
@@ -26,6 +26,6 @@ export const signup = payload => (dispatch) => {
     })
     .catch((error) => {
       dispatch(asyncActions(SIGNUP).failure(true));
-      dispatch(msgInfoActions.failure(formatError(error.response.data)));
+      dispatch(msgInfoActions.failure(formatError(error.response.data.message)));
     });
 };
