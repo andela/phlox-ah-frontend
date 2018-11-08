@@ -31,7 +31,6 @@ class Header extends Component {
       showSettingsOption: false,
       isAuth: false,
     };
-    this.onSignupClicked = this.onSignupClicked.bind(this);
     this.timeoutID = null;
   }
 
