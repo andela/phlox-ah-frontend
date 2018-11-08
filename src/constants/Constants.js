@@ -4,5 +4,8 @@ export const articleConstant = {
 };
 
 export const loginConstant = {
-  LOGIN_URL: `${BASE_URL}/api/v1/login`
+  LOGIN_URL: `${BASE_URL}/api/v1/login`,
+  GOOGLE_LOGIN_URL: `${BASE_URL}/api/v1/login/google`,
+  FACEBOOK_LOGIN_URL: `${BASE_URL}/api/v1/login/facebook`,
+  TWITTER_LOGIN_URL: 'http://127.0.0.1:3000/api/v1/login/twitter'
 };
