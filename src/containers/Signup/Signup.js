@@ -70,7 +70,7 @@ class Signup extends Component {
     <Modal id='signupModal' className="center-align">
       {
         success
-        && <div id="loginSuccessCard">
+        && <div>
           <i className="fas fa-check-circle fa-5x"></i>
           <h5>Registration was successful</h5>
           <p>To proceed, Please check your email and verify your account</p>
