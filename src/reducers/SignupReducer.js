@@ -23,7 +23,6 @@ const signupReducer = (state = initialState, action = {}) => {
     case asyncActionName(SIGNUP).failure:
       return {
         ...state,
-        failure: true
       };
     default:
       return state;
