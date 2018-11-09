@@ -6,6 +6,7 @@ import './Login.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login, msgInfoActions } from '../BasePath';
+import { loginConstant } from '../../constants/Constants';
 
 /**
  *
@@ -53,7 +54,7 @@ class Login extends Component {
    * @memberof Login
    */
   onHideModal() {
-    $('#login-modal').modal('close');
+    $('.login-modal').modal('close');
   }
 
   /**
@@ -64,10 +65,7 @@ class Login extends Component {
    */
   onSubmit(e) {
     e.preventDefault();
-
-
     const errors = this.validateData(this.state);
-
     if (errors.length) {
       this.props.displayErrorMsg(errors);
       return;
@@ -106,9 +104,9 @@ class Login extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  onResetPasswordClicked() {
+  onForgotPasswordClicked() {
     this.onHideModal();
-    $('#forgot-password-modal').modal('open');
+    $('.forgot-password-modal').modal('open');
   }
 
   /**
@@ -122,8 +120,7 @@ class Login extends Component {
 
     return (
       <Modal
-        id='login-modal'
-        className="center-align">
+        className="center-align login-modal">
         <div>
           <a className="close-modal" href="#"
             onClick={this.onHideModal}>
@@ -131,7 +128,7 @@ class Login extends Component {
           </a>
         </div>
         <h5>Authors Haven</h5>
-      <form id="test" className="col s12" onSubmit={this.onSubmit.bind(this)}>
+      <form id="test" className="col s12" onSubmit={e => this.onSubmit(e)}>
         <Row>
           <Input
             type="text"
@@ -151,30 +148,28 @@ class Login extends Component {
           />
           <Button
             type="submit"
-            id="login-button" waves='light'>
+            className="login-button" waves='light'>
             Login
             <i className="fas fa-sign-in-alt"></i>
           </Button>
+          <h6>Login Using</h6>
+          <Col s={4} >
+            <a href={loginConstant.FACEBOOK_LOGIN_URL}>
+              <i className="fab fa-facebook fa-3x"></i>
+            </a>
+          </Col>
+          <Col s={4}>
+            <a href={loginConstant.GOOGLE_LOGIN_URL}>
+              <i className="fab fa-google-plus-square fa-3x"></i>
+            </a>
+          </Col>
+          <Col s={4}>
+            <a href={loginConstant.TWITTER_LOGIN_URL}>
+              <i className="fab fa-twitter-square fa-3x"></i>
+            </a>
+          </Col>
         </Row>
       </form>
-      <h6>Login Using</h6>
-      <Row>
-        <Col s={4} >
-          <a href="#">
-            <i className="fab fa-facebook fa-3x"></i>
-          </a>
-        </Col>
-        <Col s={4}>
-          <a href="#">
-            <i className="fab fa-google-plus-square fa-3x"></i>
-          </a>
-        </Col>
-        <Col s={4}>
-          <a href="#">
-            <i className="fab fa-twitter-square fa-3x"></i>
-          </a>
-        </Col>
-      </Row>
       <h6>
         No account yet?
         <a href="#">
@@ -183,7 +178,7 @@ class Login extends Component {
           </span>
         </a>
       </h6>
-      <p className="theme-color forgot-password-link" onClick={this.onResetPasswordClicked.bind(this)}>Forgot password?</p>
+      <p className="theme-color forgot-password-link" onClick={() => this.onForgotPasswordClicked()}>Forgot password?</p>
     </Modal>
     );
   }

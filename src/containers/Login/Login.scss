@@ -1,4 +1,4 @@
-#login-modal, #reset-password-modal, #forgot-password-modal{
+.login-modal, .reset-password-modal, .forgot-password-modal{
   width:360px;
   input{
     margin: 0;
@@ -23,7 +23,7 @@
   .theme-color{
     color:#06576D;
   }
-  #login-button, #forgot-button, #reset-button{
+  .login-button, .forgot-button, .reset-button{
     width:100%;
     border-radius: 25px;
     background-color: #06576D;

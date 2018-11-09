@@ -15,6 +15,7 @@ export const login = payload => dispatch => axios.post(loginConstant.LOGIN_URL, 
       setAuthToken(response.data.token);
       dispatch(asyncActions(LOGIN).success(response.data.user));
       dispatch(msgInfoActions.success([response.data.message]));
+      setTimeout(() => dispatch(msgInfoActions.clear()), 3000);
       $('#login-modal').modal('close');
     }
     return response;
