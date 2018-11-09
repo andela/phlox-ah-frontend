@@ -27,7 +27,7 @@ describe('<Login/>', () => {
     expect(myComponent.find('form').hasClass('col')).toBe(true);
   });
   it('should have a login button', () => {
-    expect(myComponent.find('Button#login-button').exists()).toBe(true);
+    expect(myComponent.find('Button.login-button').exists()).toBe(true);
   });
   it('should have a facebook login link', () => {
     expect(myComponent.find('i.fa-facebook').exists()).toBe(true);

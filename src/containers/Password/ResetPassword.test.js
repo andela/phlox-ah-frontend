@@ -26,6 +26,6 @@ describe('<ResetPassword/>', () => {
     expect(myComponent.find('form').hasClass('col')).toBe(true);
   });
   it('should have a forgot password button', () => {
-    expect(myComponent.find('Button#reset-button').exists()).toBe(true);
+    expect(myComponent.find('Button.reset-button').exists()).toBe(true);
   });
 });
