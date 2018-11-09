@@ -54,6 +54,7 @@ div.pi-photo span.change-photo {
 div.profile-info div.pi-detail {
   flex: 1;
   min-width: 300px;
+  margin-left: 50px;
 }
 
 div.pi-detail div.username {
@@ -86,7 +87,6 @@ div.profile-info div.followers {
   display: flex;
   flex-wrap: wrap;
   margin-top: 30px;
-  border-top: 1px solid #ccc;
   padding-top: 6px;
 }
 

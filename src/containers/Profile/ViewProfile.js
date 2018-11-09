@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { viewProfile } from '../../requests/ProfileRequest';
+import FollowList from '../../components/FollowList/FollowList';
+import Tags from '../../components/Tags/Tags';
 
 import './ViewProfile.scss';
+import './Profile.scss';
 
 /**
  * @class ViewProfile
@@ -13,41 +16,14 @@ import './ViewProfile.scss';
  */
 class ViewProfile extends Component {
   /**
-   * @description - This method runs first in the class
-   * @returns {object} articles
-   * @memberof ViewProfile
-   */
-  constructor() {
-    super();
-    this.state = {
-      firstName: '',
-      lastName: '',
-      gender: '',
-      bio: '',
-      contact: '',
-      profileImage: ''
-    };
-  }
-
-  /**
    * @description - This method runs after component has been mounted
    * @returns {object} articles
    * @memberof ViewProfile
    */
   componentDidMount() {
-    this.props.viewProfile();
-  }
-
-  /**
-   * @description - This method runs after component has been mounted
-   * @param {object} props
-   * @return {object} props
-   * @memberof ViewProfile
-   */
-  static getDerivedStateFromProps(props) {
-    return {
-      ...props.profile
-    };
+    if (!this.props.profile.firstName) {
+      this.props.viewProfile();
+    }
   }
 
   /**
@@ -57,35 +33,42 @@ class ViewProfile extends Component {
    * @memberof ViewProfile
    */
   render() {
+    const followers = ['James Author', 'Chris Daughtry', 'Luke Bryan', 'Sam Hunt', 'Elie Goulding'];
+    const tags = ['Religion', 'Sports', 'Technology', 'Music', 'Art', 'Software', 'Finance'];
+
+    const listOfFollowers = (
+      followers.map((follower, i) => <FollowList key={i}>{follower}</FollowList>));
+    const tagList = tags.map((tag, i) => <Tags key={i}>{tag}</Tags>);
     return (
       <div className="profile">
         <div className="profile-wrapper">
           <div className="profile-info tablet">
             <div className="info-wrapper">
               <div className="pi-photo">
-                <span className="photo"></span>
-
+                <div className="profile-image">
+                  <img src={this.props.profile.profileImage} alt="Profile Image" className="circle responsive-img"/>
+                </div>
               </div>
               <div className="pi-detail">
                 <div className="username">
-                  {`${this.state.lastName} ${this.state.firstName}`}
+                  {`${this.props.profile.lastName} ${this.props.profile.firstName}`}
                 </div>
                 <table className="profile-data">
                   <tbody>
                     <tr className="data-row">
                       <td>Email: </td>
-                      <td>me@email.com</td>
+                      <td>{this.props.user.email}</td>
                     </tr>
                     <tr className="data-row">
                       <td>Bio: </td>
                       <td>
-                        {this.state.bio}
+                        {this.props.profile.bio}
                       </td>
                     </tr>
                     <tr className="data-row">
                       <td>Contact: </td>
                       <td>
-                        {this.state.contact}
+                        {this.props.profile.contact}
                       </td>
                     </tr>
                   </tbody>
@@ -99,41 +82,10 @@ class ViewProfile extends Component {
                   Authors I Follow
                 </span>
                 <ul className="authors">
-                  <li className="author">
-                    <a href="javascript:void">
-                      <div className="photo"></div>
-                      <div className="name">
-                        Solomon Odumah
-                      </div>
-                    </a>
-                  </li>
-                  <li className="author">
-                    <a href="javascript:void">
-                      <div className="photo"></div>
-                      <div className="name">
-                        Solomon Odumah
-                      </div>
-                    </a>
-                  </li>
-                  <li className="author">
-                    <a href="javascript:void">
-                      <div className="photo"></div>
-                      <div className="name">
-                        Solomon Odumah
-                      </div>
-                    </a>
-                  </li>
-                  <li className="author">
-                    <a href="javascript:void">
-                      <div className="photo"></div>
-                      <div className="name">
-                        Solomon Odumah
-                      </div>
-                    </a>
-                  </li>
+                  {listOfFollowers}
                 </ul>
                 <div className="more">
-                  <a href="javascript:void">View more</a>
+                  <Link to="#">View more</Link>
                 </div>
               </div>
               {/* end of follow */}
@@ -142,41 +94,10 @@ class ViewProfile extends Component {
                   Authors Following Me
                 </span>
                 <ul className="authors">
-                  <li className="author">
-                    <a href="javascript:void">
-                      <div className="photo"></div>
-                      <div className="name">
-                        Solomon Odumah
-                      </div>
-                    </a>
-                  </li>
-                  <li className="author">
-                    <a href="javascript:void">
-                      <div className="photo"></div>
-                      <div className="name">
-                        Solomon Odumah
-                      </div>
-                    </a>
-                  </li>
-                  <li className="author">
-                    <a href="javascript:void">
-                      <div className="photo"></div>
-                      <div className="name">
-                        Solomon Odumah
-                      </div>
-                    </a>
-                  </li>
-                  <li className="author">
-                    <a href="javascript:void">
-                      <div className="photo"></div>
-                      <div className="name">
-                        Solomon Odumah
-                      </div>
-                    </a>
-                  </li>
+                  {listOfFollowers}
                 </ul>
                 <div className="more">
-                  <a href="javascript:void">View more</a>
+                <Link to="#">View more</Link>
                 </div>
               </div>
               {/* end of following */}
@@ -186,69 +107,14 @@ class ViewProfile extends Component {
           {/* end of profile info */}
           <div className="profile-edit">
             <div className="edit-profile-link">
-              <Link to='/edit_profile'>Edit Profile</Link>
+              <Link to='/profile/edit'>Edit Profile</Link>
             </div>
             <div className="pref-heading">
               My Article Preferences
             </div>
             <div className="tags">
               <ul className="tags-wrapper">
-                <li className="tag">
-                  <span className="tag-name">
-                    Religion
-                  </span>
-                  <span className="remove-tag">
-                    <i className="fas fa-times"></i>
-                  </span>
-                </li>
-                <li className="tag">
-                  <span className="tag-name">
-                    Sports
-                  </span>
-                  <span className="remove-tag">
-                    <i className="fas fa-times"></i>
-                  </span>
-                </li>
-                <li className="tag">
-                  <span className="tag-name">
-                    Technology
-                  </span>
-                  <span className="remove-tag">
-                    <i className="fas fa-times"></i>
-                  </span>
-                </li>
-                <li className="tag">
-                  <span className="tag-name">
-                    Music
-                  </span>
-                  <span className="remove-tag">
-                    <i className="fas fa-times"></i>
-                  </span>
-                </li>
-                <li className="tag">
-                  <span className="tag-name">
-                    Arts
-                  </span>
-                  <span className="remove-tag">
-                    <i className="fas fa-times"></i>
-                  </span>
-                </li>
-                <li className="tag">
-                  <span className="tag-name">
-                    Software
-                  </span>
-                  <span className="remove-tag">
-                    <i className="fas fa-times"></i>
-                  </span>
-                </li>
-                <li className="tag">
-                  <span className="tag-name">
-                    Finance
-                  </span>
-                  <span className="remove-tag">
-                    <i className="fas fa-times"></i>
-                  </span>
-                </li>
+                {tagList}
               </ul>
             </div>
           </div>
@@ -260,6 +126,7 @@ class ViewProfile extends Component {
 
 const mapStateToProps = state => ({
   profile: state.Profile,
+  user: state.User
 });
 
 ViewProfile.propTypes = {
@@ -270,6 +137,8 @@ ViewProfile.propTypes = {
   bio: PropTypes.string,
   contact: PropTypes.string,
   profileImage: PropTypes.string,
+  profile: PropTypes.object,
+  user: PropTypes.object
 };
 
 export default connect(mapStateToProps, {

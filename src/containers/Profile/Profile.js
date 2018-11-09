@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Button, Icon, Input, Row, Col
+  Button, Input, Row, Col
 } from 'react-materialize';
-import { newProfile } from '../../requests/ProfileRequest';
+import { newProfile, viewProfile } from '../../requests/ProfileRequest';
 import './Profile.scss';
 
 /**
@@ -26,18 +26,57 @@ class Profile extends Component {
       lastName: '',
       gender: '',
       bio: '',
-      contact: ''
+      contact: '',
+      profileImage: '',
+      dataImage: ''
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFileInputChange = this.handleFileInputChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   /**
    * @description - This method runs after component has been mounted
-   * @param {object} e
+   * @returns {object} profile
+   * @memberof Profile
+   */
+  componentDidMount() {
+    if (!this.props.profile.firstName) {
+      this.props.viewProfile()
+        .then(({ profile }) => this.updateState(profile));
+    } else {
+      this.updateState(this.props.profile);
+    }
+  }
+
+  /**
+   * @description - This method runs after component has been mounted
+   * @returns {object} null
+   * @param {object} data
+   * @memberof Profile
+   */
+  updateState(data = {}) {
+    this.setState({ ...data });
+  }
+
+  /**
+   * @description - This method runs after component has been mounted
+   * @param {object} props
    * @return {object} props
-   * @memberof ViewProfile
+   * @memberof Profile
+   */
+  // static getDerivedStateFromProps(props) {
+  //   return {
+  //     ...props.profile
+  //   };
+  // }
+
+  /**
+   * @description - This method runs on input change
+   * @param {object} e
+   * @return {object} state
+   * @memberof Profile
    */
   handleInputChange(e) {
     this.setState({
@@ -45,16 +84,43 @@ class Profile extends Component {
     });
   }
 
+  /**
+   * @description - This method sets profile image
+   * @param {object} e
+   * @return {string} file url
+   * @memberof Profile
+   */
+  handleFileInputChange(e) {
+    const file = e.target.files[0];
+    if (file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/jpeg') {
+      this.setState({
+        profileImage: file
+      });
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataURL = reader.result;
+        this.setState({
+          dataImage: dataURL
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
 
   /**
-   * @description - This method runs after component has been mounted
+   * @description - This method handles the submit
    * @param {object} e
-   * @return {object} props
-   * @memberof ViewProfile
+   * @return {object} new profile details
+   * @memberof Profile
    */
   handleSubmit(e) {
     e.preventDefault();
-    this.props.newProfile(this.state, this.props);
+    const formData = new FormData();
+    Object.keys(this.state).forEach((key) => {
+      formData.append(key, this.state[key]);
+    });
+    this.props.newProfile(formData, this.props);
   }
 
   /**
@@ -70,17 +136,21 @@ class Profile extends Component {
           <Col s={8} m={6} offset='s2 m3' className='grid-example formCol'>
           <h5>Edit My Profile</h5>
           <Row>
-            <Col s={12}> <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?r=pg" alt="Profile Image" className="circle responsive-img"/></Col>
+            <Col s={12}>
+              <div className="profile-image">
+                <img src={this.state.dataImage || this.props.profile.profileImage} alt="Profile Image" className="circle responsive-img"/>
+              </div>
+            </Col>
             <Col s={12}><label htmlFor="profile-image" className="profile-image">Change</label></Col>
-            <input type="file" id="profile-image" name="profileImage"/>
+            <input type="file" onChange={this.handleFileInputChange} hidden id="profile-image" name="profileImage"/>
           </Row>
           <form onSubmit={this.handleSubmit}>
             <Row>
-              <Input s={12} l={6} placeholder="Firstname" label="Firstname" name="firstName" onChange={this.handleInputChange} value={this.state.firstName} />
-              <Input s={12} l={6} placeholder="Lastname" label="Lastname" name="lastName" onChange={this.handleInputChange} value={this.state.lastName}/>
+              <Input s={12} l={6} placeholder="First Name" label="Firstname" name="firstName" onChange={this.handleInputChange} value={this.state.firstName} />
+              <Input s={12} l={6} placeholder="Last Name" label="Lastname" name="lastName" onChange={this.handleInputChange} value={this.state.lastName}/>
               <Input s={12} l={6} placeholder="Contact" label="Contact" name="contact" onChange={this.handleInputChange} value={this.state.contact}/>
               <Input s={12} l={6} type='select' label="Gender" name="gender" onChange={this.handleInputChange} value={this.state.gender}>
-                <option disable>Select </option>
+                <option disable='disable'>Select </option>
                 <option value='male'>Male</option>
                 <option value='female'>Female</option>
               </Input>
@@ -100,8 +170,11 @@ const mapStateToProps = state => ({
 
 Profile.propTypes = {
   newProfile: PropTypes.func,
+  viewProfile: PropTypes.func,
+  profile: PropTypes.object
 };
 
 export default connect(mapStateToProps, {
-  newProfile
+  newProfile,
+  viewProfile
 })(Profile);

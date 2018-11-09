@@ -36,6 +36,15 @@ class Header extends Component {
 
     this.timeoutID = null;
     this.timeoutMobileID = null;
+    this.logout = this.logout.bind(this);
+    this.onMobileBlur = this.onMobileBlur.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.onLoginClicked = this.onLoginClicked.bind(this);
+    this.onShowDropDown = this.onShowDropDown.bind(this);
+    this.onShowMobileDropDown = this.onShowMobileDropDown.bind(this);
+    this.toggleDropDown = this.toggleDropDown.bind(this);
+    this.toggleMobileDropDown = this.toggleMobileDropDown.bind(this);
+    this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
   }
 
   /**
@@ -90,7 +99,7 @@ class Header extends Component {
    */
   onBlur() {
     this.clearTimeout();
-    this.timeoutID = setTimeout(this.toggleDropDown.bind(this), 200);
+    this.timeoutID = setTimeout(this.toggleDropDown, 200);
   }
 
 
@@ -101,7 +110,7 @@ class Header extends Component {
    */
   onMobileBlur() {
     this.clearMobileTimeout();
-    this.timeoutID = setTimeout(this.toggleMobileDropDown.bind(this), 200);
+    this.timeoutID = setTimeout(this.toggleMobileDropDown, 200);
   }
 
   /**
@@ -204,13 +213,13 @@ class Header extends Component {
           </div>
           <div className="search-wrapper hide-on-med-and-down">
             <div className="categories">
-              <span onClick={this.onShowDropDown.bind(this)}>
+              <span onClick={this.onShowDropDown}>
                 <i className="fas fa-th"></i>
                 <i className="fas fa-sort-down"></i>
               </span>
               {
                 showDropDown
-                && <DropDown onBlur={this.onBlur.bind(this)} />
+                && <DropDown onBlur={this.onBlur} />
               }
             </div>
             <div className="input">
@@ -224,7 +233,7 @@ class Header extends Component {
               className="right nav-button">
               <li>
                 <a
-                  onClick={this.onLoginClicked.bind(this)}
+                  onClick={this.onLoginClicked}
                   href="#"
                   className="login">
                   Login
@@ -245,9 +254,9 @@ class Header extends Component {
                 </a>
               </li>
               <li
-                onClick={this.toggleSettingsOptions.bind(this)}
+                onClick={this.toggleSettingsOptions}
                 id="settings-dropdown">
-                <span className="user-photo"><i className="fas fa-user"></i></span>
+                <span className="user-photo"><i className="fas fa-user user"></i></span>
                 {
                   showSettingsOption
                     && <div className="sd-wrapper hide-on-med-and-down">
@@ -255,12 +264,12 @@ class Header extends Component {
                       <li
                           className="s-list">
                           <Link to="/profile">
-                            <i className="fas fa-sign-out-alt"></i>
+                            <i className="fas fa-user"></i>
                             &nbsp; Profile
                           </Link>
                         </li>
                         <li
-                          onClick={this.logout.bind(this)}
+                          onClick={this.logout}
                           className="s-list">
                           <i className="fas fa-sign-out-alt"></i>
                           &nbsp; Sign out
@@ -282,13 +291,13 @@ class Header extends Component {
               <i className="fas fa-search"></i>
             </div>
             <div className="categories">
-              <span className="btn white" onClick={this.onShowMobileDropDown.bind(this)}>
+              <span className="btn white" onClick={this.onShowMobileDropDown}>
                 Categories
               <i className="fas fa-sort-down"></i>
               </span>
               {
                 showMobileDropDown
-                && <DropDown onBlur={this.onMobileBlur.bind(this)} />
+                && <DropDown onBlur={this.onMobileBlur} />
               }
             </div>
           </div>
@@ -297,7 +306,7 @@ class Header extends Component {
             && <ul>
              <li>
               <a
-                onClick={this.onLoginClicked.bind(this)}
+                onClick={this.onLoginClicked}
                 href="#"
                 className="login">
                 Login
@@ -324,7 +333,7 @@ class Header extends Component {
                 </Link>
               </li>
               <li
-                onClick={this.logout.bind(this)}>
+                onClick={this.logout}>
                 <a href="">
                 <i className="fas fa-sign-out-alt"></i>
                 &nbsp; Sign out

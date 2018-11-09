@@ -15,7 +15,7 @@ const profileReducer = (state = initialState, action) => {
     case asyncActionName(NEW_PROFILE).success:
       return { ...action.payload.profile };
     case asyncActionName(VIEW_PROFILE).success:
-      return { ...state, ...action.payload.profile };
+      return { ...state, ...action.payload.profile.profile };
     default:
       return state;
   }

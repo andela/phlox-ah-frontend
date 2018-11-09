@@ -3,6 +3,18 @@ body{
 }
 .profile-image {
     color: #06576D;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    text-align: center;
+    margin: auto;
+
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: 0px;
+    }
 }
 .container{
     background-color: #ffffff;
