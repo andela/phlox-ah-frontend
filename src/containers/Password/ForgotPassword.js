@@ -15,14 +15,16 @@ import { sendForgotPassword } from '../../requests/PasswordRequests';
  */
 class ForgotPassword extends Component {
   /**
-   * @member of Login
+   *Creates an instance of ForgotPassword.
+   * @memberof ForgotPassword
    */
-
-  /**
-   * @description - This method hides the login modal
-   * @returns {object} null
-   * @memberof Login
-   */
+  constructor() {
+    super();
+    this.onClickForgotPassword = this.onClickForgotPassword.bind(this);
+    this.onLoginClicked = this.onLoginClicked.bind(this);
+    this.onCloseClicked = this.onCloseClicked.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
   /**
    * @description - This method prevents the form from reloading the page
@@ -40,7 +42,7 @@ class ForgotPassword extends Component {
    * @memberof ForgotPassword
    */
   onCloseClicked() {
-    $('.forgot-password-modal').modal('close');
+    $('#forgot-password-modal').modal('close');
   }
 
   /**
@@ -60,7 +62,7 @@ class ForgotPassword extends Component {
    */
   onLoginClicked() {
     this.onCloseClicked();
-    $('.login-modal').modal('open');
+    $('#login-modal').modal('open');
   }
 
   /**
@@ -72,7 +74,7 @@ class ForgotPassword extends Component {
   render() {
     return (
       <Modal
-        className="center-align forgot-password-modal">
+        className="center-align forgot-password-modal" id="forgot-password-modal">
         <div>
           <a className="close-modal" href="#"
             onClick={this.onCloseClicked}>
@@ -80,18 +82,18 @@ class ForgotPassword extends Component {
           </a>
         </div>
         <h5>Authors Haven</h5>
-        <form className="col s12" onSubmit={e => this.onSubmit(e)}>
+        <form className="col s12" onSubmit={this.onSubmit}>
           <Row>
             <Input type="text" id="emailText" label="enter email" s={12} /> <br /> <br />
             <Button
-              className="forgot-button" waves='light' onClick={() => this.onClickForgotPassword()}>
+              className="forgot-button" waves='light' onClick={this.onClickForgotPassword}>
               Send Email
             </Button>
           </Row>
         </form>
         <h6>
           Have an account?
-          <a href="#" onClick={() => this.onLoginClicked()}>
+          <a href="#" onClick={this.onLoginClicked}>
             <span className="theme-color">
               &nbsp; Log in
             </span>

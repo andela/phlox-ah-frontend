@@ -27,13 +27,12 @@ class Login extends Component {
    */
   constructor() {
     super();
-
     this.state = {
       emailOrUsername: '',
       password: ''
     };
-
     this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   /**
@@ -54,7 +53,7 @@ class Login extends Component {
    * @memberof Login
    */
   onHideModal() {
-    $('.login-modal').modal('close');
+    $('#login-modal').modal('close');
   }
 
   /**
@@ -106,7 +105,7 @@ class Login extends Component {
    */
   onForgotPasswordClicked() {
     this.onHideModal();
-    $('.forgot-password-modal').modal('open');
+    $('#forgot-password-modal').modal('open');
   }
 
   /**
@@ -120,7 +119,7 @@ class Login extends Component {
 
     return (
       <Modal
-        className="center-align login-modal">
+        className="center-align login-modal" id="login-modal">
         <div>
           <a className="close-modal" href="#"
             onClick={this.onHideModal}>
@@ -128,7 +127,7 @@ class Login extends Component {
           </a>
         </div>
         <h5>Authors Haven</h5>
-      <form id="test" className="col s12" onSubmit={e => this.onSubmit(e)}>
+      <form id="test" className="col s12" onSubmit={this.onSubmit}>
         <Row>
           <Input
             type="text"

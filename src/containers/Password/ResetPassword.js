@@ -16,14 +16,16 @@ import { msgInfoActions } from '../BasePath';
  */
 class ResetPassword extends Component {
   /**
-   * @member of Login
+   *Creates an instance of ForgotPassword.
+   * @memberof ResetPassword
    */
-
-  /**
-   * @description - This method hides the login modal
-   * @returns {object} null
-   * @memberof Login
-   */
+  constructor() {
+    super();
+    this.onClickResetPassword = this.onClickResetPassword.bind(this);
+    this.onLoginClicked = this.onLoginClicked.bind(this);
+    this.onCloseClicked = this.onCloseClicked.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
   /**
    * @description - This method prevents the form from reloading the page
@@ -41,7 +43,7 @@ class ResetPassword extends Component {
    * @memberof ForgotPassword
    */
   onCloseClicked() {
-    $('.reset-password-modal').modal('close');
+    $('#reset-password-modal').modal('close');
   }
 
   /**
@@ -50,8 +52,8 @@ class ResetPassword extends Component {
    * @memberof ForgotPassword
    */
   onClickResetPassword() {
-    const password = $('.password').val();
-    const confirmPassword = $('.confirmPassword').val();
+    const password = $('#password').val();
+    const confirmPassword = $('#confirmPassword').val();
     const { token } = this.props.match.params;
     this.validatePassword(password, confirmPassword, token);
   }
@@ -84,7 +86,7 @@ class ResetPassword extends Component {
    */
   onLoginClicked() {
     this.onCloseClicked();
-    $('.login-modal').modal('open');
+    $('#login-modal').modal('open');
   }
 
   /**
@@ -96,7 +98,7 @@ class ResetPassword extends Component {
   render() {
     return (
       <Modal
-        className="center-align reset-password-modal" open={true}>
+        className="center-align reset-password-modal" id="reset-password-modal" open={true}>
         <div>
           <a className="close-modal" href="#"
             onClick={this.onCloseClicked}>
@@ -104,19 +106,19 @@ class ResetPassword extends Component {
           </a>
         </div>
         <h5>Authors Haven</h5>
-        <form className="col s12" onSubmit={e => this.onSubmit(e)}>
+        <form className="col s12" onSubmit={this.onSubmit}>
           <Row>
-            <Input type="password" className="password" label="Password" s={12} />
-            <Input type="password" className="confirmPassword" label="Confirm Password" s={12} />
+            <Input type="password" id="password" label="Password" s={12} />
+            <Input type="password" id="confirmPassword" label="Confirm Password" s={12} />
             <Button
-              className="reset-button" waves='light' onClick={() => this.onClickResetPassword()}>
+              className="reset-button" waves='light' onClick={this.onClickResetPassword}>
               Reset Password
             </Button>
           </Row>
         </form>
         <h6>
           Have an account?
-          <a href="#" onClick={() => this.onLoginClicked()}>
+          <a href="#" onClick={this.onLoginClicked}>
             <span className="theme-color">
               &nbsp; Log in
             </span>
