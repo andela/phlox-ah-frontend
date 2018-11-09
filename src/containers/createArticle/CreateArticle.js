@@ -323,7 +323,7 @@ class CreateArticle extends Component {
 }
 
 CreateArticle.propTypes = {
-  article: PropTypes.object,
+  article: PropTypes.array,
   suggestedTags: PropTypes.array,
   categories: PropTypes.array,
   loading: PropTypes.bool,

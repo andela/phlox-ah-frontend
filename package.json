@@ -42,7 +42,6 @@
     "jwt-decode": "^2.2.0",
     "materialize-css": "^1.0.0-rc.2",
     "medium-editor": "^5.23.3",
-    "medium-editor-insert-plugin": "^2.5.0",
     "npm-watch": "^0.4.0",
     "prop-types": "^15.6.2",
     "query-string": "^6.2.0",
