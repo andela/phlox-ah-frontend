@@ -34,7 +34,7 @@ describe('<Signup/>', () => {
     expect(myComponent.find('form').hasClass('col')).toBe(true);
   });
   it('should have a signup button', () => {
-    expect(myComponent.find('Button#signupButton').exists()).toBe(true);
+    expect(myComponent.find('Button').exists()).toBe(true);
   });
   it('should have a input field', () => {
     expect(myComponent.find('Input').exists()).toBe(true);
