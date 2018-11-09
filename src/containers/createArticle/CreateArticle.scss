@@ -1,43 +1,11 @@
-*:focus {
-    outline: none;
-}
+$darkBlue: #0039cb;
+$lightGray: #6d6d6d;
+$darkGray: #424242;
 
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 22px;
     line-height: 30px;
-}
-
-.top-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: auto;
-    z-index: 10;
-    padding: 10px;
-    background-color: #000;
-    background-color: rgba(0, 0, 0, .8);
-    box-shadow: 0 0 4px #000;
-    box-sizing: border-box;
-    color: #ccc;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    text-transform: uppercase;
-}
-
-#version {
-    width: 300px;
-    margin: 0px auto;
-    font-size: small;
-    color: #333;
-    font-style: italic;
-    text-align: center;
-}
-
-#container {
-    width: 960px;
-    margin: 90px auto;
 }
 
 h1 {
@@ -66,35 +34,20 @@ p {
 
 a {
     color:black;
-}
-
-a:hover {
-    color:green;
-}
-
-pre {
-    font-family: 'Menlo', monospace;
-    font-size: 15px;
-    background-color: #f0f0f0;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    color: #666;
+    text-decoration: underline;
+    &:hover {
+      color: $darkBlue;
+    }
 }
 
 blockquote {
     display: block;
     padding-left: 20px;
-    border-left: 6px solid #df0d32;
+    border-left: 6px solid $darkGray;
     margin-left: -15px;
     padding-left: 15px;
     font-style: italic;
-    color: #555;
-}
-
-#container {
-    width: 960px;
-    margin: 30px auto;
+    color: $lightGray;
 }
 
 .editable,
@@ -105,26 +58,138 @@ blockquote {
     padding: 0 0 20px 0;
 }
 
-#columns {
-    width: 90%;
-    margin: 30px auto;
-}
-
-.column-container {
-
-}
-
-.column {
-    vertical-align: top;
+/* Styles for selected tags */
+div.ReactTags__selected span.ReactTags__tag {
+    // border: 1px solid #ddd;
+    background: #3B8CA1;
+    color: #ffffff;
+    font-size: 12px;
     display: inline-block;
-    width: 30%;
-    margin: 10px 1%;
+    padding: 5px;
+    margin: 0 5px;
+    cursor: move;
+    border-radius: 2px;
+}
+div.ReactTags__selected a.ReactTags__remove {
+    color: #ffffff;
+    margin-left: 5px;
+    cursor: pointer;
+    text-decoration: none;
 }
 
-.github-link {
-    z-index: 100;
+/* Styles for suggestions */
+div.ReactTags__suggestions {
     position: absolute;
-    top: 0;
-    right: 0;
-    border: 0;
 }
+div.ReactTags__suggestions ul {
+    list-style-type: none;
+    box-shadow: .05em .01em .5em rgba(0,0,0,.2);
+    background: white;
+    width: 200px;
+}
+div.ReactTags__suggestions li {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 10px;
+    margin: 0;
+}
+div.ReactTags__suggestions li mark {
+    text-decoration: underline;
+    background: none;
+    font-weight: 600;
+}
+div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
+    background: #b7cfe0;
+    cursor: pointer;
+}
+
+.status {
+    font-size: 14px;
+    margin-top: 6px;
+    color: #777;
+}
+
+.flex {
+  display: flex;
+}
+
+.create-article {
+  margin-top: 30px;
+
+  div.author-photo{
+    width: 50px;
+    height: 50px;
+    background: #ccc;
+    border-radius: 50%;
+  }
+
+  div.author-name {
+    margin-left: 10px;
+    font-size: 16px;
+    line-height: 1.3;
+    margin-top: 6px;
+    color: #444;
+  }
+
+  div.pub-date {
+    font-size: 12px;
+    margin-top: 4px;
+    color: #777;
+  }
+
+  .publish-btn-wrapper{
+    text-align: right;
+  }
+
+
+
+  .publish-btn-wrapper button {
+    border: 1px solid #0e718c;
+    color: #0e718c;
+    font-size: 15px;
+    background-color: #fff;
+    padding: 8px 6px;
+    outline: none;
+    border-radius: 3px;
+    width: 130px;
+    box-shadow: 1px 1px 0 #0e718c;
+    cursor: pointer;
+  }
+
+  label.article-img-upload {
+    position: relative;
+    border: 1px solid #ddd;
+    height: 40px;
+    display: block;
+    top: 39px;
+    width: 100%;
+    border-radius: 3px;
+    min-width: 216px;
+
+    p.file-name {
+      position: absolute;
+      top: 4px;
+      margin: 0px;
+      left: 12px;
+      font-size: 15px;
+    }
+
+    label.browse-btn {
+      position: absolute;
+      right: 0px;
+      font-size: 16px;
+      border-radius: inherit;
+      background: #ddd;
+      padding: 4px 20px;
+    }
+
+    input.file-input{
+      display: none;
+    }
+  }
+}
+
+
+
+
+
+

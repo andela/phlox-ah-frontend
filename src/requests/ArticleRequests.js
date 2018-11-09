@@ -6,6 +6,17 @@ import {
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
+import { msgInfoActions } from '../actions/MsgInfoActions';
+
+const formatError = (error) => {
+  if (Array.isArray(error.message)) {
+    return error.message;
+  }
+  if (error.message) {
+    return [error.message];
+  }
+  return ['Error occurred'];
+};
 
 export const addArticle = article => (dispatch) => {
   dispatch(asyncActions(ADD_ARTICLE).loading(true));
@@ -25,56 +36,83 @@ export const getArticles = () => (dispatch) => {
       .failure(true, error)));
 };
 
-export const createArticle = ({ title, description, body }) => (dispatch) => {
-  const tags = ['five'];
-
-  axios.post(tagsConstant.CREATE_TAG_URL, { tags })
+export const createArticle = ({
+  title, description, body, tags, categoryId
+}) => (dispatch) => {
+  const headers = {
+    'Content-Type': 'application/json;charset=UTF-8',
+  };
+  axios.post(tagsConstant.CREATE_TAG_URL, { tags }, headers)
     .then(() => {
       dispatch(asyncActions(CREATE_ARTICLE).loading(true));
 
       axios.post(articleConstant.CREATE_ARTICLES_URL, {
-        title, description, body, tags, categoryId: 1
-      })
-        .then(response => dispatch(asyncActions(CREATE_ARTICLE).success(response.data)))
-        .catch(error => dispatch(asyncActions(CREATE_ARTICLE)
-          .failure(true, error.response.data.message)));
+        title, description, body, tags, categoryId
+      }, headers)
+        .then((response) => {
+          dispatch(asyncActions(CREATE_ARTICLE).success(response.data));
+          dispatch(msgInfoActions.success([response.data.message]));
+        })
+        .catch((error) => {
+          dispatch(asyncActions(CREATE_ARTICLE)
+            .failure(true, error.response.data.message));
+          dispatch(msgInfoActions.failure(formatError(error.response.data)));
+        });
     })
-    .catch(error => dispatch(asyncActions(CREATE_TAG)
-      .failure(true, error.response.data.message)));
+    .catch((error) => {
+      dispatch(asyncActions(CREATE_TAG)
+        .failure(true, error.response.data.message));
+      dispatch(msgInfoActions.failure(formatError(error.response.data)));
+    });
 };
 
 export const updateArticle = ({
-  title, description, body, articleSlug
+  title, description, body, articleSlug, tags, categoryId
 }) => (dispatch) => {
-  const tags = ['five'];
-
   axios.post(tagsConstant.CREATE_TAG_URL, { tags })
     .then(() => {
       dispatch(asyncActions(UPDATE_ARTICLE).loading(true));
 
       axios.put(`${articleConstant.UPDATE_ARTICLE_URL}/${articleSlug}`, {
-        title, description, body, tags, categoryId: 1
+        title, description, body, tags, categoryId
       })
-        .then(response => dispatch(asyncActions(UPDATE_ARTICLE).success(response.data)))
-        .catch(error => dispatch(asyncActions(UPDATE_ARTICLE)
-          .failure(true, error.response.data.message)));
+        .then((response) => {
+          dispatch(asyncActions(UPDATE_ARTICLE).success(response.data));
+          dispatch(msgInfoActions.success([response.data.message]));
+          dispatch(asyncActions(UPDATE_ARTICLE).loading(false));
+        })
+        .catch((error) => {
+          dispatch(asyncActions(UPDATE_ARTICLE)
+            .failure(true, error.response.data.message));
+          dispatch(msgInfoActions.failure(formatError(error.response.data)));
+        });
     })
-    .catch(error => dispatch(asyncActions(CREATE_TAG)
-      .failure(true, error.response.data.message)));
+    .catch((error) => {
+      dispatch(asyncActions(CREATE_TAG)
+        .failure(true, error.response.data.message));
+      dispatch(msgInfoActions.failure(formatError(error.response.data)));
+    });
 };
 
-export const publishArticle = ({ slug, status }) => (dispatch) => {
-  const tags = ['five'];
-
+export const publishArticle = ({ slug, status, tags }) => (dispatch) => {
   axios.post(tagsConstant.CREATE_TAG_URL, { tags })
     .then(() => {
       axios.put(`${articleConstant.UPDATE_ARTICLE_URL}/${slug}`, {
         status, tags
       })
-        .then(response => dispatch(asyncActions(PUBLISH_ARTICLE).success(response.data)))
-        .catch(error => dispatch(asyncActions(PUBLISH_ARTICLE)
-          .failure(true, error.response.data.message)));
+        .then((response) => {
+          dispatch(asyncActions(PUBLISH_ARTICLE).success(response.data));
+          dispatch(msgInfoActions.success([response.data.message]));
+        })
+        .catch((error) => {
+          dispatch(asyncActions(PUBLISH_ARTICLE)
+            .failure(true, error.response.data.message));
+          dispatch(msgInfoActions.failure(formatError(error.response.data)));
+        });
     })
-    .catch(error => dispatch(asyncActions(CREATE_TAG)
-      .failure(true, error.response.data.message)));
+    .catch((error) => {
+      dispatch(asyncActions(CREATE_TAG)
+        .failure(true, error.response.data.message));
+      dispatch(msgInfoActions.failure(formatError(error.response.data)));
+    });
 };

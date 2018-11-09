@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Home from './containers/Home/Home';
+// import Home from './containers/Home/Home';
 import CreateArticle from './containers/createArticle/CreateArticle';
 
+import './App.scss';
+import HomePage from './components/Pages/HomePage';
 /**
  * @class App
  * @extends {Component}
@@ -13,12 +15,11 @@ class App extends Component {
    * @returns {jsx} - jsx
    * @memberof App
    */
-  // eslint-disable-next-line
   render() {
     return (
       <div>
         <Switch>
-          <Route path='/' exact component={Home} />
+          <Route path='/' exact component={HomePage} />
           <Route path='/create' component={CreateArticle} />
         </Switch>
       </div>

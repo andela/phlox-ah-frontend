@@ -4,7 +4,6 @@ import { asyncActionName } from '../util/AsyncUtil';
 const initialState = {
   article: {},
   message: null,
-  success: null,
   tags: [],
   error: null,
   loading: false
@@ -19,13 +18,13 @@ const ArticleReducer = (state = initialState, action) => {
         ...state,
         article: action.payload.article,
         message: action.payload.message,
-        success: action.payload.success,
         tags: action.payload.tags,
+        error: false,
         loading: false
       };
     case asyncActionName(CREATE_ARTICLE).failure:
       return {
-        ...state, error: action.payload.status, message: action.payload.error, loading: false
+        ...state, error: action.payload.status, message: action.payload.error
       };
     case asyncActionName(UPDATE_ARTICLE).loading:
       return { ...state, loading: action.payload };
@@ -34,22 +33,19 @@ const ArticleReducer = (state = initialState, action) => {
         ...state,
         article: action.payload.article,
         message: action.payload.message,
-        success: action.payload.success,
         tags: action.payload.tags,
         loading: false
       };
     case asyncActionName(UPDATE_ARTICLE).failure:
       return {
-        ...state, error: action.payload.status, message: action.payload.error, loading: false
+        ...state, error: action.payload.status, message: action.payload.error
       };
     case asyncActionName(PUBLISH_ARTICLE).success:
       return {
         ...state,
         article: action.payload.article,
         message: action.payload.message,
-        success: action.payload.success,
-        tags: action.payload.tags,
-        loading: false
+        tags: action.payload.tags
       };
     case asyncActionName(PUBLISH_ARTICLE).failure:
       return { ...state, error: action.payload.status, message: action.payload.error };

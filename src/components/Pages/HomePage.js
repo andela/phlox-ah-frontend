@@ -1,9 +1,15 @@
 import React from 'react';
+
 import '../../styles/style.scss';
+import Header from '../../containers/Header/Header';
+import Login from '../../containers/Login/Login';
+import MsgInfo from '../../containers/MsgInfo/MsgInfo';
 
 const HomePage = () => (
   <div>
-    <h1 className="theme-color">Hello! Welcome to Authors Haven</h1>
+    <Header />
+    <Login />
+    <MsgInfo />
   </div>
 );
 
