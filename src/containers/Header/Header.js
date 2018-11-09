@@ -83,7 +83,7 @@ class Header extends Component {
    * @memberof Header
    */
   onLoginClicked() {
-    $('.login-modal').modal('open');
+    $('#login-modal').modal('open');
   }
 
   /**
