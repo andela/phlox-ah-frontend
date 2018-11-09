@@ -19,8 +19,7 @@ const ArticleReducer = (state = initialState, action) => {
         article: action.payload.article,
         message: action.payload.message,
         tags: action.payload.tags,
-        error: false,
-        loading: false
+        error: false
       };
     case asyncActionName(CREATE_ARTICLE).failure:
       return {
@@ -33,8 +32,7 @@ const ArticleReducer = (state = initialState, action) => {
         ...state,
         article: action.payload.article,
         message: action.payload.message,
-        tags: action.payload.tags,
-        loading: false
+        tags: action.payload.tags
       };
     case asyncActionName(UPDATE_ARTICLE).failure:
       return {
