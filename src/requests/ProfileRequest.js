@@ -3,10 +3,11 @@ import { asyncActions } from '../util/AsyncUtil';
 import { NEW_PROFILE, VIEW_PROFILE } from '../actionTypes/ProfileConstants';
 import { profileConstant } from '../constants/Constants';
 
-export const newProfile = profile => (dispatch) => {
+export const newProfile = (profile, props) => (dispatch) => {
   axios.post(profileConstant.PROFILE_URL, profile)
     .then((response) => {
       dispatch(asyncActions(NEW_PROFILE).success(response.data));
+      props.history.push('/profile', null);
     })
     .catch(error => dispatch(asyncActions(NEW_PROFILE).failure(true, error)));
 };

@@ -29,6 +29,15 @@ describe('<Login/>', () => {
   it('should have a login button', () => {
     expect(myComponent.find('Button#login-button').exists()).toBe(true);
   });
+  it('should have a facebook login link', () => {
+    expect(myComponent.find('i.fa-facebook').exists()).toBe(true);
+  });
+  it('should have a google login link', () => {
+    expect(myComponent.find('i.fa-google-plus-square').exists()).toBe(true);
+  });
+  it('should have a twitter login link', () => {
+    expect(myComponent.find('i.fa-twitter-square').exists()).toBe(true);
+  });
   it('should have a input field', () => {
     expect(myComponent.find('Input').exists()).toBe(true);
   });

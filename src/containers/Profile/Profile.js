@@ -45,6 +45,7 @@ class Profile extends Component {
     });
   }
 
+
   /**
    * @description - This method runs after component has been mounted
    * @param {object} e
@@ -53,7 +54,7 @@ class Profile extends Component {
    */
   handleSubmit(e) {
     e.preventDefault();
-    this.props.newProfile(this.state);
+    this.props.newProfile(this.state, this.props);
   }
 
   /**
@@ -70,7 +71,8 @@ class Profile extends Component {
           <h5>Edit My Profile</h5>
           <Row>
             <Col s={12}> <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?r=pg" alt="Profile Image" className="circle responsive-img"/></Col>
-            <Col s={12}><a href="#">Change</a></Col>
+            <Col s={12}><label htmlFor="profile-image" className="profile-image">Change</label></Col>
+            <input type="file" id="profile-image" name="profileImage"/>
           </Row>
           <form onSubmit={this.handleSubmit}>
             <Row>
