@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import Login from './Login';
-import { asyncActions, LOGIN } from './BasePath';
+import { asyncActions, LOGIN } from '../BasePath';
 
 const mockStore = configureMockStore();
 const store = mockStore({});
@@ -27,7 +27,7 @@ describe('<Login/>', () => {
     expect(myComponent.find('form').hasClass('col')).toBe(true);
   });
   it('should have a login button', () => {
-    expect(myComponent.find('Button#login-button').exists()).toBe(true);
+    expect(myComponent.find('Button.login-button').exists()).toBe(true);
   });
   it('should have a facebook login link', () => {
     expect(myComponent.find('i.fa-facebook').exists()).toBe(true);

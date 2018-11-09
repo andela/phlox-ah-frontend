@@ -10,6 +10,11 @@ export const loginConstant = {
   TWITTER_LOGIN_URL: 'http://127.0.0.1:3000/api/v1/login/twitter'
 };
 
+export const passwordConstant = {
+  FORGOT_PASSWORD_URL: `${BASE_URL}/api/v1/forgetPassword`,
+  RESET_PASSWORD_URL: `${BASE_URL}/api/v1/reset_password`
+}
+
 export const signupConstant = {
   SIGNUP_URL: `${BASE_URL}/api/v1/signup`
 };

@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import demoArticleReducer from './DemoArticleReducer';
 import userReducer from './UserReducer';
 import msgInfoReducer from './MsgInfoReducer';
+import passwordReducer from './PasswordReducer';
 import signupReducer from './SignupReducer';
 
 
 const rootReducer = combineReducers({
-  demoArticleReducer,
+  passwordReducer,
   User: userReducer,
   Info: msgInfoReducer,
   Signup: signupReducer
