@@ -6,6 +6,7 @@ import MsgInfo from './containers/MsgInfo/MsgInfo';
 import Home from './containers/Home/Home';
 import ForgotPassword from './containers/Password/ForgotPassword';
 import ResetPassword from './containers/Password/ResetPassword';
+import Signup from './containers/Signup/Signup';
 
 import './App.scss';
 /**
@@ -27,6 +28,7 @@ class App extends Component {
       <div>
         <Header />
         <h1 className="theme-color center">Hello! Welcome to Authors Haven</h1>
+        <Signup />
         <Login />
         <MsgInfo />
         <ForgotPassword />

@@ -31,7 +31,6 @@ class Header extends Component {
       showSettingsOption: false,
       isAuth: false,
     };
-
     this.timeoutID = null;
   }
 
@@ -75,6 +74,15 @@ class Header extends Component {
   onBlur() {
     this.clearTimeout();
     this.timeoutID = setTimeout(this.toggleDropDown.bind(this), 200);
+  }
+
+  /**
+   * @description - This method displays the signup modal
+   * @returns {object} null
+   * @memberof Header
+   */
+  onSignupClicked() {
+    $('#signupModal').modal('open');
   }
 
   /**
@@ -180,7 +188,11 @@ class Header extends Component {
                 </a>
               </li>
               <li>
-                <a href="#" className="sign-up">Sign Up</a>
+                <a
+                  onClick={this.onSignupClicked}
+                  href="#" className="sign-up">
+                  Sign Up
+                </a>
               </li>
             </ul>
           }
