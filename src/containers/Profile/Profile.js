@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Input, Button } from 'react-materialize';
-import ViewProfile from './ViewProfile';
+import {
+  Button, Icon, Input, Row, Col
+} from 'react-materialize';
 import { newProfile } from '../../requests/ProfileRequest';
+import './Profile.scss';
 
 /**
  *
@@ -12,11 +14,6 @@ import { newProfile } from '../../requests/ProfileRequest';
  * @extends {Component}
  */
 class Profile extends Component {
-  /**
-   * @returns {array} Profile
-   * @memberof Home
-   */
-
   /**
    * @description - This method runs first in the class
    * @returns {object} profile
@@ -67,21 +64,30 @@ class Profile extends Component {
  */
   render() {
     return (
-      <div>
+      <div className="container">
+        <Row>
+          <Col s={8} m={6} offset='s2 m3' className='grid-example formCol'>
+          <h5>Edit My Profile</h5>
+          <Row>
+            <Col s={12}> <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?r=pg" alt="Profile Image" className="circle responsive-img"/></Col>
+            <Col s={12}><a href="#">Change</a></Col>
+          </Row>
           <form onSubmit={this.handleSubmit}>
             <Row>
-              <Input s={8} label="Firstname" name="firstName" onChange={this.handleInputChange} value={this.state.firstName} />
-              <Input s={8} label="lastname" name="lastName" onChange={this.handleInputChange} value={this.state.lastName} />
-              <Input s={8} label="Gender" name="gender" onChange={this.handleInputChange} value={this.state.gender}/>
-              <Input s={8} label="Bio" name="bio" onChange={this.handleInputChange} value={this.state.bio}/>
-              <Input type="text" label="Contact" s={8} name="contact" onChange={this.handleInputChange} value={this.state.contact}/>
-              <div className="col input-field s8">
-                <Button waves='light' name="submit" node='button'> Edit Profile</Button>
-              </div>
+              <Input s={12} l={6} placeholder="Firstname" label="Firstname" name="firstName" onChange={this.handleInputChange} value={this.state.firstName} />
+              <Input s={12} l={6} placeholder="Lastname" label="Lastname" name="lastName" onChange={this.handleInputChange} value={this.state.lastName}/>
+              <Input s={12} l={6} placeholder="Contact" label="Contact" name="contact" onChange={this.handleInputChange} value={this.state.contact}/>
+              <Input s={12} l={6} type='select' label="Gender" name="gender" onChange={this.handleInputChange} value={this.state.gender}>
+                <option disable>Select </option>
+                <option value='male'>Male</option>
+                <option value='female'>Female</option>
+              </Input>
+              <Input s={12} type='textarea' rows="4" placeholder="Bio" label="Bio" name="bio" onChange={this.handleInputChange} value={this.state.bio}/>
+              <Button s={12} l={6}className="updateButton" waves='light'>Update Profile  <i className="fas fa-edit"></i></Button>
             </Row>
           </form>
-          <hr />
-          <ViewProfile />
+          </Col>
+        </Row>
       </div>
     );
   }

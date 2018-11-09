@@ -1,0 +1,28 @@
+body{
+    background-color: #F8F9FA;
+}
+.container{
+    background-color: #ffffff;
+    width:90%;
+    margin-top: 2px;
+    min-height:800px;
+}
+.formCol{
+    margin-top:100px;
+    text-align: center;
+    h5{
+        font-weight: bold;
+        margin-bottom:40px;
+    }
+    .updateButton{
+        background-color: #06576D;
+    }
+}
+@media only screen and (min-width: 993px) {
+    .formCol{
+        h5{
+            font-weight: bold;
+            margin-bottom:30px;
+        }
+    }
+}
