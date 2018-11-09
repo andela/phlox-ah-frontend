@@ -126,7 +126,7 @@ div.nav-wrapper ul li a.login {
 }
 
 div.nav-wrapper ul li a.notification-bell {
-  border: none; 
+  border: none;
   position: relative;
   bottom: 5px;
 }
@@ -135,7 +135,7 @@ div.nav-wrapper ul li a.notification-bell:hover {
   background: none;
 }
 
-div.nav-wrapper ul li a.user-photo {
+div.nav-wrapper ul li span.user-photo {
   border-radius: 50%;
   font-size: 6px;
   width: 40px;
@@ -144,8 +144,9 @@ div.nav-wrapper ul li a.user-photo {
   border-color: #bbb;
   position: relative;
   bottom: 5px;
+  display: block;
+  cursor: pointer;
 }
-
 
 ul li#settings-dropdown {
   position: relative;
@@ -167,18 +168,31 @@ div.sd-wrapper ul {
   margin: 0px;
   line-height: 0;
   position: relative;
-  left: 11px;
-  top: 19px;
 }
 
 div.sd-wrapper ul li.s-list {
-  line-height: 0px;
-  margin: 0px;
+  margin: 3px;
+  padding-left: 5px;
   float: none;
   height: 20px;
   display: flex;
   cursor: pointer;
   font-size: 15px;
+  height: 29px;
+  font-weight: 600;
+
+  a {
+    display: block;
+    width: 100%;
+    border: none;
+    margin-left: 0px;
+    padding: 0px;
+    text-decoration: none;
+  }
+
+  a:hover {
+    background: none;
+  }
 }
 
 ul li.s-list i{

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import DropDown from '../../components/DropDown/DropDown';
 import './Header.scss';
 import Logo from '../../assets/images/phlox-logo.png';
@@ -196,19 +197,25 @@ class Header extends Component {
               <li
                 onClick={this.toggleSettingsOptions.bind(this)}
                 id="settings-dropdown">
-                <a className="user-photo" href="#"></a>
+                <span className="user-photo" ></span>
                 {
                   showSettingsOption
-                    && <div className="sd-wrapper">
-                      <ul>
-                        <li
-                          onClick={this.logout.bind(this)}
-                          className="s-list">
-                          <i className="fas fa-sign-out-alt"></i>
-                          &nbsp; Sign out
+                  && <div className="sd-wrapper">
+                    <ul>
+                      <li className="s-list">
+                        <Link to="/new-story">
+                          <i className="fas fa-plus"></i>
+                          &nbsp;New Article
+                        </Link>
+                      </li>
+                      <li
+                        onClick={this.logout.bind(this)}
+                        className="s-list">
+                        <i className="fas fa-sign-out-alt"></i>
+                        &nbsp; Sign out
                         </li>
-                      </ul>
-                    </div>
+                    </ul>
+                  </div>
                 }
               </li>
             </ul>
