@@ -1,4 +1,4 @@
-export const article = [{
+export const article = {
   body: '<p>Writing can be better</p>',
   categoryId: 2,
   createdAt: '2018-11-09T08:05:04.173Z',
@@ -12,7 +12,7 @@ export const article = [{
   title: 'writing skill',
   updatedAt: '2018-11-09T08:05:04.173Z',
   userId: 1
-}];
+};
 
 export const suggestedTags = [{
   ArticlesTags:

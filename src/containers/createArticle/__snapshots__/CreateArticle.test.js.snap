@@ -3,23 +3,21 @@
 exports[`<CreateArticle /> should render without throwing an error 1`] = `
 <CreateArticle
   article={
-    Array [
-      Object {
-        "body": "<p>Writing can be better</p>",
-        "categoryId": 2,
-        "createdAt": "2018-11-09T08:05:04.173Z",
-        "description": "writing skill",
-        "id": 59,
-        "imgUrl": "",
-        "ratingAverage": 0,
-        "readTime": 1,
-        "slug": "writing-skill-b271c674-c842-4306-93ac-7597aa69824e",
-        "status": "draft",
-        "title": "writing skill",
-        "updatedAt": "2018-11-09T08:05:04.173Z",
-        "userId": 1,
-      },
-    ]
+    Object {
+      "body": "<p>Writing can be better</p>",
+      "categoryId": 2,
+      "createdAt": "2018-11-09T08:05:04.173Z",
+      "description": "writing skill",
+      "id": 59,
+      "imgUrl": "",
+      "ratingAverage": 0,
+      "readTime": 1,
+      "slug": "writing-skill-b271c674-c842-4306-93ac-7597aa69824e",
+      "status": "draft",
+      "title": "writing skill",
+      "updatedAt": "2018-11-09T08:05:04.173Z",
+      "userId": 1,
+    }
   }
   categories={
     Array [
