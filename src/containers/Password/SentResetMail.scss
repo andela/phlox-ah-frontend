@@ -1,0 +1,22 @@
+.sent-reset-mail {
+  position: absolute;
+  width: 80%;
+  top: 20%;
+  left: 10%;
+  right: 10%;
+  button {
+    margin-right: 20px;
+  }
+  .signupSuccessCard {
+    i.fa-check-circle {
+        color:#3CBF98;
+        margin-bottom:10px;
+    }
+    h6 {
+        color:#3CBF98;
+    }
+    p {
+      margin-bottom: 10px;
+    }
+  }
+}

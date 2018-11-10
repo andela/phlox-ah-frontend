@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import {
   Modal, Row, Button, Input
 } from 'react-materialize';
-import '../Login/Login.scss';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { sendForgotPassword } from '../../requests/PasswordRequests';
+import { msgInfoActions } from '../BasePath';
+import '../Login/Login.scss';
 
 /**
  *
@@ -52,7 +53,12 @@ class ForgotPassword extends Component {
    */
   onClickForgotPassword() {
     const email = $('#emailText').val();
-    this.props.sendForgotPassword(email);
+    if (email.length < 1) {
+      this.props.displayErrorMsg(['Email cannot be empty']);
+    } else {
+      this.props.displayErrorMsg([]);
+      this.props.sendForgotPassword(email);
+    }
   }
 
   /**
@@ -116,8 +122,10 @@ const mapStateToProps = state => ({
 ForgotPassword.propTypes = {
   sendForgotPassword: PropTypes.func,
   loading: PropTypes.bool,
+  history: PropTypes.object,
+  displayErrorMsg: PropTypes.func
 };
 
 export default connect(mapStateToProps, {
-  sendForgotPassword
+  sendForgotPassword, displayErrorMsg: msgInfoActions.failure
 })(ForgotPassword);

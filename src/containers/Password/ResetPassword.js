@@ -68,10 +68,10 @@ class ResetPassword extends Component {
    * @returns {array} response
    */
   validatePassword(password, confirmPassword, token) {
-    if (password.length < 6 && password !== confirmPassword) {
-      this.props.displayErrorMsg(['Password must be at least 6 characters', 'The passwords do not match']);
+    if (password.length < 8 && password !== confirmPassword) {
+      this.props.displayErrorMsg(['Password must be at least 8 characters', 'The passwords do not match']);
     } else if (password.length < 6) {
-      this.props.displayErrorMsg(['Password must be at least 6 characters']);
+      this.props.displayErrorMsg(['Password must be at least 8 characters']);
     } else if (password !== confirmPassword) {
       this.props.displayErrorMsg(['The passwords do not match']);
     } else if (password === confirmPassword) {
