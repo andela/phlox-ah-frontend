@@ -1,25 +1,25 @@
 import { MSG_INFO } from '../actionTypes/MsgInfoConstants';
 
 export const msgInfoActions = {
-  success: info => ({
+  success: message => ({
     type: MSG_INFO,
     payload: {
       success: true,
-      info
+      message
     }
   }),
   clear: () => ({
     type: MSG_INFO,
     payload: {
       success: true,
-      info: []
+      message: []
     }
   }),
-  failure: info => ({
+  failure: message => ({
     type: MSG_INFO,
     payload: {
       success: false,
-      info
+      message
     }
   })
 };
