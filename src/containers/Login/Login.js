@@ -102,7 +102,7 @@ class Login extends Component {
    * @returns {bool} error
    * @memberof Login
    */
-  hasError(info) {
+  hasError(info = {}) {
     if (info.success) {
       return false;
     }
@@ -206,13 +206,11 @@ class Login extends Component {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   info: PropTypes.object,
-  user: PropTypes.object,
   logout: PropTypes.func,
   clearMsgInfo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  user: state.User,
   info: state.Info
 });
 
