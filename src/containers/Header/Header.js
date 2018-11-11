@@ -34,6 +34,12 @@ class Header extends Component {
     };
 
     this.timeoutID = null;
+    this.onShowDropDown = this.onShowDropDown.bind(this);
+    this.toggleDropDown = this.toggleDropDown.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.onLoginClicked = this.onLoginClicked.bind(this);
+    this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   /**
@@ -75,7 +81,7 @@ class Header extends Component {
    */
   onBlur() {
     this.clearTimeout();
-    this.timeoutID = setTimeout(this.toggleDropDown.bind(this), 200);
+    this.timeoutID = setTimeout(this.toggleDropDown, 200);
   }
 
   /**
@@ -154,13 +160,13 @@ class Header extends Component {
           </div>
           <div className="search-wrapper">
             <div className="categories">
-              <span onClick={this.onShowDropDown.bind(this)}>
+              <span onClick={this.onShowDropDown}>
                 <i className="fas fa-th"></i>
                 <i className="fas fa-sort-down"></i>
               </span>
               {
                 showDropDown
-                && <DropDown onBlur={this.onBlur.bind(this)} />
+                && <DropDown onBlur={this.onBlur} />
               }
             </div>
             <div className="input">
@@ -174,7 +180,7 @@ class Header extends Component {
               className="right hide-on-med-and-down nav-button">
               <li>
                 <a
-                  onClick={this.onLoginClicked.bind(this)}
+                  onClick={this.onLoginClicked}
                   href="#"
                   className="login">
                   Login
@@ -195,7 +201,7 @@ class Header extends Component {
                 </a>
               </li>
               <li
-                onClick={this.toggleSettingsOptions.bind(this)}
+                onClick={this.toggleSettingsOptions}
                 id="settings-dropdown">
                 <span className="user-photo" ></span>
                 {
@@ -209,7 +215,7 @@ class Header extends Component {
                         </Link>
                       </li>
                       <li
-                        onClick={this.logout.bind(this)}
+                        onClick={this.logout}
                         className="s-list">
                         <i className="fas fa-sign-out-alt"></i>
                         &nbsp; Sign out
