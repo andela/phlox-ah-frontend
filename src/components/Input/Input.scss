@@ -1,0 +1,38 @@
+div.row {
+  margin-bottom: 0px;
+}
+
+
+div.input-field input.form-input {
+  margin: 0;
+  padding: 1px;
+  font-size: 12px;
+  height: 20px;
+  letter-spacing: 0.5px;
+}
+.input-field input[type="text"]:focus,
+.input-field input[type="password"]:focus {
+  box-shadow: 0 1px 0 0 #777;
+  border-bottom: 1px solid #777;
+  box-shadow: none;
+}
+div.input-field input.input-error{
+  border-bottom: 1px solid red;
+}
+
+div.input-field label.form-label{
+  font-size: 13px;
+  height: 20px;
+  top: auto;
+  bottom: 26px;
+  letter-spacing: o.5px;
+}
+
+.input-field > input[type]:-webkit-autofill:not(.browser-default) + label, .input-field > input[type=date]:not(.browser-default) + label, .input-field > input[type=time]:not(.browser-default) + label,
+div.input-field label.form-label.active {
+  -webkit-transform: translateY(0px) scale(0.8);
+  transform: translateY(0px) scale(0.8);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  font-size: 13px;
+}

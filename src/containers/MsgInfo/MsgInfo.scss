@@ -1,6 +1,7 @@
 
 ._show{
   display: block;
+  margin-bottom: 17px;
 }
 
 ._hide{
@@ -11,7 +12,6 @@ div.msg-info{
   width: auto;
   min-width: 150px;
   max-width: 310px;
-  position: fixed;
   padding: 9px 22px;
   padding-left: 10px;
   font-size: 12px;
@@ -55,5 +55,6 @@ div.msg-info ul{
 div.msg-info ul li{
   list-style: circle;
   line-height: 1.5;
+  text-align: left;
 }
 

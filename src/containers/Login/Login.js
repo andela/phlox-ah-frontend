@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import {
-  Modal, Row, Button, Col, Input
+  Modal, Row, Col
 } from 'react-materialize';
-import './Login.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login, msgInfoActions } from '../BasePath';
+import MsgInfo from '../MsgInfo/MsgInfo';
+import {
+  login, msgInfoActions, Input, Button
+} from '../BasePath';
 import { loginConstant } from '../../constants/Constants';
+import '../Common/ModalForm.scss';
+import './Login.scss';
 
 /**
  *
@@ -27,12 +31,20 @@ class Login extends Component {
    */
   constructor() {
     super();
-    this.state = {
+
+    this.initialState = {
       emailOrUsername: '',
       password: ''
     };
+
+    this.state = {
+      ...this.initialState
+    };
+
     this.onChange = this.onChange.bind(this);
+    this.onSignupClicked = this.onSignupClicked.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.hasError = this.hasError.bind(this);
   }
 
   /**
@@ -42,6 +54,9 @@ class Login extends Component {
    * @memberof Login
    */
   onChange(e) {
+    if (this.props.info.message.length) {
+      this.props.clearMsgInfo();
+    }
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -56,6 +71,7 @@ class Login extends Component {
     $('#login-modal').modal('close');
   }
 
+
   /**
    * @description - This method makes login request
    * @param {objecj} e
@@ -66,17 +82,51 @@ class Login extends Component {
     e.preventDefault();
     const errors = this.validateData(this.state);
     if (errors.length) {
-      this.props.displayErrorMsg(errors);
+      this.props.setErrorMsgInfo(errors);
       return;
     }
 
     this.props.login(this.state)
-      .then((response) => {
+      .then((res) => {
         this.setState({
-          emailOrUsername: '',
-          password: ''
+          ...this.initialState
         });
       });
+  }
+
+  /**
+   * @description - This method runs when forgot password is clicked
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof Login
+   */
+  onForgotPasswordClicked() {
+    this.props.clearMsgInfo();
+    this.onHideModal();
+    $('#forgot-password-modal').modal('open');
+  }
+
+  /**
+   * @description - This method runs when signup is clicked
+   * @returns {object} null
+   * @memberof Login
+   */
+  onSignupClicked() {
+    this.onHideModal();
+    $('#signupModal').modal('open');
+  }
+
+  /**
+   * @description - This method checks weather there is input error
+   * @param {objecj} info
+   * @returns {bool} error
+   * @memberof Login
+   */
+  hasError(info = {}) {
+    if (info.success) {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -98,17 +148,6 @@ class Login extends Component {
   }
 
   /**
-   * @description - This runs when forgot password is clicked
-   * @param {objecj} e
-   * @returns {object} null
-   * @memberof Login
-   */
-  onForgotPasswordClicked() {
-    this.onHideModal();
-    $('#forgot-password-modal').modal('open');
-  }
-
-  /**
    *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
@@ -119,82 +158,107 @@ class Login extends Component {
 
     return (
       <Modal
-        className="center-align login-modal" id="login-modal">
+        className="center-align modal" id="login-modal">
         <div>
           <a className="close-modal" href="#"
             onClick={this.onHideModal}>
             <i className="fas fa-times fa-lg black-text"></i>
           </a>
         </div>
-        <h5>Authors Haven</h5>
-      <form id="test" className="col s12" onSubmit={this.onSubmit}>
-        <Row>
-          <Input
-            type="text"
-            label="username / email"
-            s={12}
-            name="emailOrUsername"
-            value={emailOrUsername}
-            onChange={this.onChange}
-          />
-          <Input
-            type="password"
-            label="password"
-            s={12}
-            name="password"
-            value={password}
-            onChange={this.onChange}
-          />
-          <Button
-            type="submit"
-            className="login-button" waves='light'>
-            Login
-            <i className="fas fa-sign-in-alt"></i>
-          </Button>
-          <h6>Login Using</h6>
-          <Col s={4} >
-            <a href={loginConstant.FACEBOOK_LOGIN_URL}>
-              <i className="fab fa-facebook fa-3x"></i>
-            </a>
-          </Col>
-          <Col s={4}>
-            <a href={loginConstant.GOOGLE_LOGIN_URL}>
-              <i className="fab fa-google-plus-square fa-3x"></i>
-            </a>
-          </Col>
-          <Col s={4}>
-            <a href={loginConstant.TWITTER_LOGIN_URL}>
-              <i className="fab fa-twitter-square fa-3x"></i>
-            </a>
-          </Col>
-        </Row>
-      </form>
-      <h6>
-        No account yet?
-        <a href="#">
-          <span className="theme-color">
-            &nbsp; Sign Up
-          </span>
-        </a>
-      </h6>
-      <p className="theme-color forgot-password-link" onClick={() => this.onForgotPasswordClicked()}>Forgot password?</p>
-    </Modal>
+        <h5 className="form-title">Authors Haven</h5>
+        <MsgInfo />
+        <form className="col s12" onSubmit={this.onSubmit}>
+          <Row>
+            <Input
+              type="text"
+              label="Email/Username"
+              s={12}
+              name="emailOrUsername"
+              id="emailOrUsername"
+              value={emailOrUsername}
+              onChange={this.onChange}
+              required={true}
+              hasError={this.hasError(this.props.info)}
+            />
+            <Input
+              type="password"
+              label="Password"
+              s={12}
+              name="password"
+              id="lpassword"
+              value={password}
+              onChange={this.onChange}
+              required={true}
+              hasError={this.hasError(this.props.info)}
+            />
+            <Row>
+              <p s={12}
+                className="theme-color forgot-password-link"
+                onClick={() => this.onForgotPasswordClicked()}>
+                Forgot password?
+              </p>
+            </Row>
+            <Button
+              type="submit"
+              name="login"
+            />
+            <div className="or-divider">
+              <span className="theme-color or">OR</span>
+            </div>
+            <h6 className="alt-label">SIGN IN USING</h6>
+            <Row className="alt-social-auth">
+              <Col s={4} >
+                <a
+                  className="social-auth fb"
+                  href={loginConstant.FACEBOOK_LOGIN_URL}>
+                  <i className="fab fa-facebook-f"></i>
+                </a>
+              </Col>
+              <Col s={4}>
+                <a
+                  className="social-auth gp"
+                  href={loginConstant.GOOGLE_LOGIN_URL}>
+                  <i className="fab fa-google-plus-g"></i>
+                </a>
+              </Col>
+              <Col s={4}>
+                <a
+                  className="social-auth tw"
+                  href={loginConstant.TWITTER_LOGIN_URL}>
+                  <i className="fab fa-twitter"></i>
+                </a>
+              </Col>
+            </Row>
+          </Row>
+        </form>
+        <div className="more-action">
+          DO NOT HAVE AN ACCOUNT YET?
+          <a href="#" onClick={this.onSignupClicked}>
+            <span className="theme-color">
+              &nbsp; SIGN UP
+            </span>
+          </a>
+        </div>
+
+      </Modal>
     );
   }
 }
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  user: PropTypes.object,
+  info: PropTypes.object,
   logout: PropTypes.func,
-  displayErrorMsg: PropTypes.func.isRequired,
+  clearMsgInfo: PropTypes.func.isRequired,
+  setErrorMsgInfo: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  user: state.User
+  info: state.Info
 });
 
 export default connect(mapStateToProps, {
   login,
-  displayErrorMsg: msgInfoActions.failure
+  clearMsgInfo: msgInfoActions.clear,
+  setErrorMsgInfo: msgInfoActions.failure
 })(Login);

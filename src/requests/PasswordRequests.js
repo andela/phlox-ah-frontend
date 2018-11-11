@@ -34,7 +34,6 @@ export const sendForgotPassword = email => (dispatch) => {
     .then((response) => {
       if (response.status === 200) {
         dispatch(asyncActions(FORGOT_PASSWORD).success(response.data.message));
-        dispatch(msgInfoActions.success([response.data.message]));
         dispatch(asyncActions(FORGOT_PASSWORD).loading(false));
         history.push('/reset_password_mail_sent/success');
       }

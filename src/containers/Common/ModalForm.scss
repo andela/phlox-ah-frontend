@@ -1,0 +1,85 @@
+div.modal, .reset-password-modal, .forgot-password-modal{
+  width:310px;
+  .row{
+    margin-left: -0.15rem;
+    margin-right: -0.05rem;
+  }
+  .close-modal {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+  }
+  .modal-footer{
+    display:none;
+  }
+  .theme-color{
+    color:#208ba9;
+  }
+  h5.form-title {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  p.forgot-password-link {
+    cursor: pointer;
+    text-align: left;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    text-decoration: underline;
+    font-size: 13px;
+  }
+  h6.alt-label {
+    font-weight: 600;
+    margin-bottom: 13px;
+  }
+  div.or-divider {
+    margin: 17px 0px;
+    position: relative;
+    border-bottom: 2px solid #ccc;
+    padding: 0px;
+    background: inherit;
+
+    span.or {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 600;
+      background: #fafafa;
+      display: block;
+      text-align: center;
+      padding: 0 5px;
+    }
+  }
+  .mb-2{
+    margin-bottom: 0.5rem;
+  }
+  div.more-action {
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+  div.alt-social-auth {
+    margin-top: 13px;
+    margin-bottom: 8px;
+  }
+  a.social-auth  {
+    font-size: 15px;
+    padding: 10px 15px;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 50%;
+  }
+  a.social-auth.fb {
+    background: #3B5998;
+  }
+  a.social-auth.gp {
+    padding: 10px 10px;
+    background: #DB4437;
+  }
+  a.social-auth.tw {
+    padding: 10px 12px;
+    background: #1DA1F2;
+  }
+}
+
