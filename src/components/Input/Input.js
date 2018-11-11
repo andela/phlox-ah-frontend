@@ -37,6 +37,6 @@ Input.propTypes = {
   hasError: PropTypes.bool,
   required: PropTypes.bool,
   type: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   label: PropTypes.string
 };

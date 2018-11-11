@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import {
-  Modal, Row, Button, Input
+  Modal, Row
 } from 'react-materialize';
-import '../Login/Login.scss';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {
+  msgInfoActions, Input, Button
+} from '../BasePath';
+import MsgInfo from '../MsgInfo/MsgInfo';
+import '../Common/ModalForm.scss';
 import { sendForgotPassword } from '../../requests/PasswordRequests';
 
 /**
@@ -20,10 +24,32 @@ class ForgotPassword extends Component {
    */
   constructor() {
     super();
-    this.onClickForgotPassword = this.onClickForgotPassword.bind(this);
+
+    this.state = {
+      email: ''
+    };
+
     this.onLoginClicked = this.onLoginClicked.bind(this);
+    this.onSignupClicked = this.onSignupClicked.bind(this);
     this.onCloseClicked = this.onCloseClicked.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.hasError = this.hasError.bind(this);
+  }
+
+  /**
+   * @description - This method sets the input values
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof ForgotPassword
+   */
+  onChange(e) {
+    if (this.props.info.message.length) {
+      this.props.clearMsgInfo();
+    }
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
 
   /**
@@ -34,6 +60,7 @@ class ForgotPassword extends Component {
    */
   onSubmit(e) {
     e.preventDefault();
+    this.props.sendForgotPassword(this.state.emai);
   }
 
   /**
@@ -46,13 +73,16 @@ class ForgotPassword extends Component {
   }
 
   /**
-   * @description - This method sends the forgot password request
-   * @returns {object} null
+   * @description - This method checks weather there is input error
+   * @param {objecj} info
+   * @returns {bool} error
    * @memberof ForgotPassword
    */
-  onClickForgotPassword() {
-    const email = $('#emailText').val();
-    this.props.sendForgotPassword(email);
+  hasError(info = {}) {
+    if (info.success) {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -66,6 +96,16 @@ class ForgotPassword extends Component {
   }
 
   /**
+   * @description - This method opens the signup modal
+   * @returns {object} null
+   * @memberof ForgotPassword
+   */
+  onSignupClicked() {
+    this.onCloseClicked();
+    $('#signupModal').modal('open');
+  }
+
+  /**
    *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
@@ -74,36 +114,49 @@ class ForgotPassword extends Component {
   render() {
     return (
       <Modal
-        className="center-align forgot-password-modal" id="forgot-password-modal">
+        className="center-align modal"
+        id="forgot-password-modal">
         <div>
           <a className="close-modal" href="#"
             onClick={this.onCloseClicked}>
             <i className="fas fa-times fa-lg black-text"></i>
           </a>
         </div>
-        <h5>Authors Haven</h5>
+        <h5 className="form-title">Authors Haven</h5>
+        <MsgInfo />
         <form className="col s12" onSubmit={this.onSubmit}>
           <Row>
-            <Input type="text" id="emailText" label="enter email" s={12} /> <br /> <br />
+            <Input
+              type="email"
+              id="femail"
+              name="email"
+              value={this.state.email}
+              label="Enter email"
+              s={12}
+              required={true}
+              onChange={this.onChange}
+              hasError={this.hasError(this.props.info)}
+            />
             <Button
-              className="forgot-button" waves='light' onClick={this.onClickForgotPassword}>
-              Send Email
-            </Button>
+              type="submit"
+              name="Send Email"
+            />
           </Row>
         </form>
-        <h6>
-          Have an account?
+        <div className="more-action">
+          HAVE AN ACCOUNT?
           <a href="#" onClick={this.onLoginClicked}>
             <span className="theme-color">
-              &nbsp; Log in
-            </span>
-          </a> |
-          <a href="#">
-            <span className="theme-color">
-              &nbsp; Sign up
+              &nbsp; LOGIN
             </span>
           </a>
-        </h6>
+          <span>&nbsp; |</span>
+          <a href="#" onClick={this.onSignupClicked}>
+            <span className="theme-color">
+              &nbsp; SIGN UP
+            </span>
+          </a>
+        </div>
       </Modal>
     );
   }
@@ -111,13 +164,17 @@ class ForgotPassword extends Component {
 
 const mapStateToProps = state => ({
   loading: state.loading,
+  info: state.Info
 });
 
 ForgotPassword.propTypes = {
   sendForgotPassword: PropTypes.func,
   loading: PropTypes.bool,
+  info: PropTypes.object,
+  clearMsgInfo: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, {
-  sendForgotPassword
+  sendForgotPassword,
+  clearMsgInfo: msgInfoActions.clear
 })(ForgotPassword);

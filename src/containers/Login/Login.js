@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Modal, Row, Col
 } from 'react-materialize';
-import './Login.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MsgInfo from '../MsgInfo/MsgInfo';
@@ -10,6 +9,8 @@ import {
   login, msgInfoActions, Input, Button
 } from '../BasePath';
 import { loginConstant } from '../../constants/Constants';
+import '../Common/ModalForm.scss';
+import './Login.scss';
 
 /**
  *
@@ -41,6 +42,7 @@ class Login extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.onSignupClicked = this.onSignupClicked.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.hasError = this.hasError.bind(this);
   }
@@ -69,6 +71,7 @@ class Login extends Component {
     $('#login-modal').modal('close');
   }
 
+
   /**
    * @description - This method makes login request
    * @param {objecj} e
@@ -77,6 +80,12 @@ class Login extends Component {
    */
   onSubmit(e) {
     e.preventDefault();
+    const errors = this.validateData(this.state);
+    if (errors.length) {
+      this.props.setErrorMsgInfo(errors);
+      return;
+    }
+
     this.props.login(this.state)
       .then((res) => {
         this.setState({
@@ -92,8 +101,19 @@ class Login extends Component {
    * @memberof Login
    */
   onForgotPasswordClicked() {
+    this.props.clearMsgInfo();
     this.onHideModal();
     $('#forgot-password-modal').modal('open');
+  }
+
+  /**
+   * @description - This method runs when signup is clicked
+   * @returns {object} null
+   * @memberof Login
+   */
+  onSignupClicked() {
+    this.onHideModal();
+    $('#signupModal').modal('open');
   }
 
   /**
@@ -107,6 +127,24 @@ class Login extends Component {
       return false;
     }
     return true;
+  }
+
+  /**
+   * @description - This method validates the input values
+   * @param {objecj} data
+   * @returns {array} errors
+   * @memberof Login
+   */
+  validateData(data) {
+    let errors = [];
+    if (!data.emailOrUsername) {
+      errors = [...errors, 'email or username is required'];
+    }
+    if (!data.password) {
+      errors = [...errors, 'password is required'];
+    }
+
+    return errors;
   }
 
   /**
@@ -129,7 +167,7 @@ class Login extends Component {
         </div>
         <h5 className="form-title">Authors Haven</h5>
         <MsgInfo />
-        <form id="test" className="col s12" onSubmit={this.onSubmit}>
+        <form className="col s12" onSubmit={this.onSubmit}>
           <Row>
             <Input
               type="text"
@@ -147,14 +185,18 @@ class Login extends Component {
               label="Password"
               s={12}
               name="password"
-              id="password"
+              id="lpassword"
               value={password}
               onChange={this.onChange}
               required={true}
               hasError={this.hasError(this.props.info)}
             />
             <Row>
-              <p s={12} className="theme-color forgot-password-link" onClick={() => this.onForgotPasswordClicked()}>Forgot password?</p>
+              <p s={12}
+                className="theme-color forgot-password-link"
+                onClick={() => this.onForgotPasswordClicked()}>
+                Forgot password?
+              </p>
             </Row>
             <Button
               type="submit"
@@ -163,7 +205,7 @@ class Login extends Component {
             <div className="or-divider">
               <span className="theme-color or">OR</span>
             </div>
-            <h6 className="alt-login">SIGN IN USING</h6>
+            <h6 className="alt-label">SIGN IN USING</h6>
             <Row className="alt-social-auth">
               <Col s={4} >
                 <a
@@ -191,7 +233,7 @@ class Login extends Component {
         </form>
         <div className="more-action">
           DO NOT HAVE AN ACCOUNT YET?
-          <a href="#">
+          <a href="#" onClick={this.onSignupClicked}>
             <span className="theme-color">
               &nbsp; SIGN UP
             </span>
@@ -208,6 +250,7 @@ Login.propTypes = {
   info: PropTypes.object,
   logout: PropTypes.func,
   clearMsgInfo: PropTypes.func.isRequired,
+  setErrorMsgInfo: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -216,5 +259,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   login,
-  clearMsgInfo: msgInfoActions.clear
+  clearMsgInfo: msgInfoActions.clear,
+  setErrorMsgInfo: msgInfoActions.failure
 })(Login);

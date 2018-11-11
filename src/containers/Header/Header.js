@@ -5,6 +5,9 @@ import DropDown from '../../components/DropDown/DropDown';
 import './Header.scss';
 import Logo from '../../assets/images/phlox-logo.png';
 import { asyncActions, LOGOUT } from './BasePath';
+import {
+  msgInfoActions
+} from '../BasePath';
 
 /**
  *
@@ -31,7 +34,14 @@ class Header extends Component {
       showSettingsOption: false,
       isAuth: false,
     };
+
     this.timeoutID = null;
+    this.onShowDropDown = this.onShowDropDown.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.onLoginClicked = this.onLoginClicked.bind(this);
+    this.onSignupClicked = this.onSignupClicked.bind(this);
+    this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
+    this.onLogout = this.onLogout.bind(this);
   }
 
   /**
@@ -82,6 +92,7 @@ class Header extends Component {
    * @memberof Header
    */
   onSignupClicked() {
+    this.props.clearMsgInfo();
     $('#signupModal').modal('open');
   }
 
@@ -91,6 +102,7 @@ class Header extends Component {
    * @memberof Header
    */
   onLoginClicked() {
+    this.props.clearMsgInfo();
     $('#login-modal').modal('open');
   }
 
@@ -99,7 +111,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  logout() {
+  onLogout() {
     this.props.logout();
     localStorage.removeItem('token');
   }
@@ -161,13 +173,13 @@ class Header extends Component {
           </div>
           <div className="search-wrapper">
             <div className="categories">
-              <span onClick={this.onShowDropDown.bind(this)}>
+              <span onClick={this.onShowDropDown}>
                 <i className="fas fa-th"></i>
                 <i className="fas fa-sort-down"></i>
               </span>
               {
                 showDropDown
-                && <DropDown onBlur={this.onBlur.bind(this)} />
+                && <DropDown onBlur={this.onBlur} />
               }
             </div>
             <div className="input">
@@ -181,7 +193,7 @@ class Header extends Component {
               className="right hide-on-med-and-down nav-button">
               <li>
                 <a
-                  onClick={this.onLoginClicked.bind(this)}
+                  onClick={this.onLoginClicked}
                   href="#"
                   className="login">
                   Login
@@ -206,7 +218,7 @@ class Header extends Component {
                 </a>
               </li>
               <li
-                onClick={this.toggleSettingsOptions.bind(this)}
+                onClick={this.toggleSettingsOptions}
                 id="settings-dropdown">
                 <a className="user-photo" href="#"></a>
                 {
@@ -214,7 +226,7 @@ class Header extends Component {
                     && <div className="sd-wrapper">
                       <ul>
                         <li
-                          onClick={this.logout.bind(this)}
+                          onClick={this.onLogout}
                           className="s-list">
                           <i className="fas fa-sign-out-alt"></i>
                           &nbsp; Sign out
@@ -233,14 +245,16 @@ class Header extends Component {
 
 Header.propTypes = {
   user: PropTypes.object,
+  clearMsgInfo: PropTypes.func,
   logout: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-  user: state.User
+  user: state.User,
 });
 
 
 export default connect(mapStateToProps, {
-  logout: asyncActions(LOGOUT).success
+  logout: asyncActions(LOGOUT).success,
+  clearMsgInfo: msgInfoActions.clear
 })(Header);
