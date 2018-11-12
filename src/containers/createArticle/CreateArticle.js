@@ -115,18 +115,18 @@ class CreateArticle extends Component {
     */
   create() {
     const {
-      hasChanges, title, description, body, category, image
+      hasChanges, title, description, body, category, image, tags
     } = this.state;
 
     const categoryId = Number(category);
 
-    const tags = TagObjectToString(this.state.tags);
+    const newTags = TagObjectToString(tags);
 
     if (hasChanges) {
       this.setState({ hasChanges: false, alertVisible: true, isCreated: true });
 
       this.props.createArticle({
-        title, description, body, tags, categoryId
+        title, description, body, newTags, categoryId
       });
     }
   }
@@ -151,18 +151,18 @@ class CreateArticle extends Component {
     */
   update() {
     const {
-      hasChanges, title, description, body, category
+      hasChanges, title, description, body, category, tags
     } = this.state;
 
     const categoryId = Number(category);
-    const tags = TagObjectToString(this.state.tags);
+    const newTags = TagObjectToString(tags);
     const articleSlug = this.props.article.slug;
 
     if (hasChanges) {
       this.setState({ hasChanges: false, alertVisible: true });
       this.props.updateArticle(
         {
-          title, description, body, articleSlug, tags, categoryId
+          title, description, body, articleSlug, newTags, categoryId
         }
       );
     }
