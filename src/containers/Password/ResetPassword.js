@@ -28,14 +28,28 @@ class ResetPassword extends Component {
     this.state = {
       password: '',
       confirmPassword: '',
+      resetPassword: false
     };
 
-    this.onLoginClicked = this.onLoginClicked.bind(this);
-    this.onSignupClicked = this.onSignupClicked.bind(this);
-    this.onCloseClicked = this.onCloseClicked.bind(this);
+    this.onSignIn = this.onSignIn.bind(this);
+    this.onSignUp = this.onSignUp.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.hasError = this.hasError.bind(this);
+  }
+
+  /**
+   * @description - This method runs after component mounts
+   * @returns {object} null
+   * @memberof ResetPassword
+   */
+  componentDidMount() {
+    if (/\/password\/reset\/\w+/.test(this.props.match.url)) {
+      this.setState({
+        resetPassword: true
+      });
+    }
   }
 
   /**
@@ -66,7 +80,7 @@ class ResetPassword extends Component {
       return;
     }
     const { token } = this.props.match.params;
-    this.props.sendResetPassword(token, this.state.password);
+    this.props.sendResetPassword(token, this.state.password, this.props);
   }
 
   /**
@@ -74,7 +88,7 @@ class ResetPassword extends Component {
    * @returns {object} null
    * @memberof ResetPassword
    */
-  onCloseClicked() {
+  onClose() {
     $('#reset-password-modal').modal('close');
   }
 
@@ -121,8 +135,8 @@ class ResetPassword extends Component {
    * @returns {object} null
    * @memberof ResetPassword
    */
-  onLoginClicked() {
-    this.onCloseClicked();
+  onSignIn() {
+    this.onClose();
     $('#login-modal').modal('open');
   }
 
@@ -131,9 +145,9 @@ class ResetPassword extends Component {
    * @returns {object} null
    * @memberof ResetPassword
    */
-  onSignupClicked() {
-    this.onCloseClicked();
-    $('#signupModal').modal('open');
+  onSignUp() {
+    this.onClose();
+    $('#signup-modal').modal('open');
   }
 
   /**
@@ -147,12 +161,12 @@ class ResetPassword extends Component {
     return (
       <Modal
         className="center-align modal"
-        id="reset-password-modal" open={true}>
+        id="reset-password-modal" open={this.state.resetPassword}>
         <div>
-          <a className="close-modal" href="#"
-            onClick={this.onCloseClicked}>
+          <button className="close-modal"
+            onClick={this.onClose}>
             <i className="fas fa-times fa-lg black-text"></i>
-          </a>
+          </button>
         </div>
         <h5 className="form-title">Authors Haven</h5>
         <MsgInfo />
@@ -188,26 +202,27 @@ class ResetPassword extends Component {
         </form>
         <div className="more-action">
           HAVE AN ACCOUNT?
-          <a href="#" onClick={this.onLoginClicked}>
+          <button onClick={this.onSignIn}>
             <span className="theme-color">
               &nbsp; LOGIN
             </span>
-          </a>
+          </button>
           <span>&nbsp; |</span>
-          <a href="#" onClick={this.onSignupClicked}>
+          <button onClick={this.onSignUp}>
             <span className="theme-color">
               &nbsp; SIGN UP
             </span>
-          </a>
+          </button>
         </div>
       </Modal>
     );
   }
 }
 
+
 const mapStateToProps = state => ({
   loading: state.loading,
-  info: state.Info
+  info: state.info
 });
 
 ResetPassword.propTypes = {

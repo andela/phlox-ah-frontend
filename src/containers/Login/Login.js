@@ -42,7 +42,7 @@ class Login extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
-    this.onSignupClicked = this.onSignupClicked.bind(this);
+    this.onSignUp = this.onSignUp.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.hasError = this.hasError.bind(this);
   }
@@ -100,7 +100,7 @@ class Login extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  onForgotPasswordClicked() {
+  onForgotPassword() {
     this.props.clearMsgInfo();
     this.onHideModal();
     $('#forgot-password-modal').modal('open');
@@ -111,9 +111,10 @@ class Login extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  onSignupClicked() {
+  onSignUp() {
+    this.props.clearMsgInfo();
     this.onHideModal();
-    $('#signupModal').modal('open');
+    $('#signup-modal').modal('open');
   }
 
   /**
@@ -160,10 +161,10 @@ class Login extends Component {
       <Modal
         className="center-align modal" id="login-modal">
         <div>
-          <a className="close-modal" href="#"
+          <button className="close-modal"
             onClick={this.onHideModal}>
             <i className="fas fa-times fa-lg black-text"></i>
-          </a>
+          </button>
         </div>
         <h5 className="form-title">Authors Haven</h5>
         <MsgInfo />
@@ -194,7 +195,7 @@ class Login extends Component {
             <Row>
               <p s={12}
                 className="theme-color forgot-password-link"
-                onClick={() => this.onForgotPasswordClicked()}>
+                onClick={() => this.onForgotPassword()}>
                 Forgot password?
               </p>
             </Row>
@@ -233,11 +234,11 @@ class Login extends Component {
         </form>
         <div className="more-action">
           DO NOT HAVE AN ACCOUNT YET?
-          <a href="#" onClick={this.onSignupClicked}>
+          <button onClick={this.onSignUp}>
             <span className="theme-color">
               &nbsp; SIGN UP
             </span>
-          </a>
+          </button>
         </div>
 
       </Modal>
@@ -254,7 +255,7 @@ Login.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  info: state.Info
+  info: state.info
 });
 
 export default connect(mapStateToProps, {

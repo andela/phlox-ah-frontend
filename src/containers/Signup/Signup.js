@@ -28,8 +28,8 @@ class Signup extends Component {
       email: '', username: '', password: '', confirmPassword: ''
     };
     this.onChange = this.onChange.bind(this);
-    this.submit = this.submit.bind(this);
-    this.onLoginClicked = this.onLoginClicked.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onSignIn = this.onSignIn.bind(this);
   }
 
   /**
@@ -39,7 +39,7 @@ class Signup extends Component {
    * @return {*} boolean
    */
   closeModal() {
-    $('#signupModal').modal('close');
+    $('#signup-modal').modal('close');
   }
 
   /**
@@ -60,7 +60,7 @@ class Signup extends Component {
    * @returns {object} null
    * @memberof Signup
    */
-  submit(event) {
+  onSubmit(event) {
     event.preventDefault();
     this.props.signup(this.state);
   }
@@ -71,7 +71,7 @@ class Signup extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  onLoginClicked() {
+  onSignIn() {
     this.closeModal();
     $('#login-modal').modal('open');
   }
@@ -88,7 +88,7 @@ class Signup extends Component {
     } = this.state;
     const { loading, success } = this.props;
     return (
-      <Modal id='signupModal' className="center-align modal">
+      <Modal id='signup-modal' className="center-align modal">
         {
           success
           && <div className="signupSuccessCard">
@@ -108,14 +108,13 @@ class Signup extends Component {
           !success
           && <div>
             <div>
-              <a
-                className="close-modal"
-                href="#" onClick={this.closeModal}>
+              <button className="close-modal"
+                onClick={this.closeModal}>
                 <i className="fas fa-times fa-lg black-text"></i>
-              </a>
+              </button>
             </div>
             <h5 className="form-title">Authors Haven</h5>
-            <form className="col s12" onSubmit={this.submit}>
+            <form className="col s12" onSubmit={this.onSubmit}>
               <Row>
                 <Input
                   type="text"
@@ -191,11 +190,11 @@ class Signup extends Component {
             </Row>
             <div className="more-action">
               ALREADY HAVE AN ACCOUNT?
-              <a href="#" onClick={this.onLoginClicked}>
+              <button onClick={this.onSignIn}>
                 <span className="theme-color">
                   &nbsp; LOGIN
                 </span>
-              </a>
+              </button>
             </div>
           </div>
         }
@@ -211,8 +210,9 @@ Signup.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  loading: state.Signup.loading,
-  success: state.Signup.success,
+  loading: state.signup.loading,
+  success: state.signup.success,
+  info: state.info,
 });
 
 export default connect(mapStateToProps, { signup })(Signup);

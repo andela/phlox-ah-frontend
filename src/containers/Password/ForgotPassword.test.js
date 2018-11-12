@@ -23,7 +23,7 @@ describe('<ForgotPassword/>', () => {
     expect(component).toMatchSnapshot();
   });
   it('should have a form tag with class col', () => {
-    expect(myComponent.find('form').hasClass('col')).toBe(true);
+    expect(myComponent.find('form').exists()).toBe(true);
   });
   it('should have a forgot password button', () => {
     expect(myComponent.find('Button').exists()).toBe(true);

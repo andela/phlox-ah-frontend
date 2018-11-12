@@ -1,4 +1,4 @@
-div.modal, .reset-password-modal, .forgot-password-modal{
+div.modal{
   width:310px;
   .row{
     margin-left: -0.15rem;
@@ -8,6 +8,8 @@ div.modal, .reset-password-modal, .forgot-password-modal{
     position: absolute;
     top: 8px;
     right: 10px;
+    background: none;
+    border: none;
   }
   .modal-footer{
     display:none;
@@ -56,8 +58,13 @@ div.modal, .reset-password-modal, .forgot-password-modal{
   }
   div.more-action {
     font-size: 12px;
-    font-weight: 600;
     margin-top: 20px;
+    font-weight: 600;
+    button {
+      background: none;
+      border: none;
+      font-weight: inherit;
+    }
   }
   div.alt-social-auth {
     margin-top: 13px;

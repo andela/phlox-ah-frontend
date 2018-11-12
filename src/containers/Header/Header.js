@@ -30,18 +30,18 @@ class Header extends Component {
     super();
 
     this.state = {
-      showDropDown: false,
-      showSettingsOption: false,
       isAuth: false,
+      showDropDown: false,
+      showSettingsOption: false
     };
 
-    this.timeoutID = null;
-    this.onShowDropDown = this.onShowDropDown.bind(this);
     this.onBlur = this.onBlur.bind(this);
-    this.onLoginClicked = this.onLoginClicked.bind(this);
-    this.onSignupClicked = this.onSignupClicked.bind(this);
+    this.onShowDropDown = this.onShowDropDown.bind(this);
+    this.onSignIn = this.onSignIn.bind(this);
+    this.onSignOut = this.onSignOut.bind(this);
+    this.onSignUp = this.onSignUp.bind(this);
+    this.timeoutID = null;
     this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
-    this.onLogout = this.onLogout.bind(this);
   }
 
   /**
@@ -87,36 +87,6 @@ class Header extends Component {
   }
 
   /**
-   * @description - This method displays the signup modal
-   * @returns {object} null
-   * @memberof Header
-   */
-  onSignupClicked() {
-    this.props.clearMsgInfo();
-    $('#signupModal').modal('open');
-  }
-
-  /**
-   * @description - This method displays the login modal
-   * @returns {object} null
-   * @memberof Header
-   */
-  onLoginClicked() {
-    this.props.clearMsgInfo();
-    $('#login-modal').modal('open');
-  }
-
-  /**
-   * @description - This method logs the user out of the application
-   * @returns {object} null
-   * @memberof Header
-   */
-  onLogout() {
-    this.props.logout();
-    localStorage.removeItem('token');
-  }
-
-  /**
    * @description - This method displays the categories dropdown
    * @returns {object} null
    * @memberof Header
@@ -128,14 +98,34 @@ class Header extends Component {
   }
 
   /**
-   * @description - This method displays the settings dropdown
+   * @description - This method displays the login modal
    * @returns {object} null
    * @memberof Header
    */
-  toggleSettingsOptions() {
-    this.setState({
-      showSettingsOption: !this.state.showSettingsOption,
-    });
+  onSignIn() {
+    this.props.clearMsgInfo();
+    $('#login-modal').modal('open');
+  }
+
+  /**
+   * @description - This method logs the user out of the application
+   * @returns {object} null
+   * @memberof Header
+   */
+  onSignOut() {
+    this.props.signOut();
+    this.props.clearMsgInfo();
+    localStorage.removeItem('token');
+  }
+
+  /**
+   * @description - This method displays the signup modal
+   * @returns {object} null
+   * @memberof Header
+   */
+  onSignUp() {
+    this.props.clearMsgInfo();
+    $('#signup-modal').modal('open');
   }
 
   /**
@@ -146,6 +136,17 @@ class Header extends Component {
   toggleDropDown() {
     this.setState({
       showDropDown: !this.state.showDropDown,
+    });
+  }
+
+  /**
+   * @description - This method displays the settings dropdown
+   * @returns {object} null
+   * @memberof Header
+   */
+  toggleSettingsOptions() {
+    this.setState({
+      showSettingsOption: !this.state.showSettingsOption,
     });
   }
 
@@ -193,7 +194,7 @@ class Header extends Component {
               className="right hide-on-med-and-down nav-button">
               <li>
                 <a
-                  onClick={this.onLoginClicked}
+                  onClick={this.onSignIn}
                   href="#"
                   className="login">
                   Login
@@ -201,7 +202,7 @@ class Header extends Component {
               </li>
               <li>
                 <a
-                  onClick={this.onSignupClicked}
+                  onClick={this.onSignUp}
                   href="#" className="sign-up">
                   Sign Up
                 </a>
@@ -226,7 +227,7 @@ class Header extends Component {
                     && <div className="sd-wrapper">
                       <ul>
                         <li
-                          onClick={this.onLogout}
+                          onClick={this.onSignOut}
                           className="s-list">
                           <i className="fas fa-sign-out-alt"></i>
                           &nbsp; Sign out
@@ -246,15 +247,15 @@ class Header extends Component {
 Header.propTypes = {
   user: PropTypes.object,
   clearMsgInfo: PropTypes.func,
-  logout: PropTypes.func
+  signOut: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-  user: state.User,
+  user: state.user
 });
 
 
 export default connect(mapStateToProps, {
-  logout: asyncActions(LOGOUT).success,
+  signOut: asyncActions(LOGOUT).success,
   clearMsgInfo: msgInfoActions.clear
 })(Header);

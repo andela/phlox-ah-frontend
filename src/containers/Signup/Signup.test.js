@@ -7,7 +7,7 @@ import Signup from './Signup';
 
 const mockStore = configureMockStore();
 const store = mockStore({
-  Signup: {
+  signup: {
     loading: true,
     success: false,
     failure: false,
@@ -17,6 +17,7 @@ const store = mockStore({
 
 let component;
 let myComponent;
+
 
 describe('<Signup/>', () => {
   beforeEach(() => {
@@ -31,7 +32,7 @@ describe('<Signup/>', () => {
     expect(component).toMatchSnapshot();
   });
   it('should have a form tag with class col', () => {
-    expect(myComponent.find('form').hasClass('col')).toBe(true);
+    expect(myComponent.find('form').exists()).toBe(true);
   });
   it('should have a signup button', () => {
     expect(myComponent.find('Button').exists()).toBe(true);

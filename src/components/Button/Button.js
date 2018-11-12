@@ -18,5 +18,5 @@ Button.propTypes = {
   buttonClassName: PropTypes.string,
   type: PropTypes.string,
   onClick: PropTypes.func,
-  name: PropTypes.string
+  name: PropTypes.any
 };

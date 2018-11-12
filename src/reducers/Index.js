@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
-import userReducer from './UserReducer';
-import msgInfoReducer from './MsgInfoReducer';
-import passwordReducer from './PasswordReducer';
-import signupReducer from './SignupReducer';
+import user from './UserReducer';
+import info from './MsgInfoReducer';
+import password from './PasswordReducer';
+import signup from './SignupReducer';
 
 
 const rootReducer = combineReducers({
-  passwordReducer,
-  User: userReducer,
-  Info: msgInfoReducer,
-  Signup: signupReducer
+  password,
+  user,
+  info,
+  signup
 });
 
 export default rootReducer;
