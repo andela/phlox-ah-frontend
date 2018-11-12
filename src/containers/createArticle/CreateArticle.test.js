@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import CreateArticle from './CreateArticle';
 import {
-  article, suggestedTags, categories, tags
+  article, categories, tags
 } from '../../util/articleMockData';
 
 const mockStore = configureMockStore();
@@ -15,15 +15,10 @@ const store = mockStore({
     loading: false,
     error: true
   },
-  Category: {
-    categories,
-  },
-  Tags: {
-    tags,
-  }
+  Category: { categories },
+  Tags: { tags }
 });
 let component;
-let myComponent;
 
 describe('<CreateArticle />', () => {
   beforeEach(() => {

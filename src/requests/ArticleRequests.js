@@ -36,9 +36,7 @@ export const getArticles = () => (dispatch) => {
       .failure(true, error)));
 };
 
-export const createArticle = ({
-  title, description, body, tags, categoryId
-}) => (dispatch) => {
+export const createArticle = (formData, tags) => (dispatch) => {
   const headers = {
     'Content-Type': 'application/json;charset=UTF-8',
   };
@@ -46,9 +44,7 @@ export const createArticle = ({
     .then(() => {
       dispatch(asyncActions(CREATE_ARTICLE).loading(true));
 
-      axios.post(articleConstant.CREATE_ARTICLES_URL, {
-        title, description, body, tags, categoryId
-      }, headers)
+      axios.post(articleConstant.CREATE_ARTICLES_URL, formData, headers)
         .then((response) => {
           dispatch(asyncActions(CREATE_ARTICLE).success(response.data));
           dispatch(msgInfoActions.success([response.data.message]));
@@ -66,16 +62,12 @@ export const createArticle = ({
     });
 };
 
-export const updateArticle = ({
-  title, description, body, articleSlug, tags, categoryId
-}) => (dispatch) => {
+export const updateArticle = (formData, tags, articleSlug) => (dispatch) => {
   axios.post(tagsConstant.CREATE_TAG_URL, { tags })
     .then(() => {
       dispatch(asyncActions(UPDATE_ARTICLE).loading(true));
 
-      axios.put(`${articleConstant.UPDATE_ARTICLE_URL}/${articleSlug}`, {
-        title, description, body, tags, categoryId
-      })
+      axios.put(`${articleConstant.UPDATE_ARTICLE_URL}/${articleSlug}`, formData)
         .then((response) => {
           dispatch(asyncActions(UPDATE_ARTICLE).success(response.data));
           dispatch(msgInfoActions.success([response.data.message]));

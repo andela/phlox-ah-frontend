@@ -63,6 +63,7 @@ blockquote {
 div.ReactTags__tags {
   margin-top: 10px;
 }
+
 div.ReactTags__selected span.ReactTags__tag {
     background: #3B8CA1;
     color: #ffffff;
@@ -73,16 +74,19 @@ div.ReactTags__selected span.ReactTags__tag {
     cursor: move;
     border-radius: 2px;
 }
+
 div.react-tags-wrapper {
   background: #ffffff;
   padding: 10px 10px 0px;
 }
+
 div.ReactTags__selected a.ReactTags__remove {
     color: #ffffff;
     margin-left: 5px;
     cursor: pointer;
     text-decoration: none;
 }
+
 div.ReactTags__tagInput input.ReactTags__tagInputField {
   border: none;
 }
@@ -92,22 +96,26 @@ div.ReactTags__suggestions {
     position: absolute;
     z-index: 90;
 }
+
 div.ReactTags__suggestions ul {
     list-style-type: none;
     box-shadow: .05em .01em .5em rgba(0,0,0,.2);
     background: white;
     width: 200px;
 }
+
 div.ReactTags__suggestions li {
     border-bottom: 1px solid #ddd;
     padding: 5px 10px;
     margin: 0;
 }
+
 div.ReactTags__suggestions li mark {
     text-decoration: underline;
     background: none;
     font-weight: 600;
 }
+
 div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
     background: #b7cfe0;
     cursor: pointer;
@@ -152,8 +160,6 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   .publish-btn-wrapper{
     text-align: right;
   }
-
-
 
   .publish-btn-wrapper button {
     border: 1px solid #0e718c;
@@ -218,14 +224,4 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
     background: #ffffff;
     padding: 10px 10px 0;
   }
-
 }
-
-
-
-
-
-
-
-
-

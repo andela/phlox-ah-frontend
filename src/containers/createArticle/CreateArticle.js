@@ -30,28 +30,30 @@ class CreateArticle extends Component {
     super();
 
     this.state = {
-      idleTimer: null,
-      title: '',
-      description: '',
+      alertVisible: false,
       body: '',
       category: '',
-      image: null,
+      description: '',
       hasChanges: false,
-      alertVisible: false,
+      idleTimer: null,
+      imgUrl: null,
+      imageName: '',
       isCreated: false,
-      tags: []
+      tags: [],
+      title: ''
     };
 
-    this.onInputChange = this.onInputChange.bind(this);
+    this.create = this.create.bind(this);
     this.getAlertMessage = this.getAlertMessage.bind(this);
+    this.handleAddition = this.handleAddition.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.onImageChange = this.onImageChange.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onPublishArticle = this.onPublishArticle.bind(this);
     this.save = this.save.bind(this);
     this.update = this.update.bind(this);
-    this.create = this.create.bind(this);
-    this.onPublishArticle = this.onPublishArticle.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleAddition = this.handleAddition.bind(this);
-    this.handleDrag = this.handleDrag.bind(this);
   }
 
   /**
@@ -72,6 +74,21 @@ class CreateArticle extends Component {
     */
   onInputChange(e) {
     this.setState({ [e.target.id]: e.target.value, hasChanges: true, alertVisible: true });
+  }
+
+  /**
+    * @description - This method sets the image
+    * @param {object} e
+    * @returns {object} void
+    * @memberof Article
+    */
+  onImageChange(e) {
+    const file = e.target.files[0];
+    if (file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/jpeg') {
+      this.setState({
+        imgUrl: file, imageName: file.name, hasChanges: true, alertVisible: true
+      });
+    }
   }
 
   /**
@@ -115,19 +132,24 @@ class CreateArticle extends Component {
     */
   create() {
     const {
-      hasChanges, title, description, body, category, image, tags
+      hasChanges, title, description, body, category, imgUrl
     } = this.state;
 
     const categoryId = Number(category);
 
-    const newTags = TagObjectToString(tags);
+    const tags = TagObjectToString(this.state.tags);
 
     if (hasChanges) {
       this.setState({ hasChanges: false, alertVisible: true, isCreated: true });
 
-      this.props.createArticle({
-        title, description, body, newTags, categoryId
-      });
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('body', body);
+      formData.append('imgUrl', imgUrl);
+      formData.append('categoryId', categoryId);
+      formData.append('tags', JSON.stringify(tags));
+      this.props.createArticle(formData, tags);
     }
   }
 
@@ -151,33 +173,37 @@ class CreateArticle extends Component {
     */
   update() {
     const {
-      hasChanges, title, description, body, category, tags
+      hasChanges, title, description, body, category, imgUrl
     } = this.state;
 
     const categoryId = Number(category);
-    const newTags = TagObjectToString(tags);
+    const tags = TagObjectToString(this.state.tags);
     const articleSlug = this.props.article.slug;
 
     if (hasChanges) {
       this.setState({ hasChanges: false, alertVisible: true });
-      this.props.updateArticle(
-        {
-          title, description, body, articleSlug, newTags, categoryId
-        }
-      );
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('body', body);
+      formData.append('imgUrl', imgUrl);
+      formData.append('categoryId', categoryId);
+      formData.append('tags', JSON.stringify(tags));
+
+      this.props.updateArticle(formData, tags, articleSlug);
     }
   }
 
   /**
     * @description - This method delete the Tag input values
-    * @param {objecj}  tagToDelete
+    * @param {objecj}  tagIndexToDelete
     * @returns {object} void
     * @memberof Article
     */
-  handleDelete(tagToDelete) {
+  handleDelete(tagIndexToDelete) {
     const { tags } = this.state;
     this.setState({
-      tags: tags.filter((tag, index) => index !== tagToDelete),
+      tags: tags.filter((tag, index) => index !== tagIndexToDelete),
       hasChanges: true,
       alertVisible: true
     });
@@ -227,11 +253,13 @@ class CreateArticle extends Component {
    * @memberof CreateArticle
    */
   render() {
+    console.log(this.state);
+    const defaultValue = this.state.category ? this.state.category : 0;
     return (
       <div>
         <IdleTimer
           ref={(ref) => { this.idleTimer = ref; }}
-          timeout={3000}
+          timeout={7000}
           startOnMount={false}
           onIdle={this.save}>
           <Row className="create-article">
@@ -241,6 +269,7 @@ class CreateArticle extends Component {
               onPublishArticle={this.onPublishArticle}
               onInputChange={this.onInputChange}
               handleEditorChange={this.handleEditorChange}
+              onImageChange={this.onImageChange}
             />
             <Col m={4} l={3} className="tag-category">
               <label htmlFor="Title">Tags</label>
@@ -254,7 +283,13 @@ class CreateArticle extends Component {
               />
               <div className="input-field col s12">
                 <span htmlFor="Title">Categories</span>
-                <Input s={12} type='select' id="category" onChange={this.onInputChange} defaultValue={this.state.category ? this.state.category : '0'} required>
+                <Input
+                  s={12}
+                  type="select"
+                  id="category"
+                  onChange={this.onInputChange}
+                  defaultValue={defaultValue}
+                  required>
                   <option value="0" disabled>Choose your option</option>
                   {this.renderSelectOptions()}
                 </Input>
@@ -269,23 +304,22 @@ class CreateArticle extends Component {
 
 CreateArticle.propTypes = {
   article: PropTypes.object,
-  suggestedTags: PropTypes.array,
   categories: PropTypes.array,
-  loading: PropTypes.bool,
-  error: PropTypes.bool,
-  getAllTags: PropTypes.func,
   createArticle: PropTypes.func,
-  updateArticle: PropTypes.func,
+  error: PropTypes.bool,
+  getAllCategory: PropTypes.func,
+  getAllTags: PropTypes.func,
   publishArticle: PropTypes.func,
-  getAllCategory: PropTypes.func
+  suggestedTags: PropTypes.array,
+  updateArticle: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
   const {
     article, message, tags, loading, error
-  } = state.Article;
-  const { categories } = state.Category;
-  const suggestedTags = state.Tags.tags;
+  } = state.article;
+  const { categories } = state.category;
+  const suggestedTags = state.tags.tags;
 
   return {
     article, message, tags, loading, categories, suggestedTags, error

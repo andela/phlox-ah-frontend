@@ -28,17 +28,18 @@ class Header extends Component {
     super();
 
     this.state = {
-      showDropDown: false,
-      showSettingsOption: false,
       isAuth: false,
+      showDropDown: false,
+      showSettingsOption: false
     };
-    this.timeoutID = null;
-    this.onShowDropDown = this.onShowDropDown.bind(this);
-    this.toggleDropDown = this.toggleDropDown.bind(this);
     this.onBlur = this.onBlur.bind(this);
-    this.onLoginClicked = this.onLoginClicked.bind(this);
+    this.onShowDropDown = this.onShowDropDown.bind(this);
+    this.onSignIn = this.onSignIn.bind(this);
+    this.onSignOut = this.onSignOut.bind(this);
+    this.onSignUp = this.onSignUp.bind(this);
+    this.timeoutID = null;
+    this.toggleDropDown = this.toggleDropDown.bind(this);
     this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
-    this.logout = this.logout.bind(this);
   }
 
   /**
@@ -88,7 +89,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onSignupClicked() {
+  onSignUp() {
     $('#signupModal').modal('open');
   }
 
@@ -97,7 +98,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onLoginClicked() {
+  onSignIn() {
     $('#login-modal').modal('open');
   }
 
@@ -106,8 +107,8 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  logout() {
-    this.props.logout();
+  onSignOut() {
+    this.props.signOut();
     localStorage.removeItem('token');
   }
 
@@ -152,9 +153,9 @@ class Header extends Component {
    */
   render() {
     const {
+      isAuth,
       showDropDown,
-      showSettingsOption,
-      isAuth
+      showSettingsOption
     } = this.state;
 
     return (
@@ -188,7 +189,7 @@ class Header extends Component {
               className="right hide-on-med-and-down nav-button">
               <li>
                 <a
-                  onClick={this.onLoginClicked}
+                  onClick={this.onSignIn}
                   href="#"
                   className="login">
                   Login
@@ -196,7 +197,7 @@ class Header extends Component {
               </li>
               <li>
                 <a
-                  onClick={this.onSignupClicked}
+                  onClick={this.onSignUp}
                   href="#" className="sign-up">
                   Sign Up
                 </a>
@@ -227,7 +228,7 @@ class Header extends Component {
                         </Link>
                       </li>
                       <li
-                        onClick={this.logout}
+                        onClick={this.onSignOut}
                         className="s-list">
                         <i className="fas fa-sign-out-alt"></i>
                         &nbsp; Sign out
@@ -246,14 +247,14 @@ class Header extends Component {
 
 Header.propTypes = {
   user: PropTypes.object,
-  logout: PropTypes.func
+  signOut: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-  user: state.User
+  user: state.user
 });
 
 
 export default connect(mapStateToProps, {
-  logout: asyncActions(LOGOUT).success
+  signOut: asyncActions(LOGOUT).success
 })(Header);

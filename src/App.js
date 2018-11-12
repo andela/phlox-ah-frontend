@@ -31,9 +31,9 @@ class App extends Component {
         <div>
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/forgot/password" component={ForgotPassword} />
-            <Route path="/reset-password/:token" component={ResetPassword} />
-            <Route path="/new-story" exact component={CreateArticle} />
+            <Route path="/password/forgot" component={ForgotPassword} />
+            <Route path="/password/reset/:token" component={ResetPassword} />
+            <Route path="/articles" exact component={CreateArticle} />
           </Switch>
         </div>
       </div>

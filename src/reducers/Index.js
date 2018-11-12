@@ -1,22 +1,22 @@
 import { combineReducers } from 'redux';
 
-import articleReducer from './ArticleReducer';
-import userReducer from './UserReducer';
-import msgInfoReducer from './MsgInfoReducer';
-import categoryReducer from './CategoryReducer';
-import TagReducer from './TagReducer';
-import passwordReducer from './PasswordReducer';
-import signupReducer from './SignupReducer';
+import article from './ArticleReducer';
+import user from './UserReducer';
+import info from './MsgInfoReducer';
+import category from './CategoryReducer';
+import tags from './TagReducer';
+import password from './PasswordReducer';
+import signup from './SignupReducer';
 
 
 const rootReducer = combineReducers({
-  Article: articleReducer,
-  User: userReducer,
-  Info: msgInfoReducer,
-  Category: categoryReducer,
-  Tags: TagReducer,
-  passwordReducer,
-  Signup: signupReducer
+  article,
+  category,
+  info,
+  password,
+  signup,
+  tags,
+  user
 });
 
 export default rootReducer;
