@@ -9,9 +9,6 @@ import 'medium-editor/dist/css/themes/default.css';
 
 import './CreateArticle.scss';
 import '../../styles/style.scss';
-import Login from '../Login/Login';
-import Header from '../Header/Header';
-import MsgInfo from '../MsgInfo/MsgInfo';
 import { getAllTags } from '../../requests/TagRequests';
 import { getAllCategory } from '../../requests/CategoryRequests';
 import ArticleForm from '../../components/ArticleForm/ArticleForm';
