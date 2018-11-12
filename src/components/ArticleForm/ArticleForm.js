@@ -36,7 +36,7 @@ const ArticleForm = ({
       <Row>
         <Col m={7}>
             <div className="title-input">
-              <input type="text" placeholder="Title" id="title" value={componentState.title} onChange={onInputChange} />
+              <input type="text" className="title-size" placeholder="Title" id="title" value={componentState.title} onChange={onInputChange} />
           </div>
         </Col>
         <Col m={5}>
