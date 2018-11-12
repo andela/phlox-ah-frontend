@@ -32,7 +32,7 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/forgot/password" component={ForgotPassword} />
-            <Route path="/reset_password/:token" component={ResetPassword} />
+            <Route path="/reset-password/:token" component={ResetPassword} />
             <Route path="/new-story" exact component={CreateArticle} />
           </Switch>
         </div>
