@@ -4,8 +4,9 @@ $darkGray: #424242;
 
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 22px;
+    font-size: 18px;
     line-height: 30px;
+    background: #F8F9FA;
 }
 
 h1 {
@@ -59,15 +60,22 @@ blockquote {
 }
 
 /* Styles for selected tags */
+div.ReactTags__tags {
+  margin-top: 10px;
+}
 div.ReactTags__selected span.ReactTags__tag {
     background: #3B8CA1;
     color: #ffffff;
     font-size: 12px;
     display: inline-block;
     padding: 5px;
-    margin: 0 5px;
+    margin: 5px 5px;
     cursor: move;
     border-radius: 2px;
+}
+div.react-tags-wrapper {
+  background: #ffffff;
+  padding: 10px 10px 0px;
 }
 div.ReactTags__selected a.ReactTags__remove {
     color: #ffffff;
@@ -75,10 +83,14 @@ div.ReactTags__selected a.ReactTags__remove {
     cursor: pointer;
     text-decoration: none;
 }
+div.ReactTags__tagInput input.ReactTags__tagInputField {
+  border: none;
+}
 
 /* Styles for suggestions */
 div.ReactTags__suggestions {
     position: absolute;
+    z-index: 90;
 }
 div.ReactTags__suggestions ul {
     list-style-type: none;
@@ -112,7 +124,9 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 }
 
 .create-article {
-  margin-top: 30px;
+  margin:3px 30px;
+  padding-top: 20px;
+  background: #ffffff;
 
   div.author-photo{
     width: 50px;
@@ -186,6 +200,29 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
     }
   }
 }
+
+.tag-category {
+  background: #EEEEEE;
+  margin-top: 90px;
+  height: 500px;
+  padding-top: 10px;
+  label, span {
+    font-size: 16px;
+    color: #5E5F63;
+  };
+  .input-field {
+    margin-top: 40px;
+  }
+  .input-field .input-field {
+    margin-top: 9px;
+    background: #ffffff;
+    padding: 10px 10px 0;
+  }
+
+}
+
+
+
 
 
 

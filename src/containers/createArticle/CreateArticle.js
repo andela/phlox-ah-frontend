@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import IdleTimer from 'react-idle-timer';
 import PropTypes from 'prop-types';
-import Editor from 'react-medium-editor';
 import { Row, Col, Input } from 'react-materialize';
 import { WithContext as ReactTags } from 'react-tag-input';
 import 'medium-editor/dist/css/medium-editor.css';
@@ -15,6 +14,7 @@ import Header from '../Header/Header';
 import MsgInfo from '../MsgInfo/MsgInfo';
 import { getAllTags } from '../../requests/TagRequests';
 import { getAllCategory } from '../../requests/CategoryRequests';
+import ArticleForm from '../../components/ArticleForm/ArticleForm';
 import { TagObjectToString, convertIdToString } from '../../util/TagsHelper';
 import { createArticle, updateArticle, publishArticle } from '../../requests/ArticleRequests';
 
@@ -173,14 +173,14 @@ class CreateArticle extends Component {
 
   /**
     * @description - This method delete the Tag input values
-    * @param {objecj}  i
+    * @param {objecj}  tagToDelete
     * @returns {object} void
     * @memberof Article
     */
-  handleDelete(i) {
+  handleDelete(tagToDelete) {
     const { tags } = this.state;
     this.setState({
-      tags: tags.filter((tag, index) => index !== i),
+      tags: tags.filter((tag, index) => index !== tagToDelete),
       hasChanges: true,
       alertVisible: true
     });
@@ -210,17 +210,17 @@ class CreateArticle extends Component {
   /**
     * @description - This method is use to drag the tag input values
     * @param {string} tag
-    * @param {string} currPos
-    *  @param {string} newPos
+    * @param {string} currentPosition
+    *  @param {string} newPosition
     * @returns {object} void
     * @memberof Article
     */
-  handleDrag(tag, currPos, newPos) {
+  handleDrag(tag, currentPosition, newPosition) {
     const tags = [...this.state.tags];
     const newTags = tags.slice();
 
-    newTags.splice(currPos, 1);
-    newTags.splice(newPos, 0, tag);
+    newTags.splice(currentPosition, 1);
+    newTags.splice(newPosition, 0, tag);
     this.setState({ tags: newTags });
   }
 
@@ -232,84 +232,32 @@ class CreateArticle extends Component {
   render() {
     return (
       <div>
-        <Header />
-        <Login />
-        <MsgInfo />
         <IdleTimer
           ref={(ref) => { this.idleTimer = ref; }}
           timeout={3000}
           startOnMount={false}
           onIdle={this.save}>
           <Row className="create-article">
-            <Col m={8} l={9}>
-              <div className="container">
-                <Row>
-                  <Col m={8} className="flex">
-                    <div className="author-photo"></div>
-                    <div className="author-name">
-                      <div>Victor victor</div>
-                      <div className="pub-date">Sept 26, 2018</div>
-                      {this.state.alertVisible
-                        && <p className="status">
-                          {this.getAlertMessage()}
-                        </p>
-                      }
-                    </div>
-                  </Col>
-                  <Col className="publish-btn-wrapper" m={4}>
-                    <button onClick={this.onPublishArticle}>Publish</button>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col m={7}>
-                    <div>
-                      <label htmlFor="Title">Title (required)</label>
-                      <input type="text" placeholder="Enter Title" id="title" value={this.state.title} onChange={this.onInputChange} required />
-                    </div>
-                  </Col>
-                  <Col m={5}>
-                    <label className="article-img-upload">
-                      <p className="file-name">Choose file</p>
-                      <label htmlFor="file-input" className="browse-btn">Browse</label>
-                      <input id="image" type="file" className="file-input" onChange={this.onImageChange} />
-                    </label>
-                  </Col>
-                </Row>
-
-                <div>
-                  <label htmlFor="Description">Description (required)</label>
-                  <input type="text"
-                    placeholder="Enter Description"
-                    value={this.state.description}
-                    id="description" onChange={this.onInputChange} required />
-                </div>
-
-                <div>
-                  <label htmlFor="Body">Body (required)</label>
-                  <Editor
-                    className="editable"
-                    data-placeholder="Tell your story here..."
-                    text={this.state.body}
-                    onChange={this.handleEditorChange}
-                    options={{ toolbar: true }}
-                    required
-                  />
-                </div>
-              </div>
-            </Col>
-            <Col m={4} l={3}>
+            <ArticleForm
+              componentState={this.state}
+              getAlertMessage={this.getAlertMessage()}
+              onPublishArticle={this.onPublishArticle}
+              onInputChange={this.onInputChange}
+              handleEditorChange={this.handleEditorChange}
+            />
+            <Col m={4} l={3} className="tag-category">
+              <label htmlFor="Title">Tags</label>
               <ReactTags
                 tags={this.state.tags}
                 suggestions={convertIdToString(this.props.suggestedTags)}
                 handleDelete={this.handleDelete}
                 handleAddition={this.handleAddition}
                 handleDrag={this.handleDrag}
-                placeholder="Add new tag (required)"
                 required
               />
               <div className="input-field col s12">
-                <Input s={12} type='select' id="category" label="(required) Select Category" onChange={this.onInputChange} defaultValue={this.state.category ? this.state.category : '0'} required>
+                <span htmlFor="Title">Categories</span>
+                <Input s={12} type='select' id="category" onChange={this.onInputChange} defaultValue={this.state.category ? this.state.category : '0'} required>
                   <option value="0" disabled>Choose your option</option>
                   {this.renderSelectOptions()}
                 </Input>

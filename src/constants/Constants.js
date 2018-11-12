@@ -20,3 +20,12 @@ export const loginConstant = {
 export const categoryConstant = {
   GET_ALL_CATEGORY_URL: `${BASE_URL}/api/v1/categories`
 };
+
+export const passwordConstant = {
+  FORGOT_PASSWORD_URL: `${BASE_URL}/api/v1/forgetPassword`,
+  RESET_PASSWORD_URL: `${BASE_URL}/api/v1/reset_password`
+};
+
+export const signupConstant = {
+  SIGNUP_URL: `${BASE_URL}/api/v1/signup`
+};
