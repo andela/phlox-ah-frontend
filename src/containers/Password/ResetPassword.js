@@ -89,6 +89,7 @@ class ResetPassword extends Component {
    * @memberof ResetPassword
    */
   onClose() {
+    this.props.clearMsgInfo();
     $('#reset-password-modal').modal('close');
   }
 
@@ -116,11 +117,11 @@ class ResetPassword extends Component {
   validatePassword(password, confirmPassword) {
     let errors = [];
     if (password.length < 6) {
-      errors = [...errors, 'Password must be at least 6 characters'];
+      errors = [...errors, 'password must be at least 6 characters'];
     }
 
     if (password !== confirmPassword) {
-      errors = [...errors, 'The passwords do not match'];
+      errors = [...errors, 'passwords do not match'];
     }
 
     if (errors.length) {

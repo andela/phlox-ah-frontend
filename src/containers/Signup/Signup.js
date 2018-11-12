@@ -6,9 +6,9 @@ import {
 import '../Common/ModalForm.scss';
 import './Signup.scss';
 import { connect } from 'react-redux';
-import { signup } from '../../requests/SignupRequests';
+import MsgInfo from '../MsgInfo/MsgInfo';
 import {
-  Input, Button
+  signup, msgInfoActions, Input, Button, asyncActions, SIGNUP
 } from '../BasePath';
 
 /**
@@ -25,46 +25,88 @@ class Signup extends Component {
   constructor() {
     super();
     this.state = {
-      email: '', username: '', password: '', confirmPassword: ''
+      email: '',
+      username: '',
+      password: '',
+      confirmPassword: ''
     };
+
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onSignIn = this.onSignIn.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   /**
    * @memberOf handle close modal
-   * @method closeModal
+   * @method onClose
    * @param {*} event
    * @return {*} boolean
    */
-  closeModal() {
+  onClose() {
     $('#signup-modal').modal('close');
+    this.props.setSignUpSuccessState(false);
+    this.props.clearMsgInfo();
+  }
+
+  /**
+   * @description - This method checks weather there is input error
+   * @param {objecj} info
+   * @returns {object} error
+   */
+  hasError(info={}) {
+    console.log(info)
+    const errors = {
+      validEmail: true,
+      validUsername: true,
+      validPassword: true,
+    };
+
+    info.message.forEach((value) => {
+      if (!info.success && value.includes('password')) {
+        errors.validPassword = false;
+      }
+      if (!info.success && value.includes('email')) {
+        errors.validEmail = false;
+      }
+      if (!info.success && value.includes('username')) {
+        errors.validUsername = false;
+      }
+    });
+
+    return errors;
   }
 
   /**
    * @memberOf handleChangeEvent
    * @method handleChangeEvent
-   * @param {*} event
+   * @param {*} e
    * @return {*} setstate
    */
-  onChange(event) {
+  onChange(e) {
+    if (this.props.info.message.length) {
+      this.props.clearMsgInfo();
+    }
     this.setState({
-      [event.target.name]: event.target.value,
+      [e.target.name]: e.target.value,
     });
   }
 
   /**
    * @description - This method makes signup request
-   * @param {objecj} event
+   * @param {objecj} e
    * @returns {object} null
    * @memberof Signup
    */
-  onSubmit(event) {
-    event.preventDefault();
+  onSubmit(e) {
+    e.preventDefault();
+
+    if (!this.isValidData(this.state)) {
+      return;
+    }
+
     this.props.signup(this.state);
   }
-
 
   /**
    * @description - This method runs when signup is clicked
@@ -72,8 +114,36 @@ class Signup extends Component {
    * @memberof Login
    */
   onSignIn() {
-    this.closeModal();
+    this.onClose();
     $('#login-modal').modal('open');
+  }
+
+  /**
+   * @description - This method validates the input values
+   * @param {objecj} data
+   * @returns {array} errors
+   * @memberof Login
+   */
+  isValidData(data) {
+    let errors = [];
+    if (!data.username) {
+      errors = [...errors, 'username is required'];
+    }
+    if (!data.email) {
+      errors = [...errors, 'email is required'];
+    }
+    if (!data.password) {
+      errors = [...errors, 'password is required'];
+    }
+    if (data.password !== data.confirmPassword) {
+      errors = [...errors, 'passwords do not match'];
+    }
+
+    if (errors.length) {
+      this.props.setErrorMsgInfo(errors);
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -84,9 +154,14 @@ class Signup extends Component {
    */
   render() {
     const {
-      email, username, password, confirmPassword
+      email,
+      username,
+      password,
+      confirmPassword,
     } = this.state;
+
     const { loading, success } = this.props;
+
     return (
       <Modal id='signup-modal' className="center-align modal">
         {
@@ -99,7 +174,7 @@ class Signup extends Component {
             </p>
             <Button
               waves='light'
-              onClick={this.closeModal}
+              onClick={this.onClose}
               name="OK"
             />
           </div>
@@ -109,11 +184,12 @@ class Signup extends Component {
           && <div>
             <div>
               <button className="close-modal"
-                onClick={this.closeModal}>
+                onClick={this.onClose}>
                 <i className="fas fa-times fa-lg black-text"></i>
               </button>
             </div>
             <h5 className="form-title">Authors Haven</h5>
+            <MsgInfo />
             <form className="col s12" onSubmit={this.onSubmit}>
               <Row>
                 <Input
@@ -125,6 +201,7 @@ class Signup extends Component {
                   value={username}
                   onChange={this.onChange}
                   required={true}
+                  hasError={!this.hasError(this.props.info).validUsername}
                 />
                 <Input
                   type="email"
@@ -135,6 +212,7 @@ class Signup extends Component {
                   value={email}
                   onChange={this.onChange}
                   required={true}
+                  hasError={!this.hasError(this.props.info).validEmail}
                 />
                 <Input
                   type="password"
@@ -145,6 +223,7 @@ class Signup extends Component {
                   value={password}
                   onChange={this.onChange}
                   required={true}
+                  hasError={!this.hasError(this.props.info).validPassword}
                 />
                 <Input
                   type="password"
@@ -155,14 +234,13 @@ class Signup extends Component {
                   value={confirmPassword}
                   onChange={this.onChange}
                   required={true}
+                  hasError={!this.hasError(this.props.info).validPassword}
                 />
                 <Button
                   type="submit"
                   className="signupButton"
                   waves='light'
-                  name={loading
-                    ? (<i className="fas fa-spinner fa-pulse"></i>)
-                    : 'Sign Up'}
+                  name={loading ? (<i className="fas fa-spinner fa-pulse"></i>) : 'Sign Up'}
                 />
               </Row>
             </form>
@@ -205,14 +283,23 @@ class Signup extends Component {
 
 Signup.propTypes = {
   signup: PropTypes.func.isRequired,
+  setSignUpSuccessState: PropTypes.func.isRequired,
+  clearMsgInfo: PropTypes.func.isRequired,
+  setErrorMsgInfo: PropTypes.func.isRequired,
+  info: PropTypes.object,
   loading: PropTypes.bool,
-  success: PropTypes.bool,
+  success: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
   loading: state.signup.loading,
   success: state.signup.success,
-  info: state.info,
+  info: state.info
 });
 
-export default connect(mapStateToProps, { signup })(Signup);
+export default connect(mapStateToProps, {
+  signup,
+  setErrorMsgInfo: msgInfoActions.failure,
+  clearMsgInfo: msgInfoActions.clear,
+  setSignUpSuccessState: asyncActions(SIGNUP).success
+})(Signup);

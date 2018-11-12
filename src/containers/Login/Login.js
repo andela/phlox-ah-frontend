@@ -45,6 +45,7 @@ class Login extends Component {
     this.onSignUp = this.onSignUp.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.hasError = this.hasError.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   /**
@@ -67,7 +68,8 @@ class Login extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  onHideModal() {
+  onClose() {
+    this.props.clearMsgInfo();
     $('#login-modal').modal('close');
   }
 
@@ -80,9 +82,8 @@ class Login extends Component {
    */
   onSubmit(e) {
     e.preventDefault();
-    const errors = this.validateData(this.state);
-    if (errors.length) {
-      this.props.setErrorMsgInfo(errors);
+
+    if (!this.isValidData(this.state)) {
       return;
     }
 
@@ -101,8 +102,7 @@ class Login extends Component {
    * @memberof Login
    */
   onForgotPassword() {
-    this.props.clearMsgInfo();
-    this.onHideModal();
+    this.onClose();
     $('#forgot-password-modal').modal('open');
   }
 
@@ -112,8 +112,7 @@ class Login extends Component {
    * @memberof Login
    */
   onSignUp() {
-    this.props.clearMsgInfo();
-    this.onHideModal();
+    this.onClose();
     $('#signup-modal').modal('open');
   }
 
@@ -136,7 +135,7 @@ class Login extends Component {
    * @returns {array} errors
    * @memberof Login
    */
-  validateData(data) {
+  isValidData(data) {
     let errors = [];
     if (!data.emailOrUsername) {
       errors = [...errors, 'email or username is required'];
@@ -145,7 +144,11 @@ class Login extends Component {
       errors = [...errors, 'password is required'];
     }
 
-    return errors;
+    if (errors.length) {
+      this.props.setErrorMsgInfo(errors);
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -162,7 +165,7 @@ class Login extends Component {
         className="center-align modal" id="login-modal">
         <div>
           <button className="close-modal"
-            onClick={this.onHideModal}>
+            onClick={this.onClose}>
             <i className="fas fa-times fa-lg black-text"></i>
           </button>
         </div>

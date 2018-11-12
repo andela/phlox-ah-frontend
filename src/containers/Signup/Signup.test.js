@@ -18,12 +18,18 @@ const store = mockStore({
 let component;
 let myComponent;
 
+const props = {
+  info: {
+    message: ['password is required'],
+    success: false
+  }
+};
 
 describe('<Signup/>', () => {
   beforeEach(() => {
     component = shallow(
       <Provider store={store}>
-        <Signup />
+        <Signup {...props} />
       </Provider>
     );
     myComponent = component.dive({ context: { store } }).dive();

@@ -1,3 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Signup/> should render without throwing an error 1`] = `<Connect(Signup) />`;
+exports[`<Signup/> should render without throwing an error 1`] = `
+<Connect(Signup)
+  info={
+    Object {
+      "message": Array [
+        "password is required",
+      ],
+      "success": false,
+    }
+  }
+/>
+`;

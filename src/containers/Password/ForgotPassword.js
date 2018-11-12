@@ -93,7 +93,6 @@ class ForgotPassword extends Component {
    */
   onSignIn() {
     this.onClose();
-    this.props.clearMsgInfo();
     $('#login-modal').modal('open');
   }
 
@@ -104,7 +103,6 @@ class ForgotPassword extends Component {
    */
   onSignUp() {
     this.onClose();
-    this.props.clearMsgInfo();
     $('#signup-modal').modal('open');
   }
 
