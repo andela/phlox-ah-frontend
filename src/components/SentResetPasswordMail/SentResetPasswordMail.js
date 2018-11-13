@@ -10,7 +10,7 @@ const onLogin = () => {
 };
 
 const goToHome = (props) => {
-  props.history.push('/', null);
+  props.history.push('/');
 };
 
 export const SentResetPasswordMail = props => (
@@ -34,7 +34,7 @@ export const SentResetPasswordMail = props => (
 );
 
 SentResetPasswordMail.propTypes = {
-  history: PropTypes.object
+  props: PropTypes.object
 };
 
 export default SentResetPasswordMail;

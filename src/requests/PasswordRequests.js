@@ -17,7 +17,7 @@ export const sendResetPassword = (token, password) => (dispatch) => {
         dispatch(asyncActions(RESET_PASSWORD).success(response.data.message));
         dispatch(msgInfoActions.success([response.data.message]));
         dispatch(asyncActions(RESET_PASSWORD).loading(false));
-        history.push('/', null);
+        history.push('/');
       }
     })
     .catch((error) => {
@@ -34,7 +34,7 @@ export const sendForgotPassword = email => (dispatch) => {
       if (response.status === 200) {
         dispatch(asyncActions(FORGOT_PASSWORD).success(response.data.message));
         dispatch(asyncActions(FORGOT_PASSWORD).loading(false));
-        history.push('/password/reset/success', null);
+        history.push('/password/forgot-success');
       }
     })
     .catch((error) => {

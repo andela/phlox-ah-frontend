@@ -42,10 +42,11 @@ class Login extends Component {
     };
 
     this.hasError = this.hasError.bind(this);
-    this.onClose = this.onClose.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onSignUp = this.onSignUp.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.change = this.change.bind(this);
+    this.signUp = this.signUp.bind(this);
+    this.submit = this.submit.bind(this);
+    this.forgotPassword = this.forgotPassword.bind(this);
   }
 
   /**
@@ -54,13 +55,11 @@ class Login extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  onChange(e) {
+  change(e) {
     if (this.props.info.message.length) {
       this.props.clearMsgInfo();
     }
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   /**
@@ -68,7 +67,7 @@ class Login extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  onClose() {
+  closeModal() {
     this.props.clearMsgInfo();
     $('#login-modal').modal('close');
   }
@@ -80,7 +79,7 @@ class Login extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  onSubmit(e) {
+  submit(e) {
     e.preventDefault();
 
     if (!this.isValidData(this.state)) {
@@ -89,9 +88,7 @@ class Login extends Component {
 
     this.props.login(this.state)
       .then((res) => {
-        this.setState({
-          ...this.initialState
-        });
+        this.setState({ ...this.initialState });
       });
   }
 
@@ -101,8 +98,8 @@ class Login extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  onForgotPassword() {
-    this.onClose();
+  forgotPassword() {
+    this.closeModal();
     $('#forgot-password-modal').modal('open');
   }
 
@@ -111,8 +108,8 @@ class Login extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  onSignUp() {
-    this.onClose();
+  signUp() {
+    this.closeModal();
     $('#signup-modal').modal('open');
   }
 
@@ -165,13 +162,13 @@ class Login extends Component {
         className="center-align modal" id="login-modal">
         <div>
           <button className="close-modal"
-            onClick={this.onClose}>
+            onClick={this.closeModal}>
             <i className="fas fa-times fa-lg black-text"></i>
           </button>
         </div>
         <h5 className="form-title">Authors Haven</h5>
         <MsgInfo />
-        <form className="col s12" onSubmit={this.onSubmit}>
+        <form className="col s12" onSubmit={this.submit}>
           <Row>
             <Input
               type="text"
@@ -180,8 +177,7 @@ class Login extends Component {
               name="emailOrUsername"
               id="emailOrUsername"
               value={emailOrUsername}
-              onChange={this.onChange}
-              required={true}
+              onChange={this.change}
               hasError={this.hasError()}
             />
             <Input
@@ -191,14 +187,13 @@ class Login extends Component {
               name="password"
               id="lpassword"
               value={password}
-              onChange={this.onChange}
-              required={true}
+              onChange={this.change}
               hasError={this.hasError()}
             />
             <Row>
               <p s={12}
                 className="theme-color forgot-password-link"
-                onClick={() => this.onForgotPassword()}>
+                onClick={this.forgotPassword}>
                 Forgot password?
               </p>
             </Row>
@@ -237,7 +232,7 @@ class Login extends Component {
         </form>
         <div className="more-action">
           DO NOT HAVE AN ACCOUNT YET?
-          <button onClick={this.onSignUp}>
+          <button onClick={this.signUp}>
             <span className="theme-color">
               &nbsp; SIGN UP
             </span>

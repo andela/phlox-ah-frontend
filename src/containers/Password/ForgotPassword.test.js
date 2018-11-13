@@ -5,7 +5,12 @@ import configureMockStore from 'redux-mock-store';
 import ForgotPassword from './ForgotPassword';
 
 const mockStore = configureMockStore();
-const store = mockStore({});
+const store = mockStore({  
+  info: {
+    message: ['password is required'],
+    success: false
+  }
+});
 
 let component;
 let myComponent;

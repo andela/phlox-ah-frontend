@@ -31,11 +31,11 @@ class ForgotPassword extends Component {
     };
 
     this.hasError = this.hasError.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onClose = this.onClose.bind(this);
-    this.onSignIn = this.onSignIn.bind(this);
-    this.onSignUp = this.onSignUp.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.change = this.change.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.signIn = this.signIn.bind(this);
+    this.signUp = this.signUp.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   /**
@@ -44,13 +44,11 @@ class ForgotPassword extends Component {
    * @returns {object} null
    * @memberof ForgotPassword
    */
-  onChange(e) {
+  change(e) {
     if (this.props.info.message.length) {
       this.props.clearMsgInfo();
     }
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   /**
@@ -59,9 +57,9 @@ class ForgotPassword extends Component {
    * @param {*} e
    * @memberof ForgotPassword
    */
-  onSubmit(e) {
+  submit(e) {
     e.preventDefault();
-    this.props.sendForgotPassword(this.state.email, this.props);
+    this.props.sendForgotPassword(this.state.email);
   }
 
   /**
@@ -69,7 +67,7 @@ class ForgotPassword extends Component {
    * @returns {object} null
    * @memberof ForgotPassword
    */
-  onClose() {
+  closeModal() {
     this.props.clearMsgInfo();
     $('#forgot-password-modal').modal('close');
   }
@@ -80,8 +78,8 @@ class ForgotPassword extends Component {
    * @returns {bool} error
    * @memberof ForgotPassword
    */
-  hasError(info = {}) {
-    if (info.success) {
+  hasError() {
+    if (this.props.info.success) {
       return false;
     }
     return true;
@@ -92,8 +90,8 @@ class ForgotPassword extends Component {
    * @returns {object} null
    * @memberof ForgotPassword
    */
-  onSignIn() {
-    this.onClose();
+  signIn() {
+    this.closeModal();
     $('#login-modal').modal('open');
   }
 
@@ -102,8 +100,8 @@ class ForgotPassword extends Component {
    * @returns {object} null
    * @memberof ForgotPassword
    */
-  onSignUp() {
-    this.onClose();
+  signUp() {
+    this.closeModal();
     $('#signup-modal').modal('open');
   }
 
@@ -120,13 +118,13 @@ class ForgotPassword extends Component {
         id="forgot-password-modal">
         <div>
           <button className="close-modal"
-            onClick={this.onClose}>
+            onClick={this.closeModal}>
             <i className="fas fa-times fa-lg black-text"></i>
           </button>
         </div>
         <h5 className="form-title">Authors Haven</h5>
         <MsgInfo />
-        <form className="col s12" onSubmit={this.onSubmit}>
+        <form className="col s12" onSubmit={this.submit}>
           <Row>
             <Input
               type="email"
@@ -135,9 +133,8 @@ class ForgotPassword extends Component {
               value={this.state.email}
               label="Enter email"
               s={12}
-              required={true}
-              onChange={this.onChange}
-              hasError={this.hasError(this.props.info)}
+              onChange={this.change}
+              hasError={this.hasError()}
             />
             <Button
               type="submit"
@@ -147,13 +144,13 @@ class ForgotPassword extends Component {
         </form>
         <div className="more-action">
           HAVE AN ACCOUNT?
-          <button onClick={this.onSignIn}>
+          <button onClick={this.signIn}>
             <span className="theme-color">
               &nbsp; LOGIN
             </span>
           </button>
           <span>&nbsp; |</span>
-          <button onClick={this.onSignUp}>
+          <button onClick={this.signUp}>
             <span className="theme-color">
               &nbsp; SIGN UP
             </span>

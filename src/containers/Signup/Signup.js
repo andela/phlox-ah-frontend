@@ -31,21 +31,20 @@ class Signup extends Component {
       confirmPassword: ''
     };
 
-    this.onChange = this.onChange.bind(this);
-    this.onClose = this.onClose.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onSignIn = this.onSignIn.bind(this);
+    this.change = this.change.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.submit = this.submit.bind(this);
+    this.signIn = this.signIn.bind(this);
   }
 
   /**
    * @memberOf handle close modal
-   * @method onClose
+   * @method closeModal
    * @param {*} event
    * @return {*} boolean
    */
-  onClose() {
+  closeModal() {
     $('#signup-modal').modal('close');
-    this.props.setSignUpSuccessState(false);
     this.props.clearMsgInfo();
   }
 
@@ -64,14 +63,16 @@ class Signup extends Component {
     const { info } = this.props;
 
     info.message.forEach((value) => {
-      if (!info.success && value.includes('password')) {
-        errors.validPassword = false;
-      }
-      if (!info.success && value.includes('email')) {
-        errors.validEmail = false;
-      }
-      if (!info.success && value.includes('username')) {
-        errors.validUsername = false;
+      if (!info.success) {
+        if (value.includes('password')) {
+          errors.validPassword = false;
+        }
+        if (value.includes('email')) {
+          errors.validEmail = false;
+        }
+        if (value.includes('username')) {
+          errors.validUsername = false;
+        }
       }
     });
 
@@ -84,13 +85,11 @@ class Signup extends Component {
    * @param {*} e
    * @return {*} setstate
    */
-  onChange(e) {
+  change(e) {
     if (this.props.info.message.length) {
       this.props.clearMsgInfo();
     }
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   /**
@@ -99,7 +98,7 @@ class Signup extends Component {
    * @returns {object} null
    * @memberof Signup
    */
-  onSubmit(e) {
+  submit(e) {
     e.preventDefault();
 
     if (!this.isValidData(this.state)) {
@@ -114,8 +113,8 @@ class Signup extends Component {
    * @returns {object} null
    * @memberof Login
    */
-  onSignIn() {
-    this.onClose();
+  signIn() {
+    this.closeModal();
     $('#login-modal').modal('open');
   }
 
@@ -175,7 +174,7 @@ class Signup extends Component {
             </p>
             <Button
               waves='light'
-              onClick={this.onClose}
+              onClick={this.closeModal}
               name="OK"
             />
           </div>
@@ -185,13 +184,13 @@ class Signup extends Component {
           && <div>
             <div>
               <button className="close-modal"
-                onClick={this.onClose}>
+                onClick={this.closeModal}>
                 <i className="fas fa-times fa-lg black-text"></i>
               </button>
             </div>
             <h5 className="form-title">Authors Haven</h5>
             <MsgInfo />
-            <form className="col s12" onSubmit={this.onSubmit}>
+            <form className="col s12" onSubmit={this.submit}>
               <Row>
                 <Input
                   type="text"
@@ -200,8 +199,7 @@ class Signup extends Component {
                   name="username"
                   id="username"
                   value={username}
-                  onChange={this.onChange}
-                  required={true}
+                  onChange={this.change}
                   hasError={!this.hasError().validUsername}
                 />
                 <Input
@@ -211,8 +209,7 @@ class Signup extends Component {
                   name="email"
                   id="email"
                   value={email}
-                  onChange={this.onChange}
-                  required={true}
+                  onChange={this.change}
                   hasError={!this.hasError().validEmail}
                 />
                 <Input
@@ -222,8 +219,7 @@ class Signup extends Component {
                   name="password"
                   id="password"
                   value={password}
-                  onChange={this.onChange}
-                  required={true}
+                  onChange={this.change}
                   hasError={!this.hasError().validPassword}
                 />
                 <Input
@@ -233,8 +229,7 @@ class Signup extends Component {
                   name="confirmPassword"
                   id="confirmPassword"
                   value={confirmPassword}
-                  onChange={this.onChange}
-                  required={true}
+                  onChange={this.change}
                   hasError={!this.hasError().validPassword}
                 />
                 <Button
@@ -269,7 +264,7 @@ class Signup extends Component {
             </Row>
             <div className="more-action">
               ALREADY HAVE AN ACCOUNT?
-              <button onClick={this.onSignIn}>
+              <button onClick={this.signIn}>
                 <span className="theme-color">
                   &nbsp; LOGIN
                 </span>
@@ -284,7 +279,6 @@ class Signup extends Component {
 
 Signup.propTypes = {
   signup: PropTypes.func.isRequired,
-  setSignUpSuccessState: PropTypes.func.isRequired,
   clearMsgInfo: PropTypes.func.isRequired,
   setErrorMsgInfo: PropTypes.func.isRequired,
   info: PropTypes.object,
@@ -302,5 +296,4 @@ export default connect(mapStateToProps, {
   signup,
   setErrorMsgInfo: msgInfoActions.failure,
   clearMsgInfo: msgInfoActions.clear,
-  setSignUpSuccessState: asyncActions(SIGNUP).success
 })(Signup);

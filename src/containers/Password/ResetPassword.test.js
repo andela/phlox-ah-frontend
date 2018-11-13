@@ -17,7 +17,7 @@ let myComponent;
 
 const props = {
   match: {
-    url: '/password/reset/token',
+    url: '/password/reset/14e84f777aebe9055d4b43682346561d',
   }
 };
 

@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import DropDown from '../../components/DropDown/DropDown';
-import './Header.scss';
 import Logo from '../../assets/images/phlox-logo.png';
-import { asyncActions, LOGOUT } from './BasePath';
-import {
-  msgInfoActions
-} from '../BasePath';
+import { msgInfoActions, asyncActions, LOGOUT, SIGNUP } from '../BasePath';
+import './Header.scss';
 
 /**
  *
@@ -35,11 +32,11 @@ class Header extends Component {
       showSettingsOption: false
     };
 
-    this.onBlur = this.onBlur.bind(this);
-    this.onShowDropDown = this.onShowDropDown.bind(this);
-    this.onSignIn = this.onSignIn.bind(this);
-    this.onSignOut = this.onSignOut.bind(this);
-    this.onSignUp = this.onSignUp.bind(this);
+    this.blur = this.blur.bind(this);
+    this.showDropDown = this.showDropDown.bind(this);
+    this.signIn = this.signIn.bind(this);
+    this.signOut = this.signOut.bind(this);
+    this.signUp = this.signUp.bind(this);
     this.timeoutID = null;
     this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
   }
@@ -81,7 +78,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onBlur() {
+  blur() {
     this.clearTimeout();
     this.timeoutID = setTimeout(this.toggleDropDown.bind(this), 200);
   }
@@ -91,7 +88,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onShowDropDown() {
+  showDropDown() {
     if (!this.state.showDropDown) {
       this.toggleDropDown();
     }
@@ -102,7 +99,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onSignIn() {
+  signIn() {
     this.props.clearMsgInfo();
     $('#login-modal').modal('open');
   }
@@ -112,7 +109,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onSignOut() {
+  signOut() {
     this.props.signOut();
     this.props.clearMsgInfo();
     localStorage.removeItem('token');
@@ -123,8 +120,9 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onSignUp() {
+  signUp() {
     this.props.clearMsgInfo();
+    this.props.setSignUpSuccessState(false);
     $('#signup-modal').modal('open');
   }
 
@@ -174,13 +172,13 @@ class Header extends Component {
           </div>
           <div className="search-wrapper">
             <div className="categories">
-              <span onClick={this.onShowDropDown}>
+              <span onClick={this.showDropDown}>
                 <i className="fas fa-th"></i>
                 <i className="fas fa-sort-down"></i>
               </span>
               {
                 showDropDown
-                && <DropDown onBlur={this.onBlur} />
+                && <DropDown blur={this.blur} />
               }
             </div>
             <div className="input">
@@ -194,14 +192,14 @@ class Header extends Component {
               className="right hide-on-med-and-down nav-button">
               <li>
                 <button
-                  onClick={this.onSignIn}
+                  onClick={this.signIn}
                   className="login">
                   Login
                 </button>
               </li>
               <li>
                 <button
-                  onClick={this.onSignUp}
+                  onClick={this.signUp}
                   className="sign-up">
                   Sign Up
                 </button>
@@ -226,7 +224,7 @@ class Header extends Component {
                   && <div className="sd-wrapper">
                     <ul>
                       <li
-                        onClick={this.onSignOut}
+                        onClick={this.signOut}
                         className="s-list">
                         <i className="fas fa-sign-out-alt"></i>
                         &nbsp; Sign out
@@ -246,6 +244,7 @@ class Header extends Component {
 Header.propTypes = {
   user: PropTypes.object,
   clearMsgInfo: PropTypes.func,
+  setSignUpSuccessState: PropTypes.func.isRequired,
   signOut: PropTypes.func
 };
 
@@ -256,5 +255,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   signOut: asyncActions(LOGOUT).success,
+  setSignUpSuccessState: asyncActions(SIGNUP).success,
   clearMsgInfo: msgInfoActions.clear
 })(Header);
