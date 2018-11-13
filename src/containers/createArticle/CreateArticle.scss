@@ -135,6 +135,8 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   margin:3px 30px;
   padding-top: 20px;
   background: #ffffff;
+  padding-left: 30px;
+  padding-right: 30px;
 
   div.author-photo{
     width: 50px;
@@ -210,6 +212,7 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 .tag-category {
   background: #EEEEEE;
   margin-top: 90px;
+  margin-left: 10px;
   height: 500px;
   padding-top: 10px;
   label, span {

@@ -30,6 +30,7 @@ class CreateArticle extends Component {
     super();
 
     this.state = {
+      articleTags: [],
       alertVisible: false,
       body: '',
       category: '',
@@ -39,7 +40,6 @@ class CreateArticle extends Component {
       imgUrl: null,
       imageName: '',
       isCreated: false,
-      tags: [],
       title: ''
     };
 
@@ -121,7 +121,7 @@ class CreateArticle extends Component {
   onPublishArticle() {
     const status = 'published';
     const { slug } = this.props.article;
-    const tags = TagObjectToString(this.state.tags);
+    const tags = TagObjectToString(this.state.articleTags);
     this.props.publishArticle({ slug, status, tags });
   }
 
@@ -132,12 +132,12 @@ class CreateArticle extends Component {
     */
   create() {
     const {
-      hasChanges, title, description, body, category, imgUrl
+      hasChanges, title, description, body, category, imgUrl, articleTags
     } = this.state;
 
     const categoryId = Number(category);
 
-    const tags = TagObjectToString(this.state.tags);
+    const tags = TagObjectToString(articleTags);
 
     if (hasChanges) {
       this.setState({ hasChanges: false, alertVisible: true, isCreated: true });
@@ -173,11 +173,11 @@ class CreateArticle extends Component {
     */
   update() {
     const {
-      hasChanges, title, description, body, category, imgUrl
+      hasChanges, title, description, body, category, imgUrl, articleTags
     } = this.state;
 
     const categoryId = Number(category);
-    const tags = TagObjectToString(this.state.tags);
+    const tags = TagObjectToString(articleTags);
     const articleSlug = this.props.article.slug;
 
     if (hasChanges) {
@@ -201,9 +201,9 @@ class CreateArticle extends Component {
     * @memberof Article
     */
   handleDelete(tagIndexToDelete) {
-    const { tags } = this.state;
+    const { articleTags } = this.state;
     this.setState({
-      tags: tags.filter((tag, index) => index !== tagIndexToDelete),
+      articleTags: articleTags.filter((tag, index) => index !== tagIndexToDelete),
       hasChanges: true,
       alertVisible: true
     });
@@ -216,7 +216,8 @@ class CreateArticle extends Component {
     * @memberof Article
     */
   handleAddition(tag) {
-    this.setState(state => ({ tags: [...state.tags, tag], hasChanges: true, alertVisible: true }));
+    this.setState(state => (
+      { articleTags: [...state.articleTags, tag], hasChanges: true, alertVisible: true }));
   }
 
   /**
@@ -239,7 +240,7 @@ class CreateArticle extends Component {
     * @memberof Article
     */
   handleDrag(tag, currentPosition, newPosition) {
-    const tags = [...this.state.tags];
+    const tags = [...this.state.articleTags];
     const newTags = tags.slice();
 
     newTags.splice(currentPosition, 1);
@@ -253,7 +254,6 @@ class CreateArticle extends Component {
    * @memberof CreateArticle
    */
   render() {
-    console.log(this.state);
     const defaultValue = this.state.category ? this.state.category : 0;
     return (
       <div>
@@ -271,10 +271,10 @@ class CreateArticle extends Component {
               handleEditorChange={this.handleEditorChange}
               onImageChange={this.onImageChange}
             />
-            <Col m={4} l={3} className="tag-category">
+            <Col m={4} className="tag-category">
               <label htmlFor="Title">Tags</label>
               <ReactTags
-                tags={this.state.tags}
+                tags={this.state.articleTags}
                 suggestions={convertIdToString(this.props.suggestedTags)}
                 handleDelete={this.handleDelete}
                 handleAddition={this.handleAddition}
@@ -316,13 +316,13 @@ CreateArticle.propTypes = {
 
 const mapStateToProps = (state) => {
   const {
-    article, message, tags, loading, error
+    article, tags, error
   } = state.article;
   const { categories } = state.category;
   const suggestedTags = state.tags.tags;
 
   return {
-    article, message, tags, loading, categories, suggestedTags, error
+    article, tags, categories, suggestedTags, error
   };
 };
 

@@ -8,15 +8,15 @@ import {
 
 const mockStore = configureMockStore();
 const store = mockStore({
-  Article: {
+  article: {
     article,
     message: 'article created successfully',
     tags,
     loading: false,
     error: true
   },
-  Category: { categories },
-  Tags: { tags }
+  category: { categories },
+  tags: { tags }
 });
 let component;
 

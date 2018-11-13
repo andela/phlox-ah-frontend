@@ -1,4 +1,5 @@
-const BASE_URL = process.env.BASE_URL
+const BASE_URL = process.env.BASE_URL;
+
 export const articleConstant = {
   ALL_ARTICLES_URL: `${BASE_URL}/api/v1/articles/feed`,
   CREATE_ARTICLES_URL: `${BASE_URL}/api/v1/articles`,
