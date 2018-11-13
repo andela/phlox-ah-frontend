@@ -33,15 +33,14 @@ class Header extends Component {
       showSettingsOption: false,
       isAuth: false,
     };
-
-    this.timeoutID = null;
-    this.timeoutMobileID = null;
     this.logout = this.logout.bind(this);
     this.onMobileBlur = this.onMobileBlur.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onLoginClicked = this.onLoginClicked.bind(this);
     this.onShowDropDown = this.onShowDropDown.bind(this);
     this.onShowMobileDropDown = this.onShowMobileDropDown.bind(this);
+    this.timeoutID = null;
+    this.timeoutMobileID = null;
     this.toggleDropDown = this.toggleDropDown.bind(this);
     this.toggleMobileDropDown = this.toggleMobileDropDown.bind(this);
     this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
@@ -111,6 +110,15 @@ class Header extends Component {
   onMobileBlur() {
     this.clearMobileTimeout();
     this.timeoutID = setTimeout(this.toggleMobileDropDown, 200);
+  }
+
+  /**
+   * @description - This method displays the signup modal
+   * @returns {object} null
+   * @memberof Header
+   */
+  onSignupClicked() {
+    $('#signupModal').modal('open');
   }
 
   /**
@@ -240,7 +248,11 @@ class Header extends Component {
                 </a>
               </li>
               <li>
-                <a href="#" className="sign-up hide-on-small-only">Sign Up</a>
+                <a
+                  onClick={this.onSignupClicked}
+                  href="#" className="sign-up">
+                  Sign Up
+                </a>
               </li>
             </ul>
           }

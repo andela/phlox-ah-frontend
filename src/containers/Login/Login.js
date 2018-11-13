@@ -5,8 +5,8 @@ import {
 import './Login.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { login, msgInfoActions } from '../BasePath';
 import { loginConstant } from '../../constants/Constants';
-import { login, msgInfoActions } from './BasePath';
 
 /**
  *
@@ -27,13 +27,12 @@ class Login extends Component {
    */
   constructor() {
     super();
-
     this.state = {
       emailOrUsername: '',
       password: ''
     };
-
     this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   /**
@@ -65,10 +64,7 @@ class Login extends Component {
    */
   onSubmit(e) {
     e.preventDefault();
-
-
     const errors = this.validateData(this.state);
-
     if (errors.length) {
       this.props.displayErrorMsg(errors);
       return;
@@ -102,6 +98,17 @@ class Login extends Component {
   }
 
   /**
+   * @description - This runs when forgot password is clicked
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof Login
+   */
+  onForgotPasswordClicked() {
+    this.onHideModal();
+    $('#forgot-password-modal').modal('open');
+  }
+
+  /**
    *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
@@ -112,8 +119,7 @@ class Login extends Component {
 
     return (
       <Modal
-        id='login-modal'
-        className="center-align">
+        className="center-align login-modal" id="login-modal">
         <div>
           <a className="close-modal" href="#"
             onClick={this.onHideModal}>
@@ -121,7 +127,7 @@ class Login extends Component {
           </a>
         </div>
         <h5>Authors Haven</h5>
-      <form id="test" className="col s12" onSubmit={this.onSubmit.bind(this)}>
+      <form id="test" className="col s12" onSubmit={this.onSubmit}>
         <Row>
           <Input
             type="text"
@@ -141,7 +147,7 @@ class Login extends Component {
           />
           <Button
             type="submit"
-            id="login-button" waves='light'>
+            className="login-button" waves='light'>
             Login
             <i className="fas fa-sign-in-alt"></i>
           </Button>
@@ -171,6 +177,7 @@ class Login extends Component {
           </span>
         </a>
       </h6>
+      <p className="theme-color forgot-password-link" onClick={() => this.onForgotPasswordClicked()}>Forgot password?</p>
     </Modal>
     );
   }
@@ -178,8 +185,9 @@ class Login extends Component {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  logout: PropTypes.func,
   displayErrorMsg: PropTypes.func.isRequired,
-  user: PropTypes.object
 };
 
 const mapStateToProps = state => ({
