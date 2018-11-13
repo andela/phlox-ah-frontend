@@ -30,16 +30,6 @@ class DropDrown extends Component {
 
   /**
    *
-   * @description - This method listen to onblur event
-   *  @returns {object} null
-   *  @memberof DropDrown
-   */
-  onBlur() {
-    this.props.onBlur();
-  }
-
-  /**
-   *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
    * @memberof DropDrown
@@ -47,7 +37,7 @@ class DropDrown extends Component {
   render() {
     return (
       <div
-        onBlur={this.onBlur.bind(this)}
+        onBlur={this.props.blur}
         tabIndex="1"
         ref={this.dropDrownWrapper}
         className="dropdown-wrapper">
@@ -73,7 +63,7 @@ class DropDrown extends Component {
 }
 
 DropDrown.propTypes = {
-  onBlur: PropTypes.func.isRequired,
+  blur: PropTypes.func.isRequired,
 };
 
 export default DropDrown;

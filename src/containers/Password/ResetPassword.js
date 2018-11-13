@@ -35,11 +35,11 @@ class ResetPassword extends Component {
     };
 
     this.hasError = this.hasError.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onClose = this.onClose.bind(this);
-    this.onSignIn = this.onSignIn.bind(this);
-    this.onSignUp = this.onSignUp.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.change = this.change.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.signIn = this.signIn.bind(this);
+    this.signUp = this.signUp.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   /**
@@ -49,9 +49,7 @@ class ResetPassword extends Component {
    */
   componentDidMount() {
     if (/\/password\/reset\/[\w]{20,}/.test(history.location.pathname)) {
-      this.setState({
-        resetPassword: true
-      });
+      this.setState({ resetPassword: true });
     }
   }
 
@@ -61,13 +59,11 @@ class ResetPassword extends Component {
    * @returns {object} null
    * @memberof ResetPassword
    */
-  onChange(e) {
+  change(e) {
     if (this.props.info.message.length) {
       this.props.clearMsgInfo();
     }
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   /**
@@ -76,7 +72,7 @@ class ResetPassword extends Component {
    * @param {*} e
    * @memberof ResetPassword
    */
-  onSubmit(e) {
+  submit(e) {
     e.preventDefault();
     const { password, confirmPassword } = this.state;
     if (!this.validatePassword(password, confirmPassword)) {
@@ -91,7 +87,7 @@ class ResetPassword extends Component {
    * @returns {object} null
    * @memberof ResetPassword
    */
-  onClose() {
+  closeModal() {
     this.props.clearMsgInfo();
     $('#reset-password-modal').modal('close');
   }
@@ -138,8 +134,8 @@ class ResetPassword extends Component {
    * @returns {object} null
    * @memberof ResetPassword
    */
-  onSignIn() {
-    this.onClose();
+  signIn() {
+    this.closeModal();
     $('#login-modal').modal('open');
   }
 
@@ -148,8 +144,8 @@ class ResetPassword extends Component {
    * @returns {object} null
    * @memberof ResetPassword
    */
-  onSignUp() {
-    this.onClose();
+  signUp() {
+    this.closeModal();
     $('#signup-modal').modal('open');
   }
 
@@ -167,23 +163,22 @@ class ResetPassword extends Component {
         id="reset-password-modal" open={this.state.resetPassword}>
         <div>
           <button className="close-modal"
-            onClick={this.onClose}>
+            onClick={this.closeModal}>
             <i className="fas fa-times fa-lg black-text"></i>
           </button>
         </div>
         <h5 className="form-title">Authors Haven</h5>
         <MsgInfo />
-        <form className="col s12" onSubmit={this.onSubmit}>
+        <form className="col s12" onSubmit={this.submit}>
           <Row>
             <Input
               type="password"
               id="rpassword"
               name="password"
               value={password}
-              onChange={this.onChange}
+              onChange={this.change}
               label="Password"
               s={12}
-              required={true}
               hasError={this.hasError()}
             />
             <Input
@@ -191,10 +186,9 @@ class ResetPassword extends Component {
               id="rconfirmPassword"
               name="confirmPassword"
               value={confirmPassword}
-              onChange={this.onChange}
+              onChange={this.change}
               label="Confirm Password"
               s={12}
-              required={true}
               hasError={this.hasError()}
             />
             <Button
@@ -205,13 +199,13 @@ class ResetPassword extends Component {
         </form>
         <div className="more-action">
           HAVE AN ACCOUNT?
-          <button onClick={this.onSignIn}>
+          <button onClick={this.signIn}>
             <span className="theme-color">
               &nbsp; LOGIN
             </span>
           </button>
           <span>&nbsp; |</span>
-          <button onClick={this.onSignUp}>
+          <button onClick={this.signUp}>
             <span className="theme-color">
               &nbsp; SIGN UP
             </span>

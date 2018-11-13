@@ -14,7 +14,7 @@ export const Input = (props) => {
           onChange={props.onChange}
           type={props.type || 'text' }
           className={props.hasError ? `${className} input-error` : className }
-          required={props.required || false}
+          required={props.required || true}
         />
         <label
           className={`form-label ${props.labelClassName || ''}`}
