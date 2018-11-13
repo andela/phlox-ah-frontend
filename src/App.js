@@ -37,7 +37,6 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/password/reset/success" component={SentResetPasswordMail} />
-            <Route path="/password/reset/:token" component={Home} />
             <Redirect to="/" />
           </Switch>
         </div>

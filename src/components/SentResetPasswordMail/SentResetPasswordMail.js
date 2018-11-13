@@ -21,11 +21,11 @@ export const SentResetPasswordMail = props => (
         <h5>Email has been sent!</h5>
         <p>Please follow the instructions sent to your email to reset your password.</p>
       <Button waves='light' onClick={() => goToHome(props) }>
-        Go To Home
+        Go To Home &nbsp;
         <i className="fas fa-home"></i>
       </Button>
     <Button waves='light' onClick={ () => onLogin() }>
-        Go To Login
+        Go To Login &nbsp;
         <i className="fas fa-sign-in-alt"></i>
       </Button>
     </div>

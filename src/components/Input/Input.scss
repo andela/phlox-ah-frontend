@@ -1,8 +1,6 @@
 div.row {
   margin-bottom: 0px;
 }
-
-
 div.input-field input.form-input {
   margin: 0;
   padding: 1px;
@@ -19,7 +17,6 @@ div.input-field input.form-input {
 div.input-field input.input-error{
   border-bottom: 1px solid red;
 }
-
 div.input-field label.form-label{
   font-size: 13px;
   height: 20px;
@@ -27,7 +24,6 @@ div.input-field label.form-label{
   bottom: 26px;
   letter-spacing: o.5px;
 }
-
 .input-field > input[type]:-webkit-autofill:not(.browser-default) + label, .input-field > input[type=date]:not(.browser-default) + label, .input-field > input[type=time]:not(.browser-default) + label,
 div.input-field label.form-label.active {
   -webkit-transform: translateY(0px) scale(0.8);

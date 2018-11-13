@@ -41,11 +41,11 @@ class Login extends Component {
       ...this.initialState
     };
 
+    this.hasError = this.hasError.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.hasError = this.hasError.bind(this);
-    this.onClose = this.onClose.bind(this);
   }
 
   /**
@@ -122,8 +122,8 @@ class Login extends Component {
    * @returns {bool} error
    * @memberof Login
    */
-  hasError(info = {}) {
-    if (info.success) {
+  hasError() {
+    if (this.props.info.success) {
       return false;
     }
     return true;
@@ -182,7 +182,7 @@ class Login extends Component {
               value={emailOrUsername}
               onChange={this.onChange}
               required={true}
-              hasError={this.hasError(this.props.info)}
+              hasError={this.hasError()}
             />
             <Input
               type="password"
@@ -193,7 +193,7 @@ class Login extends Component {
               value={password}
               onChange={this.onChange}
               required={true}
-              hasError={this.hasError(this.props.info)}
+              hasError={this.hasError()}
             />
             <Row>
               <p s={12}
