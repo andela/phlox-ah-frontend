@@ -259,7 +259,7 @@ class CreateArticle extends Component {
       <div>
         <IdleTimer
           ref={(ref) => { this.idleTimer = ref; }}
-          timeout={7000}
+          timeout={5000}
           startOnMount={false}
           onIdle={this.save}>
           <Row className="create-article">
