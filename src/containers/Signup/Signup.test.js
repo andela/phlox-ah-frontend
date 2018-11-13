@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
+import { msgInfoActions } from '../../actions/MsgInfoActions';
 
 import Signup from './Signup';
 
@@ -12,24 +13,22 @@ const store = mockStore({
     success: false,
     failure: false,
     errors: []
+  },
+  info: {
+    message: ['password is required'],
+    success: false
   }
 });
 
 let component;
 let myComponent;
 
-const props = {
-  info: {
-    message: ['password is required'],
-    success: false
-  }
-};
 
 describe('<Signup/>', () => {
   beforeEach(() => {
     component = shallow(
       <Provider store={store}>
-        <Signup {...props} />
+        <Signup />
       </Provider>
     );
     myComponent = component.dive({ context: { store } }).dive();

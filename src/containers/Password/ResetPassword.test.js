@@ -6,7 +6,10 @@ import ResetPassword from './ResetPassword';
 
 const mockStore = configureMockStore();
 const store = mockStore({
-
+  info: {
+    message: ['password is required'],
+    success: false
+  }
 });
 
 let component;

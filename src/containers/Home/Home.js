@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import Login from '../Login/Login';
-import ForgotPassword from '../Password/ForgotPassword';
-import ResetPassword from '../Password/ResetPassword';
-import Signup from '../Signup/Signup';
 /**
  *
  *
@@ -24,10 +20,6 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Signup {...this.props} />
-        <Login {...this.props} />
-        <ForgotPassword {...this.props} />
-        <ResetPassword {...this.props} />
         This is the home component
       </div>
     );

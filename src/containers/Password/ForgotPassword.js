@@ -10,6 +10,7 @@ import {
 import MsgInfo from '../MsgInfo/MsgInfo';
 import '../Common/ModalForm.scss';
 import { sendForgotPassword } from '../../requests/PasswordRequests';
+import '../Login/Login.scss';
 
 /**
  *
@@ -60,7 +61,7 @@ class ForgotPassword extends Component {
    */
   onSubmit(e) {
     e.preventDefault();
-    this.props.sendForgotPassword(this.state.emai);
+    this.props.sendForgotPassword(this.state.email, this.props);
   }
 
   /**
@@ -129,7 +130,7 @@ class ForgotPassword extends Component {
           <Row>
             <Input
               type="email"
-              id="femail"
+              id="pemail"
               name="email"
               value={this.state.email}
               label="Enter email"

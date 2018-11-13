@@ -54,13 +54,14 @@ class Signup extends Component {
    * @param {objecj} info
    * @returns {object} error
    */
-  hasError(info={}) {
-    console.log(info)
+  hasError() {
     const errors = {
       validEmail: true,
       validUsername: true,
       validPassword: true,
     };
+
+    const { info } = this.props;
 
     info.message.forEach((value) => {
       if (!info.success && value.includes('password')) {
@@ -201,7 +202,7 @@ class Signup extends Component {
                   value={username}
                   onChange={this.onChange}
                   required={true}
-                  hasError={!this.hasError(this.props.info).validUsername}
+                  hasError={!this.hasError().validUsername}
                 />
                 <Input
                   type="email"
@@ -212,7 +213,7 @@ class Signup extends Component {
                   value={email}
                   onChange={this.onChange}
                   required={true}
-                  hasError={!this.hasError(this.props.info).validEmail}
+                  hasError={!this.hasError().validEmail}
                 />
                 <Input
                   type="password"
@@ -223,7 +224,7 @@ class Signup extends Component {
                   value={password}
                   onChange={this.onChange}
                   required={true}
-                  hasError={!this.hasError(this.props.info).validPassword}
+                  hasError={!this.hasError().validPassword}
                 />
                 <Input
                   type="password"
@@ -234,7 +235,7 @@ class Signup extends Component {
                   value={confirmPassword}
                   onChange={this.onChange}
                   required={true}
-                  hasError={!this.hasError(this.props.info).validPassword}
+                  hasError={!this.hasError().validPassword}
                 />
                 <Button
                   type="submit"

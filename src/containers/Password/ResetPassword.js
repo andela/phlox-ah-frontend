@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createBrowserHistory } from 'history';
 import {
   Modal, Row
 } from 'react-materialize';
@@ -10,6 +11,8 @@ import {
 import '../Common/ModalForm.scss';
 import { sendResetPassword } from '../../requests/PasswordRequests';
 import MsgInfo from '../MsgInfo/MsgInfo';
+
+const history = createBrowserHistory();
 
 /**
  *
@@ -45,7 +48,8 @@ class ResetPassword extends Component {
    * @memberof ResetPassword
    */
   componentDidMount() {
-    if (/\/password\/reset\/\w+/.test(this.props.match.url)) {
+    const token = encodeURI(history.location.pathname.split('/')[3]);
+    if (/\/password\/reset\/[\w]{20,}/.test(history.location.pathname)) {
       this.setState({
         resetPassword: true
       });
@@ -79,7 +83,7 @@ class ResetPassword extends Component {
     if (!this.validatePassword(password, confirmPassword)) {
       return;
     }
-    const { token } = this.props.match.params;
+    const token = encodeURI(history.location.pathname.split('/')[3]);
     this.props.sendResetPassword(token, this.state.password, this.props);
   }
 
@@ -95,12 +99,11 @@ class ResetPassword extends Component {
 
   /**
    * @description - This method checks weather there is input error
-   * @param {objecj} info
    * @returns {bool} error
    * @memberof ResetPassword
    */
-  hasError(info = {}) {
-    if (info.success) {
+  hasError() {
+    if (this.props.info.success) {
       return false;
     }
     return true;
@@ -116,8 +119,8 @@ class ResetPassword extends Component {
    */
   validatePassword(password, confirmPassword) {
     let errors = [];
-    if (password.length < 6) {
-      errors = [...errors, 'password must be at least 6 characters'];
+    if (password.length < 8) {
+      errors = [...errors, 'Password must be at least 8 characters'];
     }
 
     if (password !== confirmPassword) {
@@ -182,7 +185,7 @@ class ResetPassword extends Component {
               label="Password"
               s={12}
               required={true}
-              hasError={this.hasError(this.props.info)}
+              hasError={this.hasError()}
             />
             <Input
               type="password"
@@ -193,7 +196,7 @@ class ResetPassword extends Component {
               label="Confirm Password"
               s={12}
               required={true}
-              hasError={this.hasError(this.props.info)}
+              hasError={this.hasError()}
             />
             <Button
               type="submit"

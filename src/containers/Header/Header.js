@@ -193,19 +193,18 @@ class Header extends Component {
             && <ul
               className="right hide-on-med-and-down nav-button">
               <li>
-                <a
+                <button
                   onClick={this.onSignIn}
-                  href="#"
                   className="login">
                   Login
-                </a>
+                </button>
               </li>
               <li>
-                <a
+                <button
                   onClick={this.onSignUp}
-                  href="#" className="sign-up">
+                  className="sign-up">
                   Sign Up
-                </a>
+                </button>
               </li>
             </ul>
           }
@@ -224,16 +223,16 @@ class Header extends Component {
                 <a className="user-photo" href="#"></a>
                 {
                   showSettingsOption
-                    && <div className="sd-wrapper">
-                      <ul>
-                        <li
-                          onClick={this.onSignOut}
-                          className="s-list">
-                          <i className="fas fa-sign-out-alt"></i>
-                          &nbsp; Sign out
-                        </li>
-                      </ul>
-                    </div>
+                  && <div className="sd-wrapper">
+                    <ul>
+                      <li
+                        onClick={this.onSignOut}
+                        className="s-list">
+                        <i className="fas fa-sign-out-alt"></i>
+                        &nbsp; Sign out
+                      </li>
+                    </ul>
+                  </div>
                 }
               </li>
             </ul>
