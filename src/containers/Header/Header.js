@@ -32,11 +32,11 @@ class Header extends Component {
       showDropDown: false,
       showSettingsOption: false
     };
-    this.onBlur = this.onBlur.bind(this);
-    this.onShowDropDown = this.onShowDropDown.bind(this);
-    this.onSignIn = this.onSignIn.bind(this);
-    this.onSignOut = this.onSignOut.bind(this);
-    this.onSignUp = this.onSignUp.bind(this);
+    this.blur = this.blur.bind(this);
+    this.showDropDown = this.showDropDown.bind(this);
+    this.signIn = this.signIn.bind(this);
+    this.signOut = this.signOut.bind(this);
+    this.signUp = this.signUp.bind(this);
     this.timeoutID = null;
     this.toggleDropDown = this.toggleDropDown.bind(this);
     this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
@@ -79,7 +79,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onBlur() {
+  blur() {
     this.clearTimeout();
     this.timeoutID = setTimeout(this.toggleDropDown, 200);
   }
@@ -89,7 +89,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onSignUp() {
+  signUp() {
     $('#signupModal').modal('open');
   }
 
@@ -98,7 +98,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onSignIn() {
+  signIn() {
     $('#login-modal').modal('open');
   }
 
@@ -107,7 +107,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onSignOut() {
+  signOut() {
     this.props.signOut();
     localStorage.removeItem('token');
   }
@@ -117,7 +117,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onShowDropDown() {
+  showDropDown() {
     if (!this.state.showDropDown) {
       this.toggleDropDown();
     }
@@ -169,13 +169,13 @@ class Header extends Component {
           </div>
           <div className="search-wrapper">
             <div className="categories">
-              <span onClick={this.onShowDropDown}>
+              <span onClick={this.showDropDown}>
                 <i className="fas fa-th"></i>
                 <i className="fas fa-sort-down"></i>
               </span>
               {
                 showDropDown
-                && <DropDown onBlur={this.onBlur} />
+                && <DropDown blur={this.blur} />
               }
             </div>
             <div className="input">
@@ -189,7 +189,7 @@ class Header extends Component {
               className="right hide-on-med-and-down nav-button">
               <li>
                 <a
-                  onClick={this.onSignIn}
+                  onClick={this.signIn}
                   href="#"
                   className="login">
                   Login
@@ -197,7 +197,7 @@ class Header extends Component {
               </li>
               <li>
                 <a
-                  onClick={this.onSignUp}
+                  onClick={this.signUp}
                   href="#" className="sign-up">
                   Sign Up
                 </a>
@@ -228,7 +228,7 @@ class Header extends Component {
                         </Link>
                       </li>
                       <li
-                        onClick={this.onSignOut}
+                        onClick={this.signOut}
                         className="s-list">
                         <i className="fas fa-sign-out-alt"></i>
                         &nbsp; Sign out

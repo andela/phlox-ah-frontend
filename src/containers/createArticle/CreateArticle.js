@@ -9,6 +9,7 @@ import 'medium-editor/dist/css/themes/default.css';
 
 import './CreateArticle.scss';
 import '../../styles/style.scss';
+import articleFormData from '../../util/formData';
 import { getAllTags } from '../../requests/TagRequests';
 import { getAllCategory } from '../../requests/CategoryRequests';
 import ArticleForm from '../../components/ArticleForm/ArticleForm';
@@ -49,9 +50,9 @@ class CreateArticle extends Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
-    this.onImageChange = this.onImageChange.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onPublishArticle = this.onPublishArticle.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handlePublishArticle = this.handlePublishArticle.bind(this);
     this.save = this.save.bind(this);
     this.update = this.update.bind(this);
   }
@@ -72,7 +73,7 @@ class CreateArticle extends Component {
     * @returns {object} void
     * @memberof Article
     */
-  onInputChange(e) {
+  handleInputChange(e) {
     this.setState({ [e.target.id]: e.target.value, hasChanges: true, alertVisible: true });
   }
 
@@ -82,7 +83,7 @@ class CreateArticle extends Component {
     * @returns {object} void
     * @memberof Article
     */
-  onImageChange(e) {
+  handleImageChange(e) {
     const file = e.target.files[0];
     if (file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/jpeg') {
       this.setState({
@@ -118,7 +119,7 @@ class CreateArticle extends Component {
     * @returns {string} - return saved or not
     * @memberof Article
     */
-  onPublishArticle() {
+  handlePublishArticle() {
     const status = 'published';
     const { slug } = this.props.article;
     const tags = TagObjectToString(this.state.articleTags);
@@ -141,14 +142,7 @@ class CreateArticle extends Component {
 
     if (hasChanges) {
       this.setState({ hasChanges: false, alertVisible: true, isCreated: true });
-
-      const formData = new FormData();
-      formData.append('title', title);
-      formData.append('description', description);
-      formData.append('body', body);
-      formData.append('imgUrl', imgUrl);
-      formData.append('categoryId', categoryId);
-      formData.append('tags', JSON.stringify(tags));
+      const formData = articleFormData(title, description, body, imgUrl, categoryId, tags);
       this.props.createArticle(formData, tags);
     }
   }
@@ -182,14 +176,7 @@ class CreateArticle extends Component {
 
     if (hasChanges) {
       this.setState({ hasChanges: false, alertVisible: true });
-      const formData = new FormData();
-      formData.append('title', title);
-      formData.append('description', description);
-      formData.append('body', body);
-      formData.append('imgUrl', imgUrl);
-      formData.append('categoryId', categoryId);
-      formData.append('tags', JSON.stringify(tags));
-
+      const formData = articleFormData(title, description, body, imgUrl, categoryId, tags);
       this.props.updateArticle(formData, tags, articleSlug);
     }
   }
@@ -266,12 +253,12 @@ class CreateArticle extends Component {
             <ArticleForm
               componentState={this.state}
               getAlertMessage={this.getAlertMessage()}
-              onPublishArticle={this.onPublishArticle}
-              onInputChange={this.onInputChange}
+              handleInputChange={this.handleInputChange}
               handleEditorChange={this.handleEditorChange}
-              onImageChange={this.onImageChange}
+              handleImageChange={this.handleImageChange}
+              handlePublishArticle={this.handlePublishArticle}
             />
-            <Col m={4} className="tag-category">
+            <Col m={3} className="tag-category">
               <label htmlFor="Title">Tags</label>
               <ReactTags
                 tags={this.state.articleTags}
@@ -287,7 +274,7 @@ class CreateArticle extends Component {
                   s={12}
                   type="select"
                   id="category"
-                  onChange={this.onInputChange}
+                  onChange={this.handleInputChange}
                   defaultValue={defaultValue}
                   required>
                   <option value="0" disabled>Choose your option</option>
