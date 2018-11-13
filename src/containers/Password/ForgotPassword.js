@@ -30,12 +30,12 @@ class ForgotPassword extends Component {
       email: ''
     };
 
+    this.hasError = this.hasError.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onSignIn = this.onSignIn.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
-    this.onClose = this.onClose.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.hasError = this.hasError.bind(this);
   }
 
   /**

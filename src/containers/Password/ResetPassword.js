@@ -34,12 +34,12 @@ class ResetPassword extends Component {
       resetPassword: false
     };
 
+    this.hasError = this.hasError.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onSignIn = this.onSignIn.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
-    this.onClose = this.onClose.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.hasError = this.hasError.bind(this);
   }
 
   /**
@@ -48,7 +48,6 @@ class ResetPassword extends Component {
    * @memberof ResetPassword
    */
   componentDidMount() {
-    const token = encodeURI(history.location.pathname.split('/')[3]);
     if (/\/password\/reset\/[\w]{20,}/.test(history.location.pathname)) {
       this.setState({
         resetPassword: true
@@ -84,7 +83,7 @@ class ResetPassword extends Component {
       return;
     }
     const token = encodeURI(history.location.pathname.split('/')[3]);
-    this.props.sendResetPassword(token, this.state.password, this.props);
+    this.props.sendResetPassword(token, this.state.password);
   }
 
   /**
@@ -120,7 +119,7 @@ class ResetPassword extends Component {
   validatePassword(password, confirmPassword) {
     let errors = [];
     if (password.length < 8) {
-      errors = [...errors, 'Password must be at least 8 characters'];
+      errors = [...errors, 'password must be at least 8 characters'];
     }
 
     if (password !== confirmPassword) {

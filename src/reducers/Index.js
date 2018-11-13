@@ -6,10 +6,10 @@ import signup from './SignupReducer';
 
 
 const rootReducer = combineReducers({
-  password,
-  user,
   info,
-  signup
+  password,
+  signup,
+  user
 });
 
 export default rootReducer;

@@ -32,9 +32,9 @@ class Signup extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onSignIn = this.onSignIn.bind(this);
-    this.onClose = this.onClose.bind(this);
   }
 
   /**
