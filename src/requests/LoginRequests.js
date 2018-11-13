@@ -4,18 +4,7 @@ import setAuthToken from '../util/AuthTokenUtil';
 import { LOGIN } from '../actionTypes/UserConstants';
 import { loginConstant } from '../constants/Constants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
-
-
-const formatError = (error) => {
-  if (Array.isArray(error.message)) {
-    return error.message;
-  }
-  if (error.message) {
-    return [error.message];
-  }
-  return ['Error occurred'];
-};
-
+import { formatError } from '../helpers/Errors';
 
 export const login = payload => dispatch => axios.post(loginConstant.LOGIN_URL, payload)
   .then((response) => {
@@ -24,9 +13,8 @@ export const login = payload => dispatch => axios.post(loginConstant.LOGIN_URL, 
       localStorage.setItem('token', response.data.token);
       // setting token to request headers for authentication
       setAuthToken(response.data.token);
-      dispatch(asyncActions(LOGIN).success(response.data.user));
+      dispatch(asyncActions(LOGIN).success(response.data));
       dispatch(msgInfoActions.success([response.data.message]));
-      setTimeout(() => dispatch(msgInfoActions.clear()), 3000);
       $('#login-modal').modal('close');
     }
     return response;

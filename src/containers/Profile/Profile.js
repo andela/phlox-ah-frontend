@@ -61,18 +61,6 @@ class Profile extends Component {
   }
 
   /**
-   * @description - This method runs after component has been mounted
-   * @param {object} props
-   * @return {object} props
-   * @memberof Profile
-   */
-  // static getDerivedStateFromProps(props) {
-  //   return {
-  //     ...props.profile
-  //   };
-  // }
-
-  /**
    * @description - This method runs on input change
    * @param {object} e
    * @return {object} state

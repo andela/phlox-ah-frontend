@@ -33,15 +33,14 @@ class Header extends Component {
       showSettingsOption: false,
       isAuth: false,
     };
-
-    this.timeoutID = null;
-    this.timeoutMobileID = null;
     this.logout = this.logout.bind(this);
     this.onMobileBlur = this.onMobileBlur.bind(this);
     this.onBlur = this.onBlur.bind(this);
-    this.onLoginClicked = this.onLoginClicked.bind(this);
-    this.onShowDropDown = this.onShowDropDown.bind(this);
-    this.onShowMobileDropDown = this.onShowMobileDropDown.bind(this);
+    this.login = this.login.bind(this);
+    this.showDropDown = this.showDropDown.bind(this);
+    this.showMobileDropDown = this.showMobileDropDown.bind(this);
+    this.timeoutID = null;
+    this.timeoutMobileID = null;
     this.toggleDropDown = this.toggleDropDown.bind(this);
     this.toggleMobileDropDown = this.toggleMobileDropDown.bind(this);
     this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
@@ -114,11 +113,20 @@ class Header extends Component {
   }
 
   /**
+   * @description - This method displays the signup modal
+   * @returns {object} null
+   * @memberof Header
+   */
+  onSignupClicked() {
+    $('#signupModal').modal('open');
+  }
+
+  /**
    * @description - This method displays the login modal
    * @returns {object} null
    * @memberof Header
    */
-  onLoginClicked() {
+  login() {
     $('#login-modal').modal('open');
   }
 
@@ -137,7 +145,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onShowDropDown() {
+  showDropDown() {
     if (!this.state.showDropDown) {
       this.toggleDropDown();
     }
@@ -148,7 +156,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onShowMobileDropDown() {
+  showMobileDropDown() {
     if (!this.state.showMobileDropDown) {
       this.toggleMobileDropDown();
     }
@@ -213,7 +221,7 @@ class Header extends Component {
           </div>
           <div className="search-wrapper hide-on-med-and-down">
             <div className="categories">
-              <span onClick={this.onShowDropDown}>
+              <span onClick={this.showDropDown}>
                 <i className="fas fa-th"></i>
                 <i className="fas fa-sort-down"></i>
               </span>
@@ -233,14 +241,18 @@ class Header extends Component {
               className="right nav-button">
               <li>
                 <a
-                  onClick={this.onLoginClicked}
+                  onClick={this.login}
                   href="#"
                   className="login">
                   Login
                 </a>
               </li>
               <li>
-                <a href="#" className="sign-up hide-on-small-only">Sign Up</a>
+                <a
+                  onClick={this.onSignupClicked}
+                  href="#" className="sign-up">
+                  Sign Up
+                </a>
               </li>
             </ul>
           }
@@ -291,7 +303,7 @@ class Header extends Component {
               <i className="fas fa-search"></i>
             </div>
             <div className="categories">
-              <span className="btn white" onClick={this.onShowMobileDropDown}>
+              <span className="btn white" onClick={this.showMobileDropDown}>
                 Categories
               <i className="fas fa-sort-down"></i>
               </span>
@@ -306,7 +318,7 @@ class Header extends Component {
             && <ul>
              <li>
               <a
-                onClick={this.onLoginClicked}
+                onClick={this.login}
                 href="#"
                 className="login">
                 Login

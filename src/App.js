@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Header from './containers/Header/Header';
 import Login from './containers/Login/Login';
-import LoginForm from './components/Pages/LoginPage';
-import HomePage from './components/Pages/HomePage';
 import ViewProfile from './containers/Profile/ViewProfile';
 import EditProfile from './containers/Profile/Profile';
-import MsgInfo from './containers/MsgInfo/MsgInfo';
+import Home from './containers/Home/Home';
+import ForgotPassword from './containers/Password/ForgotPassword';
+import ResetPassword from './containers/Password/ResetPassword';
+import Signup from './containers/Signup/Signup';
+import PrivateRoute from './PrivateRoute';
 
 import './App.scss';
 /**
@@ -28,13 +30,16 @@ class App extends Component {
       <div>
         <Header />
         <Login />
-        <MsgInfo />
+        <Signup />
+        <Login />
+        <ForgotPassword />
         <div>
           <Switch>
-            <Route path="/" exact component={HomePage} />
-            <Route path="/login" exact component={LoginForm} />
-            <Route path="/profile" exact component={ViewProfile} />
-            <Route path="/profile/edit" exact component={EditProfile} />
+            <PrivateRoute path='/profile/edit' component={EditProfile} />
+            <PrivateRoute path='/profile' component={ViewProfile} />
+            <Route path="/" exact component={Home} />
+            <Route path="/forgot/password" component={ForgotPassword} />
+            <Route path="/reset_password/:token" component={ResetPassword} />
           </Switch>
         </div>
       </div>
