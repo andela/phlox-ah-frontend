@@ -222,7 +222,7 @@ class Header extends Component {
                   && <div className="sd-wrapper">
                     <ul>
                       <li className="s-list">
-                        <Link to="/new-story">
+                        <Link to="/articles">
                           <i className="fas fa-plus"></i>
                           &nbsp;New Article
                         </Link>
