@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
 import DropDown from '../../components/DropDown/DropDown';
 import './Header.scss';
 import Logo from '../../assets/images/phlox-logo.png';
 import { asyncActions, LOGOUT } from './BasePath';
+
+const history = createBrowserHistory({ forceRefresh: true });
 
 /**
  *
@@ -108,6 +112,7 @@ class Header extends Component {
    * @memberof Header
    */
   signOut() {
+    history.push('/');
     this.props.signOut();
     localStorage.removeItem('token');
   }
