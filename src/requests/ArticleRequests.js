@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { asyncActions } from '../util/AsyncUtil';
 import {
-  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE
+  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, MY_ARTICLES
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
@@ -33,6 +33,17 @@ export const getArticles = () => (dispatch) => {
       }
     })
     .catch(error => dispatch(asyncActions(ALL_ARTICLES)
+      .failure(true, error)));
+};
+
+export const getMyArticles = () => (dispatch) => {
+  dispatch(asyncActions(MY_ARTICLES).loading(true));
+  return axios.get(articleConstant.MY_ARTICLES_URL)
+    .then((response) => {
+      dispatch(asyncActions(MY_ARTICLES).success(response.data.articles));
+      dispatch(asyncActions(MY_ARTICLES).loading(false));
+    })
+    .catch(error => dispatch(asyncActions(MY_ARTICLES)
       .failure(true, error)));
 };
 

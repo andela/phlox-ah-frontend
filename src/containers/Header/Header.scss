@@ -120,6 +120,7 @@ div.nav-wrapper ul li button {
   letter-spacing: 0.7px;
   height: 35px;
   width: 80px;
+  font-size: 15px;
 }
 
 div.nav-wrapper ul li button:hover {
@@ -185,7 +186,7 @@ div.sd-wrapper ul li.s-list {
   height: 20px;
   display: flex;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14px;
   height: 29px;
   font-weight: 600;
 
@@ -196,6 +197,8 @@ div.sd-wrapper ul li.s-list {
     border: none;
     margin-left: 0px;
     padding: 0px;
+    font-size: inherit;
+    text-decoration: none;
   }
 
   a:hover {
@@ -206,7 +209,7 @@ div.sd-wrapper ul li.s-list {
 ul li.s-list i{
   height: inherit;
   line-height: inherit;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 img.side-logo {

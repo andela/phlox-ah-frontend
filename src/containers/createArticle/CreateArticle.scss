@@ -191,6 +191,8 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
       margin: 0px;
       left: 12px;
       font-size: 15px;
+      overflow: hidden;
+      height: 30px;
     }
 
     label.browse-btn {

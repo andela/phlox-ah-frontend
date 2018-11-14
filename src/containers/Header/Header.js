@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import DropDown from '../../components/DropDown/DropDown';
 import Logo from '../../assets/images/phlox-logo.png';
 import { msgInfoActions, asyncActions, LOGOUT, SIGNUP } from '../BasePath';
+import { createBrowserHistory } from 'history';
 import './Header.scss';
 
 const history = createBrowserHistory({ forceRefresh: true });
@@ -272,6 +272,14 @@ class Header extends Component {
             && <ul
               className="right nav-button">
               <li>
+                <Link 
+                  to="/articles"
+                  className="notification-bell 
+                  hide-on-med-and-down">
+                  <i className="fas fa-plus-square"></i>
+                </Link>
+              </li>
+              <li>
                 <a 
                   className="notification-bell 
                   hide-on-med-and-down" href="#">
@@ -281,9 +289,7 @@ class Header extends Component {
               <li
                 onClick={this.toggleSettingsOptions}
                 id="settings-dropdown">
-                <span className="user-photo">
-                  <i className="fas fa-user user"></i>
-                </span>
+                <span className="user-photo"></span>
                 {
                   showSettingsOption
                   && <div className="sd-wrapper hide-on-med-and-down">

@@ -14,7 +14,7 @@ import { getAllTags } from '../../requests/TagRequests';
 import { getAllCategory } from '../../requests/CategoryRequests';
 import ArticleForm from '../../components/ArticleForm/ArticleForm';
 import { TagObjectToString, convertIdToString } from '../../util/TagsHelper';
-import { createArticle, updateArticle, publishArticle } from '../../requests/ArticleRequests';
+import { createArticle, updateArticle, publishArticle, getSingleArticle } from '../../requests/ArticleRequests';
 
 
 /**
@@ -31,17 +31,17 @@ class CreateArticle extends Component {
     super();
 
     this.state = {
-      articleTags: [],
+      articleTags: [{id: "1", text: "name"}],
       alertVisible: false,
-      body: '',
-      category: '',
-      description: '',
+      body: 'sdsklfjlsdj',
+      category: "5",
+      description: 'dsjkdsjkfjlk',
       hasChanges: false,
       idleTimer: null,
       imgUrl: null,
       imageName: '',
       isCreated: false,
-      title: ''
+      title: 'title'
     };
 
     this.create = this.create.bind(this);
@@ -63,26 +63,32 @@ class CreateArticle extends Component {
     * @memberof Article
     */
   componentDidMount() {
+    const { match } = this.props;
+    const articleSlug = match.params.slug;
+    if(match.params.slug && /\/articles\/[\w|-]{2,}\/edit/.test(match.url)) {
+      this.props.getSingleArticle({slug: articleSlug});
+    }
     this.props.getAllCategory();
     this.props.getAllTags();
+
   }
 
   /**
-    * @description - This method sets the title and description input values
-    * @param {object} e
-    * @returns {object} void
-    * @memberof Article
-    */
+   * @description - This method sets the title and description input values
+   * @param {object} e
+   * @returns {object} void
+   * @memberof Article
+   */
   handleInputChange(e) {
     this.setState({ [e.target.id]: e.target.value, hasChanges: true, alertVisible: true });
   }
 
   /**
-    * @description - This method sets the image
-    * @param {object} e
-    * @returns {object} void
-    * @memberof Article
-    */
+   * @description - This method sets the image
+   * @param {object} e
+   * @returns {object} void
+   * @memberof Article
+   */
   handleImageChange(e) {
     const file = e.target.files[0];
     if (file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/jpeg') {
@@ -93,20 +99,20 @@ class CreateArticle extends Component {
   }
 
   /**
-    * @description - This method sets the body input values
-    * @param {objecj}  text
-    * @returns {object} void
-    * @memberof Article
-    */
+   * @description - This method sets the body input values
+   * @param {objecj}  text
+   * @returns {object} void
+   * @memberof Article
+   */
   handleEditorChange(text) {
     this.setState({ body: text, hasChanges: true, alertVisible: true });
   }
 
   /**
-    * @description - This method show if the article has been save or not.
-    * @returns {string} - return saved or not
-    * @memberof Article
-    */
+   * @description - This method show if the article has been save or not.
+   * @returns {string} - return saved or not
+   * @memberof Article
+   */
   getAlertMessage() {
     if (this.state.hasChanges) {
       return 'Saving...';
@@ -115,10 +121,10 @@ class CreateArticle extends Component {
   }
 
   /**
-    * @description - This method set the article status to published.
-    * @returns {string} - return saved or not
-    * @memberof Article
-    */
+   * @description - This method set the article status to published.
+   * @returns {string} - return saved or not
+   * @memberof Article
+   */
   handlePublishArticle() {
     const status = 'published';
     const { slug } = this.props.article;
@@ -127,10 +133,10 @@ class CreateArticle extends Component {
   }
 
   /**
-    * @description - This method create the article if changes has been made
-    * @returns {string} - return saved or not
-    * @memberof Article
-    */
+   * @description - This method create the article if changes has been made
+   * @returns {string} - return saved or not
+   * @memberof Article
+   */
   create() {
     const {
       hasChanges, title, description, body, category, imgUrl, articleTags
@@ -148,10 +154,10 @@ class CreateArticle extends Component {
   }
 
   /**
-    * @description - This method create or update the article if changes has been made
-    * @returns {string} - return created or updated article
-    * @memberof Article
-    */
+   * @description - This method create or update the article if changes has been made
+   * @returns {string} - return created or updated article
+   * @memberof Article
+   */
   save() {
     if (this.state.isCreated && !this.props.error) {
       this.update();
@@ -161,10 +167,10 @@ class CreateArticle extends Component {
   }
 
   /**
-    * @description - This method update the article if changes has been made
-    * @returns {string} - return created or updated article
-    * @memberof Article
-    */
+   * @description - This method update the article if changes has been made
+   * @returns {string} - return created or updated article
+   * @memberof Article
+   */
   update() {
     const {
       hasChanges, title, description, body, category, imgUrl, articleTags
@@ -182,11 +188,11 @@ class CreateArticle extends Component {
   }
 
   /**
-    * @description - This method delete the Tag input values
-    * @param {objecj}  tagIndexToDelete
-    * @returns {object} void
-    * @memberof Article
-    */
+   * @description - This method delete the Tag input values
+   * @param {objecj}  tagIndexToDelete
+   * @returns {object} void
+   * @memberof Article
+   */
   handleDelete(tagIndexToDelete) {
     const { articleTags } = this.state;
     this.setState({
@@ -197,21 +203,21 @@ class CreateArticle extends Component {
   }
 
   /**
-    * @description - This method sets the Tag input values
-    * @param {string}  tag
-    * @returns {object} void
-    * @memberof Article
-    */
+   * @description - This method sets the Tag input values
+   * @param {string}  tag
+   * @returns {object} void
+   * @memberof Article
+   */
   handleAddition(tag) {
     this.setState(state => (
       { articleTags: [...state.articleTags, tag], hasChanges: true, alertVisible: true }));
   }
 
   /**
-    * @description - This method renders the category options value
-    * @returns {object} - return object of category options
-    * @memberof Article
-    */
+   * @description - This method renders the category options value
+   * @returns {object} - return object of category options
+   * @memberof Article
+   */
   renderSelectOptions() {
     return this.props.categories.map(
       category => <option key={category.id} value={category.id}>{category.category}</option>
@@ -219,13 +225,13 @@ class CreateArticle extends Component {
   }
 
   /**
-    * @description - This method is use to drag the tag input values
-    * @param {string} tag
-    * @param {string} currentPosition
-    *  @param {string} newPosition
-    * @returns {object} void
-    * @memberof Article
-    */
+   * @description - This method is use to drag the tag input values
+   * @param {string} tag
+   * @param {string} currentPosition
+   *  @param {string} newPosition
+   * @returns {object} void
+   * @memberof Article
+   */
   handleDrag(tag, currentPosition, newPosition) {
     const tags = [...this.state.articleTags];
     const newTags = tags.slice();
@@ -233,6 +239,17 @@ class CreateArticle extends Component {
     newTags.splice(currentPosition, 1);
     newTags.splice(newPosition, 0, tag);
     this.setState({ tags: newTags });
+  }
+
+  /**
+   * @description - This method gets the author's name
+   * @returns {string} author name
+   * @memberof Article
+   */
+  getAuthorName() {
+    const { username } = this.props.user;
+    const { firstName, lastName } = this.props.profile;
+    return firstName ? `${lastName} ${firstName}` : username;
   }
 
   /**
@@ -257,6 +274,7 @@ class CreateArticle extends Component {
               handleEditorChange={this.handleEditorChange}
               handleImageChange={this.handleImageChange}
               handlePublishArticle={this.handlePublishArticle}
+              authorName={this.getAuthorName()}
             />
             <Col m={3} className="tag-category">
               <label htmlFor="Title">Tags</label>
@@ -278,13 +296,13 @@ class CreateArticle extends Component {
                   defaultValue={defaultValue}
                   required>
                   <option value="0" disabled>Choose your option</option>
-                  {this.renderSelectOptions()}
-                </Input>
-              </div>
-            </Col>
-          </Row>
-        </IdleTimer>
-      </div>
+                {this.renderSelectOptions()}
+              </Input>
+            </div>
+          </Col>
+        </Row>
+      </IdleTimer>
+    </div>
     );
   }
 }
@@ -309,11 +327,11 @@ const mapStateToProps = (state) => {
   const suggestedTags = state.tags.tags;
 
   return {
-    article, tags, categories, suggestedTags, error
+    article, tags, categories, suggestedTags, error, user: state.user, profile: state.profile
   };
 };
 
 export default connect(mapStateToProps,
   {
-    createArticle, updateArticle, publishArticle, getAllCategory, getAllTags
+    createArticle, updateArticle, publishArticle, getAllCategory, getAllTags, getSingleArticle
   })(CreateArticle);

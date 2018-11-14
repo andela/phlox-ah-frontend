@@ -14,7 +14,8 @@ const ArticleForm = ({
   handleEditorChange,
   handleInputChange,
   handleImageChange,
-  handlePublishArticle
+  handlePublishArticle,
+  authorName
 }) => (
     <Col m={9} className="container-fluid">
       <div className="main-content">
@@ -22,7 +23,7 @@ const ArticleForm = ({
         <Col m={8} className="flex">
           <div className="author-photo"></div>
           <div className="author-name">
-            <div>Victor victor</div>
+            <div>{authorName}</div>
             <div className="pub-date">{currentDate}</div>
             {componentState.alertVisible
               && <span className="status">
@@ -37,7 +38,7 @@ const ArticleForm = ({
       </Row>
 
       <Row>
-        <Col m={7}>
+        <Col m={8}>
             <div className="title-input">
               <input
                 type="text"
@@ -49,7 +50,7 @@ const ArticleForm = ({
               />
           </div>
         </Col>
-        <Col m={5}>
+        <Col m={4}>
           <label className="article-img-upload">
               <p className="file-name">{componentState.imageName || 'Choose file'}</p>
             <label htmlFor="file-input" className="browse-btn">Browse</label>

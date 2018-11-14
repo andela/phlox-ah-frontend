@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom';
 import CreateArticle from './containers/createArticle/CreateArticle';
 import Header from './containers/Header/Header';
 import ViewProfile from './containers/Profile/ViewProfile';
@@ -32,20 +32,19 @@ class App extends Component {
         <Signup />
         <Login />
         <ForgotPassword />
-        <Login />
         <ResetPassword />
-        <Signup />
-        <div>
+        <Router>
           <Switch>
             <Route path="/" exact component={Home} />
-            <PrivateRoute path="/articles" component={CreateArticle} />
+            <PrivateRoute exact path="/articles" component={CreateArticle} />
             <PrivateRoute path='/profile/edit' component={EditProfile} />
             <PrivateRoute path='/profile' component={ViewProfile} />
+            <PrivateRoute path="/articles/:slug/edit" component={CreateArticle} />
             <Route path="/password/forgot-success" component={SentResetPasswordMail} />
             <Route path="/password/reset/:token" component={Home} />
             <Redirect to="/" />
           </Switch>
-        </div>
+        </Router>
       </div>
     );
   }

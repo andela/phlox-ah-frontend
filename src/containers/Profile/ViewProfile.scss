@@ -5,6 +5,10 @@ $primary-color: #06576D;
 div.profile {
   width: 100%;
   margin: 30px 0;
+
+  a {
+    text-decoration: none;
+  }
 }
 
 div.profile div.profile-wrapper {
@@ -119,6 +123,7 @@ div.followers div.following {
 
   li.author a {
     display: inherit;
+    text-decoration: none;
   }
 
   li.author div.photo {
@@ -142,6 +147,10 @@ div.followers div.following {
   div.more {
     text-align: center;
     font-weight: 600;
+
+    a {
+      color: #039be5;
+    }
   }
 }
 

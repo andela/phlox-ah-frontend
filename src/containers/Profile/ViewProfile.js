@@ -109,7 +109,7 @@ class ViewProfile extends Component {
             </div>
             {/* end of followers */}
 
-            <AuthorsArticle />
+            <AuthorsArticle {...this.props} />
 
           </div>
           {/* end of profile info */}

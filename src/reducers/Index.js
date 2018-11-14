@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import article from './ArticleReducer';
+import myArticle from './MyArticleReducer';
 import user from './UserReducer';
 import info from './MsgInfoReducer';
 import category from './CategoryReducer';
@@ -12,6 +13,7 @@ import tags from './TagReducer';
 
 const rootReducer = combineReducers({
   article,
+  myArticle,
   category,
   info,
   password,
