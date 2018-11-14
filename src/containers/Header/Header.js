@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import DropDown from '../../components/DropDown/DropDown';
 import Logo from '../../assets/images/phlox-logo.png';
 import { msgInfoActions, asyncActions, LOGOUT, SIGNUP } from '../BasePath';
-import { createBrowserHistory } from 'history';
 import './Header.scss';
 
 const history = createBrowserHistory({ forceRefresh: true });
@@ -393,3 +393,4 @@ export default connect(mapStateToProps, {
   setSignUpSuccessState: asyncActions(SIGNUP).success,
   clearMsgInfo: msgInfoActions.clear
 })(Header);
+

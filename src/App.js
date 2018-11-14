@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import CreateArticle from './containers/createArticle/CreateArticle';
 import Header from './containers/Header/Header';
 import ViewProfile from './containers/Profile/ViewProfile';
 import EditProfile from './containers/Profile/Profile';
@@ -15,15 +16,11 @@ import './App.scss';
 
 
 /**
- *
- *
  * @class App
  * @extends {Component}
  */
 class App extends Component {
   /**
-   *
-   *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
    * @memberof App
@@ -32,15 +29,18 @@ class App extends Component {
     return (
       <div>
         <Header />
+        <Signup />
+        <Login />
         <ForgotPassword />
         <Login />
         <ResetPassword />
         <Signup />
         <div>
           <Switch>
+            <Route path="/" exact component={Home} />
+            <PrivateRoute path="/articles" component={CreateArticle} />
             <PrivateRoute path='/profile/edit' component={EditProfile} />
             <PrivateRoute path='/profile' component={ViewProfile} />
-            <Route path="/" exact component={Home} />
             <Route path="/password/forgot-success" component={SentResetPasswordMail} />
             <Route path="/password/reset/:token" component={Home} />
             <Redirect to="/" />

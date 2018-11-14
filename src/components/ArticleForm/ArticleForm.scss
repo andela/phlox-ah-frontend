@@ -1,0 +1,26 @@
+div.title-input {
+  margin-top: 35px;
+  margin-right: 10px;
+  input.title-size {
+    font-size: 30px;
+  }
+}
+
+.text-area{
+  margin-top: 30px;
+}
+
+.container-fluid {
+  width: 100%;
+  max-width:initial;
+  .row{
+    margin: 0;
+    .col{
+      padding: 0;
+    }
+  }
+}
+
+.main-content {
+  padding: 26px;
+}
