@@ -3,24 +3,26 @@ import Avatar from 'react-avatar';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 import { Row } from 'react-materialize';
-import './ViewAnArticle.scss';
+import './ViewArticle.scss';
 import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
-import ArticleTags from '../../../components/Tags/ArticleTags';
-import { viewArticle } from '../../../requests/ArticleRequests';
+import ArticleTags from '../../components/Tags/ArticleTags';
+import { viewArticle } from '../../requests/ArticleRequests';
 
 /**
  * @class ViewAnArticle
  * @extends {Component}
  */
-class ViewAnArticle extends Component {
+class ViewArticle extends Component {
   /**
    * @constructor function
    * @param {*} props React properties
    */
   constructor() {
     super();
-    this.state = { success: false, loading: false, article: [] };
+    this.state = {
+      success: false, loading: false, failure: false, article: []
+    };
   }
 
   /**
@@ -33,6 +35,14 @@ class ViewAnArticle extends Component {
     if (props.success) {
       const { success, loading, article } = props;
       return { success, loading, article };
+    }
+    if (props.failure) {
+      const {
+        success, loading, article, failure
+      } = props;
+      return {
+        success, loading, article, failure
+      };
     }
     return state;
   }
@@ -52,16 +62,24 @@ class ViewAnArticle extends Component {
    * @returns {jsx} - jsx
    */
   render() {
-    const { success, article } = this.state;
+    const { success, article, failure } = this.state;
     return (
     <div className="MainWrapper2">
         <div className="container">
         <Row className="containerRow">
             <div className="col s12 mainContainer ">
             <Row>
+                {
+                    failure
+                    && <div className="center failure">
+                         <h1><i className="fas fa-exclamation-triangle"></i></h1>
+                         <h1>404</h1>
+                         <h2 className="capitalize">We couldn’t find this page.</h2>
+                      </div>
+                }
                 {/* DUMMY DIV */}
                 { !success
-                  ? <div>
+                  ? <div className={failure && 'hide'}>
                 <div className="col s12 l6 lighten-5 img-div">
                 <div className="dummyPicture"></div>
                 </div>
@@ -133,18 +151,20 @@ class ViewAnArticle extends Component {
   }
 }
 
-ViewAnArticle.propTypes = {
+ViewArticle.propTypes = {
   viewArticle: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   success: PropTypes.bool,
+  failure: PropTypes.bool,
   articles: PropTypes.object,
   match: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  loading: state.Articles.loading,
-  success: state.Articles.success,
-  article: state.Articles.article,
+  loading: state.article.loading,
+  success: state.article.success,
+  failure: state.article.failure,
+  article: state.article.article,
 });
 
-export default connect(mapStateToProps, { viewArticle })(ViewAnArticle);
+export default connect(mapStateToProps, { viewArticle })(ViewArticle);

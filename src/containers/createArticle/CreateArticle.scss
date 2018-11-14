@@ -1,0 +1,229 @@
+$darkBlue: #0039cb;
+$lightGray: #6d6d6d;
+$darkGray: #424242;
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 30px;
+    background: #F8F9FA;
+}
+
+h1 {
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    letter-spacing: -2px;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+h3 {
+    font-size: 32px;
+    line-height: 42px;
+}
+
+h4 {
+    font-size: 26px;
+    line-height: 32px;
+}
+
+p {
+    margin-bottom: 20px;
+}
+
+a {
+    color:black;
+    text-decoration: underline;
+    &:hover {
+      color: $darkBlue;
+    }
+}
+
+blockquote {
+    display: block;
+    padding-left: 20px;
+    border-left: 6px solid $darkGray;
+    margin-left: -15px;
+    padding-left: 15px;
+    font-style: italic;
+    color: $lightGray;
+}
+
+.editable,
+.secondEditable
+ {
+    outline: none;
+    margin: 0 0 20px 0;
+    padding: 0 0 20px 0;
+}
+
+/* Styles for selected tags */
+div.ReactTags__tags {
+  margin-top: 10px;
+}
+
+div.ReactTags__selected span.ReactTags__tag {
+    background: #3B8CA1;
+    color: #ffffff;
+    font-size: 12px;
+    display: inline-block;
+    padding: 5px;
+    margin: 5px 5px;
+    cursor: move;
+    border-radius: 2px;
+}
+
+div.react-tags-wrapper {
+  background: #ffffff;
+  padding: 10px 10px 0px;
+}
+
+div.ReactTags__selected a.ReactTags__remove {
+    color: #ffffff;
+    margin-left: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+div.ReactTags__tagInput input.ReactTags__tagInputField {
+  border: none;
+}
+
+/* Styles for suggestions */
+div.ReactTags__suggestions {
+    position: absolute;
+    z-index: 90;
+}
+
+div.ReactTags__suggestions ul {
+    list-style-type: none;
+    box-shadow: .05em .01em .5em rgba(0,0,0,.2);
+    background: white;
+    width: 200px;
+}
+
+div.ReactTags__suggestions li {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 10px;
+    margin: 0;
+}
+
+div.ReactTags__suggestions li mark {
+    text-decoration: underline;
+    background: none;
+    font-weight: 600;
+}
+
+div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
+    background: #b7cfe0;
+    cursor: pointer;
+}
+
+.status {
+    font-size: 14px;
+    margin-top: 6px;
+    color: #777;
+}
+
+.flex {
+  display: flex;
+}
+
+.create-article {
+  margin:3px 30px;
+  padding-top: 20px;
+  background: #ffffff;
+  padding-right: 30px;
+
+  div.author-photo{
+    width: 50px;
+    height: 50px;
+    background: #ccc;
+    border-radius: 50%;
+  }
+
+  div.author-name {
+    margin-left: 10px;
+    font-size: 16px;
+    line-height: 1.3;
+    margin-top: 6px;
+    color: #444;
+  }
+
+  div.pub-date {
+    font-size: 12px;
+    margin-top: 4px;
+    color: #777;
+  }
+
+  .publish-btn-wrapper{
+    text-align: right;
+  }
+
+  .publish-btn-wrapper button {
+    border: 1px solid #0e718c;
+    color: #0e718c;
+    font-size: 15px;
+    background-color: #fff;
+    padding: 8px 6px;
+    outline: none;
+    border-radius: 3px;
+    width: 130px;
+    box-shadow: 1px 1px 0 #0e718c;
+    cursor: pointer;
+  }
+
+  label.article-img-upload {
+    position: relative;
+    border: 1px solid #ddd;
+    height: 40px;
+    display: block;
+    top: 39px;
+    width: 100%;
+    border-radius: 3px;
+    min-width: 216px;
+
+    p.file-name {
+      position: absolute;
+      top: 4px;
+      margin: 0px;
+      left: 12px;
+      font-size: 15px;
+    }
+
+    label.browse-btn {
+      position: absolute;
+      right: 0px;
+      font-size: 16px;
+      border-radius: inherit;
+      background: #ddd;
+      padding: 4px 20px;
+    }
+
+    input.file-input{
+      display: none;
+    }
+  }
+}
+
+.tag-category {
+  background: #EEEEEE;
+  margin-top: 90px;
+  margin-left: 10px;
+  height: 500px;
+  padding-top: 10px;
+  label, span {
+    font-size: 16px;
+    color: #5E5F63;
+  };
+  .input-field {
+    margin-top: 40px;
+  }
+  .input-field .input-field {
+    margin-top: 9px;
+    background: #ffffff;
+    padding: 10px 10px 0;
+  }
+}

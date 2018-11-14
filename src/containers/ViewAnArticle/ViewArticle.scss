@@ -11,6 +11,20 @@
   .capitalize {
     text-transform: capitalize;
   }
+  .failure{
+    h1{
+      border-bottom: none;
+      font-weight:900;
+      font-size:100px;
+      margin:10px 0px;
+      padding:0px;
+      color:#B2B2B2;
+    }
+    i{
+      font-size:70px;
+      color:#EF5350;
+    }
+  }
   .container {
     width: 90%;
     margin-top: 2px;
@@ -106,6 +120,23 @@
       h4 {
         font-weight: bold;
         font-size: 36px;
+      }
+      .failure{
+        h1{
+          border-bottom: none;
+          font-weight:900;
+          font-size:200px;
+          margin:20px 0px;
+          padding:0px;
+          color:#B2B2B2;
+        }
+        i{
+          font-size:150px;
+          color:#EF5350;
+        }
+        h2{
+          font-weight:bold;
+        }
       }
     }
     @media only screen and (min-width: 993px) {
