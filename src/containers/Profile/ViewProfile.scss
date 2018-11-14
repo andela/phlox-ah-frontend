@@ -1,0 +1,218 @@
+
+$primary-color: #06576D;
+
+
+div.profile {
+  width: 100%;
+  margin: 30px 0;
+}
+
+div.profile div.profile-wrapper {
+  margin: auto;
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div.profile-wrapper div.profile-info,
+div.profile-wrapper div.profile-edit {
+  padding: 10px;
+  background: rgba(0,0,0,0.04);
+  margin: 5px;
+}
+
+div.profile-wrapper div.profile-info {
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 320px;
+}
+
+div.profile-info div.info-wrapper {
+  display: inherit;
+}
+
+div.profile-info div.pi-photo {
+  width: 100px;
+}
+
+div.pi-photo span.photo,
+div.pi-photo span.change-photo {
+  display: block;
+}
+
+div.pi-photo span.photo {
+  border-radius: 50%;
+  background: #ccc;
+  width: 80px;
+  height: 80px;
+  margin: auto;
+}
+
+div.pi-photo span.change-photo {
+  text-align: center;
+  padding: 5px 0;
+  display: none;
+}
+
+div.profile-info div.pi-detail {
+  flex: 1;
+  min-width: 300px;
+  margin-left: 50px;
+}
+
+div.pi-detail div.username {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+table.profile-data tr.data-row {
+  border-bottom: none;
+}
+
+table.profile-data tr.data-row td:first-child{
+  font-weight: 600;
+  vertical-align: top;
+}
+
+table.profile-data tr.data-row td:nth-child(2){
+  color: #777;
+}
+
+table.profile-data tr.data-row td{
+  padding: 2px 3px;
+  font-size: 16px;
+  letter-spacing: 0.6px;
+  line-height: 1.5;
+}
+
+div.profile-info div.followers {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  padding-top: 6px;
+}
+
+div.followers div.follow,
+div.followers div.following {
+  flex-basis: 50%;
+  padding: 5px;
+  min-width: 300px;
+
+  span.header {
+    font-size: 20px;
+    font-weight: 600;
+    color: $primary-color;
+    display: block;
+    margin-left: 11px;
+  }
+
+  ul.authors {
+    margin: 4px;
+  }
+
+  ul.authors li.author {
+    display: flex;
+    padding: 4px 0;
+  }
+
+  li.author a {
+    display: inherit;
+  }
+
+  li.author div.photo {
+    width: 50px;
+    height: 50px;
+    background: #ccc;
+    border-radius: 50%;
+    margin: 2px;
+    margin-right: 5px;
+  }
+
+  li.author div.name {
+    font-size: 16px;
+    color: #777;
+    line-height: 3;
+    text-align: left;
+    flex: 1;
+    margin-left: 10px;
+  }
+
+  div.more {
+    text-align: center;
+    font-weight: 600;
+  }
+}
+
+div.followers div.following {
+  border-left: 1px solid #ccc;
+  padding-left: 15px;
+}
+
+div.profile-wrapper div.profile-edit {
+  flex: 1;
+  min-width: 220px;
+  align-self: self-start;
+
+  div.edit-profile-link {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: underline;
+    letter-spacing: 0.5px;
+  }
+
+  div.pref-heading {
+    font-size: 18px;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 4px;
+    color: #666;
+  }
+
+  div.tags ul.tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 15px 0;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  ul.tags-wrapper li.tag {
+    background: $primary-color;
+    color: #fff;
+    padding: 4px 13px;
+    border-radius: 3px;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    margin: 4px;
+  }
+
+  li.tag span.remove-tag {
+    display: inline-block;
+    margin-left: 8px;
+    cursor: pointer;
+  }
+}
+
+
+@media screen and (max-width: 890px) {
+ div.profile-wrapper div.profile-info.tablet {
+    width: 100%;
+  }
+}
+
+
+@media screen and (max-width: 700px) {
+  div.followers div.follow,
+  div.followers div.following {
+    margin: auto;
+  }
+  div.followers div.following {
+    border: none;
+    margin-top: 20px
+  }
+}
+
+

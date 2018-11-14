@@ -142,7 +142,7 @@ div.nav-wrapper ul li a.notification-bell:hover {
   background: none;
 }
 
-div.nav-wrapper ul li a.user-photo {
+div.nav-wrapper ul li span.user-photo {
   border-radius: 50%;
   font-size: 6px;
   width: 40px;
@@ -151,6 +151,8 @@ div.nav-wrapper ul li a.user-photo {
   border-color: #bbb;
   position: relative;
   bottom: 5px;
+  display: block;
+  cursor: pointer;
 }
 
 
@@ -174,23 +176,101 @@ div.sd-wrapper ul {
   margin: 0px;
   line-height: 0;
   position: relative;
-  left: 11px;
-  top: 19px;
 }
 
 div.sd-wrapper ul li.s-list {
-  line-height: 0px;
-  margin: 0px;
+  margin: 3px;
+  padding-left: 5px;
   float: none;
   height: 20px;
   display: flex;
   cursor: pointer;
   font-size: 15px;
+  height: 29px;
+  font-weight: 600;
+
+
+  a {
+    display: block;
+    width: 100%;
+    border: none;
+    margin-left: 0px;
+    padding: 0px;
+  }
+
+  a:hover {
+    background: none;
+  }
 }
 
 ul li.s-list i{
   height: inherit;
   line-height: inherit;
   font-size: 20px;
+}
+
+img.side-logo {
+  width: 50%;
+  right: 40px;
+  position: relative;
+}
+
+i.fas.user {
+  text-align: center;
+  position: relative;
+  right: 70%;
+  bottom: 35%;
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media screen and (max-width: 991px) {
+  a.brand-logo img {
+    margin-left: 20%;
+    width: 100%;
+    height: 100%;
+  }
+
+  div.brand span.brand-name {
+    font-size: 25px;
+    display: inline-block;
+    margin: 0;
+  }
+  div.search-wrapper i.fa-search {
+    position: absolute;
+    left: 8px;
+    top: -6px;
+    font-size: 18px;
+    margin-top: 22px;
+    margin-left: 5%;
+  }
+  div.search-wrapper div.input input {
+    padding-left: 32px;
+    border: 1px solid;
+    border-radius: 3px;
+    background: #eeeeee70;
+    height: 36px;
+    width: 80%;
+    margin-left: 5%;
+  }
+  div.categories span {
+    display: inherit;
+    cursor: pointer;
+    margin: 10px 0 0 10px;
+  }
+  i.fas.fa-user {
+    text-align: center;
+    position: relative;
+    right: 70%;
+    bottom: 30%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  i.fas.fa-user {
+    text-align: center;
+    position: relative;
+    right: 70%;
+    top: 10%;
+  }
 }
 
