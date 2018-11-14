@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import DropDown from '../../components/DropDown/DropDown';
 import Logo from '../../assets/images/phlox-logo.png';
-import { msgInfoActions, asyncActions, LOGOUT, SIGNUP } from '../BasePath';
+import {
+  msgInfoActions, asyncActions, LOGOUT, SIGNUP
+} from '../BasePath';
 import './Header.scss';
 
 /**
