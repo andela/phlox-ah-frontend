@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import CreateArticle from './containers/createArticle/CreateArticle';
 import Header from './containers/Header/Header';
 import Login from './containers/Login/Login';
 import MsgInfo from './containers/MsgInfo/MsgInfo';
@@ -10,15 +11,11 @@ import Signup from './containers/Signup/Signup';
 
 import './App.scss';
 /**
- *
- *
  * @class App
  * @extends {Component}
  */
 class App extends Component {
   /**
-   *
-   *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
    * @memberof App
@@ -27,7 +24,6 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <h1 className="theme-color center">Hello! Welcome to Authors Haven</h1>
         <Signup />
         <Login />
         <MsgInfo />
@@ -35,8 +31,9 @@ class App extends Component {
         <div>
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/forgot/password" component={ForgotPassword} />
-            <Route path="/reset_password/:token" component={ResetPassword} />
+            <Route path="/password/forgot" component={ForgotPassword} />
+            <Route path="/password/reset/:token" component={ResetPassword} />
+            <Route path="/articles" component={CreateArticle} />
           </Switch>
         </div>
       </div>

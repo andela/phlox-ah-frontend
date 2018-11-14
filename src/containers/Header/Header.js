@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
 import DropDown from '../../components/DropDown/DropDown';
 import './Header.scss';
 import Logo from '../../assets/images/phlox-logo.png';
 import { asyncActions, LOGOUT } from './BasePath';
+
+const history = createBrowserHistory({ forceRefresh: true });
 
 /**
  *
@@ -27,11 +32,18 @@ class Header extends Component {
     super();
 
     this.state = {
-      showDropDown: false,
-      showSettingsOption: false,
       isAuth: false,
+      showDropDown: false,
+      showSettingsOption: false
     };
+    this.blur = this.blur.bind(this);
+    this.showDropDown = this.showDropDown.bind(this);
+    this.signIn = this.signIn.bind(this);
+    this.signOut = this.signOut.bind(this);
+    this.signUp = this.signUp.bind(this);
     this.timeoutID = null;
+    this.toggleDropDown = this.toggleDropDown.bind(this);
+    this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
   }
 
   /**
@@ -71,9 +83,9 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onBlur() {
+  blur() {
     this.clearTimeout();
-    this.timeoutID = setTimeout(this.toggleDropDown.bind(this), 200);
+    this.timeoutID = setTimeout(this.toggleDropDown, 200);
   }
 
   /**
@@ -81,7 +93,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onSignupClicked() {
+  signUp() {
     $('#signupModal').modal('open');
   }
 
@@ -90,7 +102,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onLoginClicked() {
+  signIn() {
     $('#login-modal').modal('open');
   }
 
@@ -99,8 +111,9 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  logout() {
-    this.props.logout();
+  signOut() {
+    history.push('/');
+    this.props.signOut();
     localStorage.removeItem('token');
   }
 
@@ -109,7 +122,7 @@ class Header extends Component {
    * @returns {object} null
    * @memberof Header
    */
-  onShowDropDown() {
+  showDropDown() {
     if (!this.state.showDropDown) {
       this.toggleDropDown();
     }
@@ -145,9 +158,9 @@ class Header extends Component {
    */
   render() {
     const {
+      isAuth,
       showDropDown,
-      showSettingsOption,
-      isAuth
+      showSettingsOption
     } = this.state;
 
     return (
@@ -161,13 +174,13 @@ class Header extends Component {
           </div>
           <div className="search-wrapper">
             <div className="categories">
-              <span onClick={this.onShowDropDown.bind(this)}>
+              <span onClick={this.showDropDown}>
                 <i className="fas fa-th"></i>
                 <i className="fas fa-sort-down"></i>
               </span>
               {
                 showDropDown
-                && <DropDown onBlur={this.onBlur.bind(this)} />
+                && <DropDown blur={this.blur} />
               }
             </div>
             <div className="input">
@@ -181,7 +194,7 @@ class Header extends Component {
               className="right hide-on-med-and-down nav-button">
               <li>
                 <a
-                  onClick={this.onLoginClicked.bind(this)}
+                  onClick={this.signIn}
                   href="#"
                   className="login">
                   Login
@@ -189,7 +202,7 @@ class Header extends Component {
               </li>
               <li>
                 <a
-                  onClick={this.onSignupClicked}
+                  onClick={this.signUp}
                   href="#" className="sign-up">
                   Sign Up
                 </a>
@@ -206,21 +219,27 @@ class Header extends Component {
                 </a>
               </li>
               <li
-                onClick={this.toggleSettingsOptions.bind(this)}
+                onClick={this.toggleSettingsOptions}
                 id="settings-dropdown">
-                <a className="user-photo" href="#"></a>
+                <span className="user-photo" ></span>
                 {
                   showSettingsOption
-                    && <div className="sd-wrapper">
-                      <ul>
-                        <li
-                          onClick={this.logout.bind(this)}
-                          className="s-list">
-                          <i className="fas fa-sign-out-alt"></i>
-                          &nbsp; Sign out
+                  && <div className="sd-wrapper">
+                    <ul>
+                      <li className="s-list">
+                        <Link to="/articles">
+                          <i className="fas fa-plus"></i>
+                          &nbsp;New Article
+                        </Link>
+                      </li>
+                      <li
+                        onClick={this.signOut}
+                        className="s-list">
+                        <i className="fas fa-sign-out-alt"></i>
+                        &nbsp; Sign out
                         </li>
-                      </ul>
-                    </div>
+                    </ul>
+                  </div>
                 }
               </li>
             </ul>
@@ -233,14 +252,14 @@ class Header extends Component {
 
 Header.propTypes = {
   user: PropTypes.object,
-  logout: PropTypes.func
+  signOut: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-  user: state.User
+  user: state.user
 });
 
 
 export default connect(mapStateToProps, {
-  logout: asyncActions(LOGOUT).success
+  signOut: asyncActions(LOGOUT).success
 })(Header);
