@@ -28,17 +28,16 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <h1 className="theme-color center">Hello! Welcome to Authors Haven</h1>
         <Signup />
         <Login />
         <MsgInfo />
         <ForgotPassword />
         <div>
           <Switch>
-            <Route path="/" exact component={Home} />
             <Route path="/forgot/password" component={ForgotPassword} />
             <Route path="/reset_password/:token" component={ResetPassword} />
             <Route path="/articles/:articleslug" exact component={ViewArticle} />
+            <Route path="/" component={Home} />
           </Switch>
         </div>
       </div>
