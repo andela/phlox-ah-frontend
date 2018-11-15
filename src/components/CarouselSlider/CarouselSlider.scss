@@ -1,0 +1,79 @@
+@import '../../styles/variables';
+.carousel {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  @media #{$large_desktop} {
+    max-height: 300px;
+  }
+  @media #{$desktop} {
+    max-height: 230px;
+  }
+  @media #{$tablet} {
+    max-height: 260px;
+  }
+  @media #{$mobile} {
+    max-height: 340px;
+  }
+  .indicators {
+    right: 0;
+    left: inherit;
+    text-align: right;
+    .indicator-item {
+      background-color: #ADA9A9;
+      &.active {
+        background-color: #000000;
+      }
+    }
+  }
+  .carousel-item {
+    height: 280px;
+    min-height: 280px;
+    padding: 0px 20px 0px 0px;
+    margin-right: 10px;
+    .img-container {
+      height: 280px;
+      @media #{$large_desktop} {
+        height: 280px;
+      }
+      @media #{$desktop} {
+        height: 210px;
+      }
+      @media #{$tablet} {
+        max-height: 200px;
+      }
+      @media #{$mobile} {
+        max-height: 140px;
+      }
+      img {
+        height: 100%;
+      }
+    }
+    .content {
+      padding-right: 25px;
+      .editor-title {
+        font: {
+          weight: 700;
+        }
+        line-height: 35px;
+        @media #{$desktop} {
+          font-size: 1.5rem;
+        }
+        @media #{$tablet} {
+          font-size: 1.25rem;
+        }
+      }
+      p {
+        color: #6F6A6A;
+        font-size: 0.8em;
+        line-height: 20px;
+        font-weight: 400;
+        @media #{$desktop} {
+          font-size: 0.7em;
+        }
+        @media #{$tablet} {
+          font-size: 0.6em;
+        }
+      }
+    }
+  }
+}

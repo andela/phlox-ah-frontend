@@ -1,0 +1,46 @@
+@import '../../styles/variables';
+.articleCard {
+  &.medium {
+    height: 350px;
+  }
+  .card-image {
+    max-height: 55%;
+    height: 550%;
+    @media #{$mobile} {
+      max-height: 48%;
+      height: 48%;
+    }
+    .card-title {
+      font: {
+        weight: 700;
+        size: 1.3em;
+      }
+      text-align: center;
+    }
+  }
+  .card-content {
+    div {
+      font-size: 0.8em;
+      color: #6F6A6A;
+      line-height: 22px;
+      text-align: justify;
+      margin-top: -13px;
+    }
+  }
+  .card-action {
+    a {
+      font-size: 0.75em;
+      color: #3B8CA1;
+      margin-right: 14px;
+      text-decoration: none;
+    }
+    a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+      color: #3B8CA1;
+    }
+    span {
+      font-size: 0.70em;
+      color: #ADA9A9;
+      padding-right: 0.3em;
+    }
+  }
+}

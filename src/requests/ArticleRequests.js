@@ -25,7 +25,7 @@ export const addArticle = article => (dispatch) => {
 
 export const getArticles = () => (dispatch) => {
   dispatch(asyncActions(ALL_ARTICLES).loading(true));
-  axios.get(articleConstant.ALL_ARTICLES)
+  axios.get(articleConstant.ALL_ARTICLES_URL)
     .then((response) => {
       if (response.status === 200) {
         dispatch(asyncActions(ALL_ARTICLES).success(response.data.articles));

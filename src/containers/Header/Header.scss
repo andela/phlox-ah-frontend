@@ -5,7 +5,9 @@ nav.main-header {
   background: #fff;
   line-height: 52px;
   padding: 5px;
-  box-shadow: 0 2px rgba(0,0,0,0.1);
+  border-bottom:1px solid #c6c3c3;
+  line-height:4em;
+  box-shadow: 10px 10px 5px #c6c3c3;
 }
 nav.main-header * {
   color: $primary-color;

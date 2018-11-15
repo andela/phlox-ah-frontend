@@ -1,0 +1,62 @@
+.sidebar {
+  width: 29%;
+  padding: 15px;
+  h6 {
+    color: #6F6A6A;
+  }
+  .card {
+    height: 110px;
+    box-shadow: none;
+    .card-image {
+      width: 35%;
+      max-width: 35%;
+      img {
+        width: 100%;
+      }
+    }
+    img {
+      height: 100%;
+      width: 100%;
+    }
+    .card-content {
+      padding: 0px 14px 0px 14px;
+      p {
+        font-size: 0.7em;
+        color: #ADA9A9;
+        text-align: justify;
+        line-height: 15px;
+        word-spacing: -1px;
+        span {
+          font-color: black;
+        }
+      }
+      h6 {
+        margin-top: 2px;
+        color: #5E5F63;
+      }
+      .author-details {
+        img {
+          margin: auto;
+          width: 20px;
+          height: 20px;
+        }
+        p {
+          line-height: 30px;
+          font-size: 0.8em;
+          word-spacing: 0px;
+        }
+        span {
+          display: block;
+          font-size: 0.8em;
+          color: #6F6A6A;
+          &:nth-of-type(2) {
+            margin-top: -15px;
+          }
+        }
+      }
+    }
+  }
+}
+.card-stacked {
+  max-width: 65%;
+}
