@@ -33,5 +33,6 @@ export const passwordConstant = {
 };
 
 export const signupConstant = {
-  SIGNUP_URL: `${BASE_URL}/api/v1/signup`
+  SIGNUP_URL: `${BASE_URL}/api/v1/signup`,
+  VERIFY_URL: `${BASE_URL}/api/v1/users/verify`
 };

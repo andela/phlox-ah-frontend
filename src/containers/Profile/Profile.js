@@ -153,7 +153,7 @@ class Profile extends Component {
   }
 }
 const mapStateToProps = state => ({
-  profile: state.Profile,
+  profile: state.profile,
 });
 
 Profile.propTypes = {

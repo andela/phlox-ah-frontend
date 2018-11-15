@@ -295,33 +295,6 @@ class Header extends Component {
                       </ul>
                     </div>
                 }
-                <span className="user-photo" ></span>
-                {
-                  showSettingsOption
-                  && <div className="sd-wrapper">
-                    <ul>
-                      <li className="s-list">
-                        <Link to="/articles">
-                          <i className="fas fa-plus"></i>
-                          &nbsp;New Article
-                        </Link>
-                      </li>
-                      <li
-                          className="s-list">
-                          <Link to="/profile">
-                            <i className="fas fa-user"></i>
-                            &nbsp; Profile
-                          </Link>
-                      </li>
-                      <li
-                        onClick={this.signOut}
-                        className="s-list">
-                        <i className="fas fa-sign-out-alt"></i>
-                        &nbsp; Sign out
-                        </li>
-                    </ul>
-                  </div>
-                }
               </li>
             </ul>
           }

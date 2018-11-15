@@ -1,0 +1,32 @@
+.verifyDiv {
+  text-align: center;
+  div {
+    margin-top: 100px;
+  }
+  h3 {
+    font-weight: bold;
+    color: #535759;
+  }
+  p {
+    font-size: 20px;
+    font-weight: 400;
+  }
+}
+.home-button {
+  border-radius: 20px;
+  width: 300px;
+  height: 45px;
+  background-color: #06576d;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  i {
+    margin-right: 10px;
+    color: #ffffff;
+  }
+}
+.home-button:hover {
+  background-color: #06576d;
+}
+i {
+  color: #3cbf98;
+}
