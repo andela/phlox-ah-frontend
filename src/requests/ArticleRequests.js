@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { asyncActions } from '../util/AsyncUtil';
 import {
-  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE
+  ALL_ARTICLES, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, VIEW_ARTICLE
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
@@ -18,11 +18,6 @@ const formatError = (error) => {
   return ['Error occurred'];
 };
 
-export const addArticle = article => (dispatch) => {
-  dispatch(asyncActions(ADD_ARTICLE).loading(true));
-  dispatch(asyncActions(ADD_ARTICLE).success(article));
-};
-
 export const getArticles = () => (dispatch) => {
   dispatch(asyncActions(ALL_ARTICLES).loading(true));
   axios.get(articleConstant.ALL_ARTICLES_URL)
@@ -34,6 +29,18 @@ export const getArticles = () => (dispatch) => {
     })
     .catch(error => dispatch(asyncActions(ALL_ARTICLES)
       .failure(true, error)));
+};
+
+export const viewArticle = payload => (dispatch) => {
+  dispatch(asyncActions(VIEW_ARTICLE).loading(true));
+  axios.get(`${articleConstant.VIEW_ARTICLE_URL}/${payload}`)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(VIEW_ARTICLE).success(response.data.article));
+        dispatch(asyncActions(VIEW_ARTICLE).loading(false));
+      }
+    })
+    .catch(error => dispatch(asyncActions(VIEW_ARTICLE).failure(true, error)));
 };
 
 export const createArticle = (formData, tags) => (dispatch) => {

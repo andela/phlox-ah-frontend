@@ -8,6 +8,7 @@ import Home from './containers/Home/Home';
 import ForgotPassword from './containers/Password/ForgotPassword';
 import ResetPassword from './containers/Password/ResetPassword';
 import Signup from './containers/Signup/Signup';
+import ViewArticle from './containers/ViewAnArticle/ViewArticle';
 
 import './App.scss';
 /**
@@ -33,6 +34,7 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/password/forgot" component={ForgotPassword} />
             <Route path="/password/reset/:token" component={ResetPassword} />
+            <Route path="/articles/:articleslug" exact component={ViewArticle} />
             <Route path="/articles" component={CreateArticle} />
           </Switch>
         </div>
