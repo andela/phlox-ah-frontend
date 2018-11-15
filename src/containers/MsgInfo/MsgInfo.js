@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { msgInfoActions } from '../BasePath';
 
 import './MsgInfo.scss';
 
@@ -26,11 +25,9 @@ class MsgInfo extends Component {
     super();
 
     this.state = {
-      info: [],
-      success: false
+      message: [],
+      success: true
     };
-
-    this.close = this.close.bind(this);
   }
 
   /**
@@ -45,35 +42,20 @@ class MsgInfo extends Component {
   }
 
   /**
-   * @description - This method clear msg info
-   * @returns {object} null
-   * @memberof MsgInfo
-   */
-  close() {
-    this.props.clearMsgInfo();
-  }
-
-  /**
    *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
    * @memberof MsgInfo
    */
   render() {
-    const { success, info } = this.state;
+    const { success, message } = this.state;
 
-    const messages = info.map((data, index) => (<li key={index} className="info">{data}</li>));
+    const messages = message.map((data, index) => (<li key={index} className="info">{data}</li>));
 
     return (
-      <div className={info.length ? '_show' : '_hide'}>
+      <div className={message.length ? '_show' : '_hide'}>
         <div className={success
           ? 'msg-info success' : 'msg-info error'}>
-            <div className="close-btn">
-              <span onClick={this.close}
-                className="x-btn">
-                &times;
-              </span>
-            </div>
             <ul>
               {messages}
             </ul>
@@ -93,6 +75,4 @@ const mapStateToProps = state => ({
   info: state.info
 });
 
-export default connect(mapStateToProps, {
-  clearMsgInfo: msgInfoActions.clear
-})(MsgInfo);
+export default connect(mapStateToProps, {})(MsgInfo);

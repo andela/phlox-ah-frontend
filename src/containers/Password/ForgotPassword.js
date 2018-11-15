@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import {
-  Modal, Row, Button, Input
+  Modal, Row
 } from 'react-materialize';
-import '../Login/Login.scss';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {
+  msgInfoActions, Input, Button
+} from '../BasePath';
+import MsgInfo from '../MsgInfo/MsgInfo';
+import '../Common/ModalForm.scss';
 import { sendForgotPassword } from '../../requests/PasswordRequests';
+import '../Login/Login.scss';
 
 /**
  *
  *
- * @class Login
+ * @class ForgotPassword
  * @extends {Component}
  */
 class ForgotPassword extends Component {
@@ -20,10 +25,30 @@ class ForgotPassword extends Component {
    */
   constructor() {
     super();
-    this.onClickForgotPassword = this.onClickForgotPassword.bind(this);
-    this.onLoginClicked = this.onLoginClicked.bind(this);
-    this.onCloseClicked = this.onCloseClicked.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+
+    this.state = {
+      email: ''
+    };
+
+    this.hasError = this.hasError.bind(this);
+    this.change = this.change.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.signIn = this.signIn.bind(this);
+    this.signUp = this.signUp.bind(this);
+    this.submit = this.submit.bind(this);
+  }
+
+  /**
+   * @description - This method sets the input values
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof ForgotPassword
+   */
+  change(e) {
+    if (this.props.info.message.length) {
+      this.props.clearMsgInfo();
+    }
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   /**
@@ -32,8 +57,9 @@ class ForgotPassword extends Component {
    * @param {*} e
    * @memberof ForgotPassword
    */
-  onSubmit(e) {
+  submit(e) {
     e.preventDefault();
+    this.props.sendForgotPassword(this.state.email);
   }
 
   /**
@@ -41,18 +67,22 @@ class ForgotPassword extends Component {
    * @returns {object} null
    * @memberof ForgotPassword
    */
-  onCloseClicked() {
+  closeModal() {
+    this.props.clearMsgInfo();
     $('#forgot-password-modal').modal('close');
   }
 
   /**
-   * @description - This method sends the forgot password request
-   * @returns {object} null
+   * @description - This method checks weather there is input error
+   * @param {objecj} info
+   * @returns {bool} error
    * @memberof ForgotPassword
    */
-  onClickForgotPassword() {
-    const email = $('#emailText').val();
-    this.props.sendForgotPassword(email);
+  hasError() {
+    if (this.props.info.success) {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -60,9 +90,19 @@ class ForgotPassword extends Component {
    * @returns {object} null
    * @memberof ForgotPassword
    */
-  onLoginClicked() {
-    this.onCloseClicked();
+  signIn() {
+    this.closeModal();
     $('#login-modal').modal('open');
+  }
+
+  /**
+   * @description - This method opens the signup modal
+   * @returns {object} null
+   * @memberof ForgotPassword
+   */
+  signUp() {
+    this.closeModal();
+    $('#signup-modal').modal('open');
   }
 
   /**
@@ -74,36 +114,48 @@ class ForgotPassword extends Component {
   render() {
     return (
       <Modal
-        className="center-align forgot-password-modal" id="forgot-password-modal">
+        className="center-align modal"
+        id="forgot-password-modal">
         <div>
-          <a className="close-modal" href="#"
-            onClick={this.onCloseClicked}>
+          <button className="close-modal"
+            onClick={this.closeModal}>
             <i className="fas fa-times fa-lg black-text"></i>
-          </a>
+          </button>
         </div>
-        <h5>Authors Haven</h5>
-        <form className="col s12" onSubmit={this.onSubmit}>
+        <h5 className="form-title">Authors Haven</h5>
+        <MsgInfo />
+        <form className="col s12" onSubmit={this.submit}>
           <Row>
-            <Input type="text" id="emailText" label="enter email" s={12} /> <br /> <br />
+            <Input
+              type="email"
+              id="pemail"
+              name="email"
+              value={this.state.email}
+              label="Enter email"
+              s={12}
+              onChange={this.change}
+              hasError={this.hasError()}
+            />
             <Button
-              className="forgot-button" waves='light' onClick={this.onClickForgotPassword}>
-              Send Email
-            </Button>
+              type="submit"
+              name="Send Email"
+            />
           </Row>
         </form>
-        <h6>
-          Have an account?
-          <a href="#" onClick={this.onLoginClicked}>
+        <div className="more-action">
+          HAVE AN ACCOUNT?
+          <button onClick={this.signIn}>
             <span className="theme-color">
-              &nbsp; Log in
+              &nbsp; LOGIN
             </span>
-          </a> |
-          <a href="#">
+          </button>
+          <span>&nbsp; |</span>
+          <button onClick={this.signUp}>
             <span className="theme-color">
-              &nbsp; Sign up
+              &nbsp; SIGN UP
             </span>
-          </a>
-        </h6>
+          </button>
+        </div>
       </Modal>
     );
   }
@@ -111,13 +163,17 @@ class ForgotPassword extends Component {
 
 const mapStateToProps = state => ({
   loading: state.loading,
+  info: state.info
 });
 
 ForgotPassword.propTypes = {
   sendForgotPassword: PropTypes.func,
   loading: PropTypes.bool,
+  info: PropTypes.object,
+  clearMsgInfo: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, {
-  sendForgotPassword
+  sendForgotPassword,
+  clearMsgInfo: msgInfoActions.clear
 })(ForgotPassword);
