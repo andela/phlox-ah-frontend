@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
+import { msgInfoActions } from '../../actions/MsgInfoActions';
 
 import Signup from './Signup';
 
@@ -12,11 +13,16 @@ const store = mockStore({
     success: false,
     failure: false,
     errors: []
+  },
+  info: {
+    message: ['password is required'],
+    success: false
   }
 });
 
 let component;
 let myComponent;
+
 
 describe('<Signup/>', () => {
   beforeEach(() => {
@@ -31,7 +37,7 @@ describe('<Signup/>', () => {
     expect(component).toMatchSnapshot();
   });
   it('should have a form tag with class col', () => {
-    expect(myComponent.find('form').hasClass('col')).toBe(true);
+    expect(myComponent.find('form').exists()).toBe(true);
   });
   it('should have a signup button', () => {
     expect(myComponent.find('Button').exists()).toBe(true);
