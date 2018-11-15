@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import DropDown from '../../components/DropDown/DropDown';
-import './Header.scss';
 import Logo from '../../assets/images/phlox-logo.png';
-import { asyncActions, LOGOUT } from './BasePath';
+import {
+  msgInfoActions, asyncActions, LOGOUT, SIGNUP
+} from '../BasePath';
+import './Header.scss';
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -103,7 +105,7 @@ class Header extends Component {
    */
   blur() {
     this.clearTimeout();
-    this.timeoutID = setTimeout(this.toggleDropDown, 200);
+    this.timeoutID = setTimeout(this.toggleDropDown.bind(this), 200);
   }
 
 
@@ -118,12 +120,14 @@ class Header extends Component {
   }
 
   /**
-   * @description - This method displays the signup modal
+   * @description - This method displays the categories dropdown
    * @returns {object} null
    * @memberof Header
    */
-  signUp() {
-    $('#signupModal').modal('open');
+  showDropDown() {
+    if (!this.state.showDropDown) {
+      this.toggleDropDown();
+    }
   }
 
   /**
@@ -132,6 +136,7 @@ class Header extends Component {
    * @memberof Header
    */
   signIn() {
+    this.props.clearMsgInfo();
     $('#login-modal').modal('open');
   }
 
@@ -141,20 +146,21 @@ class Header extends Component {
    * @memberof Header
    */
   signOut() {
-    history.push('/');
     this.props.signOut();
+    this.props.clearMsgInfo();
     localStorage.removeItem('token');
+    history.push('/');
   }
 
   /**
-   * @description - This method displays the categories dropdown
+   * @description - This method displays the signup modal
    * @returns {object} null
    * @memberof Header
    */
-  showDropDown() {
-    if (!this.state.showDropDown) {
-      this.toggleDropDown();
-    }
+  signUp() {
+    this.props.clearMsgInfo();
+    this.props.setSignUpSuccessState(false);
+    $('#signup-modal').modal('open');
   }
 
   /**
@@ -170,16 +176,6 @@ class Header extends Component {
 
   /**
    * @description - This method displays the settings dropdown
-   * @returns {object} null
-   * @memberof Header
-   */
-  toggleSettingsOptions() {
-    this.setState({
-      showSettingsOption: !this.state.showSettingsOption,
-    });
-  }
-
-  /**
    * @description - This method toggles the categories dropdown
    * @returns {object} null
    * @memberof Header
@@ -187,6 +183,17 @@ class Header extends Component {
   toggleDropDown() {
     this.setState({
       showDropDown: !this.state.showDropDown,
+    });
+  }
+
+  /**
+   * @description - This method displays the settings dropdown
+   * @returns {object} null
+   * @memberof Header
+   */
+  toggleSettingsOptions() {
+    this.setState({
+      showSettingsOption: !this.state.showSettingsOption,
     });
   }
 
@@ -209,10 +216,10 @@ class Header extends Component {
    */
   render() {
     const {
-      isAuth,
       showDropDown,
       showMobileDropDown,
       showSettingsOption,
+      isAuth
     } = this.state;
 
     return (
@@ -246,19 +253,18 @@ class Header extends Component {
             && <ul
               className="right nav-button">
               <li>
-                <a
+                <button
                   onClick={this.signIn}
-                  href="#"
                   className="login">
                   Login
-                </a>
+                </button>
               </li>
               <li>
-                <a
+                <button
                   onClick={this.signUp}
-                  href="#" className="sign-up">
+                  className="sign-up">
                   Sign Up
-                </a>
+                </button>
               </li>
             </ul>
           }
@@ -267,14 +273,19 @@ class Header extends Component {
             && <ul
               className="right nav-button">
               <li>
-                <a className="notification-bell hide-on-med-and-down" href="#">
+                <Link to="/articles" className="notification-bell hide-on-med-and-down">
+                  <i className="fas fa-plus-square"></i>
+                </Link>
+              </li>
+              <li>
+                <a className="notification-bell hide-on-med-and-down">
                   <i className="fas fa-bell"></i>
                 </a>
               </li>
               <li
                 onClick={this.toggleSettingsOptions}
                 id="settings-dropdown">
-                <span className="user-photo"><i className="fas fa-user user"></i></span>
+                <a className="user-photo"></a>
                 {
                   showSettingsOption
                     && <div className="sd-wrapper hide-on-med-and-down">
@@ -287,7 +298,7 @@ class Header extends Component {
                           </Link>
                         </li>
                         <li
-                          onClick={this.logout}
+                          onClick={this.signOut}
                           className="s-list">
                           <i className="fas fa-sign-out-alt"></i>
                           &nbsp; Sign out
@@ -299,67 +310,6 @@ class Header extends Component {
             </ul>
           }
         </div>
-        <ul className="sidenav" id="mobile-nav">
-        <a href="#">
-          <img src={Logo} alt="" className="side-logo" />
-        </a>
-        <div className="search-wrapper">
-            <div className="input">
-              <input type="text" placeholder="Search" />
-              <i className="fas fa-search"></i>
-            </div>
-            <div className="categories">
-              <span className="btn white" onClick={this.showMobileDropDown}>
-                Categories
-              <i className="fas fa-sort-down"></i>
-              </span>
-              {
-                showMobileDropDown
-                && <DropDown onBlur={this.onMobileBlur} />
-              }
-            </div>
-          </div>
-          {
-            !isAuth
-            && <ul>
-             <li>
-              <a
-                onClick={this.login}
-                href="#"
-                className="login">
-                Login
-              </a>
-            </li>
-            <li>
-              <a href="#" className="sign-up">Sign Up</a>
-            </li>
-            </ul>
-            }
-            {
-            isAuth
-            && <ul>
-             <li>
-                <a href="#">
-                  <i className="fas fa-bell"></i>Notifications
-                </a>
-              </li>
-              <li
-                className="s-list">
-                <Link to="/profile">
-                  <i className="fas fa-sign-out-alt"></i>
-                  &nbsp; Profile
-                </Link>
-              </li>
-              <li
-                onClick={this.logout}>
-                <a href="">
-                <i className="fas fa-sign-out-alt"></i>
-                &nbsp; Sign out
-                </a>
-              </li>
-            </ul>
-            }
-        </ul>
       </nav>
     );
   }
@@ -367,6 +317,8 @@ class Header extends Component {
 
 Header.propTypes = {
   user: PropTypes.object,
+  clearMsgInfo: PropTypes.func,
+  setSignUpSuccessState: PropTypes.func.isRequired,
   signOut: PropTypes.func
 };
 
@@ -376,5 +328,7 @@ const mapStateToProps = state => ({
 
 
 export default connect(mapStateToProps, {
-  signOut: asyncActions(LOGOUT).success
+  signOut: asyncActions(LOGOUT).success,
+  setSignUpSuccessState: asyncActions(SIGNUP).success,
+  clearMsgInfo: msgInfoActions.clear
 })(Header);

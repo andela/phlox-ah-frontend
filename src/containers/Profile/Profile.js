@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Avatar from 'react-avatar';
 import PropTypes from 'prop-types';
 import {
   Button, Input, Row, Col
@@ -126,7 +127,10 @@ class Profile extends Component {
           <Row>
             <Col s={12}>
               <div className="profile-image">
-                <img src={this.state.dataImage || this.props.profile.profileImage} alt="Profile Image" className="circle responsive-img"/>
+                {
+                  this.state.dataImage || this.props.profile.profileImage ? <img src={this.state.dataImage || this.props.profile.profileImage} alt="Profile Image" className="circle responsive-img"/>
+                    : <Avatar name={this.props.user.username} size="75" round={true} />
+                }
               </div>
             </Col>
             <Col s={12}><label htmlFor="profile-image" className="profile-image">Change</label></Col>
@@ -154,12 +158,14 @@ class Profile extends Component {
 }
 const mapStateToProps = state => ({
   profile: state.profile,
+  user: state.user
 });
 
 Profile.propTypes = {
   newProfile: PropTypes.func,
   viewProfile: PropTypes.func,
-  profile: PropTypes.object
+  profile: PropTypes.object,
+  user: PropTypes.object
 };
 
 export default connect(mapStateToProps, {

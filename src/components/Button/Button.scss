@@ -1,0 +1,13 @@
+$primary-color: #06576D;
+
+div.row {
+  button.form-button {
+    display: block;
+    width: 89%;
+    border-radius: 20px;
+    margin: auto;
+    background-color: $primary-color;
+    text-transform: capitalize;
+    font-weight: 600;
+  }
+}
