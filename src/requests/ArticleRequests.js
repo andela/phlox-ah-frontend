@@ -1,12 +1,16 @@
 import axios from 'axios';
-
+import { createBrowserHistory } from 'history';
 import { asyncActions } from '../util/AsyncUtil';
 import {
-  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, MY_ARTICLES
+  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
+
+const history = createBrowserHistory({
+  forceRefresh: true
+});
 
 const formatError = (error) => {
   if (Array.isArray(error.message)) {
@@ -18,22 +22,27 @@ const formatError = (error) => {
   return ['Error occurred'];
 };
 
-export const addArticle = article => (dispatch) => {
-  dispatch(asyncActions(ADD_ARTICLE).loading(true));
-  dispatch(asyncActions(ADD_ARTICLE).success(article));
-};
-
-export const getArticles = () => (dispatch) => {
-  dispatch(asyncActions(ALL_ARTICLES).loading(true));
-  axios.get(articleConstant.ALL_ARTICLES)
+export const viewArticle = payload => (dispatch) => {
+  dispatch(asyncActions(VIEW_ARTICLE).loading(true));
+  axios.get(`${articleConstant.VIEW_ARTICLE_URL}/${payload}`)
     .then((response) => {
       if (response.status === 200) {
-        dispatch(asyncActions(ALL_ARTICLES).success(response.data.articles));
-        dispatch(asyncActions(ALL_ARTICLES).loading(false));
+        dispatch(asyncActions(VIEW_ARTICLE).success(response.data.article));
+        dispatch(asyncActions(VIEW_ARTICLE).loading(false));
       }
     })
-    .catch(error => dispatch(asyncActions(ALL_ARTICLES)
-      .failure(true, error)));
+    .catch(error => dispatch(asyncActions(VIEW_ARTICLE).failure(true, error)));
+};
+
+export const getSingleArticle = payload => (dispatch) => {
+  dispatch(asyncActions(SINGLE_ARTICLE).loading(true));
+  axios.get(`${articleConstant.SINGLE_ARTICLE_URL}/${payload.articlestatus}/${payload.articleslug}`)
+    .then((response) => {
+      console.log(response.data)
+      dispatch(asyncActions(SINGLE_ARTICLE).success(response.data.article));
+      dispatch(asyncActions(SINGLE_ARTICLE).loading(false));
+    })
+    .catch(error => dispatch(asyncActions(SINGLE_ARTICLE).failure(true, error)));
 };
 
 export const getMyArticles = () => (dispatch) => {
@@ -106,6 +115,7 @@ export const publishArticle = ({ slug, status, tags }) => (dispatch) => {
         .then((response) => {
           dispatch(asyncActions(PUBLISH_ARTICLE).success(response.data));
           dispatch(msgInfoActions.success([response.data.message]));
+          history.push(`/articles/${slug}`);
         })
         .catch((error) => {
           dispatch(asyncActions(PUBLISH_ARTICLE)

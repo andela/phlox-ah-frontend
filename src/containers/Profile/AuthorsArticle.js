@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './AuthorsArticle.scss';
 import { getMyArticles } from '../BasePath';
-import { Link } from 'react-router-dom';
+import Article from './Article';
 
+import './AuthorsArticle.scss';
 
 
 class AuthorsArticle extends Component {
@@ -56,39 +56,3 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {getMyArticles})(AuthorsArticle);
 
 
-function Article (props){
-  return (
-    <li className="article">
-      <div className="photo">
-        <img 
-          src={props.imgUrl || props.placeholderImg } 
-          alt="article-photo" 
-        />
-        <div className="title">
-          {props.article.title}
-        </div>
-      </div>
-      <div className="preview">
-        {props.article.description}
-      </div>
-      <div className="footer">
-        <span className="share">
-          <a href="#">SHARE</a>
-        </span>
-        <span className="view">
-          <a href="#">VIEW ARTICLE</a>
-        </span>
-        <span className="edit">
-          <Link to={`/articles/${props.article.slug}/slug`}>
-            <i className="fas fa-edit"></i>
-          </Link>
-        </span>
-        <span className="delete">
-          <button>
-            <i className="fas fa-trash-alt"></i>
-          </button>
-        </span>
-      </div>
-    </li>
-  )
-}

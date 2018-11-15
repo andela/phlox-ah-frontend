@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { createBrowserHistory } from 'history';
-
 import { asyncActions } from '../util/AsyncUtil';
 import { FORGOT_PASSWORD, RESET_PASSWORD } from '../actionTypes/PasswordConstants';
 import { passwordConstant } from '../constants/Constants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
 import { formatError } from '../helpers/Errors';
 
-const history = createBrowserHistory();
+const history = createBrowserHistory({
+  forceRefresh: true
+});
 
 export const sendResetPassword = (token, password) => (dispatch) => {
   dispatch(asyncActions(RESET_PASSWORD).loading(true));

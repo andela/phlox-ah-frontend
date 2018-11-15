@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import DropDown from '../../components/DropDown/DropDown';
 import Logo from '../../assets/images/phlox-logo.png';
-import { msgInfoActions, asyncActions, LOGOUT, SIGNUP } from '../BasePath';
+import { viewProfile, msgInfoActions, asyncActions, LOGOUT, SIGNUP } from '../BasePath';
 import { createBrowserHistory } from 'history';
 import './Header.scss';
 
@@ -51,6 +51,17 @@ class Header extends Component {
     this.toggleDropDown = this.toggleDropDown.bind(this);
     this.toggleMobileDropDown = this.toggleMobileDropDown.bind(this);
     this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
+  }
+
+  /**
+   * @description - This method runs after component has been mounted
+   * @returns {object} articles
+   * @memberof ViewProfile
+   */
+  componentDidMount() {
+    if (!this.props.profile.firstName) {
+      this.props.viewProfile();
+    }
   }
 
   /**
@@ -383,18 +394,22 @@ class Header extends Component {
 }
 
 Header.propTypes = {
+  viewProfile: PropTypes.func,
   user: PropTypes.object,
   clearMsgInfo: PropTypes.func,
   setSignUpSuccessState: PropTypes.func.isRequired,
+  profile: PropTypes.object,
   signOut: PropTypes.func
 };
 
 const mapStateToProps = state => ({
+  profile: state.profile,
   user: state.user
 });
 
 
 export default connect(mapStateToProps, {
+  viewProfile,
   signOut: asyncActions(LOGOUT).success,
   setSignUpSuccessState: asyncActions(SIGNUP).success,
   clearMsgInfo: msgInfoActions.clear

@@ -143,7 +143,7 @@ class Profile extends Component {
                 <option value='female'>Female</option>
               </Input>
               <Input s={12} type='textarea' rows="4" placeholder="Bio" label="Bio" name="bio" onChange={this.handleInputChange} value={this.state.bio}/>
-              <Button s={12} l={6}className="updateButton" waves='light'>Update Profile  <i className="fas fa-edit"></i></Button>
+              <Button s={12} l={6} className="updateButton" waves='light'>Update Profile  <i className="fas fa-edit"></i></Button>
             </Row>
           </form>
           </Col>
@@ -153,7 +153,7 @@ class Profile extends Component {
   }
 }
 const mapStateToProps = state => ({
-  profile: state.profile,
+  profile: state.profile
 });
 
 Profile.propTypes = {

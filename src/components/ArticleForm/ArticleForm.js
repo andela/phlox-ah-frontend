@@ -69,7 +69,7 @@ const ArticleForm = ({
       <div className="text-area">
         <Editor
           className="editable"
-          data-placeholder="Tell your story here..."
+          data-placeholder={componentState.isCreated ? "" :"Tell your story here..."}  
           text={componentState.body}
           onChange={handleEditorChange}
           options={{
@@ -87,6 +87,7 @@ const ArticleForm = ({
 ArticleForm.propTypes = {
   componentState: PropTypes.object,
   getAlertMessage: PropTypes.string,
+  authorName: PropTypes.string,
   handleEditorChange: PropTypes.func,
   handleImageChange: PropTypes.func,
   handleInputChange: PropTypes.func,

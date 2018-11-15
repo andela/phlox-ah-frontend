@@ -3,9 +3,11 @@ const articleFormData = (title, description, body, imgUrl, categoryId, tags) => 
   formData.append('title', title);
   formData.append('description', description);
   formData.append('body', body);
-  formData.append('imgUrl', imgUrl);
   formData.append('categoryId', categoryId);
   formData.append('tags', JSON.stringify(tags));
+  if(typeof imgUrl !== 'string'){
+    formData.append('imgUrl', imgUrl);
+  }
 
   return formData;
 };

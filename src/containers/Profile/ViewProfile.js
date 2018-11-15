@@ -16,16 +16,6 @@ import './Profile.scss';
  * @extends {Component}
  */
 class ViewProfile extends Component {
-  /**
-   * @description - This method runs after component has been mounted
-   * @returns {object} articles
-   * @memberof ViewProfile
-   */
-  componentDidMount() {
-    if (!this.props.profile.firstName) {
-      this.props.viewProfile();
-    }
-  }
 
   /**
    *

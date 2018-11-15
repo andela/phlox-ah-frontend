@@ -15,12 +15,14 @@ div.authors-article {
     flex-wrap: wrap;
 
     li.article {
-      width: 361px;
-      height: 260px;
+      min-width: 300px;
+      width: 46%;
+      height: 322px;
       border: 1px solid #ccc;
-      margin: 15px auto;
-      box-shadow: 0 0 2px #ddd;
+      margin: 15px;
       background: #fff;
+      border-radius: 3px;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 
       a {
         color: inherit;
@@ -37,7 +39,7 @@ div.authors-article {
       }
 
       div.photo img  {
-        height: auto;
+        height: 100%;
         width: 100%;
         object-fit: cover;
       }
@@ -45,34 +47,36 @@ div.authors-article {
       div.title {
         position: absolute;
         z-index: 10;
-        bottom: 6px;
-        font-size: 17px;
+        bottom: 17px;
+        left: 13px;
+        font-size: 26px;
         font-weight: 600;
         letter-spacing: 0.5px;
         width: 100%;
         padding: 5px;
         color: #fff;
-        text-shadow: 0 0 #444;
-        text-align: center;
+        text-shadow: 0px 0px 8px #444;
+        max-height: 80%;
+        overflow: hidden;
       }
 
       div.preview  {
-        height: 25%;
+        height: 22%;
         text-align: left;
-        padding: 4px;
-        font-size: 13px;
+        padding: 9px;
+        font-size: 16px;
         text-align: justify;
         color: #555;
+        overflow: hidden;
       }
 
       div.footer  {
         display: flex;
         justify-content: space-around;
-        height: 15%;
-        font-weight: 600;
+        height: 18%;
         color: #2587a2;
         border-top: 1px solid #ccc;
-        font-size: 14px;
+        font-size: 15px;
         align-items: center;
 
         button {

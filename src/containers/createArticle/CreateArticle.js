@@ -31,17 +31,18 @@ class CreateArticle extends Component {
     super();
 
     this.state = {
-      articleTags: [{id: "1", text: "name"}],
+      articleTags: [],
       alertVisible: false,
-      body: 'sdsklfjlsdj',
-      category: "5",
-      description: 'dsjkdsjkfjlk',
+      body: '',
+      category: '',
+      description: '',
       hasChanges: false,
       idleTimer: null,
       imgUrl: null,
       imageName: '',
       isCreated: false,
-      title: 'title'
+      title: '',
+      editMode: false
     };
 
     this.create = this.create.bind(this);
@@ -63,14 +64,43 @@ class CreateArticle extends Component {
     * @memberof Article
     */
   componentDidMount() {
+
     const { match } = this.props;
-    const articleSlug = match.params.slug;
-    if(match.params.slug && /\/articles\/[\w|-]{2,}\/edit/.test(match.url)) {
-      this.props.getSingleArticle({slug: articleSlug});
+    const articleslug = match.params.articleslug;
+    const articlestatus = match.params.articlestatus;
+
+    if(articleslug  && articlestatus && /\/articles\/[\w|-]{2,}\/[\w|-]{2,}\/edit/.test(match.url)) {
+      this.setState({ editMode: true, isCreated: true });
+      this.props.getSingleArticle({articleslug, articlestatus});
     }
     this.props.getAllCategory();
     this.props.getAllTags();
+  }
 
+  /**
+   * @description - This method updates when redux state updates 
+   * @param {object} props
+   * @param {object} state
+   * @returns {object} new state
+   * @memberof Article
+   */
+  static getDerivedStateFromProps(props, state) {
+    if(state.editMode) {
+      if(props.article.User && props.article.userId === props.user.id){
+        return {
+          ...props.article,
+          category: String(props.article.Category.id),
+          articleTags: props.article.Tags.map(data => ({id: data.name, text: data.name})),
+          editMode: false
+        };
+      }
+      else if (props.article.User && props.article.userId !== props.user.id){
+        props.history.push('/');
+      } else {
+        return null;
+      }
+    }
+    return null;
   }
 
   /**
@@ -129,7 +159,7 @@ class CreateArticle extends Component {
     const status = 'published';
     const { slug } = this.props.article;
     const tags = TagObjectToString(this.state.articleTags);
-    this.props.publishArticle({ slug, status, tags });
+    this.props.publishArticle({ slug, status, tags }, this.props);
   }
 
   /**
@@ -258,7 +288,7 @@ class CreateArticle extends Component {
    * @memberof CreateArticle
    */
   render() {
-    const defaultValue = this.state.category ? this.state.category : 0;
+    const defaultValue = this.state.category ? this.state.category : "0";
     return (
       <div>
         <IdleTimer
@@ -293,7 +323,7 @@ class CreateArticle extends Component {
                   type="select"
                   id="category"
                   onChange={this.handleInputChange}
-                  defaultValue={defaultValue}
+                  value={defaultValue}
                   required>
                   <option value="0" disabled>Choose your option</option>
                 {this.renderSelectOptions()}
