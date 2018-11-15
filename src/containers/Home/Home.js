@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Row, Col, Carousel, Card, CardTitle
+  Row, Col, Card, CardTitle
 } from 'react-materialize';
 import M from 'materialize-css';
 import PropTypes from 'prop-types';
@@ -32,6 +32,7 @@ class Home extends Component {
   constructor(props) {
     super();
     this.state = {
+      success: false,
       carouselArticles: [],
       categories: [],
       popularArticles: [],
@@ -48,11 +49,16 @@ class Home extends Component {
    * @memberof Header
    */
   static getDerivedStateFromProps(props, state) {
-    const image = 'https://i.imgur.com/6iJlwez.jpg';
-    const staticArticles = [{ title: 'Andela Best Company to work for in Nigeria 2018', body: 'Andela, a global engineering organization that scales high-performing distributed engineering teams with Africa’s most talented ', pic: image }, { title: 'Andela Best Company to work for in Nigeria 2018', body: 'Andela, a global engineering organization that scales high-performing distributed engineering teams with Africa’s most talented ', pic: image },
-      { title: 'Andela Best Company to work for in Nigeria 2018', body: 'Andela, a global engineering organization that scales high-performing distributed engineering teams with Africa’s most talented ', pic: image }];
+    if (document.querySelector('.carousel')) {
+      const elem = document.querySelector('.carousel');
+      const instance = M.Carousel.getInstance(elem);
+      setInterval(() => {
+        instance.next();
+      }, 5000);
+    }
     return {
-      carouselArticles: staticArticles,
+      success: props.success,
+      carouselArticles: props.articles.slice(0, 3),
       categories: props.categories,
       sidebarArticles: props.articles.slice(0, 4),
       trendingArticles: props.articles.slice(0, 2),
@@ -68,11 +74,6 @@ class Home extends Component {
   componentDidMount() {
     this.props.getArticles();
     this.props.getAllCategory();
-    const elem = document.querySelector('.carousel');
-    const instance = M.Carousel.getInstance(elem);
-    setInterval(() => {
-      instance.next();
-    }, 5000);
   }
 
   /**
@@ -84,7 +85,7 @@ class Home extends Component {
   trendingArticles() {
     return this.state.trendingArticles.map((article, index) => <Col s={12} m={12}
     l={12} xl={6} key={index + 3}>
-    <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={article.User.username} link={article.slug} />
+    <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={article.User.username} slug={article.slug} />
   </Col>);
   }
 
@@ -97,7 +98,7 @@ class Home extends Component {
   popularArticles() {
     return this.state.popularArticles.map((article, index) => <Col s={12} m={12}
     l={12} xl={6} key={index + 5}>
-    <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={article.User.username} link={article.slug} />
+    <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={article.User.username} slug={article.slug} />
   </Col>);
   }
 
@@ -107,7 +108,7 @@ class Home extends Component {
    * @returns {jsx} - jsx
    * @memberof Home
    */
-  categories() {
+  showCategories() {
     return this.state.categories.slice(0, 2).map((category, index) => <div key={index}><Row>
     <Col s={12} l={12}>
     <div className="row-header valign-wrapper">
@@ -150,7 +151,10 @@ class Home extends Component {
                 </Row>
                 <Row>
                   <Col s={12} l={12}>
-                    {this.showCarousel()}
+                    {!this.state.success
+                      ? <div>djkdjdj</div>
+                      : this.showCarousel()
+                      }
                   </Col>
                 </Row>
                 <Row>
@@ -174,7 +178,7 @@ class Home extends Component {
                 <Row>
                   { this.popularArticles() }
                 </Row>
-                { this.categories() }
+                { this.showCategories() }
                 <Row>
                   <Col s={12} l={12}>
                     <div className="row-header valign-wrapper">
@@ -202,13 +206,18 @@ class Home extends Component {
 const mapStateToProps = state => ({
   articles: state.article.articles,
   categories: state.category.categories,
+  failure: state.article.failure,
+  loading: state.article.loading,
+  success: state.article.success,
 });
 
 Home.propTypes = {
   actions: PropTypes.array,
   getArticles: PropTypes.func,
   articles: PropTypes.array,
-  getAllCategory: PropTypes.func
+  failure: PropTypes.bool,
+  getAllCategory: PropTypes.func,
+  success: PropTypes.bool
 };
 
 export default connect(mapStateToProps, { getArticles, getAllCategory })(Home);

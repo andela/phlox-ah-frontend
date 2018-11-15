@@ -33,9 +33,15 @@
       color: #3B8CA1;
       margin-right: 14px;
       text-decoration: none;
+      &:hover {
+        color: #3B8CA1;
+      }
     }
     a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
       color: #3B8CA1;
+      &:hover {
+        color: rgb(49, 116, 133);
+      }
     }
     span {
       font-size: 0.70em;

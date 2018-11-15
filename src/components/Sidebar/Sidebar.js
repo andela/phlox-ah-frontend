@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import {
   Row, Col, Card, CardTitle
@@ -25,7 +26,7 @@ export const Sidebar = props => (
       return (<Row key={ index + 1 }>
         <Col s={12} m={12}>
           <Card className="z-depth-1" horizontal header={<CardTitle image={articlePic}></CardTitle>}>
-              <h6><b>{article.title}</b></h6>
+              <h6><b><Link key={0} to={`/articles/${article.slug}`}>{article.title.substring(0, 25)}</Link></b></h6>
               <p>{article.description.substring(0, 50)}.<br/>
                 </p>
                 <Row className="author-details valign-wrapper">

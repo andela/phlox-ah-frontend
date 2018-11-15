@@ -6,7 +6,6 @@ import { Row } from 'react-materialize';
 import './ViewArticle.scss';
 import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
-import ArticleTags from '../../components/Tags/ArticleTags';
 import { viewArticle } from '../../requests/ArticleRequests';
 
 /**
@@ -104,8 +103,8 @@ class ViewArticle extends Component {
                             <Row className="valign-wrapper">
                                 <div className="col s4 m3 l4">
                                 {
-                                    article.User.Profile.profileImage ? <img className="profileImage" src={article.User.Profile.profileImage}/>
-                                      : <Avatar name={article.User.username} size="75" round={true} />
+                                    !article.User.Profile || !article.User.Profile.profileImage ? <Avatar name={article.User.username} size="75" round={true} />
+                                      : <img className="profileImage" src={article.User.Profile.profileImage}/>
                                 }
                                 </div>
                                 <div className="col s8 m9 l8">
@@ -136,7 +135,6 @@ class ViewArticle extends Component {
                         ReactHtmlParser(article.body)
                         }
                     </div>
-                    <ArticleTags tags={success ? article.Tags : ['']} />
                     <div className="col l4 s12 bold tag-div">
                         {<a className="red-text"href="#">Report Article</a>}
                     </div>
