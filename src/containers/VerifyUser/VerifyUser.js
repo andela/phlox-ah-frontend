@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import './VerifyUser.scss';
 import { connect } from 'react-redux';
 import { verifyUser } from '../../requests/VerifyUserRequests';
+import VerificationStatus from '../../components/VerificationStatus/VerificationStatus';
 
 /**
  * @class VerifyUser
@@ -69,19 +70,19 @@ class VerifyUser extends Component {
             <div className="col m8 offset-m2">
               {
                 success
-                && <div>
-                  <i className="far fa-check-circle fa-5x"></i>
-                  <h3>User successfully verified</h3>
-                  <Button onClick={this.redirectToHome} className="home-button" waves='light'><i className="fas fa-arrow-left"></i>  <span>BACK TO HOME</span></Button>
-                </div>
+                  && <VerificationStatus
+                    message={'User successfully verified'}
+                    iconClass={'far fa-check-circle fa-5x'}
+                    onClick={this.redirectToHome}
+                    />
               }
               {
                 !success
-                && <div>
-                    <i className="fas fa-exclamation-triangle red-text fa-5x"></i>
-                    <h3>Could Not Verify account</h3>
-                    <Button onClick={this.redirectToHome} className="home-button" waves='light'><i className="fas fa-arrow-left"></i>  <span>BACK TO HOME</span></Button>
-                  </div>
+                && <VerificationStatus
+                    message={'Could Not Verify account'}
+                    iconClass={'fas fa-exclamation-triangle red-text fa-5x'}
+                    onClick={this.redirectToHome}
+                    />
               }
             </div>
           </div>
