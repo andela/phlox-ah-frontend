@@ -2,7 +2,13 @@ import axios from 'axios';
 
 import { asyncActions } from '../util/AsyncUtil';
 import {
-  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, VIEW_ARTICLE
+  ALL_ARTICLES,
+  ADD_ARTICLE,
+  CREATE_ARTICLE,
+  UPDATE_ARTICLE,
+  PUBLISH_ARTICLE,
+  VIEW_ARTICLE,
+  RATE_ARTICLE
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
@@ -28,6 +34,22 @@ export const viewArticle = payload => (dispatch) => {
       }
     })
     .catch(error => dispatch(asyncActions(VIEW_ARTICLE).failure(true, error)));
+};
+
+export const rateArticle = (slug, rating) => (dispatch) => {
+  const headers = {
+    'Content-Type': 'application/json;charset=UTF-8',
+  };
+  dispatch(asyncActions(RATE_ARTICLE).loading(true));
+  axios.post(`${articleConstant.RATE_ARTICLE_URL}/${slug}/rate`, { rating }, headers)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(RATE_ARTICLE).success(response.data.article));
+        dispatch(asyncActions(RATE_ARTICLE).loading(false));
+        // dispatch(msgInfoActions.success([response.data.message]));
+      }
+    })
+    .catch(error => dispatch(asyncActions(RATE_ARTICLE).failure(true, error)));
 };
 
 export const createArticle = (formData, tags) => (dispatch) => {

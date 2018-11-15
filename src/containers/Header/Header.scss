@@ -201,3 +201,81 @@ ul li.s-list i{
   font-size: 20px;
 }
 
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media screen and (max-width: 991px) {
+  a.brand-logo img {
+    margin-left: 80%;
+    width: 80%;
+    height: 80%;
+  }
+
+
+  div.brand span.brand-name {
+      font-size: 25px;
+      display: inline-block;
+      margin: 0;
+      position: relative;
+      right: 10%;
+  }
+  div.search-wrapper i.fa-search {
+    position: absolute;
+    left: 8px;
+    top: -6px;
+    font-size: 18px;
+    margin-top: 22px;
+    margin-left: 5%;
+  }
+  div.search-wrapper div.input input {
+    padding-left: 32px;
+    border: 1px solid;
+    border-radius: 3px;
+    background: #eeeeee70;
+    height: 36px;
+    width: 80%;
+    margin-left: 5%;
+  }
+  div.categories span {
+    display: inherit;
+    cursor: pointer;
+    margin: 10px 0 0 10px;
+  }
+  i.fas.fa-user {
+    text-align: center;
+    position: relative;
+    right: 70%;
+    bottom: 30%;
+  }
+  nav.main-header div.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  div.nav-wrapper ul.nav-button {
+    display: flex;
+    position: absolute;
+    right: 0px;
+  }
+  div.nav-wrapper ul li span.user-photo {
+    border-radius: 50%;
+    font-size: 6px;
+    width: 40px;
+    height: 40px;
+    background: #ddd;
+    border-color: #bbb;
+    position: relative;
+    bottom: 0px;
+    display: block;
+    cursor: pointer;
+}
+}
+
+@media screen and (max-width: 450px) {
+  i.fas.fa-user {
+    text-align: center;
+    position: relative;
+    right: 70%;
+    top: 10%;
+  }
+}

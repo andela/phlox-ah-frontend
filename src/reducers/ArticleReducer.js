@@ -1,5 +1,5 @@
 import {
-  CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, VIEW_ARTICLE
+  CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, VIEW_ARTICLE, RATE_ARTICLE
 } from '../actionTypes';
 import { asyncActionName } from '../util/AsyncUtil';
 
@@ -57,6 +57,16 @@ const ArticleReducer = (state = initialState, action) => {
       return { ...state, success: true, article: action.payload };
     case asyncActionName(VIEW_ARTICLE).failure:
       return { ...state, failure: true, article: {} };
+    case asyncActionName(RATE_ARTICLE).loading:
+      return { ...state, loading: action.payload };
+    case asyncActionName(RATE_ARTICLE).success:
+      return {
+        ...state,
+        success: true,
+        article: { ...state.article, ratingAverage: action.payload[1][0].ratingAverage }
+      };
+    case asyncActionName(RATE_ARTICLE).failure:
+      return { ...state, failure: true };
     default:
       return state;
   }

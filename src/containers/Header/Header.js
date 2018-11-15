@@ -170,10 +170,10 @@ class Header extends Component {
             <a href="#" className="brand-logo">
               <img src={Logo} alt="" />
             </a>
-            <span className="brand-name">Authors Haven</span>
+            <span className="brand-name hide-on-med-and-down">Authors Haven</span>
           </div>
           <div className="search-wrapper">
-            <div className="categories">
+            <div className="categories hide-on-med-and-down">
               <span onClick={this.showDropDown}>
                 <i className="fas fa-th"></i>
                 <i className="fas fa-sort-down"></i>
@@ -183,7 +183,7 @@ class Header extends Component {
                 && <DropDown blur={this.blur} />
               }
             </div>
-            <div className="input">
+            <div className="input hide-on-med-and-down">
               <input type="text" placeholder="Search" />
               <i className="fas fa-search"></i>
             </div>
@@ -212,9 +212,9 @@ class Header extends Component {
           {
             isAuth
             && <ul
-              className="right hide-on-med-and-down nav-button">
+              className="right nav-button">
               <li>
-                <a className="notification-bell" href="#">
+                <a className="notification-bell hide-on-med-and-down" href="#">
                   <i className="fas fa-bell"></i>
                 </a>
               </li>

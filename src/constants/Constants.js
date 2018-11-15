@@ -4,7 +4,8 @@ export const articleConstant = {
   ALL_ARTICLES_URL: `${BASE_URL}/api/v1/articles/feed`,
   CREATE_ARTICLES_URL: `${BASE_URL}/api/v1/articles`,
   UPDATE_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
-  VIEW_ARTICLE_URL: `${BASE_URL}/api/v1/articles`
+  VIEW_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
+  RATE_ARTICLE_URL: `${BASE_URL}/api/v1/articles`
 };
 
 export const tagsConstant = {

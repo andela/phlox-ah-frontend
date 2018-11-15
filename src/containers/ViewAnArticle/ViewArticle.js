@@ -6,8 +6,9 @@ import { Row } from 'react-materialize';
 import './ViewArticle.scss';
 import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
+import StarRatings from 'react-star-ratings';
 import ArticleTags from '../../components/Tags/ArticleTags';
-import { viewArticle } from '../../requests/ArticleRequests';
+import { viewArticle, rateArticle } from '../../requests/ArticleRequests';
 
 /**
  * @class ViewAnArticle
@@ -23,7 +24,15 @@ class ViewArticle extends Component {
     this.state = {
       success: false, loading: false, failure: false, article: []
     };
+    this.addRating = this.addRating.bind(this);
   }
+
+
+  // eslint-disable-next-line require-jsdoc
+  addRating(newRating, name) {
+    this.props.rateArticle(this.props.match.params.articleslug, newRating);
+  }
+
 
   /**
    * @description - This method runs whenever the redux state changes
@@ -79,7 +88,7 @@ class ViewArticle extends Component {
                 }
                 {/* DUMMY DIV */}
                 { !success
-                  ? <div className={failure && 'hide'}>
+                  ? <div className={failure ? 'hide' : ''}>
                 <div className="col s12 l6 lighten-5 img-div">
                 <div className="dummyPicture"></div>
                 </div>
@@ -124,10 +133,25 @@ class ViewArticle extends Component {
                             </div>
                         </Row>
                         <div className="center-align activity-icons">
-                            <div className="col s3"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
-                            <div className="col s3"><i className="fas fa-thumbs-down dislikeButton"></i> 97</div>
-                            <div className="col s3"><i className="fas fa-bookmark bookmarkButton"></i></div>
-                            <div className="col s3"><i className="fas fa-share-alt shareButton"></i></div>
+                            <div className="col s2"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
+                            <div className="col s2"><i className="fas fa-thumbs-down dislikeButton"></i> 97</div>
+                            <div className="col s2"><i className="fas fa-bookmark bookmarkButton"></i></div>
+                            <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
+                            {!this.props.user.isAuth && <StarRatings
+                              rating={3.03}
+                              starDimension="20px"
+                              className="col s4"
+                              starSpacing="5px"
+                            /> }
+                            {this.props.user.isAuth && <StarRatings
+                              rating={article.ratingAverage}
+                              starDimension="20px"
+                              starRatedColor="#5e5f63"
+                              className="col s4"
+                              changeRating={this.addRating}
+                              starSpacing="5px"
+                              name='rating'
+                            />}
                         </div>
                         </div>
                     </div>
@@ -153,11 +177,14 @@ class ViewArticle extends Component {
 
 ViewArticle.propTypes = {
   viewArticle: PropTypes.func.isRequired,
+  rateArticle: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   success: PropTypes.bool,
   failure: PropTypes.bool,
-  articles: PropTypes.object,
-  match: PropTypes.object
+  article: PropTypes.object,
+  match: PropTypes.object,
+  articleslug: PropTypes.string,
+  user: PropTypes.object
 };
 
 const mapStateToProps = state => ({
@@ -165,6 +192,7 @@ const mapStateToProps = state => ({
   success: state.article.success,
   failure: state.article.failure,
   article: state.article.article,
+  user: state.user
 });
 
-export default connect(mapStateToProps, { viewArticle })(ViewArticle);
+export default connect(mapStateToProps, { viewArticle, rateArticle })(ViewArticle);
