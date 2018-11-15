@@ -16,7 +16,7 @@ export const ArticleCard = (props) => {
   }
   return (
   <div>
-    <Card className={`${props.size} articleCard`}
+    <Card className={`${props.size} hoverable articleCard`}
         header={<CardTitle image={articlePic}>
         {props.title}</CardTitle>}
         actions={[<a href='#' key={0}>Share</a>, <Link key={0} to={`/articles/${props.slug}`}>View Article</Link>, <span key={0}>{moment(props.createdAt).format('D MMMM YYYY')}</span>, <span key={0}>{props.author}</span>]}>

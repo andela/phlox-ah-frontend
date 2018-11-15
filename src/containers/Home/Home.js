@@ -193,7 +193,7 @@ class Home extends Component {
               </Col>
               <Col s={0} m={1} l={0} xl={0} ></Col>
               <Col s={12} m={9} l={4} xl={3} className="sidebar">
-                <Sidebar sidebarTitle="Featured" articles={this.state.sidebarArticles} />
+                <Sidebar sidebarTitle="Latest" articles={this.state.sidebarArticles} />
               </Col>
             </Row>
           </div>

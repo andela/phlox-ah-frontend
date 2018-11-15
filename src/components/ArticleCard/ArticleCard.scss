@@ -6,6 +6,7 @@
   .card-image {
     max-height: 55%;
     height: 550%;
+    box-shadow: 0em .02em rgba(0,0,0,.2);
     @media #{$mobile} {
       max-height: 48%;
       height: 48%;
