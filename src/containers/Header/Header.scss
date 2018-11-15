@@ -120,6 +120,7 @@ div.nav-wrapper ul li button {
   letter-spacing: 0.7px;
   height: 35px;
   width: 80px;
+  font-size: 16px;
 }
 
 div.nav-wrapper ul li button:hover {
@@ -142,7 +143,7 @@ div.nav-wrapper ul li a.notification-bell:hover {
   background: none;
 }
 
-div.nav-wrapper ul li span.user-photo {
+div.nav-wrapper ul li a.user-photo {
   border-radius: 50%;
   font-size: 6px;
   width: 40px;

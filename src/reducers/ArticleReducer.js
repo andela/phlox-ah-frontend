@@ -1,4 +1,6 @@
-import { CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE } from '../actionTypes';
+import {
+  CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, VIEW_ARTICLE
+} from '../actionTypes';
 import { asyncActionName } from '../util/AsyncUtil';
 
 const initialState = {
@@ -6,7 +8,9 @@ const initialState = {
   message: null,
   tags: [],
   error: null,
-  loading: false
+  loading: false,
+  success: false,
+  failure: false,
 };
 
 const ArticleReducer = (state = initialState, action) => {
@@ -47,6 +51,12 @@ const ArticleReducer = (state = initialState, action) => {
       };
     case asyncActionName(PUBLISH_ARTICLE).failure:
       return { ...state, error: action.payload.status, message: action.payload.error };
+    case asyncActionName(VIEW_ARTICLE).loading:
+      return { ...state, loading: action.payload };
+    case asyncActionName(VIEW_ARTICLE).success:
+      return { ...state, success: true, article: action.payload };
+    case asyncActionName(VIEW_ARTICLE).failure:
+      return { ...state, failure: true, article: {} };
     default:
       return state;
   }

@@ -213,14 +213,14 @@ class Header extends Component {
             && <ul
               className="right hide-on-med-and-down nav-button">
               <li>
-                <a className="notification-bell" href="#">
+                <a className="notification-bell">
                   <i className="fas fa-bell"></i>
                 </a>
               </li>
               <li
                 onClick={this.toggleSettingsOptions}
                 id="settings-dropdown">
-                <a className="user-photo" href="#"></a>
+                <a className="user-photo"></a>
                 {
                   showSettingsOption
                   && <div className="sd-wrapper">

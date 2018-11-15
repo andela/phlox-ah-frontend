@@ -8,6 +8,8 @@ import Login from './containers/Login/Login';
 import ForgotPassword from './containers/Password/ForgotPassword';
 import ResetPassword from './containers/Password/ResetPassword';
 import { SentResetPasswordMail } from './components/SentResetPasswordMail/SentResetPasswordMail';
+import ViewArticle from './containers/ViewAnArticle/ViewArticle';
+import VerifyUser from './containers/VerifyUser/VerifyUser';
 
 import './App.scss';
 
@@ -35,7 +37,9 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/password/forgot-success" component={SentResetPasswordMail} />
             <Route path="/password/reset/:token" component={Home} />
+            <Route path="/articles/:articleslug" exact component={ViewArticle} />
             <Route path="/articles" component={CreateArticle} />
+            <Route path="/user/verify/:verificationToken" component={VerifyUser} />
             <Redirect to="/" />
           </Switch>
         </div>
