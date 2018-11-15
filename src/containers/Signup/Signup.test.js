@@ -7,7 +7,7 @@ import Signup from './Signup';
 
 const mockStore = configureMockStore();
 const store = mockStore({
-  Signup: {
+  signup: {
     loading: true,
     success: false,
     failure: false,

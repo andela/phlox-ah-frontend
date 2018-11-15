@@ -90,7 +90,7 @@ MsgInfo.propTypes = {
 
 
 const mapStateToProps = state => ({
-  info: state.Info
+  info: state.info
 });
 
 export default connect(mapStateToProps, {

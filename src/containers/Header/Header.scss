@@ -148,7 +148,6 @@ div.nav-wrapper ul li span.user-photo {
   cursor: pointer;
 }
 
-
 ul li#settings-dropdown {
   position: relative;
   top: 5px;
@@ -182,13 +181,13 @@ div.sd-wrapper ul li.s-list {
   height: 29px;
   font-weight: 600;
 
-
   a {
     display: block;
     width: 100%;
     border: none;
     margin-left: 0px;
     padding: 0px;
+    text-decoration: none;
   }
 
   a:hover {

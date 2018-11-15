@@ -140,8 +140,8 @@ Signup.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  loading: state.Signup.loading,
-  success: state.Signup.success,
+  loading: state.signup.loading,
+  success: state.signup.success,
 });
 
 export default connect(mapStateToProps, { signup })(Signup);

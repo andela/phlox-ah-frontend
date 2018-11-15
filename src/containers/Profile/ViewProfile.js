@@ -46,7 +46,7 @@ class ViewProfile extends Component {
             <div className="info-wrapper">
               <div className="pi-photo">
                 <div className="profile-image">
-                  <img src={this.props.profile.profileImage} alt="Profile Image" className="circle responsive-img"/>
+                  <img src={this.props.profile.profileImage || ''} alt="Profile Image" className="circle responsive-img"/>
                 </div>
               </div>
               <div className="pi-detail">
@@ -125,8 +125,8 @@ class ViewProfile extends Component {
 }
 
 const mapStateToProps = state => ({
-  profile: state.Profile,
-  user: state.User
+  profile: state.profile,
+  user: state.user
 });
 
 ViewProfile.propTypes = {
