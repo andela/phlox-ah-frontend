@@ -1,1 +1,3 @@
-#specify codeclimate settings and configurations here.
+exclude_patterns:
+  - "src/**/*.test.js"
+  
