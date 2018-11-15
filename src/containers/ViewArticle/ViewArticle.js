@@ -134,7 +134,7 @@ class ViewArticle extends Component {
                         </Row>
                         <div className="center-align activity-icons">
                             <div className="col s2"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
-                            <div className="col s2"><i className="fas fa-thumbs-down dislikeButton"></i> 97</div>
+                            <div className="col s2"><i className="fas fa-thumbs-down dislikeButton"></i> 3</div>
                             <div className="col s2"><i className="fas fa-bookmark bookmarkButton"></i></div>
                             <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
                             {!this.props.user.isAuth && <StarRatings
@@ -153,6 +153,11 @@ class ViewArticle extends Component {
                               name='rating'
                             />}
                         </div>
+                        <button
+                          className="btn waves-effect waves-light editButton"
+                          type="submit"
+                          name="action">Edit Article
+                            </button>
                         </div>
                     </div>
                     <div className="col s12 article-body">
@@ -181,7 +186,7 @@ ViewArticle.propTypes = {
   loading: PropTypes.bool,
   success: PropTypes.bool,
   failure: PropTypes.bool,
-  article: PropTypes.object,
+  articles: PropTypes.object,
   match: PropTypes.object,
   articleslug: PropTypes.string,
   user: PropTypes.object

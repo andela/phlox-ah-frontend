@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-
 import DropDown from '../../components/DropDown/DropDown';
-import './Header.scss';
 import Logo from '../../assets/images/phlox-logo.png';
-import { asyncActions, LOGOUT } from './BasePath';
-
-const history = createBrowserHistory({ forceRefresh: true });
+import {
+  msgInfoActions, asyncActions, LOGOUT, SIGNUP
+} from '../BasePath';
+import './Header.scss';
 
 /**
  *
@@ -36,13 +33,13 @@ class Header extends Component {
       showDropDown: false,
       showSettingsOption: false
     };
+
     this.blur = this.blur.bind(this);
     this.showDropDown = this.showDropDown.bind(this);
     this.signIn = this.signIn.bind(this);
     this.signOut = this.signOut.bind(this);
     this.signUp = this.signUp.bind(this);
     this.timeoutID = null;
-    this.toggleDropDown = this.toggleDropDown.bind(this);
     this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
   }
 
@@ -85,36 +82,7 @@ class Header extends Component {
    */
   blur() {
     this.clearTimeout();
-    this.timeoutID = setTimeout(this.toggleDropDown, 200);
-  }
-
-  /**
-   * @description - This method displays the signup modal
-   * @returns {object} null
-   * @memberof Header
-   */
-  signUp() {
-    $('#signupModal').modal('open');
-  }
-
-  /**
-   * @description - This method displays the login modal
-   * @returns {object} null
-   * @memberof Header
-   */
-  signIn() {
-    $('#login-modal').modal('open');
-  }
-
-  /**
-   * @description - This method logs the user out of the application
-   * @returns {object} null
-   * @memberof Header
-   */
-  signOut() {
-    history.push('/');
-    this.props.signOut();
-    localStorage.removeItem('token');
+    this.timeoutID = setTimeout(this.toggleDropDown.bind(this), 200);
   }
 
   /**
@@ -129,14 +97,35 @@ class Header extends Component {
   }
 
   /**
-   * @description - This method displays the settings dropdown
+   * @description - This method displays the login modal
    * @returns {object} null
    * @memberof Header
    */
-  toggleSettingsOptions() {
-    this.setState({
-      showSettingsOption: !this.state.showSettingsOption,
-    });
+  signIn() {
+    this.props.clearMsgInfo();
+    $('#login-modal').modal('open');
+  }
+
+  /**
+   * @description - This method logs the user out of the application
+   * @returns {object} null
+   * @memberof Header
+   */
+  signOut() {
+    this.props.signOut();
+    this.props.clearMsgInfo();
+    localStorage.removeItem('token');
+  }
+
+  /**
+   * @description - This method displays the signup modal
+   * @returns {object} null
+   * @memberof Header
+   */
+  signUp() {
+    this.props.clearMsgInfo();
+    this.props.setSignUpSuccessState(false);
+    $('#signup-modal').modal('open');
   }
 
   /**
@@ -151,6 +140,17 @@ class Header extends Component {
   }
 
   /**
+   * @description - This method displays the settings dropdown
+   * @returns {object} null
+   * @memberof Header
+   */
+  toggleSettingsOptions() {
+    this.setState({
+      showSettingsOption: !this.state.showSettingsOption,
+    });
+  }
+
+  /**
    *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
@@ -158,9 +158,9 @@ class Header extends Component {
    */
   render() {
     const {
-      isAuth,
       showDropDown,
-      showSettingsOption
+      showSettingsOption,
+      isAuth
     } = this.state;
 
     return (
@@ -191,21 +191,20 @@ class Header extends Component {
           {
             !isAuth
             && <ul
-              className="right hide-on-med-and-down nav-button">
+              className="right nav-button">
               <li>
-                <a
+                <button
                   onClick={this.signIn}
-                  href="#"
                   className="login">
                   Login
-                </a>
+                </button>
               </li>
               <li>
-                <a
+                <button
                   onClick={this.signUp}
-                  href="#" className="sign-up">
+                  className="sign-up">
                   Sign Up
-                </a>
+                </button>
               </li>
             </ul>
           }
@@ -214,30 +213,24 @@ class Header extends Component {
             && <ul
               className="right nav-button">
               <li>
-                <a className="notification-bell hide-on-med-and-down" href="#">
+                <a className="notification-bell hide-on-med-and-down">
                   <i className="fas fa-bell"></i>
                 </a>
               </li>
               <li
                 onClick={this.toggleSettingsOptions}
                 id="settings-dropdown">
-                <span className="user-photo" ></span>
+                <a className="user-photo"></a>
                 {
                   showSettingsOption
                   && <div className="sd-wrapper">
                     <ul>
-                      <li className="s-list">
-                        <Link to="/articles">
-                          <i className="fas fa-plus"></i>
-                          &nbsp;New Article
-                        </Link>
-                      </li>
                       <li
                         onClick={this.signOut}
                         className="s-list">
                         <i className="fas fa-sign-out-alt"></i>
                         &nbsp; Sign out
-                        </li>
+                      </li>
                     </ul>
                   </div>
                 }
@@ -252,6 +245,8 @@ class Header extends Component {
 
 Header.propTypes = {
   user: PropTypes.object,
+  clearMsgInfo: PropTypes.func,
+  setSignUpSuccessState: PropTypes.func.isRequired,
   signOut: PropTypes.func
 };
 
@@ -261,5 +256,7 @@ const mapStateToProps = state => ({
 
 
 export default connect(mapStateToProps, {
-  signOut: asyncActions(LOGOUT).success
+  signOut: asyncActions(LOGOUT).success,
+  setSignUpSuccessState: asyncActions(SIGNUP).success,
+  clearMsgInfo: msgInfoActions.clear
 })(Header);

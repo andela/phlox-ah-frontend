@@ -1,8 +1,8 @@
 import { MSG_INFO } from '../actionTypes/MsgInfoConstants';
 
 const initialState = {
-  success: false,
-  info: []
+  success: true,
+  message: []
 };
 
 const msgInfoReducer = (state = initialState, action = {}) => {

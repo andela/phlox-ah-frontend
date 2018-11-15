@@ -1,5 +1,4 @@
 const { BASE_URL } = process.env;
-
 export const articleConstant = {
   ALL_ARTICLES_URL: `${BASE_URL}/api/v1/articles/feed`,
   CREATE_ARTICLES_URL: `${BASE_URL}/api/v1/articles`,
@@ -30,5 +29,6 @@ export const passwordConstant = {
 };
 
 export const signupConstant = {
-  SIGNUP_URL: `${BASE_URL}/api/v1/signup`
+  SIGNUP_URL: `${BASE_URL}/api/v1/signup`,
+  VERIFY_URL: `${BASE_URL}/api/v1/users/verify`
 };

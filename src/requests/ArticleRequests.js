@@ -46,7 +46,6 @@ export const rateArticle = (slug, rating) => (dispatch) => {
       if (response.status === 200) {
         dispatch(asyncActions(RATE_ARTICLE).success(response.data.article));
         dispatch(asyncActions(RATE_ARTICLE).loading(false));
-        // dispatch(msgInfoActions.success([response.data.message]));
       }
     })
     .catch(error => dispatch(asyncActions(RATE_ARTICLE).failure(true, error)));
