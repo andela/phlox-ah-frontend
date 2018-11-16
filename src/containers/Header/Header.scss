@@ -1,5 +1,6 @@
-
-$primary-color: #06576D;
+@import '../../styles/variables';
+// $themeColor: #06576D;
+// $themeColor: #3B8CA1;
 
 nav.main-header {
   background: #fff;
@@ -10,7 +11,7 @@ nav.main-header {
   box-shadow: 10px 10px 5px #c6c3c3;
 }
 nav.main-header * {
-  color: $primary-color;
+  color: $themeColor;
 }
 
 nav.main-header div.nav-wrapper {
@@ -94,7 +95,7 @@ div.search-wrapper div.input input:focus {
 }
 
 div.search-wrapper div.input input::-webkit-input-placeholder {
-  color: $primary-color;
+  color: $themeColor;
   opacity: 0.5;
   color: black;
   padding-left: 10px;
@@ -120,7 +121,7 @@ div.nav-wrapper ul.nav-button li {
 
 div.nav-wrapper ul li button {
   border-radius: 3px;
-  border: 1px solid $primary-color;
+  border: 1px solid $themeColor;
   font-weight: 600;
   letter-spacing: 0.7px;
   height: 35px;
@@ -135,7 +136,7 @@ div.nav-wrapper ul li button:hover {
 
 div.nav-wrapper ul li button.login {
   color: #fff;
-  background: $primary-color;
+  background: $themeColor;
 }
 
 div.nav-wrapper ul li a.notification-bell {

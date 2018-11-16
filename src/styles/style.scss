@@ -1,12 +1,11 @@
 @import '../../node_modules/materialize-css/sass/materialize.scss';
 @import './variables';
-$secondary-color: #3B8CA1;
 
 .theme-color {
     color: $themeColor;
 }
 .secondary-color {
-  color: $secondary-color;
+  color: $secondaryColor;
 }
 .capitalize {
   text-transform: capitalize;
