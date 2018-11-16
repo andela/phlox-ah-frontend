@@ -270,7 +270,7 @@ class CreateArticle extends Component {
               />
               <div
                 onChange={this.handleInputChange}
-                className="col input-field s12" 
+                className="col input-field s12"
                 value={defaultValue}>
                 <span htmlFor="Title">Categories</span>
                 <select className="browser-default s6" >
