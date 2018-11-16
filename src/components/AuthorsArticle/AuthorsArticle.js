@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getMyArticles } from '../BasePath';
-import Article from './Article';
+import ArticleCard from './ArticleCard';
 
 import './AuthorsArticle.scss';
 
@@ -22,7 +22,7 @@ class AuthorsArticle extends Component {
 
     return articles.map(article => {
       return (
-        <Article 
+        <ArticleCard 
           placeholderImg={placeholderImg}
           key={ article.id } 
           article={ article } 

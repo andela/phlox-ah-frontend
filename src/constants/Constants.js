@@ -6,7 +6,7 @@ export const articleConstant = {
   UPDATE_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
   MY_ARTICLES_URL: `${BASE_URL}/api/v1/myarticles`,
   VIEW_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
-  SINGLE_ARTICLE_URL: `${BASE_URL}/api/v1/articles`
+  DELETE_ARTICLE_URL: `${BASE_URL}/api/v1/articles`
 };
 
 export const tagsConstant = {

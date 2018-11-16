@@ -15,6 +15,11 @@ import { getAllCategory } from '../../requests/CategoryRequests';
 import ArticleForm from '../../components/ArticleForm/ArticleForm';
 import { TagObjectToString, convertIdToString } from '../../util/TagsHelper';
 import { createArticle, updateArticle, publishArticle, getSingleArticle } from '../../requests/ArticleRequests';
+import MsgInfo from '../MsgInfo/MsgInfo';
+import {
+  msgInfoActions
+} from '../BasePath';
+
 
 
 /**
@@ -34,7 +39,7 @@ class CreateArticle extends Component {
       articleTags: [],
       alertVisible: false,
       body: '',
-      category: '',
+      category: '1',
       description: '',
       hasChanges: false,
       idleTimer: null,
@@ -288,9 +293,23 @@ class CreateArticle extends Component {
    * @memberof CreateArticle
    */
   render() {
-    const defaultValue = this.state.category ? this.state.category : "0";
+    const defaultValue = this.state.category ? this.state.category : "1";
+    const { info } = this.props;
     return (
-      <div>
+      <div className="create-article-wrapper">
+        {
+          (!!info.message.length && !info.success ) && 
+          (
+            <div className="info">
+              <span 
+                className="close" 
+                onClick={this.props.clearMsgInfo}>
+                  <i className="fas fa-times"></i>
+              </span>
+              <MsgInfo />
+            </div>
+          )
+        }
         <IdleTimer
           ref={(ref) => { this.idleTimer = ref; }}
           timeout={5000}
@@ -357,11 +376,11 @@ const mapStateToProps = (state) => {
   const suggestedTags = state.tags.tags;
 
   return {
-    article, tags, categories, suggestedTags, error, user: state.user, profile: state.profile
+    article, tags, categories, suggestedTags, error, user: state.user, profile: state.profile, info: state.info
   };
 };
 
 export default connect(mapStateToProps,
   {
-    createArticle, updateArticle, publishArticle, getAllCategory, getAllTags, getSingleArticle
+    createArticle, updateArticle, publishArticle, getAllCategory, getAllTags, getSingleArticle, clearMsgInfo: msgInfoActions.clear
   })(CreateArticle);

@@ -157,10 +157,10 @@ class Header extends Component {
    * @memberof Header
    */
   signOut() {
-    history.push('/');
     this.props.signOut();
     this.props.clearMsgInfo();
     localStorage.removeItem('token');
+    history.push('/');
   }
 
   /**

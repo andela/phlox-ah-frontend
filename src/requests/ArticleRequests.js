@@ -2,10 +2,11 @@ import axios from 'axios';
 import { createBrowserHistory } from 'history';
 import { asyncActions } from '../util/AsyncUtil';
 import {
-  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES
+  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES, DELETE_ARTICLE
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
+import { DELETE } from '../actionTypes/DeleteContants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
 
 const history = createBrowserHistory({
@@ -20,6 +21,22 @@ const formatError = (error) => {
     return [error.message];
   }
   return ['Error occurred'];
+};
+
+
+
+export const deleteArticle = payload => (dispatch) => {
+  dispatch(asyncActions(DELETE).loading(true));
+  return axios.delete(`${articleConstant.DELETE_ARTICLE_URL}/${payload}`)
+    .then((response) => {
+      dispatch(asyncActions(DELETE_ARTICLE).success(payload));
+      dispatch(asyncActions(DELETE).loading(false));
+      return response;
+    })
+    .catch(error => {
+      dispatch(asyncActions(DELETE).loading(false));
+      throw error;
+    })
 };
 
 export const viewArticle = payload => (dispatch) => {

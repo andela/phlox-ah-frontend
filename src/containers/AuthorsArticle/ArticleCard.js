@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const Article = (props) => {
+const ArticleCard = (props) => {
   return (
     <li className="article">
       <div className="photo">
@@ -30,7 +30,7 @@ const Article = (props) => {
           </Link>
         </span>
         <span className="delete">
-          <button>
+          <button onClick={() => props.deleteArticle(props.article.slug)}>
             <i className="fas fa-trash-alt"></i>
           </button>
         </span>
@@ -39,8 +39,8 @@ const Article = (props) => {
   )
 }
 
-Article.propTypes = {
+ArticleCard.propTypes = {
   props: PropTypes.object,
 };
 
-export default Article;
+export default ArticleCard;

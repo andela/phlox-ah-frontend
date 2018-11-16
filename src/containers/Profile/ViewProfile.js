@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { viewProfile } from '../../requests/ProfileRequest';
 import FollowList from '../../components/FollowList/FollowList';
 import Tags from '../../components/Tags/Tags';
-import AuthorsArticle from './AuthorsArticle';
+import AuthorsArticle from '../AuthorsArticle/AuthorsArticle';
 
 import './ViewProfile.scss';
 import './Profile.scss';
