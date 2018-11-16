@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Avatar from 'react-avatar';
 import { createBrowserHistory } from 'history';
 import moment from 'moment';
 import {
   Row, Col, Card, CardTitle
 } from 'react-materialize';
 import './Sidebar.scss';
+import { ok } from 'assert';
 
-let userPic = '';
+let authorAvatar = '';
 let articlePic = '';
 const history = createBrowserHistory({ forceRefresh: true });
 const linkTo = (path) => {
@@ -19,9 +21,9 @@ export const Sidebar = props => (
     <h6 className=""><b>{props.sidebarTitle}</b></h6>
     { props.articles.map((article, index) => {// eslint-disable-line
       if (!article.User.Profile || !article.User.Profile.profileImage) {
-        userPic = 'https://via.placeholder.com/300?text=AuthorsHaven';
+        authorAvatar = <Avatar name={article.User.username} size="20" round={true} />;
       } else {
-        userPic = article.User.Profile.profileImage;
+        authorAvatar = <img className="img-responsive circle" src={article.User.Profile.profileImage}/>;
       }
       if (!article.imgUrl) {
         articlePic = 'https://via.placeholder.com/300?text=AuthorsHaven';
@@ -36,7 +38,7 @@ export const Sidebar = props => (
                 </p>
                 <Row className="author-details valign-wrapper">
                   <Col s={12} l={3} className="center-align">
-                    <img className="img-responsive circle" src={userPic}/>
+                    { authorAvatar }
                   </Col>
                   <Col s={12} l={9}>
                     <p className="text-darken-4"><span><b>{article.User.username}</b></span> <span>{moment(article.createdAt).format('MMMM D YYYY')}</span></p>

@@ -23,7 +23,8 @@ export const ArticleCard = (props) => {
   <div>
     <Card className={`${props.size} hoverable articleCard`}
         header={<CardTitle image={articlePic}> <a className="capitalize" onClick={() => linkTo(`/articles/${props.slug}`) }>{props.title.substring(0, 50)}</a> </CardTitle>}
-        actions={[<a href='#' key={0}>Share</a>, <a key={0} onClick={() => linkTo(`/articles/${props.slug}`) }>View Article</a>, <span key={0}>{moment(props.createdAt).format('D MMMM YYYY')}</span>, <span key={0}>{props.author}</span>]}>
+        actions={[<a href='#' key={0}>Share</a>, <a key={0} onClick={() => linkTo(`/articles/${props.slug}`) }>View Article</a>,
+        <span key={0}>{moment(props.createdAt).format('D MMMM YYYY')}</span>, <span key={0}>{props.author}</span>]}>
         <span className="hide-on-large-only">{props.description.substring(0, 120)}</span>
         <span className="hide-on-med-and-down">{props.description.substring(0, 90)}</span>
       </Card>

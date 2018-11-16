@@ -12,7 +12,6 @@ import { CarouselSlider } from '../../components/CarouselSlider/CarouselSlider';
 import { getArticles, getFeaturedArticles, getPopularArticles } from '../../requests/ArticleRequests';
 import { getAllCategory } from '../../requests/CategoryRequests';
 
-const preloaderImage = 'https://i.imgur.com/nESbxch.gif';
 /**
  *
  *
@@ -89,7 +88,7 @@ class Home extends Component {
    */
   carousel() {
     if (!this.state.success || this.state.failure) {
-      return (<div className="preloaderDiv"><img src={preloaderImage}></img></div>);
+      return (<div className="preloaderDiv"></div>);
     }
     return (<CarouselSlider articles={this.state.featuredArticles} />);
   }
@@ -102,7 +101,7 @@ class Home extends Component {
    */
   popularArticles() {
     if (!this.state.popularArticles || this.state.failure) {
-      return (<div className="preloaderDiv"><img src={preloaderImage}></img></div>);
+      return (<div className="preloaderDiv"></div>);
     }
     return this.listArticles(this.state.popularArticles);
   }
@@ -115,7 +114,7 @@ class Home extends Component {
    */
   showCategories() {
     if (!this.state.popularArticles) {
-      return (<div className="preloaderDiv"><img src={preloaderImage}></img></div>);
+      return (<div className="preloaderDiv"></div>);
     }
     const categories = this.state.categories.filter(category => category.articles.length > 0);
     return categories.slice(0, 3).map((category, index) => <div key={index}><Row>
@@ -136,7 +135,7 @@ class Home extends Component {
    */
   trendingArticles() {
     if (!this.state.trendingArticles || this.state.failure) {
-      return (<div className="preloaderDiv"><img src="https://i.imgur.com/nESbxch.gif"></img></div>);
+      return (<div className="preloaderDiv"></div>);
     }
     return this.listArticles(this.state.trendingArticles);
   }
@@ -162,7 +161,7 @@ class Home extends Component {
    */
   sidebarArticles() {
     if (!this.state.latestArticles || this.state.failure) {
-      return (<div className="preloaderDiv"><img src={preloaderImage}></img></div>);
+      return (<div className="preloaderDiv"></div>);
     }
     return (<Sidebar sidebarTitle="Latest" articles={this.state.latestArticles} />);
   }
