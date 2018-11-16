@@ -6,7 +6,12 @@ import Login from './Login';
 import { asyncActions, LOGIN } from '../BasePath';
 
 const mockStore = configureMockStore();
-const store = mockStore({});
+const store = mockStore({
+  info: {
+    message: ['password is required'],
+    success: false
+  }
+});
 
 let component;
 let myComponent;
@@ -27,16 +32,16 @@ describe('<Login/>', () => {
     expect(myComponent.find('form').hasClass('col')).toBe(true);
   });
   it('should have a login button', () => {
-    expect(myComponent.find('Button.login-button').exists()).toBe(true);
+    expect(myComponent.find('Button').exists()).toBe(true);
   });
   it('should have a facebook login link', () => {
-    expect(myComponent.find('i.fa-facebook').exists()).toBe(true);
+    expect(myComponent.find('i.fa-facebook-f').exists()).toBe(true);
   });
   it('should have a google login link', () => {
-    expect(myComponent.find('i.fa-google-plus-square').exists()).toBe(true);
+    expect(myComponent.find('i.fa-google-plus-g').exists()).toBe(true);
   });
   it('should have a twitter login link', () => {
-    expect(myComponent.find('i.fa-twitter-square').exists()).toBe(true);
+    expect(myComponent.find('i.fa-twitter').exists()).toBe(true);
   });
   it('should have a input field', () => {
     expect(myComponent.find('Input').exists()).toBe(true);

@@ -35,13 +35,14 @@ a.brand-logo img {
 
 div.brand span.brand-name {
   font-size: 30px;
+  font-weight: 400;
   display: inline-block;
   margin: 0 18px;
 }
 
 div.nav-wrapper div.search-wrapper {
   display: flex;
-  width: 310px;
+  width: 35%;
 }
 
 div.search-wrapper div.categories {
@@ -73,23 +74,25 @@ div.categories i.fa-sort-down {
 div.search-wrapper div.input {
   position: relative;
   width: 100%;
+  margin-left: 60px;
 }
 
 div.search-wrapper div.input input {
   padding-left: 32px;
-  border: 1px solid;
-  border-radius: 3px;
-  background: #eeeeee70;
+  border-radius: 7px;
   height: 36px;
+  background: #E5E5E5;
+  border-bottom: 0px;
 }
 
 div.search-wrapper div.input input:focus {
-  background: #fff;
+  background: #ededed;
 }
 
 div.search-wrapper div.input input::-webkit-input-placeholder {
   color: $primary-color;
   opacity: 0.5;
+  color: black;
 }
 
 div.search-wrapper i.fa-search {
@@ -97,6 +100,7 @@ div.search-wrapper i.fa-search {
   left: 8px;
   top: -6px;
   font-size: 18px;
+  color: black;
 }
 
 div.nav-wrapper ul.nav-button {
@@ -109,18 +113,22 @@ div.nav-wrapper ul.nav-button li {
   margin: auto 10px;
 }
 
-div.nav-wrapper ul li a {
+div.nav-wrapper ul li button {
   border-radius: 3px;
   border: 1px solid $primary-color;
   font-weight: 600;
   letter-spacing: 0.7px;
+  height: 35px;
+  width: 80px;
+  font-size: 16px;
 }
 
-div.nav-wrapper ul li a:hover {
+div.nav-wrapper ul li button:hover {
   background: #cce9f1;
+  cursor: pointer;
 }
 
-div.nav-wrapper ul li a.login {
+div.nav-wrapper ul li button.login {
   color: #fff;
   background: $primary-color;
 }
@@ -135,7 +143,7 @@ div.nav-wrapper ul li a.notification-bell:hover {
   background: none;
 }
 
-div.nav-wrapper ul li span.user-photo {
+div.nav-wrapper ul li a.user-photo {
   border-radius: 50%;
   font-size: 6px;
   width: 40px;
