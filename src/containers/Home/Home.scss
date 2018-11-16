@@ -1,5 +1,18 @@
 @import '../../styles/variables';
 .site-container {
+  .preloaderDiv {
+    position: relative;
+    height: 280px;
+    margin-bottom: 10px;
+    background: #E5E5E5;
+    img {
+      position: absolute;
+      height: 40px;
+      weight: 40px;
+      top: 45%;
+      left: 48%;
+    }
+  }
   .row {
     margin-bottom: 0px;
   }

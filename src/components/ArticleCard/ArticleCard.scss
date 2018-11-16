@@ -1,5 +1,8 @@
 @import '../../styles/variables';
 .articleCard {
+  a {
+    cursor: pointer;
+  }
   &.medium {
     height: 350px;
   }
@@ -7,6 +10,9 @@
     max-height: 55%;
     height: 550%;
     box-shadow: 0em .02em rgba(0,0,0,.2);
+    img {
+      filter: brightness(80%);
+    }
     @media #{$mobile} {
       max-height: 48%;
       height: 48%;
@@ -17,6 +23,13 @@
         size: 1.3em;
       }
       text-align: center;
+      a {
+        color: #ffffff;
+        text-decoration: none;
+        &:hover {
+          color: #eeecec;
+        }
+      }
     }
   }
   .card-content {

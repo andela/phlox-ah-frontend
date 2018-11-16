@@ -9,6 +9,9 @@ $secondary-color: #3B8CA1;
 .secondary-color {
   color: $secondary-color;
 }
+.capitalize {
+  text-transform: capitalize;
+}
 main {
   background: #F8F9FA;
   .site-container {
@@ -30,4 +33,7 @@ main {
 }
 .img-responsive {
   width: 100%;
+}
+.character-counter {
+  display: none;
 }

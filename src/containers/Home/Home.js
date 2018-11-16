@@ -9,9 +9,10 @@ import './Home.scss';
 import { ArticleCard } from '../../components/ArticleCard/ArticleCard';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { CarouselSlider } from '../../components/CarouselSlider/CarouselSlider';
-import { getArticles } from '../../requests/ArticleRequests';
+import { getArticles, getFeaturedArticles, getPopularArticles } from '../../requests/ArticleRequests';
 import { getAllCategory } from '../../requests/CategoryRequests';
 
+const preloaderImage = 'https://i.imgur.com/nESbxch.gif';
 /**
  *
  *
@@ -32,11 +33,12 @@ class Home extends Component {
   constructor(props) {
     super();
     this.state = {
-      success: false,
-      carouselArticles: [],
       categories: [],
+      failure: false,
+      featuredArticles: [],
+      latestArticles: [],
       popularArticles: [],
-      sidebarArticles: [],
+      success: false,
       trendingArticles: []
     };
   }
@@ -57,12 +59,13 @@ class Home extends Component {
       }, 5000);
     }
     return {
-      success: props.success,
-      carouselArticles: props.articles.slice(0, 3),
       categories: props.categories,
-      sidebarArticles: props.articles.slice(0, 4),
-      trendingArticles: props.articles.slice(0, 2),
-      popularArticles: props.articles.slice(0, 2)
+      failure: props.failure,
+      featuredArticles: props.featuredArticles,
+      latestArticles: props.articles.slice(0, 4),
+      popularArticles: props.popularArticles,
+      success: props.success,
+      trendingArticles: props.articles.slice(0, 2)
     };
   }
 
@@ -73,6 +76,8 @@ class Home extends Component {
     */
   componentDidMount() {
     this.props.getArticles();
+    this.props.getFeaturedArticles();
+    this.props.getPopularArticles();
     this.props.getAllCategory();
   }
 
@@ -82,11 +87,11 @@ class Home extends Component {
    * @returns {jsx} - jsx
    * @memberof Home
    */
-  trendingArticles() {
-    return this.state.trendingArticles.map((article, index) => <Col s={12} m={12}
-    l={12} xl={6} key={index + 3}>
-    <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={article.User.username} slug={article.slug} />
-  </Col>);
+  carousel() {
+    if (!this.state.success || this.state.failure) {
+      return (<div className="preloaderDiv"><img src={preloaderImage}></img></div>);
+    }
+    return (<CarouselSlider articles={this.state.featuredArticles} />);
   }
 
   /**
@@ -96,10 +101,10 @@ class Home extends Component {
    * @memberof Home
    */
   popularArticles() {
-    return this.state.popularArticles.map((article, index) => <Col s={12} m={12}
-    l={12} xl={6} key={index + 5}>
-    <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={article.User.username} slug={article.slug} />
-  </Col>);
+    if (!this.state.popularArticles || this.state.failure) {
+      return (<div className="preloaderDiv"><img src={preloaderImage}></img></div>);
+    }
+    return this.listArticles(this.state.popularArticles);
   }
 
   /**
@@ -109,14 +114,18 @@ class Home extends Component {
    * @memberof Home
    */
   showCategories() {
-    return this.state.categories.slice(0, 2).map((category, index) => <div key={index}><Row>
+    if (!this.state.popularArticles) {
+      return (<div className="preloaderDiv"><img src={preloaderImage}></img></div>);
+    }
+    const categories = this.state.categories.filter(category => category.articles.length > 0);
+    return categories.slice(0, 3).map((category, index) => <div key={index}><Row>
     <Col s={12} l={12}>
     <div className="row-header valign-wrapper">
     <h6><b>{category.category}</b></h6>
     <span className="right grey-text text-darken-2">More <i className='fas fa-angle-right'></i> </span>
     </div>
     </Col> </Row>
-    <Row>{ this.popularArticles() }</Row></div>);
+    <Row>{ this.listArticles(category.articles.slice(0, 1)) }</Row></div>);
   }
 
   /**
@@ -125,8 +134,37 @@ class Home extends Component {
    * @returns {jsx} - jsx
    * @memberof Home
    */
-  showCarousel() {
-    return (<CarouselSlider articles={this.state.carouselArticles} />);
+  trendingArticles() {
+    if (!this.state.trendingArticles || this.state.failure) {
+      return (<div className="preloaderDiv"><img src="https://i.imgur.com/nESbxch.gif"></img></div>);
+    }
+    return this.listArticles(this.state.trendingArticles);
+  }
+
+  /**
+   *
+  * @param {*} articles
+   * @returns {jsx} - jsx
+   * @memberof Home
+   */
+  listArticles(articles) {
+    return articles.map((article, index) => <Col s={12} m={12}
+    l={12} xl={6} key={index + 5}>
+    <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author="runor" slug={article.slug} />
+  </Col>);
+  }
+
+  /**
+   *
+   *
+   * @returns {jsx} - jsx
+   * @memberof Home
+   */
+  sidebarArticles() {
+    if (!this.state.latestArticles || this.state.failure) {
+      return (<div className="preloaderDiv"><img src={preloaderImage}></img></div>);
+    }
+    return (<Sidebar sidebarTitle="Latest" articles={this.state.latestArticles} />);
   }
 
   /**
@@ -151,10 +189,7 @@ class Home extends Component {
                 </Row>
                 <Row>
                   <Col s={12} l={12}>
-                    {!this.state.success
-                      ? <div>djkdjdj</div>
-                      : this.showCarousel()
-                      }
+                      {this.carousel()}
                   </Col>
                 </Row>
                 <Row>
@@ -179,21 +214,10 @@ class Home extends Component {
                   { this.popularArticles() }
                 </Row>
                 { this.showCategories() }
-                <Row>
-                  <Col s={12} l={12}>
-                    <div className="row-header valign-wrapper">
-                      <h6><b>Sports</b></h6>
-                      <span className="right grey-text text-darken-2">More <i className='fas fa-angle-right'></i> </span>
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  { this.popularArticles() }
-                </Row>
               </Col>
               <Col s={0} m={1} l={0} xl={0} ></Col>
               <Col s={12} m={9} l={4} xl={3} className="sidebar">
-                <Sidebar sidebarTitle="Latest" articles={this.state.sidebarArticles} />
+                { this.sidebarArticles() }
               </Col>
             </Row>
           </div>
@@ -207,17 +231,24 @@ const mapStateToProps = state => ({
   articles: state.article.articles,
   categories: state.category.categories,
   failure: state.article.failure,
-  loading: state.article.loading,
+  featuredArticles: state.article.featuredArticles,
+  popularArticles: state.article.popularArticles,
   success: state.article.success,
 });
 
 Home.propTypes = {
   actions: PropTypes.array,
-  getArticles: PropTypes.func,
   articles: PropTypes.array,
+  categories: PropTypes.array,
   failure: PropTypes.bool,
+  featuredArticles: PropTypes.array,
   getAllCategory: PropTypes.func,
+  getArticles: PropTypes.func,
+  getFeaturedArticles: PropTypes.func,
+  getPopularArticles: PropTypes.func,
   success: PropTypes.bool
 };
 
-export default connect(mapStateToProps, { getArticles, getAllCategory })(Home);
+export default connect(mapStateToProps, {
+  getArticles, getAllCategory, getFeaturedArticles, getPopularArticles
+})(Home);
