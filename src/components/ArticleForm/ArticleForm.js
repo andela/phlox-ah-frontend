@@ -69,7 +69,7 @@ const ArticleForm = ({
       <div className="text-area">
         <Editor
           className="editable"
-          data-placeholder={componentState.isCreated ? "" :"Tell your story here..."}  
+          data-placeholder={componentState.isCreated ? '' : 'Tell your story here...'}
           text={componentState.body}
           onChange={handleEditorChange}
           options={{

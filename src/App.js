@@ -41,9 +41,9 @@ class App extends Component {
             <PrivateRoute exact path="/articles" component={CreateArticle} />
             <PrivateRoute exact path='/profile' component={ViewProfile} />
             <PrivateRoute exact path='/profile/edit' component={EditProfile} />
-            <PrivateRoute exact 
-              path="/articles/:articleslug/:articlestatus/edit" 
-              component={CreateArticle} 
+            <PrivateRoute exact
+              path="/articles/:articleslug/:articlestatus/edit"
+              component={CreateArticle}
             />
             <PrivateRoute path='/profile/edit' component={EditProfile} />
             <PrivateRoute path='/profile' component={ViewProfile} />

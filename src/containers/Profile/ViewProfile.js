@@ -17,7 +17,6 @@ import './Profile.scss';
  * @extends {Component}
  */
 class ViewProfile extends Component {
-
   /**
    *
    * @description - This method renders the jsx for this component
@@ -118,7 +117,6 @@ class ViewProfile extends Component {
             </div>
           </div>
         </div>
-
 
 
       </div>

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import DropDown from '../../components/DropDown/DropDown';
 import Logo from '../../assets/images/phlox-logo.png';
+import { viewProfile } from '../../requests/ProfileRequest';
 import {
   msgInfoActions, asyncActions, LOGOUT, SIGNUP
 } from '../BasePath';
@@ -51,6 +52,17 @@ class Header extends Component {
     this.toggleDropDown = this.toggleDropDown.bind(this);
     this.toggleMobileDropDown = this.toggleMobileDropDown.bind(this);
     this.toggleSettingsOptions = this.toggleSettingsOptions.bind(this);
+  }
+
+  /**
+   * @description - This method runs when component mount
+   * @returns {object} null
+   * @memberof Header
+   */
+  componentDidMount() {
+    if (!this.props.profile.firstName) {
+      this.props.viewProfile();
+    }
   }
 
   /**
@@ -323,13 +335,14 @@ Header.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  profile: state.profile,
   user: state.user
 });
 
 
 export default connect(mapStateToProps, {
+  viewProfile,
   signOut: asyncActions(LOGOUT).success,
   setSignUpSuccessState: asyncActions(SIGNUP).success,
   clearMsgInfo: msgInfoActions.clear
 })(Header);
-

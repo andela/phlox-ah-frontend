@@ -6,7 +6,6 @@ import { deleteArticle } from '../../requests/ArticleRequests';
 import './DeleteModal.scss';
 
 class DeleteModal extends Component {
-
   constructor() {
     super();
 
@@ -15,31 +14,30 @@ class DeleteModal extends Component {
   }
 
   hideDeleteModal() {
-    if(this.props.deleteItem.loading) return;
+    if (this.props.deleteItem.loading) return;
     this.props.hideDeleteModal();
   }
 
-  deleteArticle(){
-    if(this.props.deleteItem.loading) return;
-    console.log(this.props.articleslug)
+  deleteArticle() {
+    if (this.props.deleteItem.loading) return;
+    console.log(this.props.articleslug);
     this.props.deleteArticle(this.props.articleslug)
       .then(this.hideDeleteModal);
   }
 
   render() {
-
     return (
       <div className="delete-modal">
         <div className="modal-body">
           {
-            this.props.deleteItem.loading && 
-              <div className="loader-wrapper">
+            this.props.deleteItem.loading
+              && <div className="loader-wrapper">
                 <Preloader />
               </div>
           }
           <div className="modal-info">
             <span className="warning-icon">
-              <i 
+              <i
                 className="fas fa-exclamation-triangle">
               </i>
             </span>
@@ -48,12 +46,12 @@ class DeleteModal extends Component {
             </span>
           </div>
           <div className="modal-buttons">
-            <button 
+            <button
               onClick={this.deleteArticle}
               className="btn yes">
               Yes
             </button>
-            <button 
+            <button
               onClick={this.hideDeleteModal}
               className="btn no">
               No
@@ -61,11 +59,11 @@ class DeleteModal extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   deleteItem: state.deleteItem
 });
 

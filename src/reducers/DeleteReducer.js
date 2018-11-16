@@ -9,7 +9,7 @@ const initialState = {
 const deleteReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case asyncActionName(DELETE).loading:
-      return { ...state, loading: action.payload};
+      return { ...state, loading: action.payload };
     default:
       return state;
   }

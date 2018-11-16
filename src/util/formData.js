@@ -5,7 +5,7 @@ const articleFormData = (title, description, body, imgUrl, categoryId, tags) => 
   formData.append('body', body);
   formData.append('categoryId', categoryId);
   formData.append('tags', JSON.stringify(tags));
-  if(typeof imgUrl !== 'string'){
+  if (typeof imgUrl !== 'string') {
     formData.append('imgUrl', imgUrl);
   }
 

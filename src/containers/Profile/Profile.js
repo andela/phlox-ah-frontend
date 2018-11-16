@@ -142,16 +142,19 @@ class Profile extends Component {
               <Input s={12} l={6} placeholder="Last Name" label="Lastname" name="lastName" onChange={this.handleInputChange} value={this.state.lastName}/>
               <Input s={12} l={6} placeholder="Contact" label="Contact" name="contact" onChange={this.handleInputChange} value={this.state.contact}/>
 
-              <div className="col input-field s12 l6" value={this.state.gender} onChange={this.handleInputChange}>
-                <select className="browser-default s6" >
-                  <option value="" disabled selected>Choose gender</option>
+              <div className="col input-field s12 l6">
+                <select
+                  onChange={this.handleInputChange}
+                  value={this.state.gender}
+                  className="browser-default s6" >
+                  <option value="" disabled>Choose gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
               </div>
 
               <Input s={12} type='textarea' rows="4" placeholder="Bio" label="Bio" name="bio" onChange={this.handleInputChange} value={this.state.bio}/>
-              <div class="col input-field s12 l12">
+              <div className="col input-field s12 l12">
                 <Button s={12} l={6} className="updateButton" waves='light'>Update Profile  <i className="fas fa-edit"></i></Button>
               </div>
             </Row>

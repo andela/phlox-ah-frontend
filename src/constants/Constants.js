@@ -7,7 +7,7 @@ export const articleConstant = {
   MY_ARTICLES_URL: `${BASE_URL}/api/v1/myarticles`,
   VIEW_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
   DELETE_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
-  VIEW_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
+  SINGLE_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
   FEATURED_ARTICLES_URL: `${BASE_URL}/api/v1/articles/featured`,
   POPULAR_ARTICLES_URL: `${BASE_URL}/api/v1/articles/popular`,
 };

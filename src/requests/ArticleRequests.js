@@ -32,10 +32,10 @@ export const deleteArticle = payload => (dispatch) => {
       dispatch(asyncActions(DELETE).loading(false));
       return response;
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch(asyncActions(DELETE).loading(false));
       throw error;
-    })
+    });
 };
 
 export const getArticles = () => (dispatch) => {
@@ -67,7 +67,7 @@ export const getSingleArticle = payload => (dispatch) => {
   dispatch(asyncActions(SINGLE_ARTICLE).loading(true));
   axios.get(`${articleConstant.SINGLE_ARTICLE_URL}/${payload.articlestatus}/${payload.articleslug}`)
     .then((response) => {
-      console.log(response.data)
+      console.log(response.data);
       dispatch(asyncActions(SINGLE_ARTICLE).success(response.data.article));
       dispatch(asyncActions(SINGLE_ARTICLE).loading(false));
     })

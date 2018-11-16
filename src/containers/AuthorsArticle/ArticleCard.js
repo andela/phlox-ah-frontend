@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const ArticleCard = (props) => {
-  return (
+const ArticleCard = props => (
     <li className="article">
       <div className="photo">
-        <img 
-          src={props.article.imgUrl || props.placeholderImg } 
-          alt="article-photo" 
+        <img
+          src={props.article.imgUrl || props.placeholderImg }
+          alt="article-photo"
         />
         <div className="title">
           {props.article.title}
@@ -22,7 +21,9 @@ const ArticleCard = (props) => {
           <a href="#">SHARE</a>
         </span>
         <span className="view">
-          <a href="#">VIEW ARTICLE</a>
+          <Link to={`/articles/${props.article.slug}`}>
+            VIEW ARTICLE
+          </Link>
         </span>
         <span className="edit">
           <Link to={`/articles/${props.article.slug}/${props.article.status}/edit`}>
@@ -36,11 +37,17 @@ const ArticleCard = (props) => {
         </span>
       </div>
     </li>
-  )
-}
+);
 
 ArticleCard.propTypes = {
-  props: PropTypes.object,
+  article: PropTypes.array,
+  article.title: PropTypes.string,
+  article.imgUrl: PropTypes.string,
+  placeholderImg: PropTypes.string,
+  article.description: PropTypes.string,
+  article.slug: PropTypes.string,
+  article.status: PropTypes.string,
+  deleteArticle: PropTypes.func
 };
 
 export default ArticleCard;

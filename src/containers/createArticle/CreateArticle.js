@@ -14,12 +14,13 @@ import { getAllTags } from '../../requests/TagRequests';
 import { getAllCategory } from '../../requests/CategoryRequests';
 import ArticleForm from '../../components/ArticleForm/ArticleForm';
 import { TagObjectToString, convertIdToString } from '../../util/TagsHelper';
-import { createArticle, updateArticle, publishArticle, getSingleArticle } from '../../requests/ArticleRequests';
+import {
+  createArticle, updateArticle, publishArticle, getSingleArticle
+} from '../../requests/ArticleRequests';
 import MsgInfo from '../MsgInfo/MsgInfo';
 import {
   msgInfoActions
 } from '../BasePath';
-
 
 
 /**
@@ -69,37 +70,37 @@ class CreateArticle extends Component {
     * @memberof Article
     */
   componentDidMount() {
-
     const { match } = this.props;
     const articleslug = match.params.articleslug;
     const articlestatus = match.params.articlestatus;
+    console.log(match);
 
-    if(articleslug  && articlestatus && /\/articles\/[\w|-]{2,}\/[\w|-]{2,}\/edit/.test(match.url)) {
+    if (articleslug && articlestatus && /\/articles\/[\w|-]{2,}\/[\w|-]{2,}\/edit/.test(match.url)) {
       this.setState({ editMode: true, isCreated: true });
-      this.props.getSingleArticle({articleslug, articlestatus});
+      this.props.getSingleArticle({ articleslug, articlestatus });
     }
     this.props.getAllCategory();
     this.props.getAllTags();
   }
 
   /**
-   * @description - This method updates when redux state updates 
+   * @description - This method updates when redux state updates
    * @param {object} props
    * @param {object} state
    * @returns {object} new state
    * @memberof Article
    */
   static getDerivedStateFromProps(props, state) {
-    if(state.editMode) {
-      if(props.article.User && props.article.userId === props.user.id){
+    if (state.editMode) {
+      if (props.article.User && props.article.userId === props.user.id) {
         return {
           ...props.article,
           category: String(props.article.Category.id),
-          articleTags: props.article.Tags.map(data => ({id: data.name, text: data.name})),
+          articleTags: props.article.Tags.map(data => ({ id: data.name, text: data.name })),
           editMode: false
         };
       }
-      else if (props.article.User && props.article.userId !== props.user.id){
+      if (props.article.User && props.article.userId !== props.user.id) {
         props.history.push('/');
       } else {
         return null;
@@ -293,16 +294,16 @@ class CreateArticle extends Component {
    * @memberof CreateArticle
    */
   render() {
-    const defaultValue = this.state.category ? this.state.category : "1";
+    const defaultValue = this.state.category ? this.state.category : '1';
     const { info } = this.props;
     return (
       <div className="create-article-wrapper">
         {
-          (!!info.message.length && !info.success ) && 
-          (
+          (!!info.message.length && !info.success)
+          && (
             <div className="info">
-              <span 
-                className="close" 
+              <span
+                className="close"
                 onClick={this.props.clearMsgInfo}>
                   <i className="fas fa-times"></i>
               </span>
@@ -335,13 +336,13 @@ class CreateArticle extends Component {
                 handleDrag={this.handleDrag}
                 required
               />
-              <div 
-                onChange={this.handleInputChange}
-                className="col input-field s12" 
-                value={defaultValue}>
+              <div className="col input-field s12">
                 <span htmlFor="Title">Categories</span>
-                <select className="browser-default s6" >
-                  <option value="" disabled selected>Choose gender</option>
+                <select
+                  className="browser-default s6"
+                  onChange={this.handleInputChange}
+                  value={defaultValue}>
+                  <option value="" disabled>Choose Category</option>
                 {this.renderSelectOptions()}
               </select>
             </div>
@@ -381,8 +382,6 @@ export default connect(mapStateToProps,
   {
     createArticle, updateArticle, publishArticle, getAllCategory, getAllTags, getSingleArticle, clearMsgInfo: msgInfoActions.clear
   })(CreateArticle);
-
-
 
 
 //   <Input
