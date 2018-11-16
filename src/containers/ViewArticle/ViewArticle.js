@@ -125,10 +125,10 @@ class ViewArticle extends Component {
               </div>
           </Row>
           <div className="center-align activity-icons">
-            <div className="col s3"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
-            <div className="col s3"><i className="fas fa-thumbs-down dislikeButton"></i> 97</div>
-            <div className="col s3"><i className="fas fa-bookmark bookmarkButton"></i></div>
-            <div className="col s3"><i className="fas fa-share-alt shareButton"></i></div>
+            <div className="col s2"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
+            <div className="col s2"><i className="fas fa-thumbs-down dislikeButton"></i> 3</div>
+            <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div>
+            <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
             {!this.props.user.isAuth && <StarRatings
                     rating={3.03}
                     starDimension="20px"

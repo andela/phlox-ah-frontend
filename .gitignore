@@ -3,3 +3,4 @@
 .DS_Store
 # distribution file
 /dist
+.env
