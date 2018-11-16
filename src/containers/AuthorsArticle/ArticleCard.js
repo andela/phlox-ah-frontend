@@ -40,13 +40,14 @@ const ArticleCard = props => (
 );
 
 ArticleCard.propTypes = {
-  article: PropTypes.array,
-  article.title: PropTypes.string,
-  article.imgUrl: PropTypes.string,
+  article: PropTypes.shape({
+    slug: PropTypes.string,
+    status: PropTypes.string,
+    description: PropTypes.string,
+    title: PropTypes.string,
+    imgUrl: PropTypes.string,
+  }),
   placeholderImg: PropTypes.string,
-  article.description: PropTypes.string,
-  article.slug: PropTypes.string,
-  article.status: PropTypes.string,
   deleteArticle: PropTypes.func
 };
 

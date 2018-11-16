@@ -2,7 +2,9 @@ import axios from 'axios';
 import { createBrowserHistory } from 'history';
 import { asyncActions } from '../util/AsyncUtil';
 import {
-  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES, DELETE_ARTICLE, FEATURED_ARTICLES, POPULAR_ARTICLES
+  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE,
+  PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES,
+  DELETE_ARTICLE, FEATURED_ARTICLES, POPULAR_ARTICLES
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
@@ -67,7 +69,6 @@ export const getSingleArticle = payload => (dispatch) => {
   dispatch(asyncActions(SINGLE_ARTICLE).loading(true));
   axios.get(`${articleConstant.SINGLE_ARTICLE_URL}/${payload.articlestatus}/${payload.articleslug}`)
     .then((response) => {
-      console.log(response.data);
       dispatch(asyncActions(SINGLE_ARTICLE).success(response.data.article));
       dispatch(asyncActions(SINGLE_ARTICLE).loading(false));
     })

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { getMyArticles } from '../BasePath';
 import ArticleCard from './ArticleCard';
 import DeleteModal from '../DeleteModal/DeleteModal';
@@ -46,8 +47,8 @@ class AuthorsArticle extends Component {
 
   /**
    * @description - This method get the slug of the article to be deleted
-   * @param {string} slug
-   * @returns {object} profile
+   * @param {string} articleslug
+   * @returns {object} null
    * @memberof AuthorsArticle
    */
   deleteArticle(articleslug) {

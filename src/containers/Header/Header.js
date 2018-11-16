@@ -15,7 +15,6 @@ const history = createBrowserHistory({ forceRefresh: true });
 
 /**
  *
- *
  * @class Header
  * @extends {Component}
  */
@@ -329,6 +328,10 @@ class Header extends Component {
 
 Header.propTypes = {
   user: PropTypes.object,
+  profile: PropTypes.shape({
+    firstName: PropTypes.string
+  }),
+  viewProfile: PropTypes.func,
   clearMsgInfo: PropTypes.func,
   setSignUpSuccessState: PropTypes.func.isRequired,
   signOut: PropTypes.func

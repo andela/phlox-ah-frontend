@@ -2,35 +2,39 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import Header from './Header';
+import AuthorsArticle from './AuthorsArticle';
 
 const mockStore = configureMockStore();
 const store = mockStore({
   profile: {
     firstName: 'john',
     lastName: 'doe'
-  }
+  },
+  myArticle: {
+    articles: [
+      {
+        title: 'title',
+        body: 'body',
+        description: 'description'
+      }
+    ]
+  },
+  /* eslint-disable no-undef */
+  getMyArticles: jest.fn()
 });
 
 let component;
 let myComponent;
 
-describe('<Header/>', () => {
+describe('<AuthorsArticle />', () => {
   beforeEach(() => {
     component = shallow(
       <Provider store={store}>
-        <Header />
+        <AuthorsArticle />
       </Provider>
     );
-    myComponent = component.dive({ context: { store } }).dive();
   });
   it('should render without throwing an error', () => {
     expect(component).toMatchSnapshot();
-  });
-  it('should have a img tag', () => {
-    expect(myComponent.find('img').exists()).toBe(true);
-  });
-  it('should have a category dropdown', () => {
-    expect(myComponent.find('div.categories').exists()).toBe(true);
   });
 });

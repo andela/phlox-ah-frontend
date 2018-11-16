@@ -18,9 +18,7 @@ import {
   createArticle, updateArticle, publishArticle, getSingleArticle
 } from '../../requests/ArticleRequests';
 import MsgInfo from '../MsgInfo/MsgInfo';
-import {
-  msgInfoActions
-} from '../BasePath';
+import { msgInfoActions } from '../BasePath';
 
 
 /**
@@ -40,7 +38,7 @@ class CreateArticle extends Component {
       articleTags: [],
       alertVisible: false,
       body: '',
-      category: '1',
+      category: '',
       description: '',
       hasChanges: false,
       idleTimer: null,
@@ -71,9 +69,7 @@ class CreateArticle extends Component {
     */
   componentDidMount() {
     const { match } = this.props;
-    const articleslug = match.params.articleslug;
-    const articlestatus = match.params.articlestatus;
-    console.log(match);
+    const { articleslug, articlestatus } = match.params;
 
     if (articleslug && articlestatus && /\/articles\/[\w|-]{2,}\/[\w|-]{2,}\/edit/.test(match.url)) {
       this.setState({ editMode: true, isCreated: true });
@@ -294,7 +290,7 @@ class CreateArticle extends Component {
    * @memberof CreateArticle
    */
   render() {
-    const defaultValue = this.state.category ? this.state.category : '1';
+    const defaultValue = this.state.category ? this.state.category : '';
     const { info } = this.props;
     return (
       <div className="create-article-wrapper">
@@ -356,6 +352,15 @@ class CreateArticle extends Component {
 
 CreateArticle.propTypes = {
   article: PropTypes.object,
+  user: PropTypes.shape({
+    username: PropTypes.string
+  }),
+  profile: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string
+  }),
+  info: PropTypes.object,
+  match: PropTypes.object,
   categories: PropTypes.array,
   createArticle: PropTypes.func,
   error: PropTypes.bool,
@@ -363,8 +368,12 @@ CreateArticle.propTypes = {
   getAllTags: PropTypes.func,
   publishArticle: PropTypes.func,
   suggestedTags: PropTypes.array,
+  getSingleArticle: PropTypes.func,
+  msgInfoActions: PropTypes.func,
+  clearMsgInfo: PropTypes.func,
   updateArticle: PropTypes.func
 };
+
 
 const mapStateToProps = (state) => {
   const {
@@ -374,22 +383,24 @@ const mapStateToProps = (state) => {
   const suggestedTags = state.tags.tags;
 
   return {
-    article, tags, categories, suggestedTags, error, user: state.user, profile: state.profile, info: state.info
+    article,
+    tags,
+    categories,
+    suggestedTags,
+    error,
+    user: state.user,
+    profile: state.profile,
+    info: state.info
   };
 };
 
 export default connect(mapStateToProps,
   {
-    createArticle, updateArticle, publishArticle, getAllCategory, getAllTags, getSingleArticle, clearMsgInfo: msgInfoActions.clear
+    createArticle,
+    updateArticle,
+    publishArticle,
+    getAllCategory,
+    getAllTags,
+    getSingleArticle,
+    clearMsgInfo: msgInfoActions.clear
   })(CreateArticle);
-
-
-//   <Input
-//     s={12}
-//     type="select"
-//     id="category"
-//     onChange={this.handleInputChange}
-//     value={defaultValue}
-//     required>
-//     <option value="0" disabled>Choose your option</option>
-// </Input>

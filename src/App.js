@@ -38,9 +38,6 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path="/" component={Home} />
-            <PrivateRoute exact path="/articles" component={CreateArticle} />
-            <PrivateRoute exact path='/profile' component={ViewProfile} />
-            <PrivateRoute exact path='/profile/edit' component={EditProfile} />
             <PrivateRoute exact
               path="/articles/:articleslug/:articlestatus/edit"
               component={CreateArticle}
