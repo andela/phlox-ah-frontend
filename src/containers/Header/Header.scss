@@ -43,6 +43,8 @@ div.brand span.brand-name {
   font-weight: 400;
   display: inline-block;
   margin: 0 18px;
+  position: relative;
+  bottom: 6px;
 }
 
 div.nav-wrapper div.search-wrapper {
@@ -80,6 +82,7 @@ div.categories i.fa-sort-down {
 
 div.search-wrapper div.input {
   position: relative;
+  bottom: 5px;
   width: 100%;
   margin-left: 60px;
 }

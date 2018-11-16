@@ -67,11 +67,121 @@ class ViewArticle extends Component {
 
   /**
    *
+   * @returns {jsx} - jsx
+   * @memberof ViewArticle
+   */
+  dummyContent() {
+    return (<div className={this.state.failure && 'hide'}>
+    <div className="col s12 l6 lighten-5 img-div">
+    <div className="dummyPicture"></div>
+    </div>
+    <div className="col s12 l6 lighten-5">
+    <div className="dummyRight"><div></div><div></div><div></div></div>
+    </div>
+    <div className="col s12 article-body">
+    <div className="dummyBody"><div></div><div></div><div></div></div>
+    </div>
+    </div>);
+  }
+
+  /**
+   *
+   *
+   * @param {*} article
+   * @returns {jsx} - jsx
+   * @memberof ViewArticle
+   */
+  realContent(article) {
+    return (<div>
+      <div className="col s12 l6 img-div">
+          <img src={article.imgUrl}/>
+      </div>
+      <div className="col s12 l6">
+          <div>
+          <h4 className="capitalize">{article.title}</h4>
+          <p className="articleDescription">{article.description}</p>
+          <Row className="margin-top-10">
+              <div className="col s8">
+              <Row className="valign-wrapper">
+                  <div className="col s4 m3 l4">
+                  {
+                      !article.User.Profile || !article.User.Profile.profileImage ? <Avatar name={article.User.username} size="75" round={true} />
+                        : <img className="profileImage" src={article.User.Profile.profileImage}/>
+                  }
+                  </div>
+                  <div className="col s8 m9 l8">
+                  <span className="writer capitalize">{article.User.username}</span><br/>
+                  <span className="date-written capitalize">{Moment.duration(article.createdAt, 'hours').humanize() }</span><br/>
+                  <span className="readTime">{article.readTime} Minutes Read</span>
+                  </div>
+              </Row>
+              </div>
+              <div className="col s4">
+              <button
+                  className="btn waves-effect waves-light followButton"
+                  type="submit"
+                  name="action">Follow
+              </button>
+              </div>
+          </Row>
+          <div className="center-align activity-icons">
+            <div className="col s3"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
+            <div className="col s3"><i className="fas fa-thumbs-down dislikeButton"></i> 97</div>
+            <div className="col s3"><i className="fas fa-bookmark bookmarkButton"></i></div>
+            <div className="col s3"><i className="fas fa-share-alt shareButton"></i></div>
+            {!this.props.user.isAuth && <StarRatings
+                    rating={3.03}
+                    starDimension="20px"
+                    className="col s4"
+                    starSpacing="5px"
+                  /> }
+                  {this.props.user.isAuth && <StarRatings
+                    rating={article.ratingAverage}
+                    starDimension="20px"
+                    starRatedColor="#5e5f63"
+                    className="col s4"
+                    changeRating={this.addRating}
+                    starSpacing="5px"
+                    name='rating'
+                  />}
+              </div>
+              <button
+                className="btn waves-effect waves-light editButton"
+                type="submit"
+                name="action">Edit Article
+                  </button>
+              </div>
+          </div>
+          <div className="col s12 article-body">
+          {
+          ReactHtmlParser(article.body)
+          }
+      </div>
+      <div className="col l4 s12 bold tag-div">
+          {<a className="red-text"href="#">Report Article</a>}
+      </div>
+      </div>);
+  }
+
+  /**
+   *
+   * @returns {jsx} - jsx
+   * @memberof ViewArticle
+   */
+  showContent() {
+    if (this.success || this.state.article.User) {
+      return this.realContent(this.state.article);
+    }
+    return this.dummyContent();
+  }
+
+  /**
+   *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
    */
   render() {
-    const { success, article, failure } = this.state;
+    const { failure } = this.state;
     return (
     <div className="MainWrapper2">
         <div className="container">
@@ -86,91 +196,7 @@ class ViewArticle extends Component {
                          <h2 className="capitalize">We couldn’t find this page.</h2>
                       </div>
                 }
-                {/* DUMMY DIV */}
-                { !success
-                  ? <div className={failure ? 'hide' : ''}>
-                <div className="col s12 l6 lighten-5 img-div">
-                <div className="dummyPicture"></div>
-                </div>
-                <div className="col s12 l6 lighten-5">
-                <div className="dummyRight"><div></div><div></div><div></div></div>
-                </div>
-                <div className="col s12 article-body">
-                <div className="dummyBody"><div></div><div></div><div></div></div>
-                </div>
-                </div>
-                //   REAL DIV
-                  : <div>
-                    <div className="col s12 l6 img-div">
-                        <img src={article.imgUrl}/>
-                    </div>
-                    <div className="col s12 l6">
-                        <div>
-                        <h4 className="capitalize">{article.title}</h4>
-                        <p className="articleDescription">{article.description}</p>
-                        <Row className="margin-top-10">
-                            <div className="col s8">
-                            <Row className="valign-wrapper">
-                                <div className="col s4 m3 l4">
-                                {
-                                    article.User.Profile.profileImage ? <img className="profileImage" src={article.User.Profile.profileImage}/>
-                                      : <Avatar name={article.User.username} size="75" round={true} />
-                                }
-                                </div>
-                                <div className="col s8 m9 l8">
-                                <span className="writer capitalize">{article.User.username}</span><br/>
-                                <span className="date-written capitalize">{Moment.duration(article.createdAt, 'hours').humanize() }</span><br/>
-                                <span className="readTime">{article.readTime} Minutes Read</span>
-                                </div>
-                            </Row>
-                            </div>
-                            <div className="col s4">
-                            <button
-                                className="btn waves-effect waves-light followButton"
-                                type="submit"
-                                name="action">Follow
-                            </button>
-                            </div>
-                        </Row>
-                        <div className="center-align activity-icons">
-                            <div className="col s2"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
-                            <div className="col s2"><i className="fas fa-thumbs-down dislikeButton"></i> 3</div>
-                            <div className="col s2"><i className="fas fa-bookmark bookmarkButton"></i></div>
-                            <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
-                            {!this.props.user.isAuth && <StarRatings
-                              rating={3.03}
-                              starDimension="20px"
-                              className="col s4"
-                              starSpacing="5px"
-                            /> }
-                            {this.props.user.isAuth && <StarRatings
-                              rating={article.ratingAverage}
-                              starDimension="20px"
-                              starRatedColor="#5e5f63"
-                              className="col s4"
-                              changeRating={this.addRating}
-                              starSpacing="5px"
-                              name='rating'
-                            />}
-                        </div>
-                        <button
-                          className="btn waves-effect waves-light editButton"
-                          type="submit"
-                          name="action">Edit Article
-                            </button>
-                        </div>
-                    </div>
-                    <div className="col s12 article-body">
-                        {
-                        ReactHtmlParser(article.body)
-                        }
-                    </div>
-                    <ArticleTags tags={success ? article.Tags : ['']} />
-                    <div className="col l4 s12 bold tag-div">
-                        {<a className="red-text"href="#">Report Article</a>}
-                    </div>
-                    </div>
-                }
+                { this.showContent() }
             </Row>
             </div>
         </Row>
