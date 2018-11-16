@@ -33,7 +33,7 @@ class Home extends Component {
     super();
     this.state = {
       categories: [],
-      failure: false,
+      failure: true,
       featuredArticles: [],
       latestArticles: [],
       popularArticles: [],
@@ -100,7 +100,7 @@ class Home extends Component {
    * @memberof Home
    */
   popularArticles() {
-    if (!this.state.popularArticles || this.state.failure) {
+    if (this.state.failure || !this.state.popularArticles) {
       return (<div className="preloaderDiv"></div>);
     }
     return this.listArticles(this.state.popularArticles);
@@ -113,15 +113,14 @@ class Home extends Component {
    * @memberof Home
    */
   showCategories() {
-    if (!this.state.popularArticles) {
+    if (this.state.failure || !this.state.popularArticles) {
       return (<div className="preloaderDiv"></div>);
     }
     const categories = this.state.categories.filter(category => category.articles.length > 0);
     return categories.slice(0, 3).map((category, index) => <div key={index}><Row>
     <Col s={12} l={12}>
     <div className="row-header valign-wrapper">
-    <h6><b>{category.category}</b></h6>
-    <span className="right grey-text text-darken-2">More <i className='fas fa-angle-right'></i> </span>
+    <h6 className="capitalize"><b>{category.category}</b></h6>
     </div>
     </Col> </Row>
     <Row>{ this.listArticles(category.articles.slice(0, 1)) }</Row></div>);
@@ -134,7 +133,7 @@ class Home extends Component {
    * @memberof Home
    */
   trendingArticles() {
-    if (!this.state.trendingArticles || this.state.failure) {
+    if (this.state.failure || !this.state.trendingArticles) {
       return (<div className="preloaderDiv"></div>);
     }
     return this.listArticles(this.state.trendingArticles);
@@ -160,7 +159,7 @@ class Home extends Component {
    * @memberof Home
    */
   sidebarArticles() {
-    if (!this.state.latestArticles || this.state.failure) {
+    if (this.state.failure || !this.state.latestArticles) {
       return (<div className="preloaderDiv"></div>);
     }
     return (<Sidebar sidebarTitle="Latest" articles={this.state.latestArticles} />);
@@ -205,7 +204,6 @@ class Home extends Component {
                   <Col s={12} l={12}>
                     <div className="row-header valign-wrapper">
                       <h6><b>Popular On Authors Haven</b></h6>
-                      <span className="right grey-text text-darken-2">More <i className='fas fa-angle-right'></i> </span>
                     </div>
                   </Col>
                 </Row>

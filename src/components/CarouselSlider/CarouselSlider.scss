@@ -6,15 +6,19 @@
   margin-top: 5px;
   margin-bottom: 10px;
   @media #{$large_desktop} {
+    height: 300px;
     max-height: 300px;
   }
   @media #{$desktop} {
+    height: 230px;
     max-height: 230px;
   }
   @media #{$tablet} {
+    height: 260px;;
     max-height: 260px;
   }
   @media #{$mobile} {
+    height: 340px;;
     max-height: 340px;
   }
   .indicators {
@@ -33,6 +37,9 @@
     min-height: 280px;
     padding: 0px 20px 0px 0px;
     margin-right: 10px;
+    @media #{$mobile} {
+      height: 340px;
+    }
     .img-container {
       height: 280px;
       @media #{$large_desktop} {

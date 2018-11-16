@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from 'react-avatar';
-import { createBrowserHistory } from 'history';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import {
   Row, Col, Card, CardTitle
@@ -11,10 +11,6 @@ import { ok } from 'assert';
 
 let authorAvatar = '';
 let articlePic = '';
-const history = createBrowserHistory({ forceRefresh: true });
-const linkTo = (path) => {
-  history.push(path);
-};
 
 export const Sidebar = props => (
   <div>
@@ -33,7 +29,7 @@ export const Sidebar = props => (
       return (<Row key={ index + 1 }>
         <Col s={12} m={12}>
           <Card className="z-depth-1" horizontal header={<CardTitle image={articlePic}></CardTitle>}>
-              <h6 className="capitalize"><b> <a key={0} className="capitalize" onClick={() => linkTo(`/articles/${article.slug}`) }>{article.title.substring(0, 25)}</a> </b></h6>
+              <h6 className="capitalize"><b> <Link key={0} className="capitalize" to={`/articles/${article.slug}`}>{article.title.substring(0, 25)}</Link> </b></h6>
               <p>{article.description.substring(0, 45)}.<br/>
                 </p>
                 <Row className="author-details valign-wrapper">
