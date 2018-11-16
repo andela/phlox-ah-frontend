@@ -274,7 +274,7 @@ class CreateArticle extends Component {
                 value={defaultValue}>
                 <span htmlFor="Title">Categories</span>
                 <select className="browser-default s6" >
-                  <option value="" disabled selected>Choose gender</option>
+                  <option value="" disabled selected>Choose category</option>
                 {this.renderSelectOptions()}
               </select>
             </div>
