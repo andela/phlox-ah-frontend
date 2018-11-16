@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createBrowserHistory } from 'history';
 import { asyncActions } from '../util/AsyncUtil';
 import {
-  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES, DELETE_ARTICLE
+  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES, DELETE_ARTICLE, FEATURED_ARTICLES, POPULAR_ARTICLES
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
@@ -24,7 +24,6 @@ const formatError = (error) => {
 };
 
 
-
 export const deleteArticle = payload => (dispatch) => {
   dispatch(asyncActions(DELETE).loading(true));
   return axios.delete(`${articleConstant.DELETE_ARTICLE_URL}/${payload}`)
@@ -37,6 +36,19 @@ export const deleteArticle = payload => (dispatch) => {
       dispatch(asyncActions(DELETE).loading(false));
       throw error;
     })
+};
+
+export const getArticles = () => (dispatch) => {
+  dispatch(asyncActions(ALL_ARTICLES).loading(true));
+  axios.get(articleConstant.ALL_ARTICLES_URL)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(ALL_ARTICLES).success(response.data.articles));
+        dispatch(asyncActions(ALL_ARTICLES).loading(false));
+      }
+    })
+    .catch(error => dispatch(asyncActions(ALL_ARTICLES)
+      .failure(true, error)));
 };
 
 export const viewArticle = payload => (dispatch) => {
@@ -145,4 +157,30 @@ export const publishArticle = ({ slug, status, tags }) => (dispatch) => {
         .failure(true, error.response.data.message));
       dispatch(msgInfoActions.failure(formatError(error.response.data)));
     });
+};
+
+export const getFeaturedArticles = () => (dispatch) => {
+  dispatch(asyncActions(FEATURED_ARTICLES).loading(true));
+  axios.get(articleConstant.FEATURED_ARTICLES_URL)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(FEATURED_ARTICLES).success(response.data.articles));
+        dispatch(asyncActions(FEATURED_ARTICLES).loading(false));
+      }
+    })
+    .catch(error => dispatch(asyncActions(FEATURED_ARTICLES)
+      .failure(true, error)));
+};
+
+export const getPopularArticles = () => (dispatch) => {
+  dispatch(asyncActions(POPULAR_ARTICLES).loading(true));
+  axios.get(articleConstant.POPULAR_ARTICLES_URL)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(POPULAR_ARTICLES).success(response.data.articles));
+        dispatch(asyncActions(POPULAR_ARTICLES).loading(false));
+      }
+    })
+    .catch(error => dispatch(asyncActions(POPULAR_ARTICLES)
+      .failure(true, error)));
 };

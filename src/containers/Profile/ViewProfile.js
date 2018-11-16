@@ -1,6 +1,7 @@
 /* eslint-disable no-script-url */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Avatar from 'react-avatar';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { viewProfile } from '../../requests/ProfileRequest';
@@ -38,10 +39,10 @@ class ViewProfile extends Component {
             <div className="info-wrapper">
               <div className="pi-photo">
                 <div className="profile-image">
-                  <img 
-                    src={this.props.profile.profileImage || "https://via.placeholder.com/300/ddd.png"} 
-                    alt="Profile Image" className="circle responsive-img"
-                  />
+                  {
+                    this.props.profile.profileImage ? <img src={this.props.profile.profileImage} alt="Profile Image" className="circle responsive-img"/>
+                      : <Avatar name={this.props.user.username} size="75" round={true} />
+                  }
                 </div>
               </div>
               <div className="pi-detail">

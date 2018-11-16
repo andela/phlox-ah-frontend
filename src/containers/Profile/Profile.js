@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Avatar from 'react-avatar';
 import PropTypes from 'prop-types';
 import {
   Button, Input, Row, Col
@@ -126,7 +127,10 @@ class Profile extends Component {
           <Row>
             <Col s={12}>
               <div className="profile-image">
-                <img src={this.state.dataImage || this.props.profile.profileImage} alt="Profile Image" className="circle responsive-img"/>
+                {
+                  this.state.dataImage || this.props.profile.profileImage ? <img src={this.state.dataImage || this.props.profile.profileImage} alt="Profile Image" className="circle responsive-img"/>
+                    : <Avatar name={this.props.user.username} size="75" round={true} />
+                }
               </div>
             </Col>
             <Col s={12}><label htmlFor="profile-image" className="profile-image">Change</label></Col>
@@ -137,29 +141,37 @@ class Profile extends Component {
               <Input s={12} l={6} placeholder="First Name" label="Firstname" name="firstName" onChange={this.handleInputChange} value={this.state.firstName} />
               <Input s={12} l={6} placeholder="Last Name" label="Lastname" name="lastName" onChange={this.handleInputChange} value={this.state.lastName}/>
               <Input s={12} l={6} placeholder="Contact" label="Contact" name="contact" onChange={this.handleInputChange} value={this.state.contact}/>
-              <Input s={12} l={6} type='select' label="Gender" name="gender" onChange={this.handleInputChange} value={this.state.gender}>
-                <option disable='disable'>Select </option>
-                <option value='male'>Male</option>
-                <option value='female'>Female</option>
-              </Input>
+
+              <div className="col input-field s12 l6" value={this.state.gender} onChange={this.handleInputChange}>
+                <select className="browser-default s6" >
+                  <option value="" disabled selected>Choose gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+
               <Input s={12} type='textarea' rows="4" placeholder="Bio" label="Bio" name="bio" onChange={this.handleInputChange} value={this.state.bio}/>
-              <Button s={12} l={6} className="updateButton" waves='light'>Update Profile  <i className="fas fa-edit"></i></Button>
+              <div class="col input-field s12 l12">
+                <Button s={12} l={6} className="updateButton" waves='light'>Update Profile  <i className="fas fa-edit"></i></Button>
+              </div>
             </Row>
           </form>
-          </Col>
-        </Row>
-      </div>
+        </Col>
+      </Row>
+    </div>
     );
   }
 }
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  user: state.user
 });
 
 Profile.propTypes = {
   newProfile: PropTypes.func,
   viewProfile: PropTypes.func,
-  profile: PropTypes.object
+  profile: PropTypes.object,
+  user: PropTypes.object
 };
 
 export default connect(mapStateToProps, {

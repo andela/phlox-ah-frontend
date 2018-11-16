@@ -5,7 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import './SentResetPasswordMail.scss';
 
-const onLogin = () => {
+const login = () => {
   $('#login-modal').modal('open');
 };
 
@@ -24,7 +24,7 @@ export const SentResetPasswordMail = props => (
         Go To Home &nbsp;
         <i className="fas fa-home"></i>
       </Button>
-    <Button waves='light' onClick={ () => onLogin() }>
+    <Button waves='light' onClick={ () => login() }>
         Go To Login &nbsp;
         <i className="fas fa-sign-in-alt"></i>
       </Button>

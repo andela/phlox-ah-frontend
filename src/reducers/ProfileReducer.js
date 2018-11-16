@@ -10,7 +10,7 @@ const initialState = {
   profileImage: ''
 };
 
-const profileReducer = (state = initialState, action) => {
+const ProfileReducer = (state = initialState, action) => {
   switch (action.type) {
     case asyncActionName(NEW_PROFILE).success:
       return { ...action.payload.profile };
@@ -21,4 +21,4 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-export default profileReducer;
+export default ProfileReducer;

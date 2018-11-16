@@ -6,7 +6,10 @@ export const articleConstant = {
   UPDATE_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
   MY_ARTICLES_URL: `${BASE_URL}/api/v1/myarticles`,
   VIEW_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
-  DELETE_ARTICLE_URL: `${BASE_URL}/api/v1/articles`
+  DELETE_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
+  VIEW_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
+  FEATURED_ARTICLES_URL: `${BASE_URL}/api/v1/articles/featured`,
+  POPULAR_ARTICLES_URL: `${BASE_URL}/api/v1/articles/popular`,
 };
 
 export const tagsConstant = {
@@ -35,5 +38,6 @@ export const passwordConstant = {
 };
 
 export const signupConstant = {
-  SIGNUP_URL: `${BASE_URL}/api/v1/signup`
+  SIGNUP_URL: `${BASE_URL}/api/v1/signup`,
+  VERIFY_URL: `${BASE_URL}/api/v1/users/verify`
 };

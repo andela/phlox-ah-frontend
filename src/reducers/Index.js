@@ -10,6 +10,7 @@ import password from './PasswordReducer';
 import profile from './ProfileReducer';
 import signup from './SignupReducer';
 import tags from './TagReducer';
+import verifyUser from './VerifyUserReducer';
 
 
 const rootReducer = combineReducers({
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   profile,
   signup,
   tags,
-  user
+  user,
+  verifyUser
 });
 
 export default rootReducer;

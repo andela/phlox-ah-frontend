@@ -1,14 +1,19 @@
-
-$primary-color: #06576D;
+@import '../../styles/variables';
 
 nav.main-header {
   background: #fff;
   line-height: 52px;
   padding: 5px;
-  box-shadow: 0 2px rgba(0,0,0,0.1);
+  border-bottom:1px solid #c6c3c3;
+  line-height:4em;
+  box-shadow: 10px 10px 5px #c6c3c3;
 }
 nav.main-header * {
-  color: $primary-color;
+  color: $themeColor;
+}
+
+nav.main-header a {
+  text-decoration: none;
 }
 
 nav.main-header div.nav-wrapper {
@@ -46,6 +51,8 @@ div.nav-wrapper div.search-wrapper {
 }
 
 div.search-wrapper div.categories {
+  position: relative;
+  z-index: 10;
   font-size: 20px;
   margin: 0 5px;
   margin-right: 23px;
@@ -90,15 +97,16 @@ div.search-wrapper div.input input:focus {
 }
 
 div.search-wrapper div.input input::-webkit-input-placeholder {
-  color: $primary-color;
+  color: $themeColor;
   opacity: 0.5;
   color: black;
+  padding-left: 10px;
 }
 
 div.search-wrapper i.fa-search {
   position: absolute;
   left: 8px;
-  top: -6px;
+  top: 3px;
   font-size: 18px;
   color: black;
 }
@@ -115,7 +123,7 @@ div.nav-wrapper ul.nav-button li {
 
 div.nav-wrapper ul li button {
   border-radius: 3px;
-  border: 1px solid $primary-color;
+  border: 1px solid $themeColor;
   font-weight: 600;
   letter-spacing: 0.7px;
   height: 35px;
@@ -130,7 +138,7 @@ div.nav-wrapper ul li button:hover {
 
 div.nav-wrapper ul li button.login {
   color: #fff;
-  background: $primary-color;
+  background: $themeColor;
 }
 
 div.nav-wrapper ul li a.notification-bell {
@@ -143,7 +151,7 @@ div.nav-wrapper ul li a.notification-bell:hover {
   background: none;
 }
 
-div.nav-wrapper ul li span.user-photo {
+div.nav-wrapper ul li a.user-photo {
   border-radius: 50%;
   font-size: 6px;
   width: 40px;
@@ -189,7 +197,6 @@ div.sd-wrapper ul li.s-list {
   font-size: 14px;
   height: 29px;
   font-weight: 600;
-
 
   a {
     display: block;
