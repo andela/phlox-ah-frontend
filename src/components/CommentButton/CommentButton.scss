@@ -1,0 +1,16 @@
+.comment-button {
+  display: flex;
+  justify-content: flex-end;
+  button {
+    border: 1px solid #0e718c;
+    color: #0e718c;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #fff;
+    padding: 8px 8px;
+    outline: none;
+    width: 150px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+}

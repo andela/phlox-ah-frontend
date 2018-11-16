@@ -8,6 +8,10 @@ import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
 import ArticleTags from '../../components/Tags/ArticleTags';
 import { viewArticle } from '../../requests/ArticleRequests';
+import CommentTextArea from '../../components/CommentTextArea/CommentTextArea';
+import CommentButton from '../../components/CommentButton/CommentButton';
+import CommentDisplayBox from '../../components/CommentDisplayBox/CommentDisplayBox';
+import { createComment, getAllComment } from '../../requests/CommentRequest';
 
 /**
  * @class ViewAnArticle
@@ -21,8 +25,11 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: []
+      success: false, loading: false, failure: false, article: {}, comment: '', reply: ''
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.addComment = this.addComment.bind(this);
   }
 
   /**
@@ -54,6 +61,45 @@ class ViewArticle extends Component {
    */
   componentDidMount() {
     this.props.viewArticle(this.props.match.params.articleslug);
+    this.props.getAllComment(this.props.match.params.articleslug);
+  }
+
+  /**
+   * @description - This method sets the input values
+   * @param {object} e
+   * @returns {object} void
+   * @memberof Comment
+   */
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  /**
+    * @description - This method is used to create comment
+    * @returns {object} - return payloads
+    * @memberof Comment
+    */
+  addComment() {
+    const { comment, article } = this.state;
+    this.setState({ comment: '' });
+    this.props.createComment(article.slug, comment);
+  }
+
+  /**
+    * @description - This method is used to render list of comments
+    * @returns {object} - return payloads
+    * @memberof Comment
+    * @comment remember to check when article does'nt have a comment too
+    */
+  renderCommentList() {
+    return this.props.comments.map(
+      comment => <CommentDisplayBox
+        key={comment.id}
+        comment={comment}
+        handleChange={this.handleChange}
+        value={this.state.reply}
+        />
+    );
   }
 
   /**
@@ -143,7 +189,12 @@ class ViewArticle extends Component {
                     </div>
                 }
             </Row>
-            </div>
+            <CommentTextArea
+              handleChange={this.handleChange}
+              value={this.state.comment} />
+            <CommentButton addComment={this.addComment} />
+            {this.renderCommentList()}
+          </div>
         </Row>
         </div>
     </div>
@@ -152,12 +203,15 @@ class ViewArticle extends Component {
 }
 
 ViewArticle.propTypes = {
-  viewArticle: PropTypes.func.isRequired,
-  loading: PropTypes.bool,
-  success: PropTypes.bool,
+  article: PropTypes.object,
+  comments: PropTypes.array,
+  createComment: PropTypes.func,
+  getAllComment: PropTypes.func.isRequired,
   failure: PropTypes.bool,
-  articles: PropTypes.object,
-  match: PropTypes.object
+  loading: PropTypes.bool,
+  match: PropTypes.object,
+  success: PropTypes.bool,
+  viewArticle: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -165,6 +219,7 @@ const mapStateToProps = state => ({
   success: state.article.success,
   failure: state.article.failure,
   article: state.article.article,
+  comments: state.comments.comment
 });
 
-export default connect(mapStateToProps, { viewArticle })(ViewArticle);
+export default connect(mapStateToProps, { viewArticle, createComment, getAllComment })(ViewArticle);

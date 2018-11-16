@@ -31,3 +31,7 @@ export const passwordConstant = {
 export const signupConstant = {
   SIGNUP_URL: `${BASE_URL}/api/v1/signup`
 };
+
+export const commentConstant = articleSlug => ({
+  COMMENT_URL: `${BASE_URL}/api/v1/articles/${articleSlug}/comments`,
+});
