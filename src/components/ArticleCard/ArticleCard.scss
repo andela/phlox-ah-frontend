@@ -1,0 +1,66 @@
+@import '../../styles/variables';
+.articleCard {
+  a {
+    cursor: pointer;
+  }
+  &.medium {
+    height: 350px;
+  }
+  .card-image {
+    max-height: 55%;
+    height: 550%;
+    box-shadow: 0em .02em rgba(0,0,0,.2);
+    img {
+      filter: brightness(80%);
+    }
+    @media #{$mobile} {
+      max-height: 48%;
+      height: 48%;
+    }
+    .card-title {
+      font: {
+        weight: 700;
+        size: 1.3em;
+      }
+      text-align: center;
+      a {
+        color: #ffffff;
+        text-decoration: none;
+        &:hover {
+          color: #eeecec;
+        }
+      }
+    }
+  }
+  .card-content {
+    div {
+      font-size: 0.8em;
+      color: #6F6A6A;
+      line-height: 22px;
+      text-align: justify;
+      margin-top: -13px;
+    }
+  }
+  .card-action {
+    a {
+      font-size: 0.75em;
+      color: #3B8CA1;
+      margin-right: 14px;
+      text-decoration: none;
+      &:hover {
+        color: #3B8CA1;
+      }
+    }
+    a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+      color: #3B8CA1;
+      &:hover {
+        color: rgb(49, 116, 133);
+      }
+    }
+    span {
+      font-size: 0.70em;
+      color: #ADA9A9;
+      padding-right: 0.3em;
+    }
+  }
+}

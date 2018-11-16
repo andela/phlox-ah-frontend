@@ -1,0 +1,96 @@
+@import '../../styles/variables';
+.carousel {
+  a {
+    cursor: pointer;
+  }
+  margin-top: 5px;
+  margin-bottom: 10px;
+  @media #{$large_desktop} {
+    height: 300px;
+    max-height: 300px;
+  }
+  @media #{$desktop} {
+    height: 230px;
+    max-height: 230px;
+  }
+  @media #{$tablet} {
+    height: 260px;;
+    max-height: 260px;
+  }
+  @media #{$mobile} {
+    height: 340px;;
+    max-height: 340px;
+  }
+  .indicators {
+    right: 0;
+    left: inherit;
+    text-align: right;
+    .indicator-item {
+      background-color: #ADA9A9;
+      &.active {
+        background-color: #000000;
+      }
+    }
+  }
+  .carousel-item {
+    height: 280px;
+    min-height: 280px;
+    padding: 0px 20px 0px 0px;
+    margin-right: 10px;
+    @media #{$mobile} {
+      height: 340px;
+    }
+    .img-container {
+      height: 280px;
+      @media #{$large_desktop} {
+        height: 280px;
+      }
+      @media #{$desktop} {
+        height: 210px;
+      }
+      @media #{$tablet} {
+        max-height: 200px;
+      }
+      @media #{$mobile} {
+        max-height: 140px;
+      }
+      img {
+        height: 100%;
+      }
+    }
+    .content {
+      padding-right: 25px;
+      .editor-title {
+        line-height: 35px;
+        font: {
+          weight: 700;
+        }
+        a {
+          color: #3B8CA1;
+          text-decoration: none;
+          &:hover {
+            color: #3B8CA1;
+          }
+        }
+        @media #{$desktop} {
+          font-size: 1.5rem;
+        }
+        @media #{$tablet} {
+          font-size: 1.25rem;
+        }
+      }
+      p {
+        color: #6F6A6A;
+        font-size: 0.8em;
+        line-height: 20px;
+        font-weight: 400;
+        @media #{$desktop} {
+          font-size: 0.7em;
+        }
+        @media #{$tablet} {
+          font-size: 0.6em;
+        }
+      }
+    }
+  }
+}

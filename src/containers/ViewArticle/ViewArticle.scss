@@ -1,3 +1,4 @@
+@import '../../styles//variables';
 .MainWrapper2 {
   background-color: #f8f9fa;
   .dummyBody {
@@ -7,9 +8,6 @@
       background-color: #e5e5e5;
       margin-top: 5px;
     }
-  }
-  .capitalize {
-    text-transform: capitalize;
   }
   .failure{
     h1{
@@ -21,8 +19,11 @@
       color:#B2B2B2;
     }
     i{
-      font-size:70px;
+      font-size:50px;
       color:#EF5350;
+    }
+    h2 {
+      font-size: 30px;
     }
   }
   .container {
@@ -61,6 +62,7 @@
     }
     p {
       margin-bottom: 15px;
+      text-align: justify;
     }
     .profileImage {
       width: 50px;
@@ -91,6 +93,7 @@
       margin-top: 10px;
     }
     .articleDescription {
+      font-size: 0.85em;
       color: #6f6a6a;
     }
     .writer {
@@ -105,8 +108,37 @@
     .liked-unliked {
       color: #3b8ca1;
     }
-    .article-body {
+    .article-body, .tag-div {
       margin-top: 50px;
+      text-align: justify;
+      width: 80%;
+      position: relative;
+      left: 10%;
+      right: 10%;
+      @media #{$desktop} {
+        width: 90%;
+      }
+      @media #{$tablet} {
+        width: 94%;
+        left: 0%;
+        right: 0%;
+      }
+      @media #{$mobile} {
+        width: 100%;
+        left: 0%;
+        right: 0%;
+      }
+    }
+    .article-body {
+      line-height: 45px;
+      color: rgb(114, 111, 111);
+      font: {
+        size: 1.2em;
+        weight: 400;
+      }
+      @media #{$mobile} {
+        font-size: 1em;
+      }
     }
     .bold {
       font-weight: bold;
@@ -134,23 +166,26 @@
       }
       h4 {
         font-weight: bold;
-        font-size: 36px;
+        font-size: 2em;
+        line-height: 38px;
+        margin-top: 0px;
       }
       .failure{
         h1{
           border-bottom: none;
           font-weight:900;
-          font-size:200px;
+          font-size:100px;
           margin:20px 0px;
           padding:0px;
           color:#B2B2B2;
         }
         i{
-          font-size:150px;
+          font-size:70px;
           color:#EF5350;
         }
         h2{
           font-weight:bold;
+          font-size:30px;
         }
       }
     }

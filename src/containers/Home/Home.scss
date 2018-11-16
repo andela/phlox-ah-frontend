@@ -1,0 +1,43 @@
+@import '../../styles/variables';
+.site-container {
+  .preloaderDiv {
+    position: relative;
+    height: 280px;
+    margin-bottom: 10px;
+    background: #E5E5E5;
+  }
+  .row {
+    margin-bottom: 0px;
+  }
+  .row-header {
+    background: #ADA9A9;
+    height: 22px;
+    padding: 0px 20px 0px 35px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    h6 {
+      font: {
+        weight: 600;
+        size: 0.8em;
+      }
+    }
+    span {
+      font-size: 0.6em;
+    }
+  }
+  .column-1 {
+    border-right: 2px dotted #ADA9A9;
+    padding-right: 35px;
+    width: 65%;
+    @media #{$tablet} {
+      border-right: none;
+    }
+    @media #{$mobile} {
+      border-right: none;
+      padding-right: 10px;
+    }
+    .row .col {
+      padding-right: 0.9rem;
+    }
+  }
+}
