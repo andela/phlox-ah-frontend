@@ -25,7 +25,7 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: {}, comment: '', reply: ''
+      success: false, loading: false, failure: false, article: {}, comment: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -86,10 +86,39 @@ class ViewArticle extends Component {
   }
 
   /**
+  * @description - This method displays the login modal
+  * @returns {object} null
+  * @memberof Header
+  */
+  signIn() {
+    $('#login-modal').modal('open');
+  }
+
+  /**
+    * @description - This method is used to render comment input for authenticated users
+    * @returns {object} - return jsx
+    * @memberof Comment
+    */
+  renderCommentInput() {
+    if (this.props.user.isAuth) {
+      return (
+        <div>
+          <CommentTextArea
+            handleChange={this.handleChange}
+            value={this.state.comment} />
+          <CommentButton addComment={this.addComment} />
+        </div>);
+    }
+    return (
+      <p>You must logIn to comment on this article. <button className="login-user" onClick={this.signIn}>LogIn</button>
+      </p>
+    );
+  }
+
+  /**
     * @description - This method is used to render list of comments
     * @returns {object} - return payloads
     * @memberof Comment
-    * @comment remember to check when article does'nt have a comment too
     */
   renderCommentList() {
     return this.props.comments.map(
@@ -189,10 +218,7 @@ class ViewArticle extends Component {
                     </div>
                 }
             </Row>
-            <CommentTextArea
-              handleChange={this.handleChange}
-              value={this.state.comment} />
-            <CommentButton addComment={this.addComment} />
+            {this.renderCommentInput()}
             {this.renderCommentList()}
           </div>
         </Row>
@@ -211,6 +237,7 @@ ViewArticle.propTypes = {
   loading: PropTypes.bool,
   match: PropTypes.object,
   success: PropTypes.bool,
+  user: PropTypes.object,
   viewArticle: PropTypes.func.isRequired
 };
 
@@ -219,7 +246,8 @@ const mapStateToProps = state => ({
   success: state.article.success,
   failure: state.article.failure,
   article: state.article.article,
-  comments: state.comments.comment
+  comments: state.comments.comment,
+  user: state.user
 });
 
 export default connect(mapStateToProps, { viewArticle, createComment, getAllComment })(ViewArticle);

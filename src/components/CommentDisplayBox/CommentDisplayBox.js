@@ -17,10 +17,6 @@ const CommentDisplayBox = ({ comment }) => (
         <span className="author-name">{comment.User.Profile.firstName} {comment.User.Profile.lastName}</span>
         <span className="date">{moment(comment.createdAt).format('ll')}</span>
       </div>
-      <div className="user-options">
-        <i className="fas fa-edit edit"></i>
-        <i className="fas fa-trash delete"></i>
-      </div>
     </div>
 
     <p className="comment-content">{comment.comment}</p>
@@ -34,20 +30,6 @@ const CommentDisplayBox = ({ comment }) => (
         <i className="fas fa-thumbs-down"></i>
         <span className="likes-count">23</span>
       </span>
-    </div>
-
-    <div className="user-reply">
-      <div className="reply-box">
-        <div className="user-reply-image"></div>
-        <input
-          type="text"
-          name="reply"
-          className="reply-input"
-          placeholder="Add a reply here..." />
-      </div>
-      <div className="reply-button">
-        <button>Reply</button>
-      </div>
     </div>
   </div>
 );
