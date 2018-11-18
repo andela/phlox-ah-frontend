@@ -117,7 +117,7 @@ class ViewArticle extends Component {
 
   /**
     * @description - This method is used to render list of comments
-    * @returns {object} - return payloads
+    * @returns {object} - return jsx
     * @memberof Comment
     */
   renderCommentList() {
@@ -126,7 +126,6 @@ class ViewArticle extends Component {
         key={comment.id}
         comment={comment}
         handleChange={this.handleChange}
-        value={this.state.reply}
         />
     );
   }
