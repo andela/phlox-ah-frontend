@@ -1,10 +1,18 @@
 import {
-  CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, VIEW_ARTICLE
+  CREATE_ARTICLE,
+  UPDATE_ARTICLE,
+  PUBLISH_ARTICLE,
+  VIEW_ARTICLE,
+  LIKE_ARTICLE,
+  DISLIKE_ARTICLE
 } from '../actionTypes';
 import { asyncActionName } from '../util/AsyncUtil';
 
 const initialState = {
   article: {},
+  likes: [],
+  dislikes: [],
+  likeStatus: null,
   message: null,
   tags: [],
   error: null,
@@ -54,9 +62,28 @@ const ArticleReducer = (state = initialState, action) => {
     case asyncActionName(VIEW_ARTICLE).loading:
       return { ...state, loading: action.payload };
     case asyncActionName(VIEW_ARTICLE).success:
-      return { ...state, success: true, article: action.payload };
+      return {
+        ...state,
+        success: true,
+        article: action.payload.article,
+        likes: action.payload.likes,
+        dislikes: action.payload.dislikes,
+        likeStatus: action.payload.likeStatus
+      };
     case asyncActionName(VIEW_ARTICLE).failure:
       return { ...state, failure: true, article: {} };
+    case asyncActionName(LIKE_ARTICLE).loading:
+      return { ...state };
+    case asyncActionName(LIKE_ARTICLE).success:
+      return { ...state };
+    case asyncActionName(LIKE_ARTICLE).failure:
+      return { ...state };
+    case asyncActionName(DISLIKE_ARTICLE).loading:
+      return { ...state };
+    case asyncActionName(DISLIKE_ARTICLE).success:
+      return { ...state };
+    case asyncActionName(DISLIKE_ARTICLE).failure:
+      return { ...state };
     default:
       return state;
   }

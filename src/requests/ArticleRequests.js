@@ -2,7 +2,14 @@ import axios from 'axios';
 
 import { asyncActions } from '../util/AsyncUtil';
 import {
-  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, VIEW_ARTICLE
+  ALL_ARTICLES,
+  ADD_ARTICLE,
+  CREATE_ARTICLE,
+  UPDATE_ARTICLE,
+  PUBLISH_ARTICLE,
+  VIEW_ARTICLE,
+  LIKE_ARTICLE,
+  DISLIKE_ARTICLE
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
@@ -23,11 +30,57 @@ export const viewArticle = payload => (dispatch) => {
   axios.get(`${articleConstant.VIEW_ARTICLE_URL}/${payload}`)
     .then((response) => {
       if (response.status === 200) {
-        dispatch(asyncActions(VIEW_ARTICLE).success(response.data.article));
-        dispatch(asyncActions(VIEW_ARTICLE).loading(false));
+        axios.get(`${articleConstant.VIEW_ARTICLE_URL}/${payload}/status`)
+          .then((res) => {
+            const likeStatus = res.status === 200 ? res.data.status : null;
+            const data = {
+              article: response.data.article,
+              likes: response.data.article.likes.filter(like => like.like === true),
+              dislikes: response.data.article.likes.filter(like => like.like === false),
+              likeStatus
+            };
+            dispatch(asyncActions(VIEW_ARTICLE).success(data));
+            dispatch(asyncActions(VIEW_ARTICLE).loading(false));
+          })
+          .catch((error) => {
+            const data = {
+              article: response.data.article,
+              likes: response.data.article.likes.filter(like => like.like === true),
+              dislikes: response.data.article.likes.filter(like => like.like === false),
+              likeStatus: null
+            };
+            dispatch(asyncActions(VIEW_ARTICLE).success(data));
+            dispatch(asyncActions(VIEW_ARTICLE).loading(false));
+          });
       }
     })
     .catch(error => dispatch(asyncActions(VIEW_ARTICLE).failure(true, error)));
+};
+
+export const likeArticle = payload => (dispatch) => {
+  dispatch(asyncActions(DISLIKE_ARTICLE).loading(true));
+  axios.post(`${articleConstant.LIKE_ARTICLE_URL}/${payload}/like`)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(LIKE_ARTICLE).success(response.data.message));
+        dispatch(asyncActions(LIKE_ARTICLE).loading(false));
+        dispatch(viewArticle(payload));
+      }
+    })
+    .catch(error => dispatch(asyncActions(LIKE_ARTICLE).failure(true, error)));
+};
+
+export const dislikeArticle = payload => (dispatch) => {
+  dispatch(asyncActions(DISLIKE_ARTICLE).loading(true));
+  axios.post(`${articleConstant.DISLIKE_ARTICLE_URL}/${payload}/dislike`)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(DISLIKE_ARTICLE).success(response.data.message));
+        dispatch(asyncActions(DISLIKE_ARTICLE).loading(false));
+        dispatch(viewArticle(payload));
+      }
+    })
+    .catch(error => dispatch(asyncActions(DISLIKE_ARTICLE).failure(true, error)));
 };
 
 export const createArticle = (formData, tags) => (dispatch) => {

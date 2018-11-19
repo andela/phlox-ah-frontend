@@ -7,7 +7,7 @@ import './ViewArticle.scss';
 import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
 import ArticleTags from '../../components/Tags/ArticleTags';
-import { viewArticle } from '../../requests/ArticleRequests';
+import { viewArticle, likeArticle, dislikeArticle } from '../../requests/ArticleRequests';
 
 /**
  * @class ViewAnArticle
@@ -21,8 +21,16 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: []
+      success: false,
+      loading: false,
+      failure: false,
+      article: {},
+      likes: [],
+      dilikes: [],
+      likeStatus: null
     };
+    this.likeArticle = this.likeArticle.bind(this);
+    this.dislikeArticle = this.dislikeArticle.bind(this);
   }
 
   /**
@@ -33,8 +41,22 @@ class ViewArticle extends Component {
    */
   static getDerivedStateFromProps(props, state) {
     if (props.success) {
-      const { success, loading, article } = props;
-      return { success, loading, article };
+      const {
+        success,
+        loading,
+        article,
+        likes,
+        dislikes,
+        likeStatus
+      } = props;
+      return {
+        success,
+        loading,
+        article,
+        likes,
+        dislikes,
+        likeStatus
+      };
     }
     if (props.failure) {
       const {
@@ -45,6 +67,26 @@ class ViewArticle extends Component {
       };
     }
     return state;
+  }
+
+  /**
+   * @description - This method likes an article
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof ViewArticle
+   */
+  likeArticle() {
+    this.props.likeArticle(this.props.match.params.articleslug);
+  }
+
+  /**
+   * @description - This method dislikes an article
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof ViewArticle
+   */
+  dislikeArticle() {
+    this.props.dislikeArticle(this.props.match.params.articleslug);
   }
 
   /**
@@ -62,7 +104,14 @@ class ViewArticle extends Component {
    * @returns {jsx} - jsx
    */
   render() {
-    const { success, article, failure } = this.state;
+    const {
+      success,
+      article,
+      failure,
+      likes,
+      dislikes,
+      likeStatus
+    } = this.state;
     return (
     <div className="MainWrapper2">
         <div className="container">
@@ -124,8 +173,8 @@ class ViewArticle extends Component {
                             </div>
                         </Row>
                         <div className="center-align activity-icons">
-                            <div className="col s3"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
-                            <div className="col s3"><i className="fas fa-thumbs-down dislikeButton"></i> 97</div>
+                            <div className="col s3"><i className={likeStatus === true ? 'active fas fa-thumbs-up' : 'fas fa-thumbs-up'} onClick={this.likeArticle}></i> {likes.length}</div>
+                            <div className="col s3"><i className={likeStatus === false ? 'active fas fa-thumbs-down' : 'fas fa-thumbs-down'} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
                             <div className="col s3"><i className="fas fa-bookmark bookmarkButton"></i></div>
                             <div className="col s3"><i className="fas fa-share-alt shareButton"></i></div>
                         </div>
@@ -153,10 +202,15 @@ class ViewArticle extends Component {
 
 ViewArticle.propTypes = {
   viewArticle: PropTypes.func.isRequired,
+  likeArticle: PropTypes.func.isRequired,
+  dislikeArticle: PropTypes.func.isRequired,
+  likeStatus: PropTypes.bool,
   loading: PropTypes.bool,
   success: PropTypes.bool,
   failure: PropTypes.bool,
   articles: PropTypes.object,
+  likes: PropTypes.array,
+  dislikes: PropTypes.array,
   match: PropTypes.object
 };
 
@@ -165,6 +219,9 @@ const mapStateToProps = state => ({
   success: state.article.success,
   failure: state.article.failure,
   article: state.article.article,
+  likes: state.article.likes,
+  dislikes: state.article.dislikes,
+  likeStatus: state.article.likeStatus
 });
 
-export default connect(mapStateToProps, { viewArticle })(ViewArticle);
+export default connect(mapStateToProps, { viewArticle, likeArticle, dislikeArticle })(ViewArticle);
