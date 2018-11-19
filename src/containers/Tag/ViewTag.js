@@ -39,10 +39,13 @@ class ViewTag extends Component {
    * @memberof ViewTag
    */
   static getDerivedStateFromProps(props, state) {
+    if (props.match.params.name !== state.tagName) {
+      props.getOneTag(props.match.params.name);
+    }
     return {
-      sidebarArticles: [],
       success: props.success,
-      tag: props.tag
+      tag: props.tag,
+      tagName: props.match.params.name
     };
   }
 
@@ -75,12 +78,14 @@ class ViewTag extends Component {
    */
   showTagArticles() {
     if (this.state.success && this.state.tag) {
+      console.log('dljnkdd');
+      console.log(this.state.tag.Articles[0]);
       return this.state.tag.Articles.map((article, index) => <Col s={12} m={12}
       l={12} xl={6} key={index + 5}>
       <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author="runor" slug={article.slug} />
     </Col>);
     }
-    return (<div className="center">No articles under this tag</div>);
+    return (<h5 className="center no-tags">There are no articles under this tag</h5>);
   }
 
   /**
@@ -97,7 +102,7 @@ class ViewTag extends Component {
           <Row>
               <Col s={12} m={12} l={8} xl={9} className="column-1">
                 <Row>
-                  <h4 className="center capitalize">Tag: { this.props.match.params.name }</h4>
+                  <h5 className="center capitalize">Tag: { this.props.match.params.name }</h5>
                   { this.showTagArticles() }
                 </Row>
               </Col>
@@ -123,7 +128,6 @@ ViewTag.propTypes = {
   getOneTag: PropTypes.func,
   getArticles: PropTypes.func,
   match: PropTypes.object,
-  sidebarArticles: PropTypes.array,
   success: PropTypes.bool,
   tag: PropTypes.object
 };
