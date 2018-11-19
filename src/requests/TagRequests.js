@@ -12,9 +12,6 @@ export const getAllTags = () => (dispatch) => {
     })
     .catch(error => dispatch(asyncActions(ALL_TAGS)
       .failure(true, error)));
-  // .then(response => dispatch(asyncActions(ALL_TAGS).success(response.data)))
-  // .catch(error => dispatch(asyncActions(ALL_TAGS)
-  //   .failure(true, error.response.data.message)));
 };
 
 export const getOneTag = name => (dispatch) => {

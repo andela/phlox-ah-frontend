@@ -10,7 +10,6 @@ import {
 import './Sidebar.scss';
 import { getArticles } from '../../requests/ArticleRequests';
 import { getAllTags } from '../../requests/TagRequests';
-// import { ok } from 'assert';
 
 let authorAvatar = '';
 let articlePic = '';
@@ -43,16 +42,6 @@ class Sidebar extends Component {
   componentDidMount() {
     this.props.getArticles();
     this.props.getAllTags();
-  }
-
-  /**
-   *
-   * @returns {func} tag
-   * @memberof Sidebar
-   */
-  componentDidUpdate() {// eslint-disable-line
-    // alert('awesome');// eslint-disable-line
-    console.log('ddk kmd');
   }
 
   /**
@@ -118,14 +107,14 @@ class Sidebar extends Component {
    * @returns {jsx} - jsx
    * @memberof Sidebar
    */
-  showTags(x) {
+  showTags() {
     if (this.state.tags.length > 0) {
-      return this.state.tags.slice(0, x).map((tag, index) => {// eslint-disable-line
+      return this.state.tags.map((tag, index) => {// eslint-disable-line
         return (<div key={index}>
         <Link to={`/tags/${tag.name}`}><Badge className="cyan">{ tag.name }</Badge></Link></div>);
       });
     }
-    return (<div className="preloaderDiv"></div>);
+    return (<div>No tags yet!</div>);
   }
 
   /**
@@ -138,8 +127,10 @@ class Sidebar extends Component {
       <div>
         <h6 className=""><b>Latest Articles</b></h6>
         { this.showSidebarArticles() }
+        {/* <span className="title center">Tags</span> */}
+        <h6 className=""><b>Tags</b></h6>
         <div className="sidebar-tag-container">
-          <span className="title">tags:</span> { this.showTags(2) }
+          { this.showTags() }
         </div>
       </div>);
   }
@@ -159,12 +150,11 @@ Sidebar.propTypes = {
   failure: PropTypes.bool,
   getAllTags: PropTypes.func,
   getArticles: PropTypes.func,
+  getTag: PropTypes.func,
   sidebarArticles: PropTypes.array,
   sidebarTitle: PropTypes.string,
   success: PropTypes.bool,
 };
-
-// export default Sidebar;
 
 export default connect(mapStateToProps, {
   getAllTags, getArticles

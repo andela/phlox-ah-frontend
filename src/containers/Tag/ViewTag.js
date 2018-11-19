@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { Row, Col } from 'react-materialize';
 
 import { ArticleCard } from '../../components/ArticleCard/ArticleCard';
-// import { Sidebar } from '../../components/Sidebar/Sidebar';
-import Sidebar from '../Reusable/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import { getOneTag } from '../../requests/TagRequests';
 import { getArticles } from '../../requests/ArticleRequests';
 import './ViewTag.scss';
@@ -24,11 +23,12 @@ class ViewTag extends Component {
   constructor(props) {
     super();
     this.state = {
-      failure: true,
       success: false,
       tag: {},
       tagName: '',
     };
+
+    this.getTag = this.getTag.bind(this);
   }
 
   /**
@@ -40,7 +40,6 @@ class ViewTag extends Component {
    */
   static getDerivedStateFromProps(props, state) {
     return {
-      failure: props.failure,
       sidebarArticles: [],
       success: props.success,
       tag: props.tag
@@ -55,6 +54,17 @@ class ViewTag extends Component {
   componentDidMount() {
     this.props.getOneTag(this.props.match.params.name);
     this.props.getArticles();
+  }
+
+  /**
+   *
+   *
+   * @param {*} name
+   * @returns {func} tag
+   * @memberof ViewTag
+   */
+  getTag(name) {
+    this.props.getOneTag(name);
   }
 
   /**
@@ -105,13 +115,11 @@ class ViewTag extends Component {
 const mapStateToProps = state => ({
   articles: state.article.articles,
   tag: state.tags.tag,
-  failure: state.tags.failure,
   success: state.tags.success,
 });
 
 ViewTag.propTypes = {
   articles: PropTypes.array,
-  failure: PropTypes.bool,
   getOneTag: PropTypes.func,
   getArticles: PropTypes.func,
   match: PropTypes.object,
