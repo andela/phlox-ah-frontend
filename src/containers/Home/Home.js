@@ -87,10 +87,10 @@ class Home extends Component {
    * @memberof Home
    */
   carousel() {
-    if (!this.state.success || this.state.failure) {
-      return (<div className="preloaderDiv"></div>);
+    if (this.state.featuredArticles.length > 0) {
+      return (<CarouselSlider articles={this.state.featuredArticles} />);
     }
-    return (<CarouselSlider articles={this.state.featuredArticles} />);
+    return (<div className="preloaderDiv"></div>);
   }
 
   /**

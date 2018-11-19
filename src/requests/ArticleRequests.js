@@ -66,9 +66,9 @@ export const createArticle = (formData, tags) => (dispatch) => {
   axios.post(tagsConstant.CREATE_TAG_URL, { tags }, headers)
     .then(() => {
       dispatch(asyncActions(CREATE_ARTICLE).loading(true));
-
       axios.post(articleConstant.CREATE_ARTICLES_URL, formData, headers)
         .then((response) => {
+          dispatch(asyncActions(CREATE_ARTICLE).loading(false));
           dispatch(asyncActions(CREATE_ARTICLE).success(response.data));
           dispatch(msgInfoActions.success([response.data.message]));
         })
@@ -76,6 +76,7 @@ export const createArticle = (formData, tags) => (dispatch) => {
           dispatch(asyncActions(CREATE_ARTICLE)
             .failure(true, error.response.data.message));
           dispatch(msgInfoActions.failure(formatError(error.response.data)));
+          dispatch(asyncActions(CREATE_ARTICLE).loading(false));
         });
     })
     .catch((error) => {

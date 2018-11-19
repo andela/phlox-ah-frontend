@@ -229,7 +229,7 @@ class Header extends Component {
             <a href="#" className="brand-logo">
               <img src={Logo} alt="" />
             </a>
-            <span className="brand-name hide-on-med-and-down">Authors Haven</span>
+            <span className="brand-name hide-on-med-and-down"><Link to="/" >Authors Haven</Link></span>
           </div>
           <div className="search-wrapper">
             <div className="categories hide-on-med-and-down">
