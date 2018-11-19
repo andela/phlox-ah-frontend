@@ -43,7 +43,6 @@ class CreateArticle extends Component {
       imgUrl: null,
       imageName: '',
       isCreated: false,
-      // loading: true,
       title: ''
     };
 
