@@ -8,6 +8,7 @@ import profile from './ProfileReducer';
 import tags from './TagReducer';
 import user from './UserReducer';
 import verifyUser from './VerifyUserReducer';
+import followUser from './FollowUserReducer';
 
 
 const rootReducer = combineReducers({
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   signup,
   tags,
   user,
-  verifyUser
+  verifyUser,
+  followUser
 });
 
 export default rootReducer;

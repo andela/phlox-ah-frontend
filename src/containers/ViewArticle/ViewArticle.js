@@ -7,8 +7,8 @@ import './ViewArticle.scss';
 import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
 import StarRatings from 'react-star-ratings';
-import ArticleTags from '../../components/Tags/ArticleTags';
 import { viewArticle, rateArticle } from '../../requests/ArticleRequests';
+import { followUser, unfollowUser, getFollowings } from '../../requests/FollowRequests';
 
 /**
  * @class ViewAnArticle
@@ -22,17 +22,27 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: []
+      success: false, loading: false, failure: false, article: [], followings: []
     };
     this.addRating = this.addRating.bind(this);
+    this.followAuthor = this.followAuthor.bind(this);
+    this.unfollowAuthor = this.unfollowAuthor.bind(this);
   }
-
 
   // eslint-disable-next-line require-jsdoc
   addRating(newRating, name) {
     this.props.rateArticle(this.props.match.params.articleslug, newRating);
   }
 
+  // eslint-disable-next-line require-jsdoc
+  followAuthor() {
+    this.props.followUser(this.props.article.User.username);
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  unfollowAuthor() {
+    this.props.unfollowUser(this.props.article.User.username);
+  }
 
   /**
    * @description - This method runs whenever the redux state changes
@@ -42,15 +52,19 @@ class ViewArticle extends Component {
    */
   static getDerivedStateFromProps(props, state) {
     if (props.success) {
-      const { success, loading, article } = props;
-      return { success, loading, article };
+      const {
+        success, loading, article, followings
+      } = props;
+      return {
+        success, loading, article, followings
+      };
     }
     if (props.failure) {
       const {
-        success, loading, article, failure
+        success, loading, article, followings, failure
       } = props;
       return {
-        success, loading, article, failure
+        success, loading, article, followings, failure
       };
     }
     return state;
@@ -63,6 +77,7 @@ class ViewArticle extends Component {
    */
   componentDidMount() {
     this.props.viewArticle(this.props.match.params.articleslug);
+    this.props.getFollowings();
   }
 
   /**
@@ -117,11 +132,21 @@ class ViewArticle extends Component {
               </Row>
               </div>
               <div className="col s4">
-              <button
+              {this.props.followings.find(user => user.username === article.User.username)
+              === undefined
+                ? <button
+                  onClick={this.followAuthor}
                   className="btn waves-effect waves-light followButton"
                   type="submit"
                   name="action">Follow
               </button>
+                : <button
+                  onClick={this.unfollowAuthor}
+                  className="btn waves-effect waves-light followButton"
+                  type="submit"
+                  name="action">Unfollow
+              </button>
+              }
               </div>
           </Row>
           <div className="center-align activity-icons">
@@ -130,7 +155,7 @@ class ViewArticle extends Component {
             <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div>
             <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
             {!this.props.user.isAuth && <StarRatings
-                    rating={3.03}
+                    rating={article.ratingAverage}
                     starDimension="20px"
                     className="col s4"
                     starSpacing="5px"
@@ -144,6 +169,7 @@ class ViewArticle extends Component {
                     starSpacing="5px"
                     name='rating'
                   />}
+                  {console.log('this state>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', this.state)}
               </div>
               <button
                 className="btn waves-effect waves-light editButton"
@@ -209,10 +235,14 @@ class ViewArticle extends Component {
 ViewArticle.propTypes = {
   viewArticle: PropTypes.func.isRequired,
   rateArticle: PropTypes.func.isRequired,
+  followUser: PropTypes.func.isRequired,
+  unfollowUser: PropTypes.func.isRequired,
+  getFollowings: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   success: PropTypes.bool,
   failure: PropTypes.bool,
-  articles: PropTypes.object,
+  article: PropTypes.object,
+  followings: PropTypes.array,
   match: PropTypes.object,
   articleslug: PropTypes.string,
   user: PropTypes.object
@@ -223,7 +253,10 @@ const mapStateToProps = state => ({
   success: state.article.success,
   failure: state.article.failure,
   article: state.article.article,
-  user: state.user
+  user: state.user,
+  followings: state.followUser.followings
 });
 
-export default connect(mapStateToProps, { viewArticle, rateArticle })(ViewArticle);
+export default connect(mapStateToProps, {
+  viewArticle, rateArticle, followUser, getFollowings, unfollowUser
+})(ViewArticle);
