@@ -10,6 +10,9 @@ const store = mockStore({
   info: {
     message: ['password is required'],
     success: false
+  },
+  user: {
+    loading: false,
   }
 });
 
