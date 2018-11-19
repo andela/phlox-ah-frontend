@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { createBrowserHistory } from 'history';
 import { asyncActions } from '../util/AsyncUtil';
 import {
   ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE,
@@ -10,10 +9,6 @@ import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
 import { DELETE } from '../actionTypes/DeleteContants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
-
-const history = createBrowserHistory({
-  forceRefresh: true
-});
 
 const formatError = (error) => {
   if (Array.isArray(error.message)) {
@@ -136,7 +131,7 @@ export const updateArticle = (formData, tags, articleSlug) => (dispatch) => {
     });
 };
 
-export const publishArticle = ({ slug, status, tags }) => (dispatch) => {
+export const publishArticle = ({ slug, status, tags }, props) => (dispatch) => {
   axios.post(tagsConstant.CREATE_TAG_URL, { tags })
     .then(() => {
       axios.put(`${articleConstant.UPDATE_ARTICLE_URL}/${slug}`, {
@@ -145,7 +140,7 @@ export const publishArticle = ({ slug, status, tags }) => (dispatch) => {
         .then((response) => {
           dispatch(asyncActions(PUBLISH_ARTICLE).success(response.data));
           dispatch(msgInfoActions.success([response.data.message]));
-          history.push(`/articles/${slug}`);
+          props.history.push(`/articles/${slug}`);
         })
         .catch((error) => {
           dispatch(asyncActions(PUBLISH_ARTICLE)

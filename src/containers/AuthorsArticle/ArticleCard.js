@@ -21,9 +21,9 @@ const ArticleCard = props => (
           <a href="#">SHARE</a>
         </span>
         <span className="view">
-          <Link to={`/articles/${props.article.slug}`}>
+          <a>
             VIEW ARTICLE
-          </Link>
+          </a>
         </span>
         <span className="edit">
           <Link to={`/articles/${props.article.slug}/${props.article.status}/edit`}>

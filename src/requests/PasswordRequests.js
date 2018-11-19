@@ -6,9 +6,7 @@ import { passwordConstant } from '../constants/Constants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
 import { formatError } from '../helpers/Errors';
 
-const history = createBrowserHistory({
-  forceRefresh: true
-});
+const history = createBrowserHistory({ forceRefresh: true });
 
 export const sendResetPassword = (token, password) => (dispatch) => {
   dispatch(asyncActions(RESET_PASSWORD).loading(true));

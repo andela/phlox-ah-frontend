@@ -50,7 +50,7 @@ class MsgInfo extends Component {
   render() {
     const { success, message } = this.state;
 
-    const messages = message.map((data, index) => (<li key={index} className="info">{data}</li>));
+    const messages = message.map((data, index) => (<li key={index} className="info">{JSON.stringify(data)}</li>));
 
     return (
       <div className={message.length ? '_show' : '_hide'}>

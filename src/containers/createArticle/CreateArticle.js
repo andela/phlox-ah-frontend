@@ -112,6 +112,7 @@ class CreateArticle extends Component {
    * @memberof Article
    */
   handleInputChange(e) {
+    console.log()
     this.setState({ [e.target.id]: e.target.value, hasChanges: true, alertVisible: true });
   }
 
@@ -337,9 +338,10 @@ class CreateArticle extends Component {
                 <select
                   className="browser-default s6"
                   onChange={this.handleInputChange}
+                  id="category"
                   value={defaultValue}>
                   <option value="" disabled>Choose Category</option>
-                {this.renderSelectOptions()}
+                  {this.renderSelectOptions()}
               </select>
             </div>
           </Col>
