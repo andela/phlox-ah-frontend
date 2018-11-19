@@ -268,18 +268,16 @@ class CreateArticle extends Component {
                 handleDrag={this.handleDrag}
                 required
               />
-              <div className="input-field col s12">
+              <div className="col input-field s12">
                 <span htmlFor="Title">Categories</span>
-                <Input
-                  s={12}
-                  type="select"
-                  id="category"
+                <select
+                  className="browser-default s6"
                   onChange={this.handleInputChange}
-                  defaultValue={defaultValue}
-                  required>
-                  <option value="0" disabled>Choose your option</option>
+                  id="category"
+                  value={defaultValue}>
+                  <option value="" disabled>Choose Category</option>
                   {this.renderSelectOptions()}
-                </Input>
+                </select>
               </div>
             </Col>
           </Row>

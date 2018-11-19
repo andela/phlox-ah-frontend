@@ -4,7 +4,7 @@ import './CommentTextArea.scss';
 
 const CommentTextArea = ({ handleChange, value }) => (
     <div className="comment-box">
-    <textarea name="comment" value={value} onChange={handleChange} rows="10" placeholder="Comment here..."></textarea>
+    <textarea id="comment" value={value} onChange={handleChange} rows="10" placeholder="Comment here..."></textarea>
     </div>
 );
 

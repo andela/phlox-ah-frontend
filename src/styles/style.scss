@@ -1,1 +1,37 @@
-@import '../../node_modules/materialize-css/sass/materialize.scss';
+// @import '../../node_modules/materialize-css/sass/materialize.scss';
+@import './variables';
+
+.theme-color {
+    color: $themeColor;
+}
+.secondary-color {
+  color: $secondaryColor;
+}
+.capitalize {
+  text-transform: capitalize;
+}
+main {
+  background: #F8F9FA;
+  .site-container {
+    background: #ffffff;
+    padding-top: 50px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 4% 2.4% 0% 2.4%;
+    @media #{$tablet} {
+      width: 85%;
+    }
+    @media #{$desktop} {
+      width: 95%;
+    }
+    @media #{$mobile} {
+      width: 100%;
+    }
+  }
+}
+.img-responsive {
+  width: 100%;
+}
+.character-counter {
+  display: none;
+}
