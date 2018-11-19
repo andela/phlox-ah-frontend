@@ -1,0 +1,25 @@
+@import '../../styles/variables';
+.column-1 {
+  border-right: 2px dotted #ADA9A9;
+  padding-right: 35px;
+  width: 65%;
+  @media #{$tablet} {
+    border-right: none;
+  }
+  @media #{$mobile} {
+    border-right: none;
+    padding-right: 10px;
+  }
+  .row .col {
+    padding-right: 0.9rem;
+  }
+}
+.preloaderDiv {
+  position: relative;
+  height: 280px;
+  margin-bottom: 10px;
+  background: #E5E5E5;
+}
+h4.capitalize {
+  margin-top: 0px;
+}

@@ -10,7 +10,8 @@ export const articleConstant = {
 
 export const tagsConstant = {
   CREATE_TAG_URL: `${BASE_URL}/api/v1/tags`,
-  GET_ALL_TAG_URL: `${BASE_URL}/api/v1/tags`
+  GET_ALL_TAG_URL: `${BASE_URL}/api/v1/tags`,
+  GET_ONE_TAG_URL: `${BASE_URL}/api/v1/tags`
 };
 
 export const profileConstant = {
