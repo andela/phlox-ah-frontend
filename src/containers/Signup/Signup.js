@@ -25,11 +25,17 @@ class Signup extends Component {
    */
   constructor() {
     super();
-    this.state = {
+
+
+    this.initialState = {
       email: '',
       username: '',
       password: '',
       confirmPassword: ''
+    };
+
+    this.state = {
+      ...this.initialState
     };
 
     this.change = this.change.bind(this);
@@ -106,7 +112,10 @@ class Signup extends Component {
       return;
     }
 
-    this.props.signup(this.state);
+    this.props.signup(this.state)
+    .then((res) => {
+      this.setState({ ...this.initialState });
+    });
   }
 
   /**

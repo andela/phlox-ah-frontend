@@ -22,18 +22,19 @@ const initialState = {
 const ArticleReducer = (state = initialState, action) => {
   switch (action.type) {
     case asyncActionName(CREATE_ARTICLE).loading:
-      return { ...state, loading: action.payload };
+      return { ...state, loading: action.payload, success: false };
     case asyncActionName(CREATE_ARTICLE).success:
       return {
         ...state,
         article: action.payload.article,
         message: action.payload.message,
         tags: action.payload.tags,
-        error: false
+        error: false,
+        success: action.payload.success
       };
     case asyncActionName(CREATE_ARTICLE).failure:
       return {
-        ...state, error: action.payload.status, message: action.payload.error
+        ...state, error: action.payload.status, message: action.payload.error, success: false
       };
     case asyncActionName(UPDATE_ARTICLE).loading:
       return { ...state, loading: action.payload };
