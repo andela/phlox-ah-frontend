@@ -6,8 +6,8 @@ import { loginConstant } from '../constants/Constants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
 import { formatError } from '../helpers/Errors';
 
-export const login = (payload) => {
-  return dispatch => {
+export const login = (payload) => {// eslint-disable-line
+  return (dispatch) => {
     dispatch(asyncActions(LOGIN).loading(true));
     return axios.post(loginConstant.LOGIN_URL, payload)
       .then((response) => {
@@ -28,5 +28,5 @@ export const login = (payload) => {
         dispatch(msgInfoActions.failure(formatError(error.response.data)));
         throw error;
       });
-  }
-}
+  };
+};

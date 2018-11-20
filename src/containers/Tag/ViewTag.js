@@ -78,8 +78,6 @@ class ViewTag extends Component {
    */
   showTagArticles() {
     if (this.state.success && this.state.tag) {
-      console.log('dljnkdd');
-      console.log(this.state.tag.Articles[0]);
       return this.state.tag.Articles.map((article, index) => <Col s={12} m={12}
       l={12} xl={6} key={index + 5}>
       <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author="runor" slug={article.slug} />

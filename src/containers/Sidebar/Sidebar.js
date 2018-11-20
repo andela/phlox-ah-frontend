@@ -127,7 +127,6 @@ class Sidebar extends Component {
       <div>
         <h6 className=""><b>Latest Articles</b></h6>
         { this.showSidebarArticles() }
-        {/* <span className="title center">Tags</span> */}
         <h6 className=""><b>Tags</b></h6>
         <div className="sidebar-tag-container">
           { this.showTags() }

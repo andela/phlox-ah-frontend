@@ -69,7 +69,7 @@ class CreateArticle extends Component {
     this.props.getAllTags();
   }
 
-    /**
+  /**
    * @description - This method runs whenever redux state changes
    * @returns {object} state
    * @param {object} props
@@ -126,9 +126,9 @@ class CreateArticle extends Component {
     * @memberof Article
     */
   getAlertMessage() {
-    if(this.state.loading && !this.state.success) {
+    if (this.state.loading && !this.state.success) {
       return 'Saving...';
-    } else if (!this.state.loading && this.state.success) {
+    } else if (!this.state.loading && this.state.success) {// eslint-disable-line
       return `Saved ${moment(this.state.article.updatedAt).fromNow()}`;
     } else if (!this.state.loading && !this.state.success && this.state.error === true) {
       return 'Not saved';
