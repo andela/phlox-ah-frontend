@@ -11,7 +11,7 @@ import ForgotPassword from './containers/Password/ForgotPassword';
 import ResetPassword from './containers/Password/ResetPassword';
 import PrivateRoute from './PrivateRoute';
 import { SentResetPasswordMail } from './components/SentResetPasswordMail/SentResetPasswordMail';
-import ViewArticle from './containers/ViewAnArticle/ViewArticle';
+import ViewArticle from './containers/ViewArticle/ViewArticle';
 import VerifyUser from './containers/VerifyUser/VerifyUser';
 import ViewTag from './containers/Tag/ViewTag';
 
