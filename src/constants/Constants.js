@@ -1,4 +1,4 @@
-const BASE_URL = 'https://phlox-ah-staging.herokuapp.com';
+const { BASE_URL } = process.env;
 export const articleConstant = {
   ALL_ARTICLES_URL: `${BASE_URL}/api/v1/articles/feed`,
   CREATE_ARTICLES_URL: `${BASE_URL}/api/v1/articles`,
@@ -7,6 +7,7 @@ export const articleConstant = {
   RATE_ARTICLE_URL: `${BASE_URL}/api/v1/articles`,
   FEATURED_ARTICLES_URL: `${BASE_URL}/api/v1/articles/featured`,
   POPULAR_ARTICLES_URL: `${BASE_URL}/api/v1/articles/popular`,
+  LIKE_DISLIKE_URL: `${BASE_URL}/api/v1/articles`
 };
 
 export const tagsConstant = {
