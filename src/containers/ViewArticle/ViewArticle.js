@@ -8,7 +8,9 @@ import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
 import StarRatings from 'react-star-ratings';
 import ArticleTags from '../../components/Tags/ArticleTags';
-import { viewArticle, rateArticle } from '../../requests/ArticleRequests';
+import {
+  viewArticle, rateArticle, likeArticle, dislikeArticle
+} from '../../requests/ArticleRequests';
 
 /**
  * @class ViewAnArticle
@@ -22,9 +24,11 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: []
+      success: false, loading: false, failure: false, article: {}, user: {}
     };
     this.addRating = this.addRating.bind(this);
+    this.likeArticle = this.likeArticle.bind(this);
+    this.dislikeArticle = this.dislikeArticle.bind(this);
   }
 
 
@@ -33,6 +37,21 @@ class ViewArticle extends Component {
     this.props.rateArticle(this.props.match.params.articleslug, newRating);
   }
 
+  /**
+   * @description - This method likes an article
+   * @returns {object} null
+   */
+  likeArticle() {
+    this.props.likeArticle(this.props.match.params.articleslug);
+  }
+
+  /**
+   * @description - This method likes an article
+   * @returns {object} null
+   */
+  dislikeArticle() {
+    this.props.dislikeArticle(this.props.match.params.articleslug);
+  }
 
   /**
    * @description - This method runs whenever the redux state changes
@@ -41,19 +60,7 @@ class ViewArticle extends Component {
    * @param {object} state
    */
   static getDerivedStateFromProps(props, state) {
-    if (props.success) {
-      const { success, loading, article } = props;
-      return { success, loading, article };
-    }
-    if (props.failure) {
-      const {
-        success, loading, article, failure
-      } = props;
-      return {
-        success, loading, article, failure
-      };
-    }
-    return state;
+    return props;
   }
 
   /**
@@ -92,6 +99,22 @@ class ViewArticle extends Component {
    * @memberof ViewArticle
    */
   realContent(article) {
+    let likeStatus = null;
+
+    // loop through the likes array and filter all instaces where like is equal true
+    const likes = article.likes.filter(like => like.like === true);
+
+    // loop through the likes array and filter all instaces where like is equal false
+    const dislikes = article.likes.filter(like => like.like === false);
+
+    // check if a user is logged in, then check if he/she has liked or disliked the article
+    if (this.state.user.isAuth) {
+      const likeArray = article.likes.filter(like => like.userId === this.state.user.id);
+      if (likeArray.length > 0) {
+        likeStatus = likeArray[0].like;
+      }
+    }
+
     return (<div>
       <div className="col s12 l6 img-div">
           <img src={article.imgUrl}/>
@@ -125,8 +148,8 @@ class ViewArticle extends Component {
               </div>
           </Row>
           <div className="center-align activity-icons">
-            <div className="col s2"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
-            <div className="col s2"><i className="fas fa-thumbs-down dislikeButton"></i> 3</div>
+            <div className="col s2"><i className={likeStatus === true ? 'active fas fa-thumbs-up' : 'fas fa-thumbs-up'} onClick={this.likeArticle}></i> {likes.length}</div>
+            <div className="col s2"><i className={likeStatus === false ? 'active fas fa-thumbs-up' : 'fas fa-thumbs-up'} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
             <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div>
             <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
             {!this.props.user.isAuth && <StarRatings
@@ -209,6 +232,8 @@ class ViewArticle extends Component {
 ViewArticle.propTypes = {
   viewArticle: PropTypes.func.isRequired,
   rateArticle: PropTypes.func.isRequired,
+  likeArticle: PropTypes.func.isRequired,
+  dislikeArticle: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   success: PropTypes.bool,
   failure: PropTypes.bool,
@@ -226,4 +251,6 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-export default connect(mapStateToProps, { viewArticle, rateArticle })(ViewArticle);
+export default connect(mapStateToProps, {
+  viewArticle, rateArticle, likeArticle, dislikeArticle
+})(ViewArticle);
