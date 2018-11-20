@@ -156,6 +156,7 @@ class Login extends Component {
    */
   render() {
     const { emailOrUsername, password } = this.state;
+    const { loading } = this.props;
 
     return (
       <Modal
@@ -199,7 +200,8 @@ class Login extends Component {
             </Row>
             <Button
               type="submit"
-              name="login"
+              waves='light'
+              name={loading ? (<i className="fas fa-spinner fa-pulse"></i>) : 'Login'}
             />
             <div className="or-divider">
               <span className="theme-color or">OR</span>
@@ -247,13 +249,15 @@ class Login extends Component {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   info: PropTypes.object,
+  loading: PropTypes.bool,
   logout: PropTypes.func,
   clearMsgInfo: PropTypes.func.isRequired,
   setErrorMsgInfo: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  info: state.info
+  info: state.info,
+  loading: state.user.loading,
 });
 
 export default connect(mapStateToProps, {
