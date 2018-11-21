@@ -306,4 +306,6 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-export default connect(mapStateToProps, { viewArticle, createComment, getAllComment })(ViewArticle);
+export default connect(mapStateToProps, {
+  viewArticle, createComment, getAllComment, rateArticle
+})(ViewArticle);
