@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
+import moment from 'moment';
 import IdleTimer from 'react-idle-timer';
 import PropTypes from 'prop-types';
 import { Row, Col, Input } from 'react-materialize';
@@ -11,6 +12,7 @@ import './CreateArticle.scss';
 import '../../styles/style.scss';
 import articleFormData from '../../util/formData';
 import { getAllTags } from '../../requests/TagRequests';
+import validateArticleData from '../../util/validateArticleData';
 import { getAllCategory } from '../../requests/CategoryRequests';
 import ArticleForm from '../../components/ArticleForm/ArticleForm';
 import { TagObjectToString, convertIdToString } from '../../util/TagsHelper';
@@ -38,7 +40,7 @@ class CreateArticle extends Component {
       articleTags: [],
       alertVisible: false,
       body: '',
-      category: '',
+      category: '0',
       description: '',
       hasChanges: false,
       idleTimer: null,
@@ -79,6 +81,22 @@ class CreateArticle extends Component {
     this.props.getAllTags();
   }
 
+    /**
+   * @description - This method runs whenever redux state changes
+   * @returns {object} state
+   * @param {object} props
+   * @param {object} state
+   * @memberof CreateArticle
+   */
+  static getDerivedStateFromProps(props, state) {
+    return {
+      article: props.article,
+      error: props.error,
+      loading: props.loading,
+      success: props.success
+    };
+  }
+
   /**
    * @description - This method updates when redux state updates
    * @param {object} props
@@ -112,7 +130,6 @@ class CreateArticle extends Component {
    * @memberof Article
    */
   handleInputChange(e) {
-    console.log()
     this.setState({ [e.target.id]: e.target.value, hasChanges: true, alertVisible: true });
   }
 
@@ -147,10 +164,13 @@ class CreateArticle extends Component {
    * @memberof Article
    */
   getAlertMessage() {
-    if (this.state.hasChanges) {
+    if(this.state.loading && !this.state.success) {
       return 'Saving...';
+    } else if (!this.state.loading && this.state.success) {
+      return `Saved ${moment(this.state.article.updatedAt).fromNow()}`;
+    } else if (!this.state.loading && !this.state.success && this.state.error === true) {
+      return 'Not saved';
     }
-    return 'Saved';
   }
 
   /**
@@ -179,7 +199,7 @@ class CreateArticle extends Component {
 
     const tags = TagObjectToString(articleTags);
 
-    if (hasChanges) {
+    if (hasChanges && validateArticleData(this.state)) {
       this.setState({ hasChanges: false, alertVisible: true, isCreated: true });
       const formData = articleFormData(title, description, body, imgUrl, categoryId, tags);
       this.props.createArticle(formData, tags);
@@ -213,7 +233,7 @@ class CreateArticle extends Component {
     const tags = TagObjectToString(articleTags);
     const articleSlug = this.props.article.slug;
 
-    if (hasChanges) {
+    if (hasChanges && validateArticleData(this.state)) {
       this.setState({ hasChanges: false, alertVisible: true });
       const formData = articleFormData(title, description, body, imgUrl, categoryId, tags);
       this.props.updateArticle(formData, tags, articleSlug);
@@ -310,7 +330,7 @@ class CreateArticle extends Component {
         }
         <IdleTimer
           ref={(ref) => { this.idleTimer = ref; }}
-          timeout={5000}
+          timeout={1000}
           startOnMount={false}
           onIdle={this.save}>
           <Row className="create-article">
@@ -335,19 +355,15 @@ class CreateArticle extends Component {
               />
               <div className="col input-field s12">
                 <span htmlFor="Title">Categories</span>
-                <select
-                  className="browser-default s6"
-                  onChange={this.handleInputChange}
-                  id="category"
-                  value={defaultValue}>
-                  <option value="" disabled>Choose Category</option>
+                <select onChange={this.handleInputChange} id="category" value={this.state.category} className="browser-default s6">
+                  <option value="0" disabled>Choose category</option>
                   {this.renderSelectOptions()}
-              </select>
+                </select>
             </div>
-          </Col>
-        </Row>
-      </IdleTimer>
-    </div>
+            </Col>
+          </Row>
+        </IdleTimer>
+      </div>
     );
   }
 }
@@ -368,7 +384,9 @@ CreateArticle.propTypes = {
   error: PropTypes.bool,
   getAllCategory: PropTypes.func,
   getAllTags: PropTypes.func,
+  loading: PropTypes.bool,
   publishArticle: PropTypes.func,
+  success: PropTypes.bool,
   suggestedTags: PropTypes.array,
   getSingleArticle: PropTypes.func,
   msgInfoActions: PropTypes.func,
@@ -379,30 +397,18 @@ CreateArticle.propTypes = {
 
 const mapStateToProps = (state) => {
   const {
-    article, tags, error
+    article, tags, error, loading, success
   } = state.article;
   const { categories } = state.category;
   const suggestedTags = state.tags.tags;
 
   return {
-    article,
-    tags,
-    categories,
-    suggestedTags,
-    error,
-    user: state.user,
-    profile: state.profile,
-    info: state.info
+    article, tags, categories, suggestedTags, error, loading, success, user: state.user, profile: state.profile, info: state.info
   };
 };
 
 export default connect(mapStateToProps,
   {
-    createArticle,
-    updateArticle,
-    publishArticle,
-    getAllCategory,
-    getAllTags,
-    getSingleArticle,
-    clearMsgInfo: msgInfoActions.clear
+    createArticle, updateArticle, publishArticle, getAllCategory, 
+    getAllTags, getSingleArticle, clearMsgInfo: msgInfoActions.clear
   })(CreateArticle);

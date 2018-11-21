@@ -1,6 +1,6 @@
 import {
   CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, VIEW_ARTICLE, SINGLE_ARTICLE,
-  ALL_ARTICLES, FEATURED_ARTICLES, POPULAR_ARTICLES
+  ALL_ARTICLES, FEATURED_ARTICLES, POPULAR_ARTICLES, RATE_ARTICLE
 } from '../actionTypes';
 import { asyncActionName } from '../util/AsyncUtil';
 
@@ -21,18 +21,19 @@ const initialState = {
 const ArticleReducer = (state = initialState, action) => {
   switch (action.type) {
     case asyncActionName(CREATE_ARTICLE).loading:
-      return { ...state, loading: action.payload };
+      return { ...state, loading: action.payload, success: false };
     case asyncActionName(CREATE_ARTICLE).success:
       return {
         ...state,
         article: action.payload.article,
         message: action.payload.message,
         tags: action.payload.tags,
-        error: false
+        error: false,
+        success: action.payload.success
       };
     case asyncActionName(CREATE_ARTICLE).failure:
       return {
-        ...state, error: action.payload.status, message: action.payload.error
+        ...state, error: action.payload.status, message: action.payload.error, success: false
       };
     case asyncActionName(UPDATE_ARTICLE).loading:
       return { ...state, loading: action.payload };
@@ -76,6 +77,16 @@ const ArticleReducer = (state = initialState, action) => {
       return { ...state, article: action.payload };
     case asyncActionName(VIEW_ARTICLE).failure:
       return { ...state, failure: true, article: {} };
+    case asyncActionName(RATE_ARTICLE).loading:
+      return { ...state, loading: action.payload };
+    case asyncActionName(RATE_ARTICLE).success:
+      return {
+        ...state,
+        success: true,
+        article: { ...state.article, ratingAverage: action.payload[1][0].ratingAverage }
+      };
+    case asyncActionName(RATE_ARTICLE).failure:
+      return { ...state, failure: true };
     case asyncActionName(FEATURED_ARTICLES).loading:
       return { ...state, loading: action.payload };
     case asyncActionName(FEATURED_ARTICLES).success:

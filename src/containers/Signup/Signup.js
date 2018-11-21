@@ -6,6 +6,7 @@ import {
 import '../Common/ModalForm.scss';
 import './Signup.scss';
 import { connect } from 'react-redux';
+import { loginConstant } from '../../constants/Constants';
 import MsgInfo from '../MsgInfo/MsgInfo';
 import {
   signup, msgInfoActions, Input, Button, asyncActions, SIGNUP
@@ -24,11 +25,17 @@ class Signup extends Component {
    */
   constructor() {
     super();
-    this.state = {
+
+
+    this.initialState = {
       email: '',
       username: '',
       password: '',
       confirmPassword: ''
+    };
+
+    this.state = {
+      ...this.initialState
     };
 
     this.change = this.change.bind(this);
@@ -105,7 +112,10 @@ class Signup extends Component {
       return;
     }
 
-    this.props.signup(this.state);
+    this.props.signup(this.state)
+    .then((res) => {
+      this.setState({ ...this.initialState });
+    });
   }
 
   /**
@@ -247,17 +257,17 @@ class Signup extends Component {
             <Row>
               <Col s={4} >
                 <a
-                  className="social-auth fb" href="#">
+                  className="social-auth fb" href={loginConstant.FACEBOOK_LOGIN_URL}>
                   <i className="fab fa-facebook-f"></i>
                 </a>
               </Col>
               <Col s={4}>
-                <a className="social-auth gp "href="#">
+                <a className="social-auth gp " href={loginConstant.GOOGLE_LOGIN_URL}>
                   <i className="fab fa-google-plus-g"></i>
                 </a>
               </Col>
               <Col s={4}>
-                <a className="social-auth tw" href="#">
+                <a className="social-auth tw" href={loginConstant.TWITTER_LOGIN_URL}>
                   <i className="fab fa-twitter"></i>
                 </a>
               </Col>
