@@ -111,7 +111,8 @@ class ViewArticle extends Component {
     if (this.state.user.isAuth) {
       const likeArray = article.likes.filter(like => like.userId === this.state.user.id);
       if (likeArray.length > 0) {
-        likeStatus = likeArray[0].like;
+        const [user, ...otherArrayItems] = likeArray;
+        likeStatus = user.like;
       }
     }
 
@@ -175,11 +176,11 @@ class ViewArticle extends Component {
                   </button>
               </div>
           </div>
-          <div className="col s12 article-body">
+          <div className="col s12 ">
           {
           ReactHtmlParser(article.body)
           }
-      </div>
+          </div>
       <div className="col l4 s12 bold tag-div">
           {<a className="red-text"href="#">Report Article</a>}
       </div>
