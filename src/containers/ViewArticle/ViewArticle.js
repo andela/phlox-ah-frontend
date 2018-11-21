@@ -123,6 +123,10 @@ class ViewArticle extends Component {
                   name="action">Follow
               </button>
               </div>
+  <div class="fb-share-button" 
+    data-href="https://www.your-domain.com/your-page.html" 
+    data-layout="button_count">
+  </div>
           </Row>
           <div className="center-align activity-icons">
             <div className="col s2"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
