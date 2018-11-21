@@ -64,7 +64,17 @@ describe('<DeleteModal />', () => {
   it('should have deleteArticle prop function', () => {
     expect(myComponent.instance().props.deleteArticle).toBeDefined();
   });
-  it('should create an action to set user object on the store', () => {
+  it('should create an action to set loading to false', () => {
+    const payload = {
+      loading: false
+    };
+    const expectedAction = {
+      type: 'DELETE_LOADING',
+      payload
+    };
+    expect(asyncActions(DELETE).loading(payload)).toEqual(expectedAction);
+  });
+  it('should create an action to set loading to true', () => {
     const payload = {
       loading: true
     };

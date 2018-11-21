@@ -15,7 +15,7 @@
     "eslint-fix": "eslint . --fix --ignore-path .gitignore",
     "eslint": "eslint . --ignore-path .gitignore",
     "watch": "npm-watch",
-    "test": "jest \"-u\"",
+    "test": "jest \"-u\" --forceExit",
     "test-watch": "jest --watchAll"
   },
   "jest": {

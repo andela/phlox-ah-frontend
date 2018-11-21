@@ -19,14 +19,12 @@ class ViewArticle extends Component {
    * @constructor function
    * @param {*} props React properties
    */
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       success: false, loading: false, failure: false, article: []
     };
     this.addRating = this.addRating.bind(this);
-    console.log(props)
-    console.log(window.location.href)
   }
 
 

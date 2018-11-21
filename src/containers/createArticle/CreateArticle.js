@@ -81,22 +81,6 @@ class CreateArticle extends Component {
     this.props.getAllTags();
   }
 
-    /**
-   * @description - This method runs whenever redux state changes
-   * @returns {object} state
-   * @param {object} props
-   * @param {object} state
-   * @memberof CreateArticle
-   */
-  static getDerivedStateFromProps(props, state) {
-    return {
-      article: props.article,
-      error: props.error,
-      loading: props.loading,
-      success: props.success
-    };
-  }
-
   /**
    * @description - This method updates when redux state updates
    * @param {object} props
@@ -111,16 +95,29 @@ class CreateArticle extends Component {
           ...props.article,
           category: String(props.article.Category.id),
           articleTags: props.article.Tags.map(data => ({ id: data.name, text: data.name })),
-          editMode: false
+          editMode: false,
+          error: props.error,
+          loading: props.loading,
+          success: props.success
         };
       }
       if (props.article.User && props.article.userId !== props.user.id) {
         props.history.push('/');
       } else {
-        return null;
+        return {
+          article: props.article,
+          error: props.error,
+          loading: props.loading,
+          success: props.success
+        };
       }
     }
-    return null;
+    return {
+      article: props.article,
+      error: props.error,
+      loading: props.loading,
+      success: props.success
+    };
   }
 
   /**
@@ -166,7 +163,7 @@ class CreateArticle extends Component {
   getAlertMessage() {
     if(this.state.loading && !this.state.success) {
       return 'Saving...';
-    } else if (!this.state.loading && this.state.success) {
+    } else if (!this.state.loading && !this.state.success) {
       return `Saved ${moment(this.state.article.updatedAt).fromNow()}`;
     } else if (!this.state.loading && !this.state.success && this.state.error === true) {
       return 'Not saved';
@@ -317,16 +314,16 @@ class CreateArticle extends Component {
       <div className="create-article-wrapper">
         {
           (!!info.message.length && !info.success)
-          && (
-            <div className="info">
-              <span
-                className="close"
-                onClick={this.props.clearMsgInfo}>
+            && (
+              <div className="info">
+                <span
+                  className="close"
+                  onClick={this.props.clearMsgInfo}>
                   <i className="fas fa-times"></i>
-              </span>
-              <MsgInfo />
-            </div>
-          )
+                </span>
+                <MsgInfo />
+              </div>
+            )
         }
         <IdleTimer
           ref={(ref) => { this.idleTimer = ref; }}
@@ -357,13 +354,13 @@ class CreateArticle extends Component {
                 <span htmlFor="Title">Categories</span>
                 <select onChange={this.handleInputChange} id="category" value={this.state.category} className="browser-default s6">
                   <option value="0" disabled>Choose category</option>
-                  {this.renderSelectOptions()}
-                </select>
+                {this.renderSelectOptions()}
+              </select>
             </div>
-            </Col>
-          </Row>
-        </IdleTimer>
-      </div>
+          </Col>
+        </Row>
+      </IdleTimer>
+    </div>
     );
   }
 }

@@ -23,7 +23,7 @@ const formatError = (error) => {
 
 export const deleteArticle = payload => (dispatch) => {
   dispatch(asyncActions(DELETE).loading(true));
-  return axios.delete(`${articleConstant.DELETE_ARTICLE_URL}/${payload}`)
+  return axios.delete(`${articleConstant.ARTICLES_URL}/${payload}`)
     .then((response) => {
       dispatch(asyncActions(DELETE_ARTICLE).success(payload));
       dispatch(asyncActions(DELETE).loading(false));
@@ -50,7 +50,7 @@ export const getArticles = () => (dispatch) => {
 
 export const viewArticle = payload => (dispatch) => {
   dispatch(asyncActions(VIEW_ARTICLE).loading(true));
-  axios.get(`${articleConstant.VIEW_ARTICLE_URL}/${payload}`)
+  axios.get(`${articleConstant.ARTICLES_URL}/${payload}`)
     .then((response) => {
       if (response.status === 200) {
         dispatch(asyncActions(VIEW_ARTICLE).success(response.data.article));
@@ -62,7 +62,7 @@ export const viewArticle = payload => (dispatch) => {
 
 export const getSingleArticle = payload => (dispatch) => {
   dispatch(asyncActions(SINGLE_ARTICLE).loading(true));
-  axios.get(`${articleConstant.SINGLE_ARTICLE_URL}/${payload.articlestatus}/${payload.articleslug}`)
+  axios.get(`${articleConstant.ARTICLES_URL}/${payload.articlestatus}/${payload.articleslug}`)
     .then((response) => {
       dispatch(asyncActions(SINGLE_ARTICLE).success(response.data.article));
       dispatch(asyncActions(SINGLE_ARTICLE).loading(false));
@@ -86,7 +86,7 @@ export const rateArticle = (slug, rating) => (dispatch) => {
     'Content-Type': 'application/json;charset=UTF-8',
   };
   dispatch(asyncActions(RATE_ARTICLE).loading(true));
-  axios.post(`${articleConstant.RATE_ARTICLE_URL}/${slug}/rate`, { rating }, headers)
+  axios.post(`${articleConstant.ARTICLES_URL}/${slug}/rate`, { rating }, headers)
     .then((response) => {
       if (response.status === 200) {
         dispatch(asyncActions(RATE_ARTICLE).success(response.data.article));
@@ -103,10 +103,10 @@ export const createArticle = (formData, tags) => (dispatch) => {
   axios.post(tagsConstant.CREATE_TAG_URL, { tags }, headers)
     .then(() => {
       dispatch(asyncActions(CREATE_ARTICLE).loading(true));
-      axios.post(articleConstant.CREATE_ARTICLES_URL, formData, headers)
+      axios.post(articleConstant.ARTICLES_URL, formData, headers)
         .then((response) => {
-          dispatch(asyncActions(CREATE_ARTICLE).loading(false));
           dispatch(asyncActions(CREATE_ARTICLE).success(response.data));
+          dispatch(asyncActions(CREATE_ARTICLE).loading(false));
           dispatch(msgInfoActions.success([response.data.message]));
         })
         .catch((error) => {
@@ -128,7 +128,7 @@ export const updateArticle = (formData, tags, articleSlug) => (dispatch) => {
     .then(() => {
       dispatch(asyncActions(UPDATE_ARTICLE).loading(true));
 
-      axios.put(`${articleConstant.UPDATE_ARTICLE_URL}/${articleSlug}`, formData)
+      axios.put(`${articleConstant.ARTICLES_URL}/${articleSlug}`, formData)
         .then((response) => {
           dispatch(asyncActions(UPDATE_ARTICLE).success(response.data));
           dispatch(msgInfoActions.success([response.data.message]));
