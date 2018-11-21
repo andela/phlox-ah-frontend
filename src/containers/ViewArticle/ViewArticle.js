@@ -209,8 +209,8 @@ class ViewArticle extends Component {
                   </div>
                   <div className="col s8 m9 l8">
                   <span className="writer capitalize">{article.User.username}</span><br/>
-                  <span className="date-written capitalize">{Moment.duration(article.createdAt, 'hours').humanize() }</span><br/>
-                  <span className="readTime">{article.readTime} Minutes Read</span>
+                  <span className="date-written capitalize"><small>{Moment.duration(article.createdAt, 'hours').humanize() }</small></span><br/>
+                  <span className="readTime"><small>{article.readTime} Minutes Read</small></span>
                   </div>
               </Row>
               </div>
