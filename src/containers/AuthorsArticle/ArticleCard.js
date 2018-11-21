@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const ArticleCard = props => (
-    <li className="article">
+    <li key={props.key} className="article">
       <div className="photo">
         <img
           src={props.article.imgUrl || props.placeholderImg }

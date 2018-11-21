@@ -125,10 +125,6 @@ class ViewArticle extends Component {
                   name="action">Follow
               </button>
               </div>
-  <div className="fb-share-button" 
-    data-href={"https://phlox-ah-staging.herokuapp.com/" + this.props.location.pathname} 
-    data-layout="button_count">
-  </div>
           </Row>
           <div className="center-align activity-icons">
             <div className="col s2"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
