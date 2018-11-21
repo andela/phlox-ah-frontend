@@ -5,7 +5,7 @@ import { ALL_TAGS, ONE_TAG } from '../actionTypes';
 import { tagsConstant } from '../constants/Constants';
 
 export const getAllTags = () => (dispatch) => {
-  axios.get(tagsConstant.GET_ALL_TAG_URL)
+  axios.get(tagsConstant.TAG_URL)
     .then((response) => {
       dispatch(asyncActions(ALL_TAGS).success(response.data));
       dispatch(asyncActions(ALL_TAGS).loading(false));
@@ -15,7 +15,7 @@ export const getAllTags = () => (dispatch) => {
 };
 
 export const getOneTag = name => (dispatch) => {
-  axios.get(`${tagsConstant.GET_ONE_TAG_URL}/${name}`)
+  axios.get(`${tagsConstant.TAG_URL}/${name}`)
     .then(response => dispatch(asyncActions(ONE_TAG).success(response.data.tag)))
     .catch(error => dispatch(asyncActions(ONE_TAG)
       .failure(true, error)));

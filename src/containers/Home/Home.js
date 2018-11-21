@@ -115,7 +115,7 @@ class Home extends Component {
       return (<div className="preloaderDiv"></div>);
     }
     const categories = this.state.categories.filter(category => category.articles.length > 0);
-    return categories.slice(0, 3).map((category, index) => <div key={index}><Row>
+    return categories.slice(0, 3).map((category, index) => <div key={category.id}><Row>
     <Col s={12} l={12}>
     <div className="row-header valign-wrapper">
     <h6 className="capitalize"><b>{category.category}</b></h6>
@@ -147,10 +147,10 @@ class Home extends Component {
     return articles.map((article, index) => {
       let username = '';
       if (article.User) {
-        username = article.User;// eslint-disable-line
+        username = article.User.username;// eslint-disable-line
       }
       return (<Col s={12} m={12}
-      l={12} xl={6} key={index + 5}>
+      l={12} xl={6} key={article.id}>
       <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} />
       </Col>);
     });

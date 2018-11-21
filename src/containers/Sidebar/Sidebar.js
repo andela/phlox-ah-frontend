@@ -84,10 +84,10 @@ class Sidebar extends Component {
       } else {
         articlePic = article.imgUrl;
       }
-      return (<Row key={ index + 1 }>
+      return (<Row key={ article.id }>
         <Col s={12} m={12}>
           <Card className="z-depth-1" horizontal header={<CardTitle image={articlePic}></CardTitle>}>
-              <h6 className="capitalize"><b> <Link key={0} className="capitalize" to={`/articles/${article.slug}`}>{article.title.substring(0, 25)}</Link> </b></h6>
+              <h6 className="capitalize"><b> <Link key={article.id} className="capitalize" to={`/articles/${article.slug}`}>{article.title.substring(0, 25)}</Link> </b></h6>
               <p>{article.description.substring(0, 45)}.<br/>
                 </p>
                 <Row className="author-details valign-wrapper">
@@ -117,7 +117,7 @@ class Sidebar extends Component {
     }
     if (this.state.tags.length > 0) {
       return this.state.tags.slice(0, this.state.limit).map((tag, index) => {// eslint-disable-line
-        return (<div key={index}>
+        return (<div key={tag.id}>
         <Link to={`/tags/${tag.name}`}><Badge className="cyan">{ tag.name }</Badge></Link></div>);
       });
     }
