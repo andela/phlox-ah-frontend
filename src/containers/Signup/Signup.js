@@ -113,9 +113,9 @@ class Signup extends Component {
     }
 
     this.props.signup(this.state)
-    .then((res) => {
-      this.setState({ ...this.initialState });
-    });
+      .then((res) => {
+        this.setState({ ...this.initialState });
+      });
   }
 
   /**

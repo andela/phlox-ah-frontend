@@ -3,10 +3,15 @@ import Avatar from 'react-avatar';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 import { Row } from 'react-materialize';
+import StarRatings from 'react-star-ratings';
+
 import './ViewArticle.scss';
 import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
-import StarRatings from 'react-star-ratings';
+import CommentTextArea from '../../components/CommentTextArea/CommentTextArea';
+import CommentButton from '../../components/CommentButton/CommentButton';
+import CommentDisplayBox from '../../components/CommentDisplayBox/CommentDisplayBox';
+import { createComment, getAllComment } from '../../requests/CommentRequest';
 import ArticleTags from '../../components/Tags/ArticleTags';
 import {
   viewArticle, rateArticle, likeArticle, dislikeArticle
@@ -24,11 +29,14 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: {}, user: {}
+      success: false, loading: false, failure: false, article: {}, user: {}, comment: ''
     };
+
+    this.addComment = this.addComment.bind(this);
     this.addRating = this.addRating.bind(this);
     this.likeArticle = this.likeArticle.bind(this);
     this.dislikeArticle = this.dislikeArticle.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
 
@@ -70,6 +78,72 @@ class ViewArticle extends Component {
    */
   componentDidMount() {
     this.props.viewArticle(this.props.match.params.articleslug);
+    this.props.getAllComment(this.props.match.params.articleslug);
+  }
+
+  /**
+   * @description - This method sets the input values
+   * @param {object} e
+   * @returns {object} void
+   * @memberof Comment
+   */
+  handleChange(e) {
+    this.setState({ [e.target.id]: e.target.value });
+  }
+
+  /**
+    * @description - This method is used to create comment
+    * @returns {object} - return payloads
+    * @memberof Comment
+    */
+  addComment() {
+    const { comment, article } = this.state;
+    this.setState({ comment: '' });
+    this.props.createComment(article.slug, comment);
+  }
+
+  /**
+  * @description - This method displays the login modal
+  * @returns {object} null
+  * @memberof Header
+  */
+  signIn() {
+    $('#login-modal').modal('open');
+  }
+
+  /**
+    * @description - This method is used to render comment input for authenticated users
+    * @returns {object} - return jsx
+    * @memberof Comment
+    */
+  renderCommentInput() {
+    if (this.props.user.isAuth) {
+      return (
+        <div>
+          <CommentTextArea
+            handleChange={this.handleChange}
+            value={this.state.comment} />
+          <CommentButton addComment={this.addComment} />
+        </div>);
+    }
+    return (
+      <p>You must logIn to comment on this article. <button className="login-user" onClick={this.signIn}>LogIn</button>
+      </p>
+    );
+  }
+
+  /**
+    * @description - This method is used to render list of comments
+    * @returns {object} - return jsx
+    * @memberof Comment
+    */
+  renderCommentList() {
+    return this.props.comments.map(
+      comment => <CommentDisplayBox
+        key={comment.id}
+        comment={comment}
+        />
+    );
   }
 
   /**
@@ -129,8 +203,8 @@ class ViewArticle extends Component {
               <Row className="valign-wrapper">
                   <div className="col s4 m3 l4">
                   {
-                      !article.User.Profile || !article.User.Profile.profileImage ? <Avatar name={article.User.username} size="75" round={true} />
-                        : <img className="profileImage" src={article.User.Profile.profileImage}/>
+                    !article.User.Profile || !article.User.Profile.profileImage ? <Avatar name={article.User.username} size="75" round={true} />
+                      : <img className="profileImage" src={article.User.Profile.profileImage}/>
                   }
                   </div>
                   <div className="col s8 m9 l8">
@@ -153,13 +227,15 @@ class ViewArticle extends Component {
             <div className="col s2"><i className={likeStatus === false ? 'active fas fa-thumbs-up' : 'fas fa-thumbs-up'} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
             <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div>
             <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
-            {!this.props.user.isAuth && <StarRatings
-                    rating={3.03}
+            {(!this.props.user.isAuth
+            || article.User.username === this.props.user.username) && <StarRatings
+                    rating={article.ratingAverage}
                     starDimension="20px"
                     className="col s4"
                     starSpacing="5px"
                   /> }
-                  {this.props.user.isAuth && <StarRatings
+                  {(this.props.user.isAuth
+                  && article.User.username !== this.props.user.username) && <StarRatings
                     rating={article.ratingAverage}
                     starDimension="20px"
                     starRatedColor="#5e5f63"
@@ -222,7 +298,9 @@ class ViewArticle extends Component {
                 }
                 { this.showContent() }
             </Row>
-            </div>
+            {this.renderCommentInput()}
+            {this.renderCommentList()}
+          </div>
         </Row>
         </div>
     </div>
@@ -237,11 +315,14 @@ ViewArticle.propTypes = {
   dislikeArticle: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   success: PropTypes.bool,
-  failure: PropTypes.bool,
-  articles: PropTypes.object,
-  match: PropTypes.object,
+  article: PropTypes.object,
   articleslug: PropTypes.string,
-  user: PropTypes.object
+  comments: PropTypes.array,
+  createComment: PropTypes.func,
+  getAllComment: PropTypes.func.isRequired,
+  failure: PropTypes.bool,
+  match: PropTypes.object,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
@@ -249,9 +330,10 @@ const mapStateToProps = state => ({
   success: state.article.success,
   failure: state.article.failure,
   article: state.article.article,
+  comments: state.comments.comment,
   user: state.user
 });
 
 export default connect(mapStateToProps, {
-  viewArticle, rateArticle, likeArticle, dislikeArticle
+  viewArticle, createComment, getAllComment, rateArticle, likeArticle, dislikeArticle
 })(ViewArticle);

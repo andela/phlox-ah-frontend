@@ -69,7 +69,7 @@ class CreateArticle extends Component {
     this.props.getAllTags();
   }
 
-    /**
+  /**
    * @description - This method runs whenever redux state changes
    * @returns {object} state
    * @param {object} props
@@ -126,11 +126,11 @@ class CreateArticle extends Component {
     * @memberof Article
     */
   getAlertMessage() {
-    if(this.state.loading && !this.state.success) {
+    if (this.state.loading && !this.state.success) {
       return 'Saving...';
-    } else if (!this.state.loading && this.state.success) {
+    } if (!this.state.loading && this.state.success) {
       return `Saved ${moment(this.state.article.updatedAt).fromNow()}`;
-    } else if (!this.state.loading && !this.state.success && this.state.error === true) {
+    } if (!this.state.loading && !this.state.success && this.state.error === true) {
       return 'Not saved';
     }
   }
@@ -290,7 +290,10 @@ class CreateArticle extends Component {
               />
               <div className="col input-field s12">
                 <span htmlFor="Title">Categories</span>
-                <select onChange={this.handleInputChange} id="category" value={this.state.category} className="browser-default s6">
+                <select
+                  onChange={this.handleInputChange}
+                  id="category" value={this.state.category}
+                  className="browser-default s6">
                   <option value="0" disabled>Choose category</option>
                   {this.renderSelectOptions()}
                 </select>
