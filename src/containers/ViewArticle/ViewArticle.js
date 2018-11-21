@@ -129,13 +129,15 @@ class ViewArticle extends Component {
             <div className="col s2"><i className="fas fa-thumbs-down dislikeButton"></i> 3</div>
             <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div>
             <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
-            {!this.props.user.isAuth && <StarRatings
-                    rating={3.03}
+            {(!this.props.user.isAuth
+            || article.User.username === this.props.user.username) && <StarRatings
+                    rating={article.ratingAverage}
                     starDimension="20px"
                     className="col s4"
                     starSpacing="5px"
                   /> }
-                  {this.props.user.isAuth && <StarRatings
+                  {(this.props.user.isAuth
+                  && article.User.username !== this.props.user.username) && <StarRatings
                     rating={article.ratingAverage}
                     starDimension="20px"
                     starRatedColor="#5e5f63"
