@@ -224,16 +224,15 @@ class Header extends Component {
 
     return (
       <nav className="main-header">
-        <a href="#" data-target="mobile-nav" className="sidenav-trigger"><i className="material-icons">menu</i></a>
         <div className="nav-wrapper">
           <div className="brand">
             <a href="#" className="brand-logo">
               <img src={Logo} alt="" />
             </a>
-            <span className="brand-name hide-on-med-and-down">Authors Haven</span>
+            <span className="brand-name hide-on-med-and-down"><Link to="/" >Authors Haven</Link></span>
           </div>
-          <div className="search-wrapper hide-on-med-and-down">
-            <div className="categories">
+          <div className="search-wrapper">
+            <div className="categories hide-on-med-and-down">
               <span onClick={this.showDropDown}>
                 <i className="fas fa-th"></i>
                 <i className="fas fa-sort-down"></i>
@@ -243,7 +242,7 @@ class Header extends Component {
                 && <DropDown blur={this.blur} />
               }
             </div>
-            <div className="input">
+            <div className="input hide-on-med-and-down">
               <input type="text" placeholder="Search" />
               <i className="fas fa-search"></i>
             </div>
@@ -288,7 +287,7 @@ class Header extends Component {
                 <a className="user-photo"></a>
                 {
                   showSettingsOption
-                    && <div className="sd-wrapper hide-on-med-and-down">
+                    && <div className="sd-wrapper">
                       <ul>
                       <li
                           className="s-list">

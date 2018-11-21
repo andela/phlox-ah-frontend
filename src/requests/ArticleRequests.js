@@ -2,8 +2,8 @@ import axios from 'axios';
 
 import { asyncActions } from '../util/AsyncUtil';
 import {
-  CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, VIEW_ARTICLE,
-  ALL_ARTICLES, FEATURED_ARTICLES, POPULAR_ARTICLES
+  ALL_ARTICLES, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE,
+  VIEW_ARTICLE, FEATURED_ARTICLES, POPULAR_ARTICLES, RATE_ARTICLE
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
@@ -44,6 +44,21 @@ export const viewArticle = payload => (dispatch) => {
     .catch(error => dispatch(asyncActions(VIEW_ARTICLE).failure(true, error)));
 };
 
+export const rateArticle = (slug, rating) => (dispatch) => {
+  const headers = {
+    'Content-Type': 'application/json;charset=UTF-8',
+  };
+  dispatch(asyncActions(RATE_ARTICLE).loading(true));
+  axios.post(`${articleConstant.RATE_ARTICLE_URL}/${slug}/rate`, { rating }, headers)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(RATE_ARTICLE).success(response.data.article));
+        dispatch(asyncActions(RATE_ARTICLE).loading(false));
+      }
+    })
+    .catch(error => dispatch(asyncActions(RATE_ARTICLE).failure(true, error)));
+};
+
 export const createArticle = (formData, tags) => (dispatch) => {
   const headers = {
     'Content-Type': 'application/json;charset=UTF-8',
@@ -51,9 +66,9 @@ export const createArticle = (formData, tags) => (dispatch) => {
   axios.post(tagsConstant.CREATE_TAG_URL, { tags }, headers)
     .then(() => {
       dispatch(asyncActions(CREATE_ARTICLE).loading(true));
-
       axios.post(articleConstant.CREATE_ARTICLES_URL, formData, headers)
         .then((response) => {
+          dispatch(asyncActions(CREATE_ARTICLE).loading(false));
           dispatch(asyncActions(CREATE_ARTICLE).success(response.data));
           dispatch(msgInfoActions.success([response.data.message]));
         })
@@ -61,6 +76,7 @@ export const createArticle = (formData, tags) => (dispatch) => {
           dispatch(asyncActions(CREATE_ARTICLE)
             .failure(true, error.response.data.message));
           dispatch(msgInfoActions.failure(formatError(error.response.data)));
+          dispatch(asyncActions(CREATE_ARTICLE).loading(false));
         });
     })
     .catch((error) => {

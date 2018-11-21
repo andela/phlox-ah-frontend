@@ -19,7 +19,7 @@ const CommentReducer = (state = initialState, action) => {
       };
     case asyncActionName(CREATE_COMMENT).failure:
       return {
-        ...state, error: action.payload.status, message: action.payload.error
+        ...state, error: action.payload.status, message: action.payload
       };
     case asyncActionName(GET_ALL_COMMENT).success:
       return {
@@ -30,7 +30,7 @@ const CommentReducer = (state = initialState, action) => {
       };
     case asyncActionName(GET_ALL_COMMENT).failure:
       return {
-        ...state, error: action.payload.status, message: action.payload.error
+        ...state, error: action.payload.status, message: action.payload
       };
     default:
       return state;

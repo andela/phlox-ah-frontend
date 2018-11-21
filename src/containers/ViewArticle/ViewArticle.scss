@@ -1,4 +1,5 @@
 @import '../../styles//variables';
+
 .MainWrapper2 {
   background-color: #f8f9fa;
   .dummyBody {
@@ -74,6 +75,25 @@
       background-color: #e5e5e5;
       color: #5e5f63;
       border: 1px solid #5e5f63;
+    }
+    .editButton {
+      background-color: #3B8CA1;
+      color: white;
+      border: none;
+    }
+    p.articleDescription {
+      height: 150px;
+      padding-top: 3%;
+    }
+    a.red-text {
+      float: right;
+      text-decoration: none;
+    }
+
+    button.btn.waves-effect.waves-light.editButton {
+      position: relative;
+      right: 100%;
+      bottom: 30px;
     }
     .margin-top-10 {
       margin-top: 10px;
@@ -193,3 +213,13 @@
   cursor: pointer;
   color: #3b8ca1;
 }
+@media screen and (max-width: 991px) {
+  .MainWrapper2 .container button.btn.waves-effect.waves-light.editButton {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    margin-top: 10%;
+  }
+}
+
+

@@ -3,14 +3,17 @@ import Avatar from 'react-avatar';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 import { Row } from 'react-materialize';
+import StarRatings from 'react-star-ratings';
+
 import './ViewArticle.scss';
 import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
-import { viewArticle } from '../../requests/ArticleRequests';
 import CommentTextArea from '../../components/CommentTextArea/CommentTextArea';
 import CommentButton from '../../components/CommentButton/CommentButton';
 import CommentDisplayBox from '../../components/CommentDisplayBox/CommentDisplayBox';
 import { createComment, getAllComment } from '../../requests/CommentRequest';
+import ArticleTags from '../../components/Tags/ArticleTags';
+import { viewArticle, rateArticle } from '../../requests/ArticleRequests';
 
 /**
  * @class ViewAnArticle
@@ -27,9 +30,17 @@ class ViewArticle extends Component {
       success: false, loading: false, failure: false, article: {}, comment: ''
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.addComment = this.addComment.bind(this);
+    this.addRating = this.addRating.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
+
+
+  // eslint-disable-next-line require-jsdoc
+  addRating(newRating, name) {
+    this.props.rateArticle(this.props.match.params.articleslug, newRating);
+  }
+
 
   /**
    * @description - This method runs whenever the redux state changes
@@ -168,8 +179,8 @@ class ViewArticle extends Component {
               <Row className="valign-wrapper">
                   <div className="col s4 m3 l4">
                   {
-                      !article.User.Profile || !article.User.Profile.profileImage ? <Avatar name={article.User.username} size="75" round={true} />
-                        : <img className="profileImage" src={article.User.Profile.profileImage}/>
+                    !article.User.Profile || !article.User.Profile.profileImage ? <Avatar name={article.User.username} size="75" round={true} />
+                      : <img className="profileImage" src={article.User.Profile.profileImage}/>
                   }
                   </div>
                   <div className="col s8 m9 l8">
@@ -188,14 +199,34 @@ class ViewArticle extends Component {
               </div>
           </Row>
           <div className="center-align activity-icons">
-            <div className="col s3"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
-            <div className="col s3"><i className="fas fa-thumbs-down dislikeButton"></i> 97</div>
-            <div className="col s3"><i className="fas fa-bookmark bookmarkButton"></i></div>
-            <div className="col s3"><i className="fas fa-share-alt shareButton"></i></div>
+            <div className="col s2"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
+            <div className="col s2"><i className="fas fa-thumbs-down dislikeButton"></i> 3</div>
+            <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div>
+            <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
+            {!this.props.user.isAuth && <StarRatings
+                    rating={3.03}
+                    starDimension="20px"
+                    className="col s4"
+                    starSpacing="5px"
+                  /> }
+                  {this.props.user.isAuth && <StarRatings
+                    rating={article.ratingAverage}
+                    starDimension="20px"
+                    starRatedColor="#5e5f63"
+                    className="col s4"
+                    changeRating={this.addRating}
+                    starSpacing="5px"
+                    name='rating'
+                  />}
+              </div>
+              <button
+                className="btn waves-effect waves-light editButton"
+                type="submit"
+                name="action">Edit Article
+                  </button>
+              </div>
           </div>
-          </div>
-      </div>
-      <div className="col s12 article-body">
+          <div className="col s12 article-body">
           {
           ReactHtmlParser(article.body)
           }
@@ -253,15 +284,17 @@ class ViewArticle extends Component {
 
 ViewArticle.propTypes = {
   article: PropTypes.object,
+  articleslug: PropTypes.string,
   comments: PropTypes.array,
   createComment: PropTypes.func,
   getAllComment: PropTypes.func.isRequired,
   failure: PropTypes.bool,
   loading: PropTypes.bool,
   match: PropTypes.object,
+  rateArticle: PropTypes.func,
   success: PropTypes.bool,
   user: PropTypes.object,
-  viewArticle: PropTypes.func.isRequired
+  viewArticle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

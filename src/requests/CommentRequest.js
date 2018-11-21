@@ -12,7 +12,7 @@ export const createComment = (articleSlug, comment) => (dispatch) => {
         .catch(error => dispatch(asyncActions(CREATE_COMMENT)
           .failure(true, error.response.data.message)));
     })
-    .catch(error => dispatch(asyncActions(CREATE_COMMENT)
+    .catch(error => dispatch(asyncActions(GET_ALL_COMMENT)
       .failure(true, error.response.data.message)));
 };
 

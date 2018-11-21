@@ -18,15 +18,17 @@ const formatError = (error) => {
 export const signup = payload => (dispatch) => {
   dispatch(asyncActions(SIGNUP).loading(true));
   dispatch(msgInfoActions.clear());
-  axios.post(signupConstant.SIGNUP_URL, payload)
+  return axios.post(signupConstant.SIGNUP_URL, payload)
     .then((response) => {
       dispatch(asyncActions(SIGNUP).loading(false));
       if (response.status === 201) {
         dispatch(asyncActions(SIGNUP).success(true));
       }
+      return response;
     })
     .catch((error) => {
       dispatch(asyncActions(SIGNUP).loading(false));
       dispatch(msgInfoActions.failure(formatError(error.response.data.message)));
+      throw error;
     });
 };

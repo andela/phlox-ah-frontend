@@ -33,6 +33,7 @@ exports[`<CreateArticle /> should render without throwing an error 1`] = `
   error={true}
   getAllCategory={[Function]}
   getAllTags={[Function]}
+  loading={false}
   publishArticle={[Function]}
   store={
     Object {
