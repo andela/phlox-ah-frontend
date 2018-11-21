@@ -16,7 +16,7 @@ const store = mockStore({
   tags: {
     tag: {}
   },
-  getOneTag: jest.fn()
+  getOneTag: jest.fn()// eslint-disable-line
 
 });
 

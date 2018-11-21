@@ -147,12 +147,13 @@ class Home extends Component {
     return articles.map((article, index) => {
       let username = '';
       if (article.User) {
-        username = article.User.username;
+        username = article.User;// eslint-disable-line
       }
-    return (<Col s={12} m={12}
-    l={12} xl={6} key={index + 5}>
-    <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} />
-    </Col>);} );
+      return (<Col s={12} m={12}
+      l={12} xl={6} key={index + 5}>
+      <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} />
+      </Col>);
+    });
   }
 
   /**

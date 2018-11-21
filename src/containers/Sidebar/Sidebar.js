@@ -126,7 +126,7 @@ class Sidebar extends Component {
 
   /**
    *
-   *
+   * @returns {state} - object
    * @memberof Sidebar
    */
   moreTags() {
@@ -148,7 +148,7 @@ class Sidebar extends Component {
         <div className="sidebar-tag-container">
           { this.showTags() }
         </div>
-        {this.state.tags.length > this.state.limit &&
+        {this.state.tags.length > this.state.limit &&// eslint-disable-line
           <a className="more-tags" onClick={this.moreTags}>see more tags</a>
         }
       </div>);

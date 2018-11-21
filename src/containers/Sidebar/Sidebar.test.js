@@ -22,7 +22,7 @@ const store = mockStore({
   article: {
     articles: []
   },
-  getArticles: jest.fn()
+  getArticles: jest.fn()// eslint-disable-line
 
 });
 
