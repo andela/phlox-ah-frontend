@@ -19,12 +19,14 @@ class ViewArticle extends Component {
    * @constructor function
    * @param {*} props React properties
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       success: false, loading: false, failure: false, article: []
     };
     this.addRating = this.addRating.bind(this);
+    console.log(props)
+    console.log(window.location.href)
   }
 
 
@@ -123,8 +125,8 @@ class ViewArticle extends Component {
                   name="action">Follow
               </button>
               </div>
-  <div class="fb-share-button" 
-    data-href="https://www.your-domain.com/your-page.html" 
+  <div className="fb-share-button" 
+    data-href={"https://phlox-ah-staging.herokuapp.com/" + this.props.location.pathname} 
     data-layout="button_count">
   </div>
           </Row>
