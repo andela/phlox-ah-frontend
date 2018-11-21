@@ -17,7 +17,7 @@ const TagReducer = (state = initialState, action) => {
       return {
         ...state,
         tags: action.payload.tags,
-        message: action.payload.message
+        message: action.payload.message,
       };
     case asyncActionName(ALL_TAGS).failure:
       return {

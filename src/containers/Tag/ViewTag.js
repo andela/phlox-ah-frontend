@@ -78,10 +78,15 @@ class ViewTag extends Component {
    */
   showTagArticles() {
     if (this.state.success && this.state.tag) {
-      return this.state.tag.Articles.map((article, index) => <Col s={12} m={12}
+      return this.state.tag.Articles.map((article, index) => {
+      let username = '';
+      if (article.User) {
+        username = article.User.username;
+      }
+      return (<Col s={12} m={12}
       l={12} xl={6} key={index + 5}>
-      <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author="runor" slug={article.slug} />
-    </Col>);
+      <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} />
+      </Col>); });
     }
     return (<h5 className="center no-tags">There are no articles under this tag</h5>);
   }

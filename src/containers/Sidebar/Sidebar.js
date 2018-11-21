@@ -27,11 +27,14 @@ class Sidebar extends Component {
   constructor(props) {
     super();
     this.state = {
+      error: false,
       sidebarArticles: [],
-      failure: true,
+      failure: false,
+      limit: 10,
       success: false,
       tags: []
     };
+    this.moreTags = this.moreTags.bind(this);
   }
 
   /**
@@ -53,10 +56,11 @@ class Sidebar extends Component {
    */
   static getDerivedStateFromProps(props, state) {
     return {
-      tags: props.tags,
+      error: props.error,
       failure: props.failure,
       sidebarArticles: props.sidebarArticles,
-      success: props.success
+      success: props.success,
+      tags: props.tags,
     };
   }
 
@@ -75,7 +79,7 @@ class Sidebar extends Component {
       } else {
         authorAvatar = <img className="img-responsive circle" src={article.User.Profile.profileImage}/>;
       }
-      if (!article.imgUrl) {
+      if (article.imgUrl === 'null') {
         articlePic = 'https://via.placeholder.com/300?text=AuthorsHaven';
       } else {
         articlePic = article.imgUrl;
@@ -108,13 +112,26 @@ class Sidebar extends Component {
    * @memberof Sidebar
    */
   showTags() {
+    if (this.state.error) {
+      return (<p>loading...</p>);
+    }
     if (this.state.tags.length > 0) {
-      return this.state.tags.map((tag, index) => {// eslint-disable-line
+      return this.state.tags.slice(0, this.state.limit).map((tag, index) => {// eslint-disable-line
         return (<div key={index}>
         <Link to={`/tags/${tag.name}`}><Badge className="cyan">{ tag.name }</Badge></Link></div>);
       });
     }
-    return (<div>No tags yet!</div>);
+    return (<div className="center">No tags yet!</div>);
+  }
+
+  /**
+   *
+   *
+   * @memberof Sidebar
+   */
+  moreTags() {
+    const newLimit = this.state.limit + 5;
+    this.setState({ limit: newLimit });
   }
 
   /**
@@ -131,21 +148,26 @@ class Sidebar extends Component {
         <div className="sidebar-tag-container">
           { this.showTags() }
         </div>
+        {this.state.tags.length > this.state.limit &&
+          <a className="more-tags" onClick={this.moreTags}>see more tags</a>
+        }
       </div>);
   }
 }
 
 const mapStateToProps = state => ({
-  tag: state.tags.tag,
-  tags: state.tags.tags,
+  error: state.tags.error,
   failure: state.tags.failure,
   sidebarArticles: state.article.articles,
   success: state.tags.success,
+  tag: state.tags.tag,
+  tags: state.tags.tags,
 });
 
 
 Sidebar.propTypes = {
   articles: PropTypes.array,
+  error: PropTypes.bool,
   failure: PropTypes.bool,
   getAllTags: PropTypes.func,
   getArticles: PropTypes.func,

@@ -10,8 +10,8 @@ import './ArticleCard.scss';
 let articlePic = '';
 
 export const ArticleCard = (props) => {
-  if (!props.pic) {
-    articlePic = 'https://via.placeholder.com/300?text=AuthorsHaven';
+  if (props.pic === 'null') {
+    articlePic = `https://via.placeholder.com/50?text=AuthorsHaven-${props.title.substring(0, 20)}`;
   } else {
     articlePic = props.pic;
   }
