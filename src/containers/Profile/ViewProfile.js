@@ -38,10 +38,13 @@ class ViewProfile extends Component {
    * @memberof ViewProfile
    */
   render() {
-    const followers = ['James Author', 'Chris Daughtry', 'Luke Bryan', 'Sam Hunt', 'Elie Goulding'];
     const tags = ['Religion', 'Sports', 'Technology', 'Music', 'Art', 'Software', 'Finance'];
+    const listOfFollowings = (
+      this.props.followings.slice(0, 3).map((following, i) => <FollowList
+      key={i}>{following.username}</FollowList>));
     const listOfFollowers = (
-      this.props.followings.map((following, i) => <FollowList key={i}>{following.username}</FollowList>));
+      this.props.followers.slice(0, 3).map((following, i) => <FollowList
+      key={i}>{following.username}</FollowList>));
     const tagList = tags.map((tag, i) => <Tags key={i}>{tag}</Tags>);
     return (
       <div className="profile">
@@ -89,11 +92,14 @@ class ViewProfile extends Component {
                   Authors I Follow
                 </span>
                 <ul className="authors">
-                  {listOfFollowers}
+                  {listOfFollowings}
+                  {this.props.followings.length === 0 && <p>You are not following any author</p>}
                 </ul>
-                <div className="more">
+                {this.props.followings.length > 3
+                && <div className="more">
                   <Link to="#">View more</Link>
                 </div>
+                }
               </div>
               {/* end of follow */}
               <div className="following">
@@ -102,10 +108,13 @@ class ViewProfile extends Component {
                 </span>
                 <ul className="authors">
                   {listOfFollowers}
+                  {this.props.followers.length === 0 && <p>You do not have any followers</p>}
                 </ul>
-                <div className="more">
-                <Link to="#">View more</Link>
+                {this.props.followers.length > 3
+                && <div className="more">
+                  <Link to="#">View more</Link>
                 </div>
+                }
               </div>
               {/* end of following */}
             </div>
@@ -134,7 +143,8 @@ class ViewProfile extends Component {
 const mapStateToProps = state => ({
   profile: state.profile,
   user: state.user,
-  followings: state.followUser.followings
+  followings: state.followUser.followings,
+  followers: state.followUser.followers
 });
 
 ViewProfile.propTypes = {
@@ -148,7 +158,8 @@ ViewProfile.propTypes = {
   profile: PropTypes.object,
   user: PropTypes.object,
   getFollowings: PropTypes.func.isRequired,
-  followings: PropTypes.array
+  followings: PropTypes.array,
+  followers: PropTypes.array,
 };
 
 export default connect(mapStateToProps, {

@@ -1,12 +1,13 @@
 import {
-  FOLLOW_USER, UNFOLLOW_USER, GET_FOLLOWINGS, GET_FOLLOWERS
+  FOLLOW_USER, UNFOLLOW_USER, GET_FOLLOWINGS
 } from '../actionTypes/UserConstants';
 import { asyncActionName } from '../util/AsyncUtil';
 
 const initialState = {
   loading: true,
   success: false,
-  followings: []
+  followings: [],
+  followers: []
 };
 
 const followUserReducer = (state = initialState, action) => {
@@ -14,13 +15,13 @@ const followUserReducer = (state = initialState, action) => {
     case asyncActionName(FOLLOW_USER).loading:
       return { ...state, loading: action.payload };
     case asyncActionName(FOLLOW_USER).success:
-      return { ...state, message: action.payload };
+      return { ...state, followings: [action.payload] };
     case asyncActionName(FOLLOW_USER).failure:
       return { ...state, error: action.payload.status };
     case asyncActionName(UNFOLLOW_USER).loading:
       return { ...state, loading: action.payload };
     case asyncActionName(UNFOLLOW_USER).success:
-      return { ...state, message: action.payload };
+      return { ...state, followings: [] };
     case asyncActionName(UNFOLLOW_USER).failure:
       return { ...state, error: action.payload.status };
     case asyncActionName(GET_FOLLOWINGS).failure:
@@ -28,13 +29,11 @@ const followUserReducer = (state = initialState, action) => {
     case asyncActionName(GET_FOLLOWINGS).loading:
       return { ...state, loading: action.payload };
     case asyncActionName(GET_FOLLOWINGS).success:
-      return { ...state, followings: action.payload };
-    case asyncActionName(GET_FOLLOWERS).failure:
-      return { ...state, error: action.payload.status };
-    case asyncActionName(GET_FOLLOWERS).loading:
-      return { ...state, loading: action.payload };
-    case asyncActionName(GET_FOLLOWERS).success:
-      return { ...state, followings: action.payload };
+      return {
+        ...state,
+        followings: action.payload.following,
+        followers: action.payload.followers
+      };
     default:
       return state;
   }

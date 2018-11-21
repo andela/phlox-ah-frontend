@@ -51,23 +51,7 @@ class ViewArticle extends Component {
    * @param {object} state
    */
   static getDerivedStateFromProps(props, state) {
-    if (props.success) {
-      const {
-        success, loading, article, followings
-      } = props;
-      return {
-        success, loading, article, followings
-      };
-    }
-    if (props.failure) {
-      const {
-        success, loading, article, followings, failure
-      } = props;
-      return {
-        success, loading, article, followings, failure
-      };
-    }
-    return state;
+    return props;
   }
 
   /**
@@ -131,7 +115,8 @@ class ViewArticle extends Component {
                   </div>
               </Row>
               </div>
-              <div className="col s4">
+              {this.props.user.username !== article.User.username
+              && <div className="col s4">
               {this.props.followings.find(user => user.username === article.User.username)
               === undefined
                 ? <button
@@ -148,6 +133,7 @@ class ViewArticle extends Component {
               </button>
               }
               </div>
+            }
           </Row>
           <div className="center-align activity-icons">
             <div className="col s2"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
@@ -169,7 +155,7 @@ class ViewArticle extends Component {
                     starSpacing="5px"
                     name='rating'
                   />}
-                  {console.log('this state>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', this.state)}
+                  {console.log('this state>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', this.props)}
               </div>
               <button
                 className="btn waves-effect waves-light editButton"

@@ -1,4 +1,4 @@
-const BASE_URL = 'https://phlox-ah-staging.herokuapp.com';
+const BASE_URL = 'http://localhost:3000';
 export const articleConstant = {
   ALL_ARTICLES_URL: `${BASE_URL}/api/v1/articles/feed`,
   CREATE_ARTICLES_URL: `${BASE_URL}/api/v1/articles`,
@@ -20,7 +20,6 @@ export const profileConstant = {
 
 export const followUserConstant = {
   FOLLOW_USER_CONSTANT: `${BASE_URL}/api/v1/profiles`,
-  GET_FOLLOWERS_CONSTANT: `${BASE_URL}/api/v1/followers`,
   GET_FOLLOWINGS_CONSTANT: `${BASE_URL}/api/v1/followings`,
 };
 
