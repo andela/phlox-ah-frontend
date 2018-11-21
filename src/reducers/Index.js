@@ -7,6 +7,7 @@ import info from './MsgInfoReducer';
 import deleteItem from './DeleteReducer';
 import category from './CategoryReducer';
 import password from './PasswordReducer';
+import comments from './CommentReducer';
 import profile from './ProfileReducer';
 import signup from './SignupReducer';
 import tags from './TagReducer';
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   article,
   category,
   deleteItem,
+  comments,
   info,
   myArticle,
   password,
