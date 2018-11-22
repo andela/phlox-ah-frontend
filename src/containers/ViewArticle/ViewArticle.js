@@ -185,8 +185,8 @@ class ViewArticle extends Component {
     if (this.state.user.isAuth) {
       const likeArray = article.likes.filter(like => like.userId === this.state.user.id);
       if (likeArray.length > 0) {
-        const [user, ...otherArrayItems] = likeArray;
-        likeStatus = user.like;
+        const [like, ...otherArrayItems] = likeArray;
+        likeStatus = like.like;
       }
     }
 
