@@ -8,7 +8,7 @@ import { viewProfile } from '../../requests/ProfileRequest';
 import FollowList from '../../components/FollowList/FollowList';
 import Tags from '../../components/Tags/Tags';
 import { getFollowings, getFollowers } from '../../requests/FollowRequests';
-
+import AuthorsArticle from '../AuthorsArticle/AuthorsArticle';
 
 import './ViewProfile.scss';
 import './Profile.scss';
@@ -31,7 +31,6 @@ class ViewProfile extends Component {
     }
   }
 
-
   /**
    *
    * @description - This method renders the jsx for this component
@@ -47,6 +46,7 @@ class ViewProfile extends Component {
       this.props.followers.slice(0, 3).map((followers, i) => <FollowList
       key={i}>{followers.username}</FollowList>));
     const tagList = tags.map((tag, i) => <Tags key={i}>{tag}</Tags>);
+
     return (
       <div className="profile">
         <div className="profile-wrapper">
@@ -120,6 +120,9 @@ class ViewProfile extends Component {
               {/* end of following */}
             </div>
             {/* end of followers */}
+
+            <AuthorsArticle {...this.props} />
+
           </div>
           {/* end of profile info */}
           <div className="profile-edit">
@@ -136,6 +139,8 @@ class ViewProfile extends Component {
             </div>
           </div>
         </div>
+
+
       </div>
     );
   }

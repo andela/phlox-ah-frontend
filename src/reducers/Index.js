@@ -1,13 +1,16 @@
 import { combineReducers } from 'redux';
+
 import article from './ArticleReducer';
-import category from './CategoryReducer';
+import myArticle from './MyArticleReducer';
+import user from './UserReducer';
 import info from './MsgInfoReducer';
+import deleteItem from './DeleteReducer';
+import category from './CategoryReducer';
 import password from './PasswordReducer';
-import signup from './SignupReducer';
 import comments from './CommentReducer';
 import profile from './ProfileReducer';
+import signup from './SignupReducer';
 import tags from './TagReducer';
-import user from './UserReducer';
 import verifyUser from './VerifyUserReducer';
 import followUser from './FollowUserReducer';
 
@@ -15,8 +18,10 @@ import followUser from './FollowUserReducer';
 const rootReducer = combineReducers({
   article,
   category,
+  deleteItem,
   comments,
   info,
+  myArticle,
   password,
   profile,
   signup,

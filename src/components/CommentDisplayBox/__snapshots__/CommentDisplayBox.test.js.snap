@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render without throwing an error 1`] = `
+<CommentDisplayBox
+  comment={
+    Object {
+      "Replies": Array [],
+      "User": Object {
+        "Profile": Object {
+          "firstName": "Jame",
+          "lastName": "Jackson",
+          "profileImage": null,
+        },
+        "email": "admin@authorshaven.com",
+        "username": "admin1",
+      },
+      "articleSlug": "title-of-article2",
+      "comment": "good work",
+      "createdAt": "2018-11-21T08:25:35.435Z",
+      "id": 3,
+      "likes": Array [],
+      "updatedAt": "2018-11-21T08:25:35.435Z",
+      "userId": 6,
+    }
+  }
+>
+  <div
+    className="comment-display"
+  >
+    <div
+      className="author-details"
+    >
+      <div
+        className="author-image"
+      >
+        <withAvatarConfig
+          name="admin1"
+          round={true}
+          size="50"
+        >
+          <Avatar
+            avatarRedirectUrl={null}
+            cache={
+              Object {
+                "get": [Function],
+                "hasSourceFailedBefore": [Function],
+                "set": [Function],
+                "sourceFailed": [Function],
+              }
+            }
+            className=""
+            colors={
+              Array [
+                "#d73d32",
+                "#7e3794",
+                "#4285f4",
+                "#67ae3f",
+                "#d61a7f",
+                "#ff4080",
+              ]
+            }
+            fgColor="#FFF"
+            initials={[Function]}
+            name="admin1"
+            round={true}
+            size="50"
+            textSizeRatio={3}
+            unstyled={false}
+          >
+            <div
+              className=" sb-avatar"
+              style={
+                Object {
+                  "borderRadius": "100%",
+                  "display": "inline-block",
+                  "fontFamily": "Helvetica, Arial, sans-serif",
+                  "height": "50px",
+                  "verticalAlign": "middle",
+                  "width": "50px",
+                }
+              }
+            >
+              <div
+                className=" sb-avatar__text"
+                style={
+                  Object {
+                    "background": undefined,
+                    "borderRadius": "100%",
+                    "color": "#FFF",
+                    "height": "50px",
+                    "lineHeight": "initial",
+                    "textAlign": "center",
+                    "textTransform": "uppercase",
+                    "width": "50px",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "table",
+                      "height": "100%",
+                      "width": "100%",
+                    }
+                  }
+                >
+                  <span
+                    style={
+                      Object {
+                        "display": "table-cell",
+                        "verticalAlign": "middle",
+                      }
+                    }
+                  >
+                    <span
+                      key="null"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Avatar>
+        </withAvatarConfig>
+      </div>
+      <div
+        className="more-details"
+      >
+        <span
+          className="author-name"
+        >
+          Jame Jackson
+        </span>
+        <span
+          className="date"
+        >
+          Nov 21, 2018
+        </span>
+      </div>
+    </div>
+    <p
+      className="comment-content"
+    >
+      good work
+    </p>
+    <div
+      className="comment-like"
+    >
+      <span
+        className="likes"
+      >
+        <i
+          className="fas fa-thumbs-up"
+        />
+        <span
+          className="likes-count"
+        >
+          10
+        </span>
+      </span>
+      <span
+        className="likes"
+      >
+        <i
+          className="fas fa-thumbs-down"
+        />
+        <span
+          className="likes-count"
+        >
+          23
+        </span>
+      </span>
+    </div>
+  </div>
+</CommentDisplayBox>
+`;

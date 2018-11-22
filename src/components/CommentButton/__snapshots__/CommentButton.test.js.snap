@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render without throwing an error 1`] = `
+<CommentButton
+  addComment={[Function]}
+>
+  <div
+    className="comment-button"
+  >
+    <button
+      onClick={[Function]}
+    >
+      Comment
+    </button>
+  </div>
+</CommentButton>
+`;

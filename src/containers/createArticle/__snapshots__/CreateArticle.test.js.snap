@@ -29,10 +29,12 @@ exports[`<CreateArticle /> should render without throwing an error 1`] = `
       },
     ]
   }
+  clearMsgInfo={[Function]}
   createArticle={[Function]}
   error={true}
   getAllCategory={[Function]}
   getAllTags={[Function]}
+  getSingleArticle={[Function]}
   loading={false}
   publishArticle={[Function]}
   store={

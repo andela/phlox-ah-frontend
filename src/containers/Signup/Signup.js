@@ -70,7 +70,7 @@ class Signup extends Component {
     const { info } = this.props;
 
     info.message.forEach((value) => {
-      if (!info.success) {
+      if (!info.success && typeof value === 'string') {
         if (value.includes('password')) {
           errors.validPassword = false;
         }
@@ -113,9 +113,9 @@ class Signup extends Component {
     }
 
     this.props.signup(this.state)
-    .then((res) => {
-      this.setState({ ...this.initialState });
-    });
+      .then((res) => {
+        this.setState({ ...this.initialState });
+      });
   }
 
   /**
