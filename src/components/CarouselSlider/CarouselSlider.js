@@ -24,7 +24,7 @@ export const CarouselSlider = props => (
             </Col>
             <Col s={12} m={7} l={7} xl={6}>
               <div className="content">
-                <h5 className="secondary-color editor-title capitalize"> <Link key={0} className="capitalize" to={`/articles/${article.slug}`}>{article.title.substring(0, 50)}</Link> </h5>
+                <h5 className="secondary-color editor-title capitalize"> <Link key={article.id} className="capitalize" to={`/articles/${article.slug}`}>{article.title.substring(0, 50)}</Link> </h5>
                 <p>
                   {article.description.substring(0, 220)}
                 </p>

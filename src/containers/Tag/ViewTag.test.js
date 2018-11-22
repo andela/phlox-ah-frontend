@@ -1,26 +1,26 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import ViewTag from './ViewTag';
+import TagReducer from '../../reducers/TagReducer';
 
-const mockStore = configureMockStore();
+const mockStore = configureMockStore([thunk]);
 const store = mockStore({
-  info: {
-    message: ['password is required'],
-    success: false
-  },
+  success: true,
   article: {
     articles: []
   },
   tags: {
-    tag: {}
+    tag: { articles: [{ title: 'first title' }] }
   },
-  getOneTag: jest.fn()// eslint-disable-line
+  getOneTag: jest.fn()
 
 });
 
 let component;
+let myComponent;
 
 const props = {
   match: {
@@ -38,8 +38,48 @@ describe('<ViewTag/>', () => {
         <ViewTag {...props}/>
       </Provider>
     );
+    myComponent = component.dive({ context: { store } }).dive();
   });
   it('should render without throwing an error', () => {
     expect(component).toMatchSnapshot();
+  });
+  it('should have a site-container class', () => {
+    expect(myComponent.find('.site-container').exists()).toBe(true);
+  });
+  it('should have a sidebar class', () => {
+    expect(myComponent.find('.sidebar').exists()).toBe(true);
+  });
+  it('should have a h5', () => {
+    expect(myComponent.find('h5.center').exists()).toBe(true);
+  });
+  it('should have function showTagArticles', () => {
+    expect(myComponent.instance().showTagArticles).toBeDefined();
+  });
+  it('should have function getTag', () => {
+    expect(myComponent.instance().getTag).toBeDefined();
+  });
+  it('should have tag state as object', () => {
+    expect(myComponent.instance().state.tag).toMatchObject({});
+  });
+  it('should have tagName state as string array', () => {
+    expect(myComponent.instance().state.tagName).toEqual('');
+  });
+  it('should have articles props', () => {
+    expect(myComponent.instance().props.match.url).toEqual('/tags/sports');
+  });
+  it('should dispatch an action to get all tags', () => {
+    const payload = {
+      tags: [],
+      message: 'Tags retrieved successfullys',
+    };
+    const action = {
+      type: 'ALL_TAGS_SUCCESS',
+      payload
+    };
+    const newState = TagReducer({}, action);
+    expect(newState).toEqual({
+      tags: payload.tags,
+      message: payload.message,
+    });
   });
 });

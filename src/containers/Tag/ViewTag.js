@@ -84,7 +84,7 @@ class ViewTag extends Component {
           username = article.User.username;// eslint-disable-line
         }
         return (<Col s={12} m={12}
-        l={12} xl={6} key={index + 5}>
+        l={12} xl={6} key={article.id}>
         <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} />
         </Col>);
       });

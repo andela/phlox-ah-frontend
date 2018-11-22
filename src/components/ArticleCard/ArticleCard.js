@@ -18,9 +18,9 @@ export const ArticleCard = (props) => {
   return (
   <div>
     <Card className={`${props.size} hoverable articleCard`}
-        header={<CardTitle image={articlePic}> <Link key={0} className="capitalize" to={`/articles/${props.slug}`}>{props.title.substring(0, 50)}</Link> </CardTitle>}
-        actions={[<a href='#' key={0}>Share</a>, <Link key={0} to={`/articles/${props.slug}`}>View Article</Link>,
-        <span key={0}>{moment(props.createdAt).format('D MMMM YYYY')}</span>, <span key={0}>{props.author}</span>]}>
+        header={<CardTitle image={articlePic}> <Link key={props.slug} className="capitalize" to={`/articles/${props.slug}`}>{props.title.substring(0, 50)}</Link> </CardTitle>}
+        actions={[<a href='#' key={props.slug}>Share</a>, <Link key={props.slug} to={`/articles/${props.slug}`}>View Article</Link>,
+        <span key={props.slug}>{moment(props.createdAt).format('D MMMM YYYY')}</span>, <span key={props.slug}>{props.author}</span>]}>
         <span className="hide-on-large-only">{props.description.substring(0, 120)}</span>
         <span className="hide-on-med-and-down">{props.description.substring(0, 90)}</span>
       </Card>

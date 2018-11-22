@@ -130,7 +130,7 @@ class CreateArticle extends Component {
       return 'Saving...';
     } else if (!this.state.loading && this.state.success) {// eslint-disable-line
       return `Saved ${moment(this.state.article.updatedAt).fromNow()}`;
-    } else if (!this.state.loading && !this.state.success && this.state.error === true) {
+    } else if (!this.state.loading && !this.state.success && this.state.error) {
       return 'Not saved';
     }
   }
