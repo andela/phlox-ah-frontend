@@ -131,6 +131,23 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   display: flex;
 }
 
+div.create-article-wrapper {
+  position: relative;
+
+  div.info {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+
+    span.close {
+      position: absolute;
+      right: 5px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+  }
+}
+
 .create-article {
   margin:3px 30px;
   padding-top: 20px;
@@ -191,6 +208,8 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
       margin: 0px;
       left: 12px;
       font-size: 15px;
+      overflow: hidden;
+      height: 30px;
     }
 
     label.browse-btn {

@@ -16,6 +16,7 @@ main {
     background: #ffffff;
     padding-top: 50px;
     width: 90%;
+    min-height: 100vh;
     margin: 0 auto;
     padding: 4% 2.4% 0% 2.4%;
     @media #{$tablet} {

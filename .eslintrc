@@ -40,7 +40,7 @@
     "curly": ["error", "multi-line"],
     "import/no-unresolved": [2, { "commonjs": true }],
     "import/extensions": 0,
-    "no-shadow": ["error", { "allow": ["req", "res", "err", "state", "props"] }],
+    "no-shadow": ["error", { "allow": ["req", "res", "err", "state", "props", ] }],
     "valid-jsdoc": ["error", {
       "requireReturn": true,
       "requireReturnType": true,
