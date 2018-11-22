@@ -152,7 +152,12 @@ class ViewArticle extends Component {
    * @memberof ViewArticle
    */
   dummyContent() {
-    return (<div className={this.state.failure && 'hide'}>
+    let className = '';
+    if (this.state.failure) {
+      className = 'hide';
+    }
+
+    return (<div className={className}>
     <div className="col s12 l6 lighten-5 img-div">
     <div className="dummyPicture"></div>
     </div>
@@ -189,7 +194,15 @@ class ViewArticle extends Component {
         likeStatus = like.like;
       }
     }
+    let likeClassName = 'fas fa-thumbs-up';
+    let dislikeClassName = 'fas fa-thumbs-down';
 
+    if (likeStatus) {
+      likeClassName = 'active fas fa-thumbs-up';
+    }
+    if (likeStatus === false) {
+      dislikeClassName = 'active fas fa-thumbs-up';
+    }
     return (<div>
       <div className="col s12 l6 img-div">
           <img src={article.imgUrl}/>
@@ -223,8 +236,8 @@ class ViewArticle extends Component {
               </div>
           </Row>
           <div className="center-align activity-icons">
-            <div className="col s2"><i className={likeStatus === true ? 'active fas fa-thumbs-up' : 'fas fa-thumbs-up'} onClick={this.likeArticle}></i> {likes.length}</div>
-            <div className="col s2"><i className={likeStatus === false ? 'active fas fa-thumbs-down' : 'fas fa-thumbs-down'} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
+            <div className="col s2"><i className={likeClassName} onClick={this.likeArticle}></i> {likes.length}</div>
+            <div className="col s2"><i className={dislikeClassName} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
             <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div>
             <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
             {(!this.props.user.isAuth
