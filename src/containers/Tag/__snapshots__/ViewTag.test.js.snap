@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ViewTag/> should render without throwing an error 1`] = `
+<Connect(ViewTag)
+  match={
+    Object {
+      "params": Object {
+        "name": "",
+      },
+      "url": "/tags/sports",
+    }
+  }
+/>
+`;

@@ -7,6 +7,39 @@
   h6 {
     color: #6F6A6A;
   }
+  .sidebar-tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    .center {
+      display: block;
+      flex: none;
+    }
+    .title {
+      font-size: 0.9em;
+      margin-top: -5px;
+    }
+    div {
+      margin-bottom: 5px;
+      a {
+        .badge {
+          border-radius: 7%;
+          color: white;
+          &:hover {
+            transition: 0.5s;
+            color: #6F6A6A;
+          }
+        }
+      }
+    }
+  }
+  .more-tags {
+    padding-left: 10px;
+    color: #3B8CA1;
+    font-size: 0.8em;
+    &:hover {
+      color: darken(#3B8CA1, 10)
+    }
+  }
   .card {
     height: 105px;
     box-shadow: none;
