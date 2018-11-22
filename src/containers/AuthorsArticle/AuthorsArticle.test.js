@@ -2,9 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { asyncActions, MY_ARTICLES } from '../BasePath';
 import configureMockStore from 'redux-mock-store';
+import { asyncActions, MY_ARTICLES } from '../BasePath';
 import AuthorsArticle from './AuthorsArticle';
+import MyArticleReducer from '../../reducers/MyArticleReducer';
 
 const mockStore = configureMockStore([thunk]);
 const props = {
@@ -28,7 +29,6 @@ let component;
 let myComponent;
 
 describe('<AuthorsArticle />', () => {
-
   beforeEach(() => {
     component = shallow(
       <Provider store={store}>
@@ -69,10 +69,11 @@ describe('<AuthorsArticle />', () => {
   it('should create an action to set articles array on the store', () => {
     const expectedAction = {
       type: 'MY_ARTICLES_SUCCESS',
-      payload: props.myArticle.articles
+      payload: props.myArticle
     };
-
     expect(asyncActions(MY_ARTICLES).success(expectedAction.payload)).toEqual(expectedAction);
+    const newState = MyArticleReducer({}, expectedAction);
+    expect(newState).toEqual({ articles: props.myArticle });
   });
   it('should create an action to set loading to false', () => {
     const payload = {
@@ -83,6 +84,8 @@ describe('<AuthorsArticle />', () => {
       payload
     };
     expect(asyncActions(MY_ARTICLES).loading(payload)).toEqual(expectedAction);
+    const newState = MyArticleReducer({}, expectedAction);
+    expect(newState).toEqual({ loading: payload });
   });
   it('should create an action to set loading to true', () => {
     const payload = {
@@ -93,6 +96,7 @@ describe('<AuthorsArticle />', () => {
       payload
     };
     expect(asyncActions(MY_ARTICLES).loading(payload)).toEqual(expectedAction);
+    const newState = MyArticleReducer({}, expectedAction);
+    expect(newState).toEqual({ loading: payload });
   });
-
 });

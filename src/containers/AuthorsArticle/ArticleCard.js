@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const ArticleCard = props => (
-    <li key={props.key} className="article">
+    <li key={props.article.id} className="article">
       <div className="photo">
         <img
           src={props.article.imgUrl || props.placeholderImg }
@@ -41,6 +41,7 @@ const ArticleCard = props => (
 
 ArticleCard.propTypes = {
   article: PropTypes.shape({
+    id: PropTypes.number,
     slug: PropTypes.string,
     status: PropTypes.string,
     description: PropTypes.string,

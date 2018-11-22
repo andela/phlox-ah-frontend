@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import DeleteModal from './DeleteModal';
+import DeleteReducer from '../../reducers/DeleteReducer';
 import { asyncActions, DELETE } from '../BasePath';
 
 const mockStore = configureMockStore([thunk]);
@@ -73,6 +74,8 @@ describe('<DeleteModal />', () => {
       payload
     };
     expect(asyncActions(DELETE).loading(payload)).toEqual(expectedAction);
+    const newState = DeleteReducer({}, expectedAction);
+    expect(newState).toEqual({ loading: payload });
   });
   it('should create an action to set loading to true', () => {
     const payload = {
@@ -83,6 +86,7 @@ describe('<DeleteModal />', () => {
       payload
     };
     expect(asyncActions(DELETE).loading(payload)).toEqual(expectedAction);
+    const newState = DeleteReducer({}, expectedAction);
+    expect(newState).toEqual({ loading: payload });
   });
-
 });

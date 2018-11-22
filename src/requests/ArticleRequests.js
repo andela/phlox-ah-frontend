@@ -150,7 +150,7 @@ export const updateArticle = (formData, tags, articleSlug) => (dispatch) => {
 export const publishArticle = ({ slug, status, tags }, props) => (dispatch) => {
   axios.post(tagsConstant.CREATE_TAG_URL, { tags })
     .then(() => {
-      axios.put(`${articleConstant.UPDATE_ARTICLE_URL}/${slug}`, {
+      axios.put(`${articleConstant.ARTICLES_URL}/${slug}`, {
         status, tags
       })
         .then((response) => {

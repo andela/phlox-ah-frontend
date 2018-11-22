@@ -14,7 +14,6 @@ const props = {
     title: 'title',
     slug: 'title',
     status: 'title',
-    description: 'title',
     imgUrl: 'https://via.placeholder.com/300?text=AuthorsHaven',
     body: 'body',
     description: 'description'

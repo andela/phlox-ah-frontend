@@ -73,7 +73,7 @@ class CreateArticle extends Component {
     const { match } = this.props;
     const { articleslug, articlestatus } = match.params;
 
-    if (articleslug && articlestatus && /\/articles\/[\w|-]{2,}\/[\w|-]{2,}\/edit/.test(match.url)) {
+    if (articleslug && articlestatus) {
       this.setState({ editMode: true, isCreated: true });
       this.props.getSingleArticle({ articleslug, articlestatus });
     }
@@ -103,13 +103,6 @@ class CreateArticle extends Component {
       }
       if (props.article.User && props.article.userId !== props.user.id) {
         props.history.push('/');
-      } else {
-        return {
-          article: props.article,
-          error: props.error,
-          loading: props.loading,
-          success: props.success
-        };
       }
     }
     return {
@@ -403,12 +396,26 @@ const mapStateToProps = (state) => {
   const suggestedTags = state.tags.tags;
 
   return {
-    article, tags, categories, suggestedTags, error, loading, success, user: state.user, profile: state.profile, info: state.info
+    article,
+    tags,
+    categories,
+    suggestedTags,
+    error,
+    loading,
+    success,
+    user: state.user,
+    profile: state.profile,
+    info: state.info
   };
 };
 
 export default connect(mapStateToProps,
   {
-    createArticle, updateArticle, publishArticle, getAllCategory, 
-    getAllTags, getSingleArticle, clearMsgInfo: msgInfoActions.clear
+    createArticle,
+    updateArticle,
+    publishArticle,
+    getAllCategory,
+    getAllTags,
+    getSingleArticle,
+    clearMsgInfo: msgInfoActions.clear
   })(CreateArticle);

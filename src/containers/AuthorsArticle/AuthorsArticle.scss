@@ -65,6 +65,8 @@ div.authors-article {
         text-shadow: 0px 0px 8px #444;
         max-height: 80%;
         overflow: hidden;
+        width: 94%;
+        overflow-wrap: break-word;
       }
 
       div.preview  {
@@ -75,6 +77,8 @@ div.authors-article {
         text-align: justify;
         color: #555;
         overflow: hidden;
+        width: 100%;
+        overflow-wrap: break-word;
       }
 
       div.footer  {
