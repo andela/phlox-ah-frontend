@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render without throwing an error 1`] = `
+<CommentTextArea
+  handleChange={[Function]}
+  value="This is article comment"
+>
+  <div
+    className="comment-box"
+  >
+    <textarea
+      id="comment"
+      onChange={[Function]}
+      placeholder="Comment here..."
+      rows="10"
+      value="This is article comment"
+    />
+  </div>
+</CommentTextArea>
+`;
