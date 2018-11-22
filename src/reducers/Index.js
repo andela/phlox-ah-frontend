@@ -1,19 +1,26 @@
 import { combineReducers } from 'redux';
+
 import article from './ArticleReducer';
-import category from './CategoryReducer';
-import info from './MsgInfoReducer';
-import password from './PasswordReducer';
-import signup from './SignupReducer';
-import profile from './ProfileReducer';
-import tags from './TagReducer';
+import myArticle from './MyArticleReducer';
 import user from './UserReducer';
+import info from './MsgInfoReducer';
+import deleteItem from './DeleteReducer';
+import category from './CategoryReducer';
+import password from './PasswordReducer';
+import comments from './CommentReducer';
+import profile from './ProfileReducer';
+import signup from './SignupReducer';
+import tags from './TagReducer';
 import verifyUser from './VerifyUserReducer';
 
 
 const rootReducer = combineReducers({
   article,
   category,
+  deleteItem,
+  comments,
   info,
+  myArticle,
   password,
   profile,
   signup,

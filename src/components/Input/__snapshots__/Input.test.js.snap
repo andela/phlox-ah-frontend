@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Input/> should render without throwing an error 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="input-field col sundefined"
+  >
+    <input
+      className="form-input  input-error"
+      id="id"
+      name="input"
+      onChange={[MockFunction]}
+      required={true}
+      type="text"
+      value="value"
+    />
+    <label
+      className="form-label labelClassName"
+      htmlFor="id"
+    >
+      label
+    </label>
+  </div>
+</div>
+`;

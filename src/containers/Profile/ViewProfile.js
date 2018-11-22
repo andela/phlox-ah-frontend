@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { viewProfile } from '../../requests/ProfileRequest';
 import FollowList from '../../components/FollowList/FollowList';
 import Tags from '../../components/Tags/Tags';
+import AuthorsArticle from '../AuthorsArticle/AuthorsArticle';
 
 import './ViewProfile.scss';
 import './Profile.scss';
@@ -16,17 +17,6 @@ import './Profile.scss';
  * @extends {Component}
  */
 class ViewProfile extends Component {
-  /**
-   * @description - This method runs after component has been mounted
-   * @returns {object} articles
-   * @memberof ViewProfile
-   */
-  componentDidMount() {
-    if (!this.props.profile.firstName) {
-      this.props.viewProfile();
-    }
-  }
-
   /**
    *
    * @description - This method renders the jsx for this component
@@ -40,6 +30,7 @@ class ViewProfile extends Component {
     const listOfFollowers = (
       followers.map((follower, i) => <FollowList key={i}>{follower}</FollowList>));
     const tagList = tags.map((tag, i) => <Tags key={i}>{tag}</Tags>);
+
     return (
       <div className="profile">
         <div className="profile-wrapper">
@@ -107,6 +98,9 @@ class ViewProfile extends Component {
               {/* end of following */}
             </div>
             {/* end of followers */}
+
+            <AuthorsArticle {...this.props} />
+
           </div>
           {/* end of profile info */}
           <div className="profile-edit">
@@ -123,6 +117,8 @@ class ViewProfile extends Component {
             </div>
           </div>
         </div>
+
+
       </div>
     );
   }
