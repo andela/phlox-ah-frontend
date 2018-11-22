@@ -100,7 +100,7 @@ export const createArticle = (formData, tags) => (dispatch) => {
   const headers = {
     'Content-Type': 'application/json;charset=UTF-8',
   };
-  axios.post(tagsConstant.CREATE_TAG_URL, { tags }, headers)
+  axios.post(tagsConstant.TAG_URL, { tags }, headers)
     .then(() => {
       dispatch(asyncActions(CREATE_ARTICLE).loading(true));
       axios.post(articleConstant.ARTICLES_URL, formData, headers)
@@ -124,7 +124,7 @@ export const createArticle = (formData, tags) => (dispatch) => {
 };
 
 export const updateArticle = (formData, tags, articleSlug) => (dispatch) => {
-  axios.post(tagsConstant.CREATE_TAG_URL, { tags })
+  axios.post(tagsConstant.TAG_URL, { tags })
     .then(() => {
       dispatch(asyncActions(UPDATE_ARTICLE).loading(true));
 
@@ -148,7 +148,7 @@ export const updateArticle = (formData, tags, articleSlug) => (dispatch) => {
 };
 
 export const publishArticle = ({ slug, status, tags }, props) => (dispatch) => {
-  axios.post(tagsConstant.CREATE_TAG_URL, { tags })
+  axios.post(tagsConstant.TAG_URL, { tags })
     .then(() => {
       axios.put(`${articleConstant.ARTICLES_URL}/${slug}`, {
         status, tags

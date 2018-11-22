@@ -203,9 +203,15 @@ class ViewArticle extends Component {
     if (likeStatus === false) {
       dislikeClassName = 'active fas fa-thumbs-up';
     }
+    let articlePic = '';
+    if (article.imgUrl === 'null') {
+      articlePic = `https://via.placeholder.com/300?text=${article.title.substring(0, 20)}`;
+    } else {
+      articlePic = article.imgUrl;
+    }
     return (<div>
       <div className="col s12 l6 img-div">
-          <img src={article.imgUrl}/>
+          <img src={articlePic}/>
       </div>
       <div className="col s12 l6">
           <div>

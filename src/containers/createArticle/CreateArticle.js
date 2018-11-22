@@ -156,9 +156,9 @@ class CreateArticle extends Component {
   getAlertMessage() {
     if (this.state.loading && !this.state.success) {
       return 'Saving...';
-    } if (!this.state.loading && this.state.success) {
+    } else if (!this.state.loading && this.state.success) {// eslint-disable-line
       return `Saved ${moment(this.state.article.updatedAt).fromNow()}`;
-    } if (!this.state.loading && !this.state.success && this.state.error === true) {
+    } else if (!this.state.loading && !this.state.success && this.state.error) {
       return 'Not saved';
     }
   }
