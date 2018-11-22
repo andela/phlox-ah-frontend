@@ -108,6 +108,9 @@
       i {
         cursor: pointer;
       }
+      .active{
+        color: #3b8ca1;
+      }
       color: #5e5f63;
     }
     .liked-unliked {
@@ -132,17 +135,6 @@
         width: 100%;
         left: 0%;
         right: 0%;
-      }
-    }
-    .article-body {
-      line-height: 45px;
-      color: rgb(114, 111, 111);
-      font: {
-        size: 1.2em;
-        weight: 400;
-      }
-      @media #{$mobile} {
-        font-size: 1em;
       }
     }
     .bold {
