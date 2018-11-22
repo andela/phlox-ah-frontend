@@ -224,7 +224,7 @@ class ViewArticle extends Component {
           </Row>
           <div className="center-align activity-icons">
             <div className="col s2"><i className={likeStatus === true ? 'active fas fa-thumbs-up' : 'fas fa-thumbs-up'} onClick={this.likeArticle}></i> {likes.length}</div>
-            <div className="col s2"><i className={likeStatus === false ? 'active fas fa-thumbs-up' : 'fas fa-thumbs-up'} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
+            <div className="col s2"><i className={likeStatus === false ? 'active fas fa-thumbs-down' : 'fas fa-thumbs-down'} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
             <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div>
             <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
             {(!this.props.user.isAuth
