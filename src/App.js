@@ -37,6 +37,11 @@ class App extends Component {
         <ResetPassword />
         <div>
           <Switch>
+            <Route exact path="/" component={Home} />
+            <PrivateRoute exact
+              path="/articles/:articleslug/:articlestatus/edit"
+              component={CreateArticle}
+            />
             <PrivateRoute path='/profile/edit' component={EditProfile} />
             <PrivateRoute path='/profile' component={ViewProfile} />
             <Route path="/" exact component={Home} />

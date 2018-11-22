@@ -1,12 +1,13 @@
 import axios from 'axios';
-
 import { asyncActions } from '../util/AsyncUtil';
 import {
-  ALL_ARTICLES, CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE,
-  VIEW_ARTICLE, FEATURED_ARTICLES, POPULAR_ARTICLES, RATE_ARTICLE, LIKE_ARTICLE, DISLIKE_ARTICLE
+  ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE,
+  PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES,
+  DELETE_ARTICLE, FEATURED_ARTICLES, POPULAR_ARTICLES, RATE_ARTICLE, LIKE_ARTICLE, DISLIKE_ARTICLE
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
+import { DELETE } from '../actionTypes/DeleteContants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
 
 const formatError = (error) => {
@@ -17,6 +18,21 @@ const formatError = (error) => {
     return [error.message];
   }
   return ['Error occurred'];
+};
+
+
+export const deleteArticle = payload => (dispatch) => {
+  dispatch(asyncActions(DELETE).loading(true));
+  return axios.delete(`${articleConstant.ARTICLES_URL}/${payload}`)
+    .then((response) => {
+      dispatch(asyncActions(DELETE_ARTICLE).success(payload));
+      dispatch(asyncActions(DELETE).loading(false));
+      return response;
+    })
+    .catch((error) => {
+      dispatch(asyncActions(DELETE).loading(false));
+      throw error;
+    });
 };
 
 export const getArticles = () => (dispatch) => {
@@ -34,7 +50,7 @@ export const getArticles = () => (dispatch) => {
 
 export const viewArticle = payload => (dispatch) => {
   dispatch(asyncActions(VIEW_ARTICLE).loading(true));
-  axios.get(`${articleConstant.VIEW_ARTICLE_URL}/${payload}`)
+  axios.get(`${articleConstant.ARTICLES_URL}/${payload}`)
     .then((response) => {
       if (response.status === 200) {
         dispatch(asyncActions(VIEW_ARTICLE).success(response.data.article));
@@ -44,12 +60,33 @@ export const viewArticle = payload => (dispatch) => {
     .catch(error => dispatch(asyncActions(VIEW_ARTICLE).failure(true, error)));
 };
 
+export const getSingleArticle = payload => (dispatch) => {
+  dispatch(asyncActions(SINGLE_ARTICLE).loading(true));
+  axios.get(`${articleConstant.ARTICLES_URL}/${payload.articlestatus}/${payload.articleslug}`)
+    .then((response) => {
+      dispatch(asyncActions(SINGLE_ARTICLE).success(response.data.article));
+      dispatch(asyncActions(SINGLE_ARTICLE).loading(false));
+    })
+    .catch(error => dispatch(asyncActions(SINGLE_ARTICLE).failure(true, error)));
+};
+
+export const getMyArticles = () => (dispatch) => {
+  dispatch(asyncActions(MY_ARTICLES).loading(true));
+  return axios.get(articleConstant.MY_ARTICLES_URL)
+    .then((response) => {
+      dispatch(asyncActions(MY_ARTICLES).success(response.data.articles));
+      dispatch(asyncActions(MY_ARTICLES).loading(false));
+    })
+    .catch(error => dispatch(asyncActions(MY_ARTICLES)
+      .failure(true, error)));
+};
+
 export const rateArticle = (slug, rating) => (dispatch) => {
   const headers = {
     'Content-Type': 'application/json;charset=UTF-8',
   };
   dispatch(asyncActions(RATE_ARTICLE).loading(true));
-  axios.post(`${articleConstant.RATE_ARTICLE_URL}/${slug}/rate`, { rating }, headers)
+  axios.post(`${articleConstant.ARTICLES_URL}/${slug}/rate`, { rating }, headers)
     .then((response) => {
       if (response.status === 200) {
         dispatch(asyncActions(RATE_ARTICLE).success(response.data.article));
@@ -66,10 +103,10 @@ export const createArticle = (formData, tags) => (dispatch) => {
   axios.post(tagsConstant.CREATE_TAG_URL, { tags }, headers)
     .then(() => {
       dispatch(asyncActions(CREATE_ARTICLE).loading(true));
-      axios.post(articleConstant.CREATE_ARTICLES_URL, formData, headers)
+      axios.post(articleConstant.ARTICLES_URL, formData, headers)
         .then((response) => {
-          dispatch(asyncActions(CREATE_ARTICLE).loading(false));
           dispatch(asyncActions(CREATE_ARTICLE).success(response.data));
+          dispatch(asyncActions(CREATE_ARTICLE).loading(false));
           dispatch(msgInfoActions.success([response.data.message]));
         })
         .catch((error) => {
@@ -91,7 +128,7 @@ export const updateArticle = (formData, tags, articleSlug) => (dispatch) => {
     .then(() => {
       dispatch(asyncActions(UPDATE_ARTICLE).loading(true));
 
-      axios.put(`${articleConstant.UPDATE_ARTICLE_URL}/${articleSlug}`, formData)
+      axios.put(`${articleConstant.ARTICLES_URL}/${articleSlug}`, formData)
         .then((response) => {
           dispatch(asyncActions(UPDATE_ARTICLE).success(response.data));
           dispatch(msgInfoActions.success([response.data.message]));
@@ -110,15 +147,16 @@ export const updateArticle = (formData, tags, articleSlug) => (dispatch) => {
     });
 };
 
-export const publishArticle = ({ slug, status, tags }) => (dispatch) => {
+export const publishArticle = ({ slug, status, tags }, props) => (dispatch) => {
   axios.post(tagsConstant.CREATE_TAG_URL, { tags })
     .then(() => {
-      axios.put(`${articleConstant.UPDATE_ARTICLE_URL}/${slug}`, {
+      axios.put(`${articleConstant.ARTICLES_URL}/${slug}`, {
         status, tags
       })
         .then((response) => {
           dispatch(asyncActions(PUBLISH_ARTICLE).success(response.data));
           dispatch(msgInfoActions.success([response.data.message]));
+          props.history.push(`/articles/${slug}`);
         })
         .catch((error) => {
           dispatch(asyncActions(PUBLISH_ARTICLE)
@@ -161,7 +199,7 @@ export const getPopularArticles = () => (dispatch) => {
 
 export const likeArticle = payload => (dispatch) => {
   dispatch(asyncActions(DISLIKE_ARTICLE).loading(true));
-  axios.post(`${articleConstant.LIKE_DISLIKE_URL}/${payload}/like`)
+  axios.post(`${articleConstant.ARTICLES_URL}/${payload}/like`)
     .then((response) => {
       if (response.status === 200) {
         dispatch(asyncActions(LIKE_ARTICLE).success(response.data.message));
@@ -174,7 +212,7 @@ export const likeArticle = payload => (dispatch) => {
 
 export const dislikeArticle = payload => (dispatch) => {
   dispatch(asyncActions(DISLIKE_ARTICLE).loading(true));
-  axios.post(`${articleConstant.LIKE_DISLIKE_URL}/${payload}/dislike`)
+  axios.post(`${articleConstant.ARTICLES_URL}/${payload}/dislike`)
     .then((response) => {
       if (response.status === 200) {
         dispatch(asyncActions(DISLIKE_ARTICLE).success(response.data.message));

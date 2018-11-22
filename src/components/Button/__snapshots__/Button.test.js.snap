@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Button/> should render without throwing an error 1`] = `
+<div
+  className="row"
+>
+  <button
+    className="btn waves-effect waves-light form-button class-name"
+    onClick={[MockFunction]}
+    type="button"
+  >
+    button
+  </button>
+</div>
+`;

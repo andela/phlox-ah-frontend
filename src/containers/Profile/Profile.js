@@ -141,6 +141,7 @@ class Profile extends Component {
               <Input s={12} l={6} placeholder="First Name" label="Firstname" name="firstName" onChange={this.handleInputChange} value={this.state.firstName} />
               <Input s={12} l={6} placeholder="Last Name" label="Lastname" name="lastName" onChange={this.handleInputChange} value={this.state.lastName}/>
               <Input s={12} l={6} placeholder="Contact" label="Contact" name="contact" onChange={this.handleInputChange} value={this.state.contact}/>
+
               <div className="col input-field s12 l6">
                 <select
                   value={this.state.gender}
@@ -152,15 +153,16 @@ class Profile extends Component {
                   <option value="female">Female</option>
                 </select>
               </div>
+
               <Input s={12} type='textarea' rows="4" placeholder="Bio" label="Bio" name="bio" onChange={this.handleInputChange} value={this.state.bio}/>
               <Col s={12}>
-              <Button s={12} l={6}className="updateButton" waves='light'>Update Profile  <i className="fas fa-edit"></i></Button>
+              <Button s={12} l={6} className="updateButton" waves='light'>Update Profile  <i className="fas fa-edit"></i></Button>
               </Col>
             </Row>
           </form>
-          </Col>
-        </Row>
-      </div>
+        </Col>
+      </Row>
+    </div>
     );
   }
 }
