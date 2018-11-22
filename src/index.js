@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import jwtDecode from 'jwt-decode';
 import queryString from 'query-string';
 import setAuthToken from './util/AuthTokenUtil';
@@ -23,7 +24,7 @@ if (localStorage.token) {
 
 const parsedToken = queryString.parse(window.location.search);
 
-const store = createStore(rootReducer, applyMiddleware(createLogger(), thunk));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(createLogger(), thunk)));
 
 if (localStorage.getItem('token') === null) {
   if (parsedToken.token) {

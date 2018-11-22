@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { asyncActions } from '../util/AsyncUtil';
 import {
-  FOLLOW_USER, UNFOLLOW_USER, GET_FOLLOWINGS
+  FOLLOW_USER, UNFOLLOW_USER, GET_FOLLOWINGS, GET_FOLLOWERS
 } from '../actionTypes/UserConstants';
 import { followUserConstant } from '../constants/Constants';
 import { msgInfoActions } from '../actions/MsgInfoActions';
@@ -40,5 +40,17 @@ export const getFollowings = () => (dispatch) => {
         dispatch(asyncActions(GET_FOLLOWINGS).loading(false));
       }
     })
-    .catch(error => dispatch(asyncActions(FOLLOW_USER).failure(true, error)));
+    .catch(error => dispatch(asyncActions(GET_FOLLOWINGS).failure(true, error)));
+};
+
+export const getFollowers = () => (dispatch) => {
+  dispatch(asyncActions(GET_FOLLOWERS).loading(true));
+  axios.get(`${followUserConstant.GET_FOLLOWERS_CONSTANT}`)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(GET_FOLLOWERS).success(response.data));
+        dispatch(asyncActions(GET_FOLLOWERS).loading(false));
+      }
+    })
+    .catch(error => dispatch(asyncActions(GET_FOLLOWERS).failure(true, error)));
 };

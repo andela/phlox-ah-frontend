@@ -21,13 +21,14 @@ export const profileConstant = {
 export const followUserConstant = {
   FOLLOW_USER_CONSTANT: `${BASE_URL}/api/v1/profiles`,
   GET_FOLLOWINGS_CONSTANT: `${BASE_URL}/api/v1/followings`,
+  GET_FOLLOWERS_CONSTANT: `${BASE_URL}/api/v1/followers`,
 };
 
 export const loginConstant = {
   LOGIN_URL: `${BASE_URL}/api/v1/login`,
   GOOGLE_LOGIN_URL: `${BASE_URL}/api/v1/login/google`,
   FACEBOOK_LOGIN_URL: `${BASE_URL}/api/v1/login/facebook`,
-  TWITTER_LOGIN_URL: 'http://127.0.0.1:3000/api/v1/login/twitter'
+  TWITTER_LOGIN_URL: `${BASE_URL}/api/v1/login/twitter`
 };
 
 export const categoryConstant = {
@@ -43,3 +44,7 @@ export const signupConstant = {
   SIGNUP_URL: `${BASE_URL}/api/v1/signup`,
   VERIFY_URL: `${BASE_URL}/api/v1/users/verify`
 };
+
+export const commentConstant = articleSlug => ({
+  COMMENT_URL: `${BASE_URL}/api/v1/articles/${articleSlug}/comments`,
+});

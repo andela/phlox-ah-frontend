@@ -1,5 +1,5 @@
 import {
-  FOLLOW_USER, UNFOLLOW_USER, GET_FOLLOWINGS
+  FOLLOW_USER, UNFOLLOW_USER, GET_FOLLOWINGS, GET_FOLLOWERS
 } from '../actionTypes/UserConstants';
 import { asyncActionName } from '../util/AsyncUtil';
 
@@ -29,11 +29,13 @@ const followUserReducer = (state = initialState, action) => {
     case asyncActionName(GET_FOLLOWINGS).loading:
       return { ...state, loading: action.payload };
     case asyncActionName(GET_FOLLOWINGS).success:
-      return {
-        ...state,
-        followings: action.payload.following,
-        followers: action.payload.followers
-      };
+      return { ...state, followings: action.payload.following };
+    case asyncActionName(GET_FOLLOWERS).failure:
+      return { ...state, error: action.payload.status };
+    case asyncActionName(GET_FOLLOWERS).loading:
+      return { ...state, loading: action.payload };
+    case asyncActionName(GET_FOLLOWERS).success:
+      return { ...state, followers: action.payload.followers };
     default:
       return state;
   }

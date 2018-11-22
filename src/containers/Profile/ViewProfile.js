@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { viewProfile } from '../../requests/ProfileRequest';
 import FollowList from '../../components/FollowList/FollowList';
 import Tags from '../../components/Tags/Tags';
-import { getFollowings } from '../../requests/FollowRequests';
+import { getFollowings, getFollowers } from '../../requests/FollowRequests';
 
 
 import './ViewProfile.scss';
@@ -25,6 +25,7 @@ class ViewProfile extends Component {
    */
   componentDidMount() {
     this.props.getFollowings();
+    this.props.getFollowers();
     if (!this.props.profile.firstName) {
       this.props.viewProfile();
     }
@@ -43,8 +44,8 @@ class ViewProfile extends Component {
       this.props.followings.slice(0, 3).map((following, i) => <FollowList
       key={i}>{following.username}</FollowList>));
     const listOfFollowers = (
-      this.props.followers.slice(0, 3).map((following, i) => <FollowList
-      key={i}>{following.username}</FollowList>));
+      this.props.followers.slice(0, 3).map((followers, i) => <FollowList
+      key={i}>{followers.username}</FollowList>));
     const tagList = tags.map((tag, i) => <Tags key={i}>{tag}</Tags>);
     return (
       <div className="profile">
@@ -158,10 +159,11 @@ ViewProfile.propTypes = {
   profile: PropTypes.object,
   user: PropTypes.object,
   getFollowings: PropTypes.func.isRequired,
+  getFollowers: PropTypes.func.isRequired,
   followings: PropTypes.array,
   followers: PropTypes.array,
 };
 
 export default connect(mapStateToProps, {
-  viewProfile, getFollowings
+  viewProfile, getFollowings, getFollowers
 })(ViewProfile);

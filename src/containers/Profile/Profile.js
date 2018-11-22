@@ -142,7 +142,11 @@ class Profile extends Component {
               <Input s={12} l={6} placeholder="Last Name" label="Lastname" name="lastName" onChange={this.handleInputChange} value={this.state.lastName}/>
               <Input s={12} l={6} placeholder="Contact" label="Contact" name="contact" onChange={this.handleInputChange} value={this.state.contact}/>
               <div className="col input-field s12 l6">
-                <select value={this.state.gender} onChange={this.handleInputChange} name="gender" className="browser-default s6" >
+                <select
+                  value={this.state.gender}
+                  onChange={this.handleInputChange}
+                  name="gender"
+                  className="browser-default s6" >
                   <option value="" disabled>Choose gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>

@@ -3,10 +3,15 @@ import Avatar from 'react-avatar';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 import { Row } from 'react-materialize';
+import StarRatings from 'react-star-ratings';
 import './ViewArticle.scss';
 import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
-import StarRatings from 'react-star-ratings';
+import CommentTextArea from '../../components/CommentTextArea/CommentTextArea';
+import CommentButton from '../../components/CommentButton/CommentButton';
+import CommentDisplayBox from '../../components/CommentDisplayBox/CommentDisplayBox';
+import { createComment, getAllComment } from '../../requests/CommentRequest';
+import ArticleTags from '../../components/Tags/ArticleTags';
 import { viewArticle, rateArticle } from '../../requests/ArticleRequests';
 import { followUser, unfollowUser, getFollowings } from '../../requests/FollowRequests';
 
@@ -22,11 +27,14 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: [], followings: []
+      success: false, loading: false, failure: false, article: {}, comment: '', followings: []
     };
+
+    this.addComment = this.addComment.bind(this);
     this.addRating = this.addRating.bind(this);
     this.followAuthor = this.followAuthor.bind(this);
     this.unfollowAuthor = this.unfollowAuthor.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   // eslint-disable-next-line require-jsdoc
@@ -62,6 +70,72 @@ class ViewArticle extends Component {
   componentDidMount() {
     this.props.viewArticle(this.props.match.params.articleslug);
     this.props.getFollowings();
+    this.props.getAllComment(this.props.match.params.articleslug);
+  }
+
+  /**
+   * @description - This method sets the input values
+   * @param {object} e
+   * @returns {object} void
+   * @memberof Comment
+   */
+  handleChange(e) {
+    this.setState({ [e.target.id]: e.target.value });
+  }
+
+  /**
+    * @description - This method is used to create comment
+    * @returns {object} - return payloads
+    * @memberof Comment
+    */
+  addComment() {
+    const { comment, article } = this.state;
+    this.setState({ comment: '' });
+    this.props.createComment(article.slug, comment);
+  }
+
+  /**
+  * @description - This method displays the login modal
+  * @returns {object} null
+  * @memberof Header
+  */
+  signIn() {
+    $('#login-modal').modal('open');
+  }
+
+  /**
+    * @description - This method is used to render comment input for authenticated users
+    * @returns {object} - return jsx
+    * @memberof Comment
+    */
+  renderCommentInput() {
+    if (this.props.user.isAuth) {
+      return (
+        <div>
+          <CommentTextArea
+            handleChange={this.handleChange}
+            value={this.state.comment} />
+          <CommentButton addComment={this.addComment} />
+        </div>);
+    }
+    return (
+      <p>You must logIn to comment on this article. <button className="login-user" onClick={this.signIn}>LogIn</button>
+      </p>
+    );
+  }
+
+  /**
+    * @description - This method is used to render list of comments
+    * @returns {object} - return jsx
+    * @memberof Comment
+    */
+  renderCommentList() {
+    return this.props.comments.map(
+      comment => <CommentDisplayBox
+        key={comment.id}
+        comment={comment}
+        />
+    );
   }
 
   /**
@@ -104,8 +178,8 @@ class ViewArticle extends Component {
               <Row className="valign-wrapper">
                   <div className="col s4 m3 l4">
                   {
-                      !article.User.Profile || !article.User.Profile.profileImage ? <Avatar name={article.User.username} size="75" round={true} />
-                        : <img className="profileImage" src={article.User.Profile.profileImage}/>
+                    !article.User.Profile || !article.User.Profile.profileImage ? <Avatar name={article.User.username} size="75" round={true} />
+                      : <img className="profileImage" src={article.User.Profile.profileImage}/>
                   }
                   </div>
                   <div className="col s8 m9 l8">
@@ -117,7 +191,7 @@ class ViewArticle extends Component {
               </div>
               {this.props.user.username !== article.User.username
               && <div className="col s4">
-              {this.props.followings.find(user => user.username === article.User.username)
+              {this.props.followings.find(author => author.username === article.User.username)
               === undefined
                 ? <button
                   onClick={this.followAuthor}
@@ -140,13 +214,15 @@ class ViewArticle extends Component {
             <div className="col s2"><i className="fas fa-thumbs-down dislikeButton"></i> 3</div>
             <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div>
             <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
-            {!this.props.user.isAuth && <StarRatings
+            {(!this.props.user.isAuth
+                  || article.User.username === this.props.user.username) && <StarRatings
                     rating={article.ratingAverage}
                     starDimension="20px"
                     className="col s4"
                     starSpacing="5px"
                   /> }
-                  {this.props.user.isAuth && <StarRatings
+                  {(this.props.user.isAuth
+                  && article.User.username !== this.props.user.username) && <StarRatings
                     rating={article.ratingAverage}
                     starDimension="20px"
                     starRatedColor="#5e5f63"
@@ -155,7 +231,6 @@ class ViewArticle extends Component {
                     starSpacing="5px"
                     name='rating'
                   />}
-                  {console.log('this state>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', this.props)}
               </div>
               <button
                 className="btn waves-effect waves-light editButton"
@@ -210,7 +285,9 @@ class ViewArticle extends Component {
                 }
                 { this.showContent() }
             </Row>
-            </div>
+            {this.renderCommentInput()}
+            {this.renderCommentList()}
+          </div>
         </Row>
         </div>
     </div>
@@ -219,19 +296,22 @@ class ViewArticle extends Component {
 }
 
 ViewArticle.propTypes = {
+  article: PropTypes.object,
+  articleslug: PropTypes.string,
+  comments: PropTypes.array,
+  createComment: PropTypes.func,
+  getAllComment: PropTypes.func.isRequired,
+  failure: PropTypes.bool,
+  loading: PropTypes.bool,
+  match: PropTypes.object,
+  rateArticle: PropTypes.func,
+  success: PropTypes.bool,
+  user: PropTypes.object,
   viewArticle: PropTypes.func.isRequired,
-  rateArticle: PropTypes.func.isRequired,
   followUser: PropTypes.func.isRequired,
   unfollowUser: PropTypes.func.isRequired,
-  getFollowings: PropTypes.func.isRequired,
-  loading: PropTypes.bool,
-  success: PropTypes.bool,
-  failure: PropTypes.bool,
-  article: PropTypes.object,
   followings: PropTypes.array,
-  match: PropTypes.object,
-  articleslug: PropTypes.string,
-  user: PropTypes.object
+  getFollowings: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -239,10 +319,11 @@ const mapStateToProps = state => ({
   success: state.article.success,
   failure: state.article.failure,
   article: state.article.article,
+  comments: state.comments.comment,
   user: state.user,
   followings: state.followUser.followings
 });
 
 export default connect(mapStateToProps, {
-  viewArticle, rateArticle, followUser, getFollowings, unfollowUser
+  viewArticle, createComment, getAllComment, rateArticle, followUser, getFollowings, unfollowUser
 })(ViewArticle);

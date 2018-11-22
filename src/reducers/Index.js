@@ -4,6 +4,7 @@ import category from './CategoryReducer';
 import info from './MsgInfoReducer';
 import password from './PasswordReducer';
 import signup from './SignupReducer';
+import comments from './CommentReducer';
 import profile from './ProfileReducer';
 import tags from './TagReducer';
 import user from './UserReducer';
@@ -14,6 +15,7 @@ import followUser from './FollowUserReducer';
 const rootReducer = combineReducers({
   article,
   category,
+  comments,
   info,
   password,
   profile,
