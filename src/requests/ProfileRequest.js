@@ -8,7 +8,7 @@ export const newProfile = (profile, props) => (dispatch) => {
   axios.post(profileConstant.PROFILE_URL, profile)
     .then((response) => {
       dispatch(asyncActions(NEW_PROFILE).success(response.data));
-      props.history.push('/profile', null);
+      props.history.push('/profile');
     })
     .catch(error => dispatch(asyncActions(NEW_PROFILE).failure(true, error)));
 };
