@@ -2,7 +2,7 @@ import axios from 'axios';
 import { asyncActions } from '../util/AsyncUtil';
 import {
   ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE,
-  PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES,
+  PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES, SEARCH_ARTICLES,
   DELETE_ARTICLE, FEATURED_ARTICLES, POPULAR_ARTICLES, RATE_ARTICLE, LIKE_ARTICLE, DISLIKE_ARTICLE
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
@@ -45,6 +45,19 @@ export const getArticles = () => (dispatch) => {
       }
     })
     .catch(error => dispatch(asyncActions(ALL_ARTICLES)
+      .failure(true, error)));
+};
+
+export const searchArticles = payload => (dispatch) => {
+  dispatch(asyncActions(SEARCH_ARTICLES).loading(true));
+  axios.get(`${articleConstant.SEARCH_ARTICLES_URL}${payload}`)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(SEARCH_ARTICLES).success(response.data.articles));
+        dispatch(asyncActions(SEARCH_ARTICLES).loading(false));
+      }
+    })
+    .catch(error => dispatch(asyncActions(SEARCH_ARTICLES)
       .failure(true, error)));
 };
 

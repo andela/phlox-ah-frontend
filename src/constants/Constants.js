@@ -6,6 +6,7 @@ export const articleConstant = {
   FEATURED_ARTICLES_URL: `${BASE_URL}/api/v1/articles/featured`,
   POPULAR_ARTICLES_URL: `${BASE_URL}/api/v1/articles/popular`,
   ARTICLES_URL: `${BASE_URL}/api/v1/articles`,
+  SEARCH_ARTICLES_URL: `${BASE_URL}/api/v1/search`,
 };
 
 export const tagsConstant = {
