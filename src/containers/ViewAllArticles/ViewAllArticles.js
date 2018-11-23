@@ -49,13 +49,10 @@ class ViewAllArticles extends Component {
    * @returns {jsx} - jsx
    */
   showAllArticles() {
-    if (this.state.success) {
-      return this.state.articles.map((article, index) => {
-        let username = '';
-        if (article.User) {
-          username = article.User.username;// eslint-disable-line
-        }
-        return (
+    const { articles } = this.state;
+    return articles.map((article) => {
+      const username = article.User ? article.User.username : '';
+      return (
         <Col s={12} m={12} l={12} xl={6} key={article.id}>
           <ArticleCard
             size="medium"
@@ -67,9 +64,7 @@ class ViewAllArticles extends Component {
             slug={article.slug}
           />
         </Col>);
-      });
-    }
-    return (<h5 className="center no-tags">There are no articles at the moment</h5>);
+    });
   }
 
   /**
@@ -78,6 +73,7 @@ class ViewAllArticles extends Component {
    * @returns {jsx} - jsx
    */
   render() {
+    const { success } = this.state;
     return (
       <div>
          <main>
@@ -85,7 +81,7 @@ class ViewAllArticles extends Component {
           <Row>
               <Col s={12} m={12} l={8} xl={9} className="column-1">
                 <Row>
-                  { this.showAllArticles() }
+                  { success ? this.showAllArticles() : <h5 className="center no-tags">There are no articles at the moment</h5> }
                 </Row>
               </Col>
               <Col s={12} m={9} l={4} xl={3} className="sidebar">
