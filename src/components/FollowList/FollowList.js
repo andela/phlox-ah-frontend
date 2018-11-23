@@ -10,8 +10,7 @@ import { Link } from 'react-router-dom';
 export default function FollowList(props) {
   return (
     <li className="author">
-    <Link to="#">
-      <div className="photo"></div>
+    <Link to=''>
       <div className="name">
         {props.children}
       </div>

@@ -7,6 +7,8 @@ import ViewProfile from './containers/Profile/ViewProfile';
 import EditProfile from './containers/Profile/Profile';
 import Home from './containers/Home/Home';
 import Signup from './containers/Signup/Signup';
+import Followings from './containers/Followings/Followings';
+import Followers from './containers/Followings/Followers';
 import ForgotPassword from './containers/Password/ForgotPassword';
 import ResetPassword from './containers/Password/ResetPassword';
 import PrivateRoute from './PrivateRoute';
@@ -43,8 +45,10 @@ class App extends Component {
               path="/articles/:articleslug/:articlestatus/edit"
               component={CreateArticle}
             />
-            <PrivateRoute path='/profile/edit' component={EditProfile} />
-            <PrivateRoute path='/profile' component={ViewProfile} />
+            <PrivateRoute path="/profile/edit" component={EditProfile} />
+            <PrivateRoute path="/following" component={Followings} />
+            <PrivateRoute path="/followers" component={Followers} />
+            <PrivateRoute path="/profile" component={ViewProfile} />
             <Route path="/" exact component={Home} />
             <Route path="/password/forgot-success" component={SentResetPasswordMail} />
             <Route path="/password/reset/:token" component={Home} />

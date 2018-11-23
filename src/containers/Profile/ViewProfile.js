@@ -26,9 +26,6 @@ class ViewProfile extends Component {
   componentDidMount() {
     this.props.getFollowings();
     this.props.getFollowers();
-    if (!this.props.profile.firstName) {
-      this.props.viewProfile();
-    }
   }
 
   /**
@@ -41,10 +38,12 @@ class ViewProfile extends Component {
     const tags = ['Religion', 'Sports', 'Technology', 'Music', 'Art', 'Software', 'Finance'];
     const listOfFollowings = (
       this.props.followings.slice(0, 3).map((following, i) => <FollowList
-      key={i}>{following.username}</FollowList>));
+      key={i}>{following.Profile && following.Profile.profileImage ? <img src={following.Profile.profileImage} alt="Profile Image" className="circle responsive-img follow-pic"/>
+        : <Avatar name={following.username} size="50" round={true} />}{following.username}</FollowList>));
     const listOfFollowers = (
       this.props.followers.slice(0, 3).map((followers, i) => <FollowList
-      key={i}>{followers.username}</FollowList>));
+      key={i}>{followers.Profile && followers.Profile.profileImage ? <img src={followers.Profile.profileImage} alt="Profile Image" className="circle responsive-img follow-pic"/>
+        : <Avatar name={followers.username} size="50" round={true} />}{followers.username}</FollowList>));
     const tagList = tags.map((tag, i) => <Tags key={i}>{tag}</Tags>);
 
     return (
@@ -96,11 +95,9 @@ class ViewProfile extends Component {
                   {listOfFollowings}
                   {this.props.followings.length === 0 && <p>You are not following any author</p>}
                 </ul>
-                {this.props.followings.length > 3
-                && <div className="more">
-                  <Link to="#">View more</Link>
+                <div className="more">
+                  <Link to="/following">View more</Link>
                 </div>
-                }
               </div>
               {/* end of follow */}
               <div className="following">
@@ -111,11 +108,9 @@ class ViewProfile extends Component {
                   {listOfFollowers}
                   {this.props.followers.length === 0 && <p>You do not have any followers</p>}
                 </ul>
-                {this.props.followers.length > 3
-                && <div className="more">
-                  <Link to="#">View more</Link>
+                 <div className="more">
+                  <Link to="/followers">View more</Link>
                 </div>
-                }
               </div>
               {/* end of following */}
             </div>
