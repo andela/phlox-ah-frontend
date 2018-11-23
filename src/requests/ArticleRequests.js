@@ -40,9 +40,20 @@ export const getArticles = () => (dispatch) => {
   axios.get(articleConstant.ALL_ARTICLES_URL)
     .then((response) => {
       if (response.status === 200) {
-        dispatch(asyncActions(ALL_ARTICLES).success(response.data.articles));
+        dispatch(asyncActions(ALL_ARTICLES).success(response.data));
         dispatch(asyncActions(ALL_ARTICLES).loading(false));
       }
+    })
+    .catch(error => dispatch(asyncActions(ALL_ARTICLES)
+      .failure(true, error)));
+};
+
+export const getArticlesByPages = pageNumber => (dispatch) => {
+  dispatch(asyncActions(ALL_ARTICLES).loading(true));
+  axios.get(`${articleConstant.ALL_ARTICLES_URL}?page=${pageNumber}`)
+    .then((response) => {
+      dispatch(asyncActions(ALL_ARTICLES).success(response.data));
+      dispatch(asyncActions(ALL_ARTICLES).loading(false));
     })
     .catch(error => dispatch(asyncActions(ALL_ARTICLES)
       .failure(true, error)));
