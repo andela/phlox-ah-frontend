@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Avatar from 'react-avatar';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Moment from 'moment';
 import { Row } from 'react-materialize';
 import StarRatings from 'react-star-ratings';
@@ -12,6 +13,7 @@ import CommentTextArea from '../../components/CommentTextArea/CommentTextArea';
 import CommentButton from '../../components/CommentButton/CommentButton';
 import CommentDisplayBox from '../../components/CommentDisplayBox/CommentDisplayBox';
 import { createComment, getAllComment } from '../../requests/CommentRequest';
+import { bookmarkArticle, allBookmarks, deleteBookmark } from '../../requests/BookmarkRequests';
 import ArticleTags from '../../components/Tags/ArticleTags';
 import {
   viewArticle, rateArticle, likeArticle, dislikeArticle
@@ -29,7 +31,7 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: {}, user: {}, comment: ''
+      success: false, loading: false, failure: false, article: {}, user: {}, comment: '', bookmarks: []
     };
 
     this.addComment = this.addComment.bind(this);
@@ -37,12 +39,42 @@ class ViewArticle extends Component {
     this.likeArticle = this.likeArticle.bind(this);
     this.dislikeArticle = this.dislikeArticle.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.bookmark = this.bookmark.bind(this);
   }
 
 
   // eslint-disable-next-line require-jsdoc
   addRating(newRating, name) {
     this.props.rateArticle(this.props.match.params.articleslug, newRating);
+  }
+
+  /**
+   *
+   * @returns {func} - bookmark
+   * @memberof ViewArticle
+   */
+  bookmark() {
+    const bookmarks = this.state.bookmarks
+      .filter(bookmark => bookmark.articleId === this.state.article.id);
+    if (bookmarks.length) {
+      this.props.deleteBookmark(this.state.article.id);
+    } else {
+      this.props.bookmarkArticle(this.state.article.id);
+    }
+  }
+
+  /**
+   *
+   * @returns {jsx} - jsx
+   * @memberof ViewArticle
+   */
+  showBookmarkIcon() {
+    const bookmarks = this.state.bookmarks
+      .filter(bookmark => bookmark.articleId === this.state.article.id);
+    if (bookmarks.length) {
+      return (<i className="fas fa-bookmark bookmarked bookmarkButton"></i>);
+    }
+    return (<i className="fas fa-bookmark not-bookmarked bookmarkButton"></i>);
   }
 
   /**
@@ -79,6 +111,7 @@ class ViewArticle extends Component {
   componentDidMount() {
     this.props.viewArticle(this.props.match.params.articleslug);
     this.props.getAllComment(this.props.match.params.articleslug);
+    this.props.allBookmarks();
   }
 
   /**
@@ -201,7 +234,7 @@ class ViewArticle extends Component {
       likeClassName = 'active fas fa-thumbs-up';
     }
     if (likeStatus === false) {
-      dislikeClassName = 'active fas fa-thumbs-up';
+      dislikeClassName = 'active fas fa-thumbs-down';
     }
     let articlePic = '';
     if (article.imgUrl === 'null') {
@@ -244,7 +277,8 @@ class ViewArticle extends Component {
           <div className="center-align activity-icons">
             <div className="col s2"><i className={likeClassName} onClick={this.likeArticle}></i> {likes.length}</div>
             <div className="col s2"><i className={dislikeClassName} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
-            <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div>
+            {(!this.props.user.isAuth || article.User.username === this.props.user.username) && <div className="col s1"><i className="fas fa-bookmark no-bookmark bookmarkButton"></i></div> }
+            {(this.props.user.isAuth && article.User.username !== this.props.user.username) && <div className="col s1" onClick={this.bookmark}>{this.showBookmarkIcon()}</div> }
             <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
             {(!this.props.user.isAuth
             || article.User.username === this.props.user.username) && <StarRatings
@@ -264,11 +298,7 @@ class ViewArticle extends Component {
                     name='rating'
                   />}
               </div>
-              <button
-                className="btn waves-effect waves-light editButton"
-                type="submit"
-                name="action">Edit Article
-                  </button>
+              {(this.props.user.isAuth && article.User.username === this.props.user.username) && <Link className="btn waves-effect waves-light editButton" to={`/articles/${article.slug}/${article.status}/edit`}>Edit Articles</Link> }
               </div>
           </div>
           <div className="col s12 ">
@@ -328,6 +358,9 @@ class ViewArticle extends Component {
 }
 
 ViewArticle.propTypes = {
+  allBookmarks: PropTypes.func.isRequired,
+  bookmarkArticle: PropTypes.func.isRequired,
+  deleteBookmark: PropTypes.func.isRequired,
   viewArticle: PropTypes.func.isRequired,
   rateArticle: PropTypes.func.isRequired,
   likeArticle: PropTypes.func.isRequired,
@@ -345,6 +378,7 @@ ViewArticle.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  bookmarks: state.bookmark.bookmarks,
   loading: state.article.loading,
   success: state.article.success,
   failure: state.article.failure,
@@ -354,5 +388,13 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  viewArticle, createComment, getAllComment, rateArticle, likeArticle, dislikeArticle
+  viewArticle,
+  createComment,
+  getAllComment,
+  rateArticle,
+  likeArticle,
+  dislikeArticle,
+  bookmarkArticle,
+  allBookmarks,
+  deleteBookmark
 })(ViewArticle);
