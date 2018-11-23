@@ -75,7 +75,8 @@ class CreateArticle extends Component {
 
     if (articleslug && articlestatus) {
       this.setState({ editMode: true, isCreated: true });
-      this.props.getSingleArticle({ articleslug, articlestatus }, {props: this.props, editMode: true});
+      this.props.getSingleArticle({ articleslug, articlestatus },
+        { props: this.props, editMode: true });
     }
     this.props.getAllCategory();
     this.props.getAllTags();

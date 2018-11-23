@@ -7,7 +7,7 @@ import ViewArticle from './ViewArticle';
 import { articleStore } from './mockStore';
 import { asyncActions } from '../BasePath';
 import {
-  RATE_ARTICLE, GET_ALL_COMMENT, CREATE_COMMENT, LIKE_ARTICLE, DISLIKE_ARTICLE, ALL_BOOKMARK, NEW_BOOKMARK
+  RATE_ARTICLE, LIKE_ARTICLE, DISLIKE_ARTICLE, ALL_BOOKMARK, NEW_BOOKMARK
 } from '../../actionTypes';
 import CommentReducer from '../../reducers/CommentReducer';
 import BookmarkReducer from '../../reducers/BookmarkReducer';
