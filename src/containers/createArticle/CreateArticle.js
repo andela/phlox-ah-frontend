@@ -90,7 +90,7 @@ class CreateArticle extends Component {
    */
   static getDerivedStateFromProps(props, state) {
     if (state.editMode) {
-      if (props.article.User && props.article.userId === props.user.id) {
+      if (props.article.userId === props.user.id) {
         return {
           ...props.article,
           category: String(props.article.Category.id),
@@ -101,8 +101,8 @@ class CreateArticle extends Component {
           success: props.success
         };
       }
-      if (props.article.User && props.article.userId !== props.user.id) {
-        props.history.push('/');
+      if (props.article.userId !== props.user.id) {
+        props.history.push('/', { category: { articles: [] }});
       }
     }
     return {
@@ -396,16 +396,8 @@ const mapStateToProps = (state) => {
   const suggestedTags = state.tags.tags;
 
   return {
-    article,
-    tags,
-    categories,
-    suggestedTags,
-    error,
-    loading,
-    success,
-    user: state.user,
-    profile: state.profile,
-    info: state.info
+    article, tags, categories, suggestedTags, error, loading, 
+    success, user: state.user, profile: state.profile, info: state.info
   };
 };
 
