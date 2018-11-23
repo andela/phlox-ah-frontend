@@ -201,7 +201,7 @@ class ViewArticle extends Component {
       likeClassName = 'active fas fa-thumbs-up';
     }
     if (likeStatus === false) {
-      dislikeClassName = 'active fas fa-thumbs-up';
+      dislikeClassName = 'active fas fa-thumbs-down';
     }
     let articlePic = '';
     if (article.imgUrl === 'null') {
