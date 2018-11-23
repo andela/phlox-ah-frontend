@@ -1,6 +1,5 @@
 
-// const BASE_URL = 'https://phlox-ah-staging.herokuapp.com';
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'https://phlox-ah-staging.herokuapp.com';
 
 export const articleConstant = {
   ALL_ARTICLES_URL: `${BASE_URL}/api/v1/articles/feed`,
@@ -8,6 +7,10 @@ export const articleConstant = {
   FEATURED_ARTICLES_URL: `${BASE_URL}/api/v1/articles/featured`,
   POPULAR_ARTICLES_URL: `${BASE_URL}/api/v1/articles/popular`,
   ARTICLES_URL: `${BASE_URL}/api/v1/articles`,
+};
+
+export const bookmarkConstant = {
+  BOOKMARK_URL: `${BASE_URL}/api/v1/bookmarks`
 };
 
 export const tagsConstant = {

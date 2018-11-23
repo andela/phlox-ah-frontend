@@ -71,14 +71,21 @@ export const viewArticle = payload => (dispatch) => {
     .catch(error => dispatch(asyncActions(VIEW_ARTICLE).failure(true, error)));
 };
 
-export const getSingleArticle = payload => (dispatch) => {
+export const getSingleArticle = (payload, { props, editMode }) => (dispatch) => {
   dispatch(asyncActions(SINGLE_ARTICLE).loading(true));
   axios.get(`${articleConstant.ARTICLES_URL}/${payload.articlestatus}/${payload.articleslug}`)
     .then((response) => {
-      dispatch(asyncActions(SINGLE_ARTICLE).success(response.data.article));
+      const { article } = response.data;
+      if (editMode && article.userId !== props.user.id) {
+        props.history.push('/');
+      }
       dispatch(asyncActions(SINGLE_ARTICLE).loading(false));
+      dispatch(asyncActions(SINGLE_ARTICLE).success(article));
     })
-    .catch(error => dispatch(asyncActions(SINGLE_ARTICLE).failure(true, error)));
+    .catch((error) => {
+      props.history.push('/');
+      dispatch(asyncActions(SINGLE_ARTICLE).failure(true, error));
+    });
 };
 
 export const getMyArticles = () => (dispatch) => {
