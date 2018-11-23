@@ -61,7 +61,6 @@ const ArticleReducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.payload.status,
-        failure: true,
         success: false
       };
     case asyncActionName(PUBLISH_ARTICLE).success:

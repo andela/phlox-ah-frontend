@@ -23,8 +23,7 @@ class ViewAllArticles extends Component {
     super();
     this.state = {
       success: false,
-      articles: [],
-      failure: null
+      articles: []
     };
   }
 
@@ -70,7 +69,7 @@ class ViewAllArticles extends Component {
         </Col>);
       });
     }
-    return (<h5 className="center no-tags">There are no articles for now</h5>);
+    return (<h5 className="center no-tags">There are no articles at the moment</h5>);
   }
 
   /**
@@ -102,15 +101,14 @@ class ViewAllArticles extends Component {
 
 const mapStateToProps = state => ({
   articles: state.article.articles,
-  success: state.article.success,
-  failure: state.article.failure,
+  success: state.article.success
 });
 
 ViewAllArticles.propTypes = {
   articles: PropTypes.array,
   getArticles: PropTypes.func,
   match: PropTypes.object,
-  success: PropTypes.bool,
+  success: PropTypes.bool
 };
 
 export default connect(mapStateToProps, { getArticles })(ViewAllArticles);

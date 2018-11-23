@@ -5,12 +5,6 @@ import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import ViewAllArticles from './ViewAllArticles';
 import { articleStore } from './mockStore';
-import { asyncActions } from '../BasePath';
-import {
-  RATE_ARTICLE, GET_ALL_COMMENT, CREATE_COMMENT, LIKE_ARTICLE, DISLIKE_ARTICLE
-} from '../../actionTypes';
-import CommentReducer from '../../reducers/CommentReducer';
-// import ArticleCard from '../../components/ArticleCard/ArticleCard';
 
 const mockStore = configureMockStore([thunk]);
 const store = mockStore(articleStore);
@@ -18,7 +12,7 @@ const store = mockStore(articleStore);
 let component;
 let myComponent;
 
-describe('<ViewArticle/>', () => {
+describe('<ViewAllArticles/>', () => {
   test('renders the ArticlePage Container', () => {
     component = shallow(
       <Provider store={store}>
