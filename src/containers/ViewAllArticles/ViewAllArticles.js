@@ -76,18 +76,18 @@ class ViewAllArticles extends Component {
     const { success } = this.state;
     return (
       <div>
-         <main>
+        <main>
           <div className="site-container">
-          <Row>
+            <Row>
               <Col s={12} m={12} l={8} xl={9} className="column-1">
                 <Row>
-                  { success ? this.showAllArticles() : <h5 className="center no-tags">There are no articles at the moment</h5> }
+                  {success ? this.showAllArticles() : <h5 className="center no-tags">There are no articles at the moment</h5>}
                 </Row>
               </Col>
               <Col s={12} m={9} l={4} xl={3} className="sidebar">
-                <Sidebar/>
+                <Sidebar />
               </Col>
-          </Row>
+            </Row>
           </div>
         </main>
       </div>
