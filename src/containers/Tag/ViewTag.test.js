@@ -61,7 +61,7 @@ describe('<ViewTag/>', () => {
   it('should have tag state as object', () => {
     expect(myComponent.instance().state.tag).toMatchObject({});
   });
-  it('should have tagName state as string array', () => {
+  it('should have tagName state as string', () => {
     expect(myComponent.instance().state.tagName).toEqual('');
   });
   it('should have articles props', () => {

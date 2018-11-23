@@ -92,6 +92,9 @@ describe('<ViewArticle/>', () => {
   it('should have function bookmark', () => {
     expect(myComponent.instance().bookmark).toBeDefined();
   });
+  it('should have bookmarks state as array', () => {
+    expect(myComponent.instance().state.bookmarks).toEqual([]);
+  });
 
   describe('GET_ALL_COMMENT Action Type', () => {
     it('should handle an action type of GET_ALL_COMMENT_SUCCESS', () => {
