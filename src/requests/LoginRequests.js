@@ -15,6 +15,7 @@ export const login = payload => (dispatch) => {
         localStorage.setItem('token', response.data.token);
         // setting token to request headers for authentication
         setAuthToken(response.data.token);
+        console.log(response.data);
         dispatch(asyncActions(LOGIN).success(response.data));
         dispatch(asyncActions(LOGIN).loading(false));
         dispatch(msgInfoActions.success([response.data.message]));

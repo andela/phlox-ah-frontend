@@ -66,6 +66,7 @@ const ArticleForm = ({
       </div>
 
       <div className="text-area">
+          <label>Tip: highlight text to see options</label>
         <Editor
           className="editable"
           data-placeholder="Tell your story here..."
