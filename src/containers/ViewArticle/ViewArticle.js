@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Avatar from 'react-avatar';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Moment from 'moment';
 import { Row } from 'react-materialize';
 import StarRatings from 'react-star-ratings';
@@ -55,7 +56,7 @@ class ViewArticle extends Component {
   bookmark() {
     const bookmarks = this.state.bookmarks
       .filter(bookmark => bookmark.articleId === this.state.article.id);
-    if (bookmarks.length === 1) {
+    if (bookmarks.length) {
       this.props.deleteBookmark(this.state.article.id);
     } else {
       this.props.bookmarkArticle(this.state.article.id);
@@ -70,7 +71,7 @@ class ViewArticle extends Component {
   showBookmarkIcon() {
     const bookmarks = this.state.bookmarks
       .filter(bookmark => bookmark.articleId === this.state.article.id);
-    if (bookmarks.length === 1) {
+    if (bookmarks.length) {
       return (<i className="fas fa-bookmark bookmarked bookmarkButton"></i>);
     }
     return (<i className="fas fa-bookmark not-bookmarked bookmarkButton"></i>);
@@ -233,7 +234,7 @@ class ViewArticle extends Component {
       likeClassName = 'active fas fa-thumbs-up';
     }
     if (likeStatus === false) {
-      dislikeClassName = 'active fas fa-thumbs-up';
+      dislikeClassName = 'active fas fa-thumbs-down';
     }
     let articlePic = '';
     if (article.imgUrl === 'null') {
@@ -276,7 +277,7 @@ class ViewArticle extends Component {
           <div className="center-align activity-icons">
             <div className="col s2"><i className={likeClassName} onClick={this.likeArticle}></i> {likes.length}</div>
             <div className="col s2"><i className={dislikeClassName} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
-            {(!this.props.user.isAuth || article.User.username === this.props.user.username) && <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div> }
+            {(!this.props.user.isAuth || article.User.username === this.props.user.username) && <div className="col s1"><i className="fas fa-bookmark no-bookmark bookmarkButton"></i></div> }
             {(this.props.user.isAuth && article.User.username !== this.props.user.username) && <div className="col s1" onClick={this.bookmark}>{this.showBookmarkIcon()}</div> }
             <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
             {(!this.props.user.isAuth
@@ -297,11 +298,7 @@ class ViewArticle extends Component {
                     name='rating'
                   />}
               </div>
-              <button
-                className="btn waves-effect waves-light editButton"
-                type="submit"
-                name="action">Edit Article
-                  </button>
+              {(this.props.user.isAuth && article.User.username === this.props.user.username) && <Link className="btn waves-effect waves-light editButton" to={`/articles/${article.slug}/${article.status}/edit`}>Edit Articles</Link> }
               </div>
           </div>
           <div className="col s12 ">
