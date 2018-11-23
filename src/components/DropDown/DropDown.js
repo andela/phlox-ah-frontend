@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './DropDown.scss';
 
@@ -42,7 +43,7 @@ class DropDrown extends Component {
         ref={this.dropDrownWrapper}
         className="dropdown-wrapper">
         <ul className="l-wing">
-          <li className="dropdown-list"><a href="#">Religion</a></li>
+          <li className="dropdown-list"><Link className="capitalize a" to={'/articles/feed'}>All Articles</Link></li>
           <li className="dropdown-list"><a href="#">Arts</a></li>
           <li className="dropdown-list"><a href="#">Technology</a></li>
           <li className="dropdown-list"><a href="#">Animals</a></li>
