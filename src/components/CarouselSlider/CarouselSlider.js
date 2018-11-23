@@ -17,14 +17,14 @@ export const CarouselSlider = props => (
         } else {
           articlePic = article.imgUrl;
         }
-        return (<div key={ index + 2 }>
+        return (<div key={ article.id }>
           <Row>
             <Col s={12} m={5} l={5} xl={6} className="img-container">
               <img className="img-responsive z-depth-2" src={articlePic}/>
             </Col>
             <Col s={12} m={7} l={7} xl={6}>
               <div className="content">
-                <h5 className="secondary-color editor-title capitalize"> <Link key={0} className="capitalize" to={`/articles/${article.slug}`}>{article.title.substring(0, 50)}</Link> </h5>
+                <h5 className="secondary-color editor-title capitalize"> <Link key={article.id} className="capitalize" to={`/articles/${article.slug}`}>{article.title.substring(0, 50)}</Link> </h5>
                 <p>
                   {article.description.substring(0, 220)}
                 </p>

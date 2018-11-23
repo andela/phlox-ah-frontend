@@ -3,7 +3,7 @@ import { asyncActions } from '../util/AsyncUtil';
 import {
   ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE,
   PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES,
-  DELETE_ARTICLE, FEATURED_ARTICLES, POPULAR_ARTICLES, RATE_ARTICLE
+  DELETE_ARTICLE, FEATURED_ARTICLES, POPULAR_ARTICLES, RATE_ARTICLE, LIKE_ARTICLE, DISLIKE_ARTICLE
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
 import { CREATE_TAG } from '../actionTypes/TagConstants';
@@ -100,7 +100,7 @@ export const createArticle = (formData, tags) => (dispatch) => {
   const headers = {
     'Content-Type': 'application/json;charset=UTF-8',
   };
-  axios.post(tagsConstant.CREATE_TAG_URL, { tags }, headers)
+  axios.post(tagsConstant.TAG_URL, { tags }, headers)
     .then(() => {
       dispatch(asyncActions(CREATE_ARTICLE).loading(true));
       axios.post(articleConstant.ARTICLES_URL, formData, headers)
@@ -124,7 +124,7 @@ export const createArticle = (formData, tags) => (dispatch) => {
 };
 
 export const updateArticle = (formData, tags, articleSlug) => (dispatch) => {
-  axios.post(tagsConstant.CREATE_TAG_URL, { tags })
+  axios.post(tagsConstant.TAG_URL, { tags })
     .then(() => {
       dispatch(asyncActions(UPDATE_ARTICLE).loading(true));
 
@@ -148,7 +148,7 @@ export const updateArticle = (formData, tags, articleSlug) => (dispatch) => {
 };
 
 export const publishArticle = ({ slug, status, tags }, props) => (dispatch) => {
-  axios.post(tagsConstant.CREATE_TAG_URL, { tags })
+  axios.post(tagsConstant.TAG_URL, { tags })
     .then(() => {
       axios.put(`${articleConstant.ARTICLES_URL}/${slug}`, {
         status, tags
@@ -195,4 +195,30 @@ export const getPopularArticles = () => (dispatch) => {
     })
     .catch(error => dispatch(asyncActions(POPULAR_ARTICLES)
       .failure(true, error)));
+};
+
+export const likeArticle = payload => (dispatch) => {
+  dispatch(asyncActions(DISLIKE_ARTICLE).loading(true));
+  axios.post(`${articleConstant.ARTICLES_URL}/${payload}/like`)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(LIKE_ARTICLE).success(response.data.message));
+        dispatch(asyncActions(LIKE_ARTICLE).loading(false));
+        dispatch(viewArticle(payload));
+      }
+    })
+    .catch(error => dispatch(asyncActions(LIKE_ARTICLE).failure(true, error)));
+};
+
+export const dislikeArticle = payload => (dispatch) => {
+  dispatch(asyncActions(DISLIKE_ARTICLE).loading(true));
+  axios.post(`${articleConstant.ARTICLES_URL}/${payload}/dislike`)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(asyncActions(DISLIKE_ARTICLE).success(response.data.message));
+        dispatch(asyncActions(DISLIKE_ARTICLE).loading(false));
+        dispatch(viewArticle(payload));
+      }
+    })
+    .catch(error => dispatch(asyncActions(DISLIKE_ARTICLE).failure(true, error)));
 };
