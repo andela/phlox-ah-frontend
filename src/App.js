@@ -14,6 +14,8 @@ import { SentResetPasswordMail } from './components/SentResetPasswordMail/SentRe
 import ViewArticle from './containers/ViewArticle/ViewArticle';
 import VerifyUser from './containers/VerifyUser/VerifyUser';
 import Settings from './containers/Settings/Settings';
+import ViewTag from './containers/Tag/ViewTag';
+import ViewAllArticles from './containers/ViewAllArticles/ViewAllArticles';
 
 import './App.scss';
 
@@ -38,14 +40,20 @@ class App extends Component {
         <ResetPassword />
         <div>
           <Switch>
-            <PrivateRoute path='/profile/edit' component={EditProfile} />
-            <PrivateRoute path='/profile' component={ViewProfile} />
+            <PrivateRoute exact
+              path="/articles/:articleslug/:articlestatus/edit"
+              component={CreateArticle}
+            />
+            <PrivateRoute path="/profile/edit" component={EditProfile} />
+            <PrivateRoute path="/profile" component={ViewProfile} />
             <Route path="/" exact component={Home} />
             <Route path="/password/forgot-success" component={SentResetPasswordMail} />
             <Route path="/password/reset/:token" component={Home} />
+            <Route path="/articles/feed" exact component={ViewAllArticles} />
             <Route path="/articles/:articleslug" exact component={ViewArticle} />
             <Route path="/settings" component={Settings} />
             <Route path="/articles" component={CreateArticle} />
+            <Route path="/tags/:name" component={ViewTag} />
             <Route path="/user/verify/:verificationToken" component={VerifyUser} />
             <Redirect to="/" />
             </Switch>

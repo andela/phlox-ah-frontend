@@ -10,21 +10,30 @@ import './ArticleCard.scss';
 let articlePic = '';
 
 export const ArticleCard = (props) => {
-  if (!props.pic) {
-    articlePic = 'https://via.placeholder.com/300?text=AuthorsHaven';
+  if (props.pic === 'null') {
+    articlePic = `https://via.placeholder.com/50?text=AuthorsHaven-${props.title.substring(0, 20)}`;
   } else {
     articlePic = props.pic;
   }
   return (
-  <div>
-    <Card className={`${props.size} hoverable articleCard`}
-        header={<CardTitle image={articlePic}> <Link key={0} className="capitalize" to={`/articles/${props.slug}`}>{props.title.substring(0, 50)}</Link> </CardTitle>}
-        actions={[<a href='#' key={0}>Share</a>, <Link key={0} to={`/articles/${props.slug}`}>View Article</Link>,
-        <span key={0}>{moment(props.createdAt).format('D MMMM YYYY')}</span>, <span key={0}>{props.author}</span>]}>
+    <div>
+      <Card className={`${props.size} hoverable articleCard`}
+        header={
+          <CardTitle image={articlePic}>
+            <Link key={props.slug} className="capitalize" to={`/articles/${props.slug}`}>
+              {props.title.substring(0, 50)}
+            </Link>
+          </CardTitle>}
+        actions={[
+          <Link to={'#'} key={props.slug}>Share</Link>,
+          <Link key={props.slug} to={`/articles/${props.slug}`}>View Article</Link>,
+          <span key={props.slug}>{moment(props.createdAt).format('D MMMM YYYY')}</span>,
+          <span key={props.slug}>{props.author}</span>
+        ]}>
         <span className="hide-on-large-only">{props.description.substring(0, 120)}</span>
         <span className="hide-on-med-and-down">{props.description.substring(0, 90)}</span>
       </Card>
-  </div>);
+    </div>);
 };
 
 ArticleCard.propTypes = {

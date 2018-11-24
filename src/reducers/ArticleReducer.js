@@ -1,5 +1,5 @@
 import {
-  CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, VIEW_ARTICLE,
+  CREATE_ARTICLE, UPDATE_ARTICLE, PUBLISH_ARTICLE, VIEW_ARTICLE, SINGLE_ARTICLE,
   ALL_ARTICLES, FEATURED_ARTICLES, POPULAR_ARTICLES, RATE_ARTICLE
 } from '../actionTypes';
 import { asyncActionName } from '../util/AsyncUtil';
@@ -28,6 +28,7 @@ const ArticleReducer = (state = initialState, action) => {
         article: action.payload.article,
         message: action.payload.message,
         tags: action.payload.tags,
+        loading: false,
         error: false,
         success: action.payload.success
       };
@@ -42,6 +43,8 @@ const ArticleReducer = (state = initialState, action) => {
         ...state,
         article: action.payload.article,
         message: action.payload.message,
+        loading: false,
+        success: action.payload.success,
         tags: action.payload.tags
       };
     case asyncActionName(UPDATE_ARTICLE).failure:
@@ -52,13 +55,13 @@ const ArticleReducer = (state = initialState, action) => {
       return { ...state, loading: action.payload };
     case asyncActionName(ALL_ARTICLES).success:
       return {
-        ...state, articles: action.payload
+        ...state, articles: action.payload, success: true
       };
     case asyncActionName(ALL_ARTICLES).failure:
       return {
         ...state,
         error: action.payload.status,
-        failure: true,
+        success: false
       };
     case asyncActionName(PUBLISH_ARTICLE).success:
       return {
@@ -73,6 +76,8 @@ const ArticleReducer = (state = initialState, action) => {
       return { ...state, loading: action.payload };
     case asyncActionName(VIEW_ARTICLE).success:
       return { ...state, success: true, article: action.payload };
+    case asyncActionName(SINGLE_ARTICLE).success:
+      return { ...state, article: action.payload };
     case asyncActionName(VIEW_ARTICLE).failure:
       return { ...state, failure: true, article: {} };
     case asyncActionName(RATE_ARTICLE).loading:

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Avatar from 'react-avatar';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Moment from 'moment';
 import { Row } from 'react-materialize';
 import StarRatings from 'react-star-ratings';
@@ -12,8 +13,11 @@ import CommentTextArea from '../../components/CommentTextArea/CommentTextArea';
 import CommentButton from '../../components/CommentButton/CommentButton';
 import CommentDisplayBox from '../../components/CommentDisplayBox/CommentDisplayBox';
 import { createComment, getAllComment } from '../../requests/CommentRequest';
+import { bookmarkArticle, allBookmarks, deleteBookmark } from '../../requests/BookmarkRequests';
 import ArticleTags from '../../components/Tags/ArticleTags';
-import { viewArticle, rateArticle } from '../../requests/ArticleRequests';
+import {
+  viewArticle, rateArticle, likeArticle, dislikeArticle
+} from '../../requests/ArticleRequests';
 
 /**
  * @class ViewAnArticle
@@ -27,12 +31,15 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: {}, comment: ''
+      success: false, loading: false, failure: false, article: {}, user: {}, comment: '', bookmarks: []
     };
 
     this.addComment = this.addComment.bind(this);
     this.addRating = this.addRating.bind(this);
+    this.likeArticle = this.likeArticle.bind(this);
+    this.dislikeArticle = this.dislikeArticle.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.bookmark = this.bookmark.bind(this);
   }
 
 
@@ -41,6 +48,50 @@ class ViewArticle extends Component {
     this.props.rateArticle(this.props.match.params.articleslug, newRating);
   }
 
+  /**
+   *
+   * @returns {func} - bookmark
+   * @memberof ViewArticle
+   */
+  bookmark() {
+    const bookmarks = this.state.bookmarks
+      .filter(bookmark => bookmark.articleId === this.state.article.id);
+    if (bookmarks.length) {
+      this.props.deleteBookmark(this.state.article.id);
+    } else {
+      this.props.bookmarkArticle(this.state.article.id);
+    }
+  }
+
+  /**
+   *
+   * @returns {jsx} - jsx
+   * @memberof ViewArticle
+   */
+  showBookmarkIcon() {
+    const bookmarks = this.state.bookmarks
+      .filter(bookmark => bookmark.articleId === this.state.article.id);
+    if (bookmarks.length) {
+      return (<i className="fas fa-bookmark bookmarked bookmarkButton"></i>);
+    }
+    return (<i className="fas fa-bookmark not-bookmarked bookmarkButton"></i>);
+  }
+
+  /**
+   * @description - This method likes an article
+   * @returns {object} null
+   */
+  likeArticle() {
+    this.props.likeArticle(this.props.match.params.articleslug);
+  }
+
+  /**
+   * @description - This method likes an article
+   * @returns {object} null
+   */
+  dislikeArticle() {
+    this.props.dislikeArticle(this.props.match.params.articleslug);
+  }
 
   /**
    * @description - This method runs whenever the redux state changes
@@ -49,19 +100,7 @@ class ViewArticle extends Component {
    * @param {object} state
    */
   static getDerivedStateFromProps(props, state) {
-    if (props.success) {
-      const { success, loading, article } = props;
-      return { success, loading, article };
-    }
-    if (props.failure) {
-      const {
-        success, loading, article, failure
-      } = props;
-      return {
-        success, loading, article, failure
-      };
-    }
-    return state;
+    return props;
   }
 
   /**
@@ -72,6 +111,7 @@ class ViewArticle extends Component {
   componentDidMount() {
     this.props.viewArticle(this.props.match.params.articleslug);
     this.props.getAllComment(this.props.match.params.articleslug);
+    this.props.allBookmarks();
   }
 
   /**
@@ -145,7 +185,12 @@ class ViewArticle extends Component {
    * @memberof ViewArticle
    */
   dummyContent() {
-    return (<div className={this.state.failure && 'hide'}>
+    let className = '';
+    if (this.state.failure) {
+      className = 'hide';
+    }
+
+    return (<div className={className}>
     <div className="col s12 l6 lighten-5 img-div">
     <div className="dummyPicture"></div>
     </div>
@@ -166,9 +211,40 @@ class ViewArticle extends Component {
    * @memberof ViewArticle
    */
   realContent(article) {
+    let likeStatus = null;
+
+    // loop through the likes array and filter all instaces where like is equal true
+    const likes = article.likes.filter(like => like.like === true);
+
+    // loop through the likes array and filter all instaces where like is equal false
+    const dislikes = article.likes.filter(like => like.like === false);
+
+    // check if a user is logged in, then check if he/she has liked or disliked the article
+    if (this.state.user.isAuth) {
+      const likeArray = article.likes.filter(like => like.userId === this.state.user.id);
+      if (likeArray.length > 0) {
+        const [like, ...otherArrayItems] = likeArray;
+        likeStatus = like.like;
+      }
+    }
+    let likeClassName = 'fas fa-thumbs-up';
+    let dislikeClassName = 'fas fa-thumbs-down';
+
+    if (likeStatus) {
+      likeClassName = 'active fas fa-thumbs-up';
+    }
+    if (likeStatus === false) {
+      dislikeClassName = 'active fas fa-thumbs-down';
+    }
+    let articlePic = '';
+    if (article.imgUrl === 'null') {
+      articlePic = `https://via.placeholder.com/300?text=${article.title.substring(0, 20)}`;
+    } else {
+      articlePic = article.imgUrl;
+    }
     return (<div>
       <div className="col s12 l6 img-div">
-          <img src={article.imgUrl}/>
+          <img src={articlePic}/>
       </div>
       <div className="col s12 l6">
           <div>
@@ -185,8 +261,8 @@ class ViewArticle extends Component {
                   </div>
                   <div className="col s8 m9 l8">
                   <span className="writer capitalize">{article.User.username}</span><br/>
-                  <span className="date-written capitalize">{Moment.duration(article.createdAt, 'hours').humanize() }</span><br/>
-                  <span className="readTime">{article.readTime} Minutes Read</span>
+                  <span className="date-written capitalize"><small>{Moment.duration(article.createdAt, 'hours').humanize() }</small></span><br/>
+                  <span className="readTime"><small>{article.readTime} Minutes Read</small></span>
                   </div>
               </Row>
               </div>
@@ -199,9 +275,10 @@ class ViewArticle extends Component {
               </div>
           </Row>
           <div className="center-align activity-icons">
-            <div className="col s2"><i className="fas fa-thumbs-up likeButton liked-unliked"></i> {article.likes.length}</div>
-            <div className="col s2"><i className="fas fa-thumbs-down dislikeButton"></i> 3</div>
-            <div className="col s1"><i className="fas fa-bookmark bookmarkButton"></i></div>
+            <div className="col s2"><i className={likeClassName} onClick={this.likeArticle}></i> {likes.length}</div>
+            <div className="col s2"><i className={dislikeClassName} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
+            {(!this.props.user.isAuth || article.User.username === this.props.user.username) && <div className="col s1"><i className="fas fa-bookmark no-bookmark bookmarkButton"></i></div> }
+            {(this.props.user.isAuth && article.User.username !== this.props.user.username) && <div className="col s1" onClick={this.bookmark}>{this.showBookmarkIcon()}</div> }
             <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
             {(!this.props.user.isAuth
             || article.User.username === this.props.user.username) && <StarRatings
@@ -221,18 +298,14 @@ class ViewArticle extends Component {
                     name='rating'
                   />}
               </div>
-              <button
-                className="btn waves-effect waves-light editButton"
-                type="submit"
-                name="action">Edit Article
-                  </button>
+              {(this.props.user.isAuth && article.User.username === this.props.user.username) && <Link className="btn waves-effect waves-light editButton" to={`/articles/${article.slug}/${article.status}/edit`}>Edit Articles</Link> }
               </div>
           </div>
-          <div className="col s12 article-body">
+          <div className="col s12 ">
           {
           ReactHtmlParser(article.body)
           }
-      </div>
+          </div>
       <div className="col l4 s12 bold tag-div">
           {<a className="red-text"href="#">Report Article</a>}
       </div>
@@ -285,21 +358,27 @@ class ViewArticle extends Component {
 }
 
 ViewArticle.propTypes = {
+  allBookmarks: PropTypes.func.isRequired,
+  bookmarkArticle: PropTypes.func.isRequired,
+  deleteBookmark: PropTypes.func.isRequired,
+  viewArticle: PropTypes.func.isRequired,
+  rateArticle: PropTypes.func.isRequired,
+  likeArticle: PropTypes.func.isRequired,
+  dislikeArticle: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  success: PropTypes.bool,
   article: PropTypes.object,
   articleslug: PropTypes.string,
   comments: PropTypes.array,
   createComment: PropTypes.func,
   getAllComment: PropTypes.func.isRequired,
   failure: PropTypes.bool,
-  loading: PropTypes.bool,
   match: PropTypes.object,
-  rateArticle: PropTypes.func,
-  success: PropTypes.bool,
   user: PropTypes.object,
-  viewArticle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
+  bookmarks: state.bookmark.bookmarks,
   loading: state.article.loading,
   success: state.article.success,
   failure: state.article.failure,
@@ -309,5 +388,13 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  viewArticle, createComment, getAllComment, rateArticle
+  viewArticle,
+  createComment,
+  getAllComment,
+  rateArticle,
+  likeArticle,
+  dislikeArticle,
+  bookmarkArticle,
+  allBookmarks,
+  deleteBookmark
 })(ViewArticle);

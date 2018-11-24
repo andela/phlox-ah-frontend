@@ -3,17 +3,18 @@ const BASE_URL = 'http://localhost:3000/api/v1';
 
 export const articleConstant = {
   ALL_ARTICLES_URL: `${BASE_URL}/articles/feed`,
-  CREATE_ARTICLES_URL: `${BASE_URL}/articles`,
-  UPDATE_ARTICLE_URL: `${BASE_URL}/articles`,
-  VIEW_ARTICLE_URL: `${BASE_URL}/articles`,
-  RATE_ARTICLE_URL: `${BASE_URL}/articles`,
+  MY_ARTICLES_URL: `${BASE_URL}/myarticles`,
   FEATURED_ARTICLES_URL: `${BASE_URL}/articles/featured`,
   POPULAR_ARTICLES_URL: `${BASE_URL}/articles/popular`,
+  ARTICLES_URL: `${BASE_URL}/articles`,
+};
+
+export const bookmarkConstant = {
+  BOOKMARK_URL: `${BASE_URL}/bookmarks`
 };
 
 export const tagsConstant = {
-  CREATE_TAG_URL: `${BASE_URL}/tags`,
-  GET_ALL_TAG_URL: `${BASE_URL}/tags`
+  TAG_URL: `${BASE_URL}/tags`,
 };
 
 export const profileConstant = {

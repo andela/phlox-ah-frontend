@@ -7,7 +7,7 @@ import M from 'materialize-css';
 import PropTypes from 'prop-types';
 import './Home.scss';
 import { ArticleCard } from '../../components/ArticleCard/ArticleCard';
-import { Sidebar } from '../../components/Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import { CarouselSlider } from '../../components/CarouselSlider/CarouselSlider';
 import { getArticles, getFeaturedArticles, getPopularArticles } from '../../requests/ArticleRequests';
 import { getAllCategory } from '../../requests/CategoryRequests';
@@ -35,7 +35,6 @@ class Home extends Component {
       categories: [],
       failure: true,
       featuredArticles: [],
-      latestArticles: [],
       popularArticles: [],
       success: false,
       trendingArticles: []
@@ -61,7 +60,6 @@ class Home extends Component {
       categories: props.categories,
       failure: props.failure,
       featuredArticles: props.featuredArticles,
-      latestArticles: props.articles.slice(0, 4),
       popularArticles: props.popularArticles,
       success: props.success,
       trendingArticles: props.articles.slice(0, 2)
@@ -117,7 +115,7 @@ class Home extends Component {
       return (<div className="preloaderDiv"></div>);
     }
     const categories = this.state.categories.filter(category => category.articles.length > 0);
-    return categories.slice(0, 3).map((category, index) => <div key={index}><Row>
+    return categories.slice(0, 3).map((category, index) => <div key={category.id}><Row>
     <Col s={12} l={12}>
     <div className="row-header valign-wrapper">
     <h6 className="capitalize"><b>{category.category}</b></h6>
@@ -146,23 +144,16 @@ class Home extends Component {
    * @memberof Home
    */
   listArticles(articles) {
-    return articles.map((article, index) => <Col s={12} m={12}
-    l={12} xl={6} key={index + 5}>
-    <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author="runor" slug={article.slug} />
-  </Col>);
-  }
-
-  /**
-   *
-   *
-   * @returns {jsx} - jsx
-   * @memberof Home
-   */
-  sidebarArticles() {
-    if (this.state.failure || !this.state.latestArticles) {
-      return (<div className="preloaderDiv"></div>);
-    }
-    return (<Sidebar sidebarTitle="Latest" articles={this.state.latestArticles} />);
+    return articles.map((article, index) => {
+      let username = '';
+      if (article.User) {
+        username = article.User.username;// eslint-disable-line
+      }
+      return (<Col s={12} m={12}
+      l={12} xl={6} key={article.id}>
+      <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} />
+      </Col>);
+    });
   }
 
   /**
@@ -214,7 +205,7 @@ class Home extends Component {
               </Col>
               <Col s={0} m={1} l={0} xl={0} ></Col>
               <Col s={12} m={9} l={4} xl={3} className="sidebar">
-                { this.sidebarArticles() }
+                <Sidebar/>
               </Col>
             </Row>
           </div>

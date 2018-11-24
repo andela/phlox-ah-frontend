@@ -5,7 +5,12 @@ import configureMockStore from 'redux-mock-store';
 import Header from './Header';
 
 const mockStore = configureMockStore();
-const store = mockStore({});
+const store = mockStore({
+  profile: {
+    firstName: 'john',
+    lastName: 'doe'
+  }
+});
 
 let component;
 let myComponent;
