@@ -9,6 +9,7 @@ import profile from './ProfileReducer';
 import tags from './TagReducer';
 import user from './UserReducer';
 import verifyUser from './VerifyUserReducer';
+import notification from './NotificationReducer';
 
 
 const rootReducer = combineReducers({
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   signup,
   tags,
   user,
-  verifyUser
+  verifyUser,
+  notification
 });
 
 export default rootReducer;

@@ -6,12 +6,19 @@ import Settings from './Settings';
 
 const mockStore = configureMockStore();
 const store = mockStore({
-  info: {
-    message: ['password is required'],
-    success: false
+  notification: {
+    error: null,
+    message: 'successfully opted out of notification',
+    success: true,
+    emailNotification: false
   },
   user: {
+    isAuth: true,
     loading: false,
+    id: 6,
+    email: 'admin@authorshaven.com',
+    username: 'admin1',
+    role: 'Admin'
   }
 });
 let component;

@@ -1,4 +1,5 @@
-const BASE_URL = 'https://phlox-ah-staging.herokuapp.com/api/v1';
+// const BASE_URL = 'https://phlox-ah-staging.herokuapp.com/api/v1';
+const BASE_URL = 'http://localhost:3000/api/v1';
 
 export const articleConstant = {
   ALL_ARTICLES_URL: `${BASE_URL}/articles/feed`,
@@ -41,10 +42,14 @@ export const signupConstant = {
 };
 
 export const commentConstant = articleSlug => ({
-  COMMENT_URL: `${BASE_URL}/articles/${articleSlug}/comments`,
+  COMMENT_URL: `${BASE_URL}/articles/${articleSlug}/comments`
 });
 
 export const notificationConstant = {
   OPT_IN_URL: `${BASE_URL}/notifications/optin`,
   OPT_OUT_URL: `${BASE_URL}/notifications/optout`
 };
+
+export const userConstant = username => ({
+  GET_ONE_USER_URL: `${BASE_URL}/users/${username}`
+});
