@@ -89,7 +89,7 @@
       float: right;
       text-decoration: none;
     }
-    button.btn.waves-effect.waves-light.editButton {
+    a.btn.waves-effect.waves-light.editButton {
       position: relative;
       right: 100%;
       bottom: 30px;
@@ -112,6 +112,15 @@
         color: #3b8ca1;
       }
       color: #5e5f63;
+      .bookmarked {
+        color: #3B8CA1;
+      }
+      .not-bookmarked {
+        color: #5E5F63;
+      }
+      .no-bookmark {
+        cursor: default;
+      }
     }
     .liked-unliked {
       color: #3b8ca1;
@@ -205,7 +214,7 @@
   color: #3b8ca1;
 }
 @media screen and (max-width: 991px) {
-  .MainWrapper2 .container button.btn.waves-effect.waves-light.editButton {
+  .MainWrapper2 .container a.btn.waves-effect.waves-light.editButton {
     position: relative;
     right: 0;
     bottom: 0;

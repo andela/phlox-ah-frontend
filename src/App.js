@@ -14,6 +14,7 @@ import { SentResetPasswordMail } from './components/SentResetPasswordMail/SentRe
 import ViewArticle from './containers/ViewArticle/ViewArticle';
 import VerifyUser from './containers/VerifyUser/VerifyUser';
 import ViewTag from './containers/Tag/ViewTag';
+import ViewAllArticles from './containers/ViewAllArticles/ViewAllArticles';
 
 import './App.scss';
 
@@ -47,6 +48,7 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/password/forgot-success" component={SentResetPasswordMail} />
             <Route path="/password/reset/:token" component={Home} />
+            <Route path="/articles/feed" exact component={ViewAllArticles} />
             <Route path="/articles/:articleslug" exact component={ViewArticle} />
             <Route path="/articles" component={CreateArticle} />
             <Route path="/tags/:name" component={ViewTag} />

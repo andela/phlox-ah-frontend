@@ -6,7 +6,7 @@ const ArticleCard = props => (
     <li key={props.article.id} className="article">
       <div className="photo">
         <img
-          src={props.article.imgUrl || props.placeholderImg }
+          src={(props.article.imgUrl !== 'null' && props.article.imgUrl) ? props.article.imgUrl : props.placeholderImg }
           alt="article-photo"
         />
         <div className="title">

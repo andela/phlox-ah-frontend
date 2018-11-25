@@ -75,7 +75,8 @@ class CreateArticle extends Component {
 
     if (articleslug && articlestatus) {
       this.setState({ editMode: true, isCreated: true });
-      this.props.getSingleArticle({ articleslug, articlestatus });
+      this.props.getSingleArticle({ articleslug, articlestatus },
+        { props: this.props, editMode: true });
     }
     this.props.getAllCategory();
     this.props.getAllTags();
@@ -100,9 +101,6 @@ class CreateArticle extends Component {
           loading: props.loading,
           success: props.success
         };
-      }
-      if (props.article.userId !== props.user.id) {
-        props.history.push('/', { category: { articles: [] }});
       }
     }
     return {

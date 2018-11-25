@@ -10,6 +10,10 @@ export const articleConstant = {
   ARTICLES_URL: `${BASE_URL}/api/v1/articles`,
 };
 
+export const bookmarkConstant = {
+  BOOKMARK_URL: `${BASE_URL}/api/v1/bookmarks`
+};
+
 export const tagsConstant = {
   TAG_URL: `${BASE_URL}/api/v1/tags`,
 };
