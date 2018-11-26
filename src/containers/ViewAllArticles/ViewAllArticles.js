@@ -51,7 +51,11 @@ class ViewAllArticles extends Component {
     this.props.getArticlesByPages(currentPage);
   }
 
-  // eslint-disable-next-line require-jsdoc
+  /**
+  * @description - This method sets the page
+  * @param {integer} pageNumber
+  * @returns {obj} articles
+  */
   select(pageNumber) {
     this.props.getArticlesByPages(pageNumber);
   }
