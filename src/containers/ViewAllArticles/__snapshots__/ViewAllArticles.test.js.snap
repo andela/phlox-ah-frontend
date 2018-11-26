@@ -1,3 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ViewAllArticles/> should render without throwing an error 1`] = `<Connect(ViewAllArticles) />`;
+exports[`<ViewAllArticles/> should render without throwing an error 1`] = `
+<Connect(ViewAllArticles)
+  location={
+    Object {
+      "search": "",
+    }
+  }
+/>
+`;
