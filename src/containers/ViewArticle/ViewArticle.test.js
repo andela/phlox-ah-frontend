@@ -18,7 +18,7 @@ const store = mockStore(articleStore);
 let component;
 let myComponent;
 
-describe('<ViewArticle/>', () => {
+describe('<ViewArticle />', () => {
   test('renders the ArticlePage Container', () => {
     component = shallow(
       <Provider store={store}>
@@ -91,6 +91,12 @@ describe('<ViewArticle/>', () => {
   });
   it('should have function bookmark', () => {
     expect(myComponent.instance().bookmark).toBeDefined();
+  });
+  it('should have function toggleSocialShareIcons', () => {
+    expect(myComponent.instance().toggleSocialShareIcons).toBeDefined();
+  });
+  it('should have showSocialShareIcons state of bool', () => {
+    expect(myComponent.instance().state.showSocialShareIcons).toBeFalsy();
   });
   it('should have bookmarks state as array', () => {
     expect(myComponent.instance().state.bookmarks).toEqual([]);

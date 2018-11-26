@@ -394,8 +394,16 @@ const mapStateToProps = (state) => {
   const suggestedTags = state.tags.tags;
 
   return {
-    article, tags, categories, suggestedTags, error, loading, 
-    success, user: state.user, profile: state.profile, info: state.info
+    article,
+    tags,
+    categories,
+    suggestedTags,
+    error,
+    loading,
+    success,
+    user: state.user,
+    profile: state.profile,
+    info: state.info
   };
 };
 
