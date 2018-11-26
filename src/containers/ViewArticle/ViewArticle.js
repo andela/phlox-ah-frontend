@@ -314,98 +314,98 @@ class ViewArticle extends Component {
                 && <div className="col s1">
                   <i className="fas fa-bookmark no-bookmark bookmarkButton"></i>
                 </div>
-                }
-                {
-                  (this.props.user.isAuth && article.User.username !== this.props.user.username)
-                  && <div className="col s1" onClick={this.bookmark}>
-                    {this.showBookmarkIcon()}
-                  </div>
-                  }
-                  <div className="col s1 social-share">
-                    <i
-                      onClick={this.toggleSocialIcons}
-                      className="fas fa-share-alt shareButton">
-                    </i>
-                    {
-                      this.state.showSocialShareIcons
-                        && <div
-                          className="social-network-wrapper">
-                          <div className="social-network">
-                            <FacebookShareButton
-                              url={shareUrl}
-                              quote={article.title}
-                              className="social-network__share-button">
-                              <FacebookIcon
-                                size={32}
-                                round />
-                            </FacebookShareButton>
-                          </div>
-                          <div className="social-network">
-                            <TwitterShareButton
-                              url={shareUrl}
-                              title={article.title}
-                              className="social-network__share-button">
-                              <TwitterIcon
-                                size={32}
-                                round />
-                            </TwitterShareButton>
-                          </div>
-                          <div className="social-network">
-                            <EmailShareButton
-                              url={shareUrl}
-                              subject={article.title}
-                              body={article.body}
-                              className="social-network__share-button">
-                              <EmailIcon
-                                size={32}
-                                round />
-                            </EmailShareButton>
-                          </div>
+              }
+              {
+                (this.props.user.isAuth && article.User.username !== this.props.user.username)
+                && <div className="col s1" onClick={this.bookmark}>
+                  {this.showBookmarkIcon()}
+                </div>
+              }
+                <div className="col s1 social-share">
+                  <i
+                    onClick={this.toggleSocialIcons}
+                    className="fas fa-share-alt shareButton">
+                  </i>
+                  {
+                    this.state.showSocialShareIcons
+                      && <div
+                        className="social-network-wrapper">
+                        <div className="social-network">
+                          <FacebookShareButton
+                            url={shareUrl}
+                            quote={article.title}
+                            className="social-network__share-button">
+                            <FacebookIcon
+                              size={32}
+                              round />
+                          </FacebookShareButton>
                         </div>
-                    }
-                  </div>
-                  {(!this.props.user.isAuth
-                    || article.User.username === this.props.user.username)
+                        <div className="social-network">
+                          <TwitterShareButton
+                            url={shareUrl}
+                            title={article.title}
+                            className="social-network__share-button">
+                            <TwitterIcon
+                              size={32}
+                              round />
+                          </TwitterShareButton>
+                        </div>
+                        <div className="social-network">
+                          <EmailShareButton
+                            url={shareUrl}
+                            subject={article.title}
+                            body={article.body}
+                            className="social-network__share-button">
+                            <EmailIcon
+                              size={32}
+                              round />
+                          </EmailShareButton>
+                        </div>
+                      </div>
+                  }
+                </div>
+                {(!this.props.user.isAuth
+                  || article.User.username === this.props.user.username)
                     && <StarRatings
                       rating={article.ratingAverage}
                       starDimension="20px"
                       className="col s4"
                       starSpacing="5px"
                     />
-                    }
-                    {
-                      (this.props.user.isAuth
-                        && article.User.username !== this.props.user.username)
-                        && <StarRatings
-                          rating={article.ratingAverage}
-                          starDimension="20px"
-                          starRatedColor="#5e5f63"
-                          className="col s4"
-                          changeRating={this.addRating}
-                          starSpacing="5px"
-                          name='rating'
-                        />}
-                      </div>
-                      {
-                        (this.props.user.isAuth
-                          && article.User.username === this.props.user.username)
-                        && <Link
-                          className="btn waves-effect waves-light editButton"
-                          to={`/articles/${article.slug}/${article.status}/edit`}>
-                          Edit Articles
-                        </Link>
-                        }
-                      </div>
-                    </div>
-                    <div className="col s12 ">
-                      {
-                        ReactHtmlParser(article.body)
-                      }
-                    </div>
-                    <div className="col l4 s12 bold tag-div">
-                      {<a className="red-text"href="#">Report Article</a>}
-                    </div>
+                }
+                {
+                  (this.props.user.isAuth
+                    && article.User.username !== this.props.user.username)
+                    && <StarRatings
+                      rating={article.ratingAverage}
+                      starDimension="20px"
+                      starRatedColor="#5e5f63"
+                      className="col s4"
+                      changeRating={this.addRating}
+                      starSpacing="5px"
+                      name='rating'
+                    />}
                   </div>
+                  {
+                    (this.props.user.isAuth
+                      && article.User.username === this.props.user.username)
+                      && <Link
+                        className="btn waves-effect waves-light editButton"
+                        to={`/articles/${article.slug}/${article.status}/edit`}>
+                        Edit Articles
+                      </Link>
+                  }
+                </div>
+              </div>
+              <div className="col s12 ">
+                {
+                  ReactHtmlParser(article.body)
+                }
+              </div>
+              <div className="col l4 s12 bold tag-div">
+                {<a className="red-text"href="#">Report Article</a>}
+              </div>
+            </div>
     );
   }
 
