@@ -138,5 +138,5 @@ export const articleStore = {
   },
   params: {
     articleslug: 'article-slxug'
-  },
+  }
 };

@@ -55,7 +55,7 @@ const ArticleReducer = (state = initialState, action) => {
       return { ...state, loading: action.payload };
     case asyncActionName(ALL_ARTICLES).success:
       return {
-        ...state, articles: action.payload, success: true
+        ...state, ...action.payload, success: true
       };
     case asyncActionName(ALL_ARTICLES).failure:
       return {
