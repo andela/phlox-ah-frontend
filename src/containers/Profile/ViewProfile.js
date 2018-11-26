@@ -93,7 +93,7 @@ class ViewProfile extends Component {
                 </span>
                 <ul className="authors">
                   {listOfFollowings}
-                  {this.props.followings.length === 0 && <p>You are not following any author</p>}
+                  {!this.props.followings.length && <p>You are not following any author</p>}
                 </ul>
                 <div className="more">
                   <Link to="/following">View more</Link>

@@ -115,6 +115,7 @@ class Home extends Component {
                 </Row>
                 <Row>
                   { this.followers() }
+                  {this.state.followings.length === 0 && <h3>You do not have any followers</h3>}
                 </Row>
               </Col>
               <Col s={0} m={1} l={0} xl={0} ></Col>

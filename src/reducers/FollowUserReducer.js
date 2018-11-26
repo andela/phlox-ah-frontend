@@ -21,7 +21,10 @@ const followUserReducer = (state = initialState, action) => {
     case asyncActionName(UNFOLLOW_USER).loading:
       return { ...state, loading: action.payload };
     case asyncActionName(UNFOLLOW_USER).success:
-      return { ...state, followings: [] };
+      return {
+        ...state,
+        followings: state.followings.filter(data => data.username !== action.payload.user.username)
+      };
     case asyncActionName(UNFOLLOW_USER).failure:
       return { ...state, error: action.payload.status };
     case asyncActionName(GET_FOLLOWINGS).failure:

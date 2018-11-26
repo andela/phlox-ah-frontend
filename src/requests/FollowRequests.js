@@ -24,7 +24,7 @@ export const unfollowUser = username => (dispatch) => {
   axios.delete(`${followUserConstant.FOLLOW_USER_CONSTANT}/${username}/follow`)
     .then((response) => {
       if (response.status === 200) {
-        dispatch(asyncActions(UNFOLLOW_USER).success(response.data.user));
+        dispatch(asyncActions(UNFOLLOW_USER).success(response.data));
         dispatch(asyncActions(UNFOLLOW_USER).loading(false));
       }
     })

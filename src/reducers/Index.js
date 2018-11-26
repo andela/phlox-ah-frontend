@@ -13,10 +13,12 @@ import signup from './SignupReducer';
 import tags from './TagReducer';
 import verifyUser from './VerifyUserReducer';
 import followUser from './FollowUserReducer';
+import bookmark from './BookmarkReducer';
 
 
 const rootReducer = combineReducers({
   article,
+  bookmark,
   category,
   deleteItem,
   comments,

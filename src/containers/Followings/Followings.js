@@ -38,7 +38,7 @@ class Home extends Component {
       followings: [],
       success: false
     };
-    this.unfollowAuthor = this.unfollowAuthor.bind(this);
+    this.unfollow = this.unfollow.bind(this);
   }
 
   /**
@@ -63,10 +63,9 @@ class Home extends Component {
   }
 
   // eslint-disable-next-line require-jsdoc
-  unfollowAuthor(username) {
+  unfollow(username) {
     this.props.unfollowUser(username);
   }
-
 
   /**
    *
@@ -94,7 +93,7 @@ class Home extends Component {
       <Card >
       <FollowList
       key={i}>{following.Profile && following.Profile.profileImage ? <img src={following.Profile.profileImage} alt="Profile Image" className="circle responsive-img follow-pic"/>
-        : <Avatar name={following.username} size="50" round={true} />}{following.username}</FollowList><Button className="followAuthor" onClick={() => this.unfollowAuthor(following.username)}>unfollow</Button>
+        : <Avatar name={following.username} size="50" round={true} />}{following.username}</FollowList><Button className="followAuthor" onClick={() => this.unfollow(following.username)}>unfollow</Button>
     </Card>
       </Col>));
   }
@@ -121,8 +120,8 @@ class Home extends Component {
                 </Row>
                 <Row>
                   { this.followings() }
+                  {this.state.followings.length === 0 && <h3>You are not following any author</h3>}
                 </Row>
-
               </Col>
               <Col s={0} m={1} l={0} xl={0} ></Col>
               <Col s={12} m={9} l={4} xl={3} className="sidebar">
