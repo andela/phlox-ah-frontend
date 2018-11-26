@@ -304,22 +304,19 @@ class Header extends Component {
                       <li
                         className="s-list">
                         <Link to="/settings">
-                          <i className="fas fa-cog"></i>
-                          &nbsp; Settings
+                          <i className="fas fa-cog"></i> Settings
                           </Link>
                       </li>
                       <li
                           className="s-list">
                           <Link to="/profile">
-                            <i className="fas fa-user"></i>
-                            &nbsp; Profile
+                            <i className="fas fa-user"></i> Profile
                           </Link>
                         </li>
                         <li
                           onClick={this.signOut}
                           className="s-list">
-                          <i className="fas fa-sign-out-alt"></i>
-                          &nbsp; Sign out
+                          <i className="fas fa-sign-out-alt"></i> Sign out
                         </li>
                       </ul>
                     </div>

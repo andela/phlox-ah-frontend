@@ -249,6 +249,9 @@ div.nav-wrapper ul li button {
   text-rendering: auto;
   line-height: 1;
 }
+li.s-list i {
+  margin-right: 10px;
+}
 
 @media screen and (max-width: 991px) {
   a.brand-logo img {

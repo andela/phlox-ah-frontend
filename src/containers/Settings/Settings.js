@@ -18,8 +18,8 @@ class Settings extends Component {
   constructor() {
     super();
 
-    this.state = { notificationStatus: false };
-    this.handleChange = this.handleChange.bind(this);
+    this.state = { checked: false };
+    this.toggleButton = this.toggleButton.bind(this);
   }
 
   /**
@@ -33,14 +33,12 @@ class Settings extends Component {
 
   /**
    * @description - This method sets the input values
-   * @param {object} checked
-   * @param {object} event
-   * @param {object} id
+   * @param {boolean} checked
    * @returns {object} void
    * @memberof Settings
    */
-  handleChange(checked, event, id) {
-    this.setState({ [id]: checked });
+  toggleButton(checked) {
+    this.setState({ checked });
     if (checked) {
       this.props.optInForNotification();
     } else {
@@ -56,8 +54,7 @@ class Settings extends Component {
   */
   static getDerivedStateFromProps(props, state) {
     if (props.notification.success) {
-      const { emailNotification } = props.notification;
-      return { notificationStatus: emailNotification };
+      return { checked: props.notification.emailNotification };
     }
     return state;
   }
@@ -80,11 +77,10 @@ class Settings extends Component {
                 on your stories and publications, and when you have new followers.</p>
             <div className="button">
               <Switch
-                onChange={this.handleChange}
-                checked={this.state.notificationStatus}
+                onChange={this.toggleButton}
+                checked={this.state.checked}
                 onColor="#3B8CA1"
                 height={30}
-                id="notificationStatus"
               />
             </div>
           </div>
