@@ -302,6 +302,13 @@ class Header extends Component {
                     && <div className="sd-wrapper">
                       <ul>
                       <li
+                        className="s-list">
+                        <Link to="/settings">
+                          <i className="fas fa-cog"></i>
+                          &nbsp; Settings
+                          </Link>
+                      </li>
+                      <li
                           className="s-list">
                           <Link to="/profile">
                             <i className="fas fa-user"></i>
