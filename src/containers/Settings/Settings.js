@@ -37,7 +37,7 @@ class Settings extends Component {
    * @param {object} event
    * @param {object} id
    * @returns {object} void
-   * @memberof Comment
+   * @memberof Settings
    */
   handleChange(checked, event, id) {
     this.setState({ [id]: checked });

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import Settings from './Settings';
-import { getUserNotificationStatus, optInForNotification, optOutFromNotification } from '../../requests/NotificationRequests';
+import NotificationReducer from '../../reducers/NotificationReducer';
 
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({
@@ -61,4 +61,69 @@ it('should have a h2 with text settings', () => {
 
 it('should have a h4 with text Turn On All Notifications', () => {
   expect(myComponent.find('h4').text()).toEqual('Turn On All Notifications');
+});
+
+describe('OPT_IN Action Type', () => {
+  it('should handle an action type of OPT_IN_SUCCESS', () => {
+    const payload = {
+      message: 'successfully opted in to notification',
+      success: true,
+      emailNotification: true
+    };
+    const action = {
+      type: 'OPT_IN_SUCCESS',
+      payload
+    };
+    const newState = NotificationReducer({}, action);
+
+    expect(newState).toEqual({
+      emailNotification: action.payload.emailNotification,
+      success: action.payload.success,
+      message: action.payload.message
+    });
+  });
+});
+
+describe('NOTIFICATION_STATUS Action Type', () => {
+  it('should handle an action type of NOTIFICATION_STATUS_SUCCESS', () => {
+    const payload = {
+      message: 'successfully fetch notification status',
+      success: true,
+      user: {
+        emailNotification: true
+      }
+    };
+    const action = {
+      type: 'NOTIFICATION_STATUS_SUCCESS',
+      payload
+    };
+    const newState = NotificationReducer({}, action);
+
+    expect(newState).toEqual({
+      emailNotification: action.payload.user.emailNotification,
+      success: action.payload.success,
+      message: action.payload.message
+    });
+  });
+});
+
+describe('OPT_OUT Action Type', () => {
+  it('should handle an action type of OPT_OUT_SUCCESS', () => {
+    const payload = {
+      message: 'successfully opted out of notification',
+      success: true,
+      emailNotification: false
+    };
+    const action = {
+      type: 'OPT_OUT_SUCCESS',
+      payload
+    };
+    const newState = NotificationReducer({}, action);
+
+    expect(newState).toEqual({
+      emailNotification: action.payload.emailNotification,
+      success: action.payload.success,
+      message: action.payload.message
+    });
+  });
 });
