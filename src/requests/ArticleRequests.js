@@ -53,7 +53,8 @@ export const searchArticles = payload => (dispatch) => {
   axios.get(`${articleConstant.SEARCH_ARTICLES_URL}${payload}`)
     .then((response) => {
       if (response.status === 200) {
-        dispatch(asyncActions(SEARCH_ARTICLES).success(response.data.articles));
+        console.log(response.data, '}}}}}}}}}}}}}}}}}}}}}');
+        dispatch(asyncActions(SEARCH_ARTICLES).success(response.data.searchResult.Articles));
         dispatch(asyncActions(SEARCH_ARTICLES).loading(false));
       }
     })
