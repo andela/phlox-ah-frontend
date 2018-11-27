@@ -2,7 +2,7 @@ import axios from 'axios';
 import { asyncActions } from '../util/AsyncUtil';
 import {
   ALL_ARTICLES, ADD_ARTICLE, CREATE_ARTICLE, UPDATE_ARTICLE,
-  PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES, SEARCH_ARTICLES,
+  PUBLISH_ARTICLE, SINGLE_ARTICLE, VIEW_ARTICLE, MY_ARTICLES,
   DELETE_ARTICLE, FEATURED_ARTICLES, POPULAR_ARTICLES, RATE_ARTICLE, LIKE_ARTICLE, DISLIKE_ARTICLE
 } from '../actionTypes';
 import { articleConstant, tagsConstant } from '../constants/Constants';
@@ -40,7 +40,7 @@ export const getArticles = () => (dispatch) => {
   axios.get(articleConstant.ALL_ARTICLES_URL)
     .then((response) => {
       if (response.status === 200) {
-        dispatch(asyncActions(ALL_ARTICLES).success(response.data.articles));
+        dispatch(asyncActions(ALL_ARTICLES).success(response.data));
         dispatch(asyncActions(ALL_ARTICLES).loading(false));
       }
     })
@@ -48,17 +48,14 @@ export const getArticles = () => (dispatch) => {
       .failure(true, error)));
 };
 
-export const searchArticles = payload => (dispatch) => {
-  dispatch(asyncActions(SEARCH_ARTICLES).loading(true));
-  axios.get(`${articleConstant.SEARCH_ARTICLES_URL}${payload}`)
+export const getArticlesByPages = pageNumber => (dispatch) => {
+  dispatch(asyncActions(ALL_ARTICLES).loading(true));
+  axios.get(`${articleConstant.ALL_ARTICLES_URL}?page=${pageNumber}`)
     .then((response) => {
-      if (response.status === 200) {
-        console.log(response.data, '}}}}}}}}}}}}}}}}}}}}}');
-        dispatch(asyncActions(SEARCH_ARTICLES).success(response.data.searchResult.Articles));
-        dispatch(asyncActions(SEARCH_ARTICLES).loading(false));
-      }
+      dispatch(asyncActions(ALL_ARTICLES).success(response.data));
+      dispatch(asyncActions(ALL_ARTICLES).loading(false));
     })
-    .catch(error => dispatch(asyncActions(SEARCH_ARTICLES)
+    .catch(error => dispatch(asyncActions(ALL_ARTICLES)
       .failure(true, error)));
 };
 

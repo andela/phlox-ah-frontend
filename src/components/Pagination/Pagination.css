@@ -1,0 +1,10 @@
+.pagination {
+  margin: 50px auto 30px;
+}
+.pagination li.active  {
+  background-color: #06576D;
+}
+
+.pagination li a {
+  text-decoration: none;
+}

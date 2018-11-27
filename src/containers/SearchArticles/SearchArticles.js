@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-materialize';
+import { Row, Col, Button } from 'react-materialize';
 
 import { ArticleCard } from '../../components/ArticleCard/ArticleCard';
 import Sidebar from '../Sidebar/Sidebar';
-import { searchArticles } from '../../requests/ArticleRequests';
+import { searchArticles } from '../../requests/SearchRequests';
 import './SearchArticles.scss';
 
 
@@ -21,36 +21,72 @@ class SearchArticles extends Component {
    */
   constructor(props) {
     super();
-    this.state = {
-      success: false,
-      articles: []
-    };
-  }
+    this.initialState = { searchBy: 'article', query: '' };
 
-  /**
-   * @description - This method runs whenever redux state changes
-   * @returns {object} state
-   * @param {object} props
-   */
-  static getDerivedStateFromProps(props) {
-    return props;
+    this.state = { ...this.initialState };
+
+    this.change = this.change.bind(this);
+    this.submit = this.submit.bind(this);
+    this.swithSearchBy = this.swithSearchBy.bind(this);
   }
 
   /**
    * @returns {func} tag
    */
   componentDidMount() {
-    this.props.searchArticles();
+    const { search } = this.props.location;
+    if (search) {
+      this.props.searchArticles({ query: search, searchBy: 'article' });
+    }
   }
 
+  /**
+   * @memberOf handleChangeEvent
+   * @method handleChangeEvent
+   * @param {*} e
+   * @return {*} setstate
+   */
+  change(e) {
+    this.setState({
+      query: e.target.value
+    });
+  }
+
+  /**
+   * @description - This method changes the searchBy filter
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof SearchArticles
+   */
+  swithSearchBy(e) {
+    const searchBy = e.target.value;
+    const searchQuery = `?${searchBy}=${this.state.query}`;
+    this.props.searchArticles({ query: searchQuery, searchBy });
+    this.setState({
+      searchBy
+    });
+  }
+
+  /**
+   * @description - This method runs when search form is submitted
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof SearchArticles
+   */
+  submit(e) {
+    e.preventDefault();
+    const { searchBy, query } = this.state;
+    const searchQuery = `?${searchBy}=${query}`;
+    this.props.searchArticles({ query: searchQuery, searchBy });
+  }
 
   /**
    * @description - This method shows all articles
    * @returns {jsx} - jsx
    */
-  showAllArticles() {
-    const { articles } = this.state;
-    return articles.map((article) => {
+  showSearchedArticles() {
+    const { searchResult } = this.props;
+    return searchResult.map((article) => {
       const username = article.User ? article.User.username : '';
       return (
         <Col s={12} m={12} l={12} xl={6} key={article.id}>
@@ -73,21 +109,69 @@ class SearchArticles extends Component {
    * @returns {jsx} - jsx
    */
   render() {
-    const { success } = this.state;
+    const {
+      success, failure, loading, error
+    } = this.props;
+    const { searchBy, query } = this.state;
+
     return (
       <div>
         <main>
-          <div className="site-container">
+          <div className="site-container ">
+          <div className="my-container">
             <Row>
-              <Col s={12} m={12} l={8} xl={9} className="column-1">
+              <Col s={12}>
                 <Row>
-                  {success ? this.showAllArticles() : <h5 className="center no-tags">There are no articles at the moment</h5>}
+                  <Row>
+                    <Col s={12} className="column-2">
+                    <form onSubmit={this.submit}>
+                      <input
+                        type="text"
+                        onChange={this.change}
+                        placeholder="Search authors heaven"
+                        name={'query'}
+                        value={query}
+                        className="searchInput"
+                        id="searchInput"
+                      />
+                      <Row className="filter-row">
+                        <Col s={2}>
+                          <h6 className="text-bold">Search By: </h6>
+                        </Col>
+                        <Col s={10}>
+                          <input
+                            className={searchBy === 'author' ? 'active' : ''}
+                            type="button" value={'author'} onClick={this.swithSearchBy}
+                            name="myname"
+                          /><span className="divider">|</span>
+                          <input
+                            className={searchBy === 'article' ? 'active' : ''}
+                            type="button"
+                            value={'article'}
+                            onClick={this.swithSearchBy}
+                            name="myname"
+                          /><span className="divider">|</span>
+                          <input
+                            className={searchBy === 'tag' ? 'active' : ''}
+                            type="button"
+                            value={'tag'}
+                            onClick={this.swithSearchBy}
+                            name="myname"
+                          />
+                        </Col>
+                      </Row>
+                    </form>
+                    </Col>
+                  </Row>
+                  <div className="mt-5">
+                    {success && this.showSearchedArticles() }
+                    { failure && <h5 className="center">{ error }</h5>}
+                    { loading && <h5 className="center">loading...</h5>}
+                  </div>
                 </Row>
               </Col>
-              <Col s={12} m={9} l={4} xl={3} className="sidebar">
-                <Sidebar />
-              </Col>
             </Row>
+            </div>
           </div>
         </main>
       </div>
@@ -97,14 +181,24 @@ class SearchArticles extends Component {
 
 const mapStateToProps = state => ({
   articles: state.article.articles,
-  success: state.article.success
+  loading: state.search.loading,
+  success: state.search.success,
+  failure: state.search.failure,
+  error: state.search.error,
+  searchResult: state.search.searchResult
 });
 
 SearchArticles.propTypes = {
-  articles: PropTypes.array,
+  searchResult: PropTypes.array,
   searchArticles: PropTypes.func,
   match: PropTypes.object,
-  success: PropTypes.bool
+  loading: PropTypes.bool,
+  success: PropTypes.bool,
+  failure: PropTypes.bool,
+  error: PropTypes.string,
+  location: PropTypes.shape({
+    search: PropTypes.string
+  })
 };
 
 export default connect(mapStateToProps, { searchArticles })(SearchArticles);

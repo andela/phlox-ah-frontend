@@ -92,6 +92,19 @@ describe('<ViewArticle/>', () => {
   it('should have function bookmark', () => {
     expect(myComponent.instance().bookmark).toBeDefined();
   });
+  it('should have function toggleSocialShareIcons', () => {
+    expect(myComponent.instance().toggleSocialShareIcons).toBeDefined();
+  });
+  it('should have showSocialShareIcons state of bool', () => {
+    expect(myComponent.instance().state.showSocialShareIcons).toBeFalsy();
+  });
+  it('should have div.social-network-wrapper tag', () => {
+    myComponent.instance().toggleSocialShareIcons();
+    expect(myComponent.find('div.social-network-wrapper').exists()).toBe(true);
+  });
+  it('should have div.social-network tag', () => {
+    expect(myComponent.find('div.social-network').exists()).toBe(true);
+  });
   it('should have bookmarks state as array', () => {
     expect(myComponent.instance().state.bookmarks).toEqual([]);
   });

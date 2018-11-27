@@ -1,14 +1,31 @@
 @import '../../styles/variables';
-.column-1 {
-  border-right: 2px dotted #ADA9A9;
+.column-2 {
   padding-right: 35px;
   width: 65%;
-  @media #{$tablet} {
-    border-right: none;
+  .divider{
+    margin-left:20px;
+    margin-right:20px;
+    color:#C4C4C4;
   }
-  @media #{$mobile} {
-    border-right: none;
-    padding-right: 10px;
+  #searchInput{
+    border: 1px solid #ADA9A9;
+    padding-left:20px;
+    border-radius:5px;
+  }
+  input[type=button]{
+      width: 100px;
+      padding: 10px 20px;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      border-radius:5px;
+      font-weight:bold;
+  }
+  .active{
+    background-color: rgb(116, 112, 112);
+  }
+  .searchInput{
+    margin-bottom:30px;
   }
   .row .col {
     padding-right: 0.9rem;
@@ -26,4 +43,34 @@ h5.capitalize {
 h5.no-tags {
   color: #6F6A6A;
 
+}
+.my-container{
+  min-height: 0px;
+  padding: 0px 50px;
+}
+.filter-row{
+  margin-top: 30px;
+  h6{
+    color:#6F6A6A;
+    font-size: 20px;
+  }
+}
+.text-bold{
+  font-weight:bold;
+}
+.mt-5{
+  margin-top: 70px;
+}
+@media #{$tablet} {
+  .my-container{
+    min-height: 0px;
+    padding: 0px 0px;
+  }
+}
+@media #{$mobile} {
+  padding-right: 10px;
+  .my-container{
+    min-height: 0px;
+    padding: 0px 0px;
+  }
 }
