@@ -53,3 +53,7 @@ export const notificationConstant = {
 export const userConstant = username => ({
   GET_ONE_USER_URL: `${BASE_URL}/users/${username}`
 });
+
+export const reportConstant = articleSlug => ({
+  REPORT_ARTICLE_URL: `${BASE_URL}/articles/${articleSlug}/reports`
+});

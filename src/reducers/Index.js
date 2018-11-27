@@ -14,6 +14,7 @@ import tags from './TagReducer';
 import verifyUser from './VerifyUserReducer';
 import notification from './NotificationReducer';
 import bookmark from './BookmarkReducer';
+import report from './ReportArticleReducer';
 
 
 const rootReducer = combineReducers({
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   myArticle,
   password,
   profile,
+  report,
   signup,
   tags,
   user,
