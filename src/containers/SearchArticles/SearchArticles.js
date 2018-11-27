@@ -117,7 +117,7 @@ class SearchArticles extends Component {
     return (
       <div>
         <main>
-          <div className="site-container ">
+          <div className="site-container">
           <div className="my-container">
             <Row>
               <Col s={12}>
@@ -180,7 +180,6 @@ class SearchArticles extends Component {
 }
 
 const mapStateToProps = state => ({
-  articles: state.article.articles,
   loading: state.search.loading,
   success: state.search.success,
   failure: state.search.failure,

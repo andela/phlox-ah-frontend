@@ -8,7 +8,6 @@ export const searchArticles = payload => (dispatch) => {
   axios.get(`${articleConstant.SEARCH_ARTICLES_URL}${payload.query}`)
     .then((response) => {
       if (response.status === 200) {
-        console.log(payload.searchBy, '[[[[[[[[[[[[[[[[[');
         if (payload.searchBy === 'tag') {
           dispatch(asyncActions(SEARCH_ARTICLES).success(response.data.searchResult[0].Articles));
           return null;
