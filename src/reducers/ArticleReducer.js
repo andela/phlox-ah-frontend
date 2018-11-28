@@ -16,6 +16,7 @@ const initialState = {
   loading: false,
   success: false,
   failure: false,
+  followings: []
 };
 
 const ArticleReducer = (state = initialState, action) => {

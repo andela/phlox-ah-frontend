@@ -20,6 +20,7 @@ import CommentDisplayBox from '../../components/CommentDisplayBox/CommentDisplay
 import { createComment, getAllComment } from '../../requests/CommentRequest';
 import { bookmarkArticle, allBookmarks, deleteBookmark } from '../../requests/BookmarkRequests';
 import ArticleTags from '../../components/Tags/ArticleTags';
+import { followUser, unfollowUser, getFollowings } from '../../requests/FollowRequests';
 import {
   viewArticle, rateArticle, likeArticle, dislikeArticle
 } from '../../requests/ArticleRequests';
@@ -36,11 +37,13 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: {}, user: {}, comment: '', bookmarks: [], showSocialShareIcons: false
+      success: false, loading: false, failure: false, article: {}, comment: '', followings: [], user: {}, bookmarks: [], showSocialShareIcons: false
     };
 
     this.addComment = this.addComment.bind(this);
     this.addRating = this.addRating.bind(this);
+    this.follow = this.follow.bind(this);
+    this.unfollow = this.unfollow.bind(this);
     this.likeArticle = this.likeArticle.bind(this);
     this.dislikeArticle = this.dislikeArticle.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -48,10 +51,19 @@ class ViewArticle extends Component {
     this.toggleSocialShareIcons = this.toggleSocialShareIcons.bind(this);
   }
 
-
   // eslint-disable-next-line require-jsdoc
   addRating(newRating, name) {
     this.props.rateArticle(this.props.match.params.articleslug, newRating);
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  follow() {
+    this.props.followUser(this.props.article.User.username);
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  unfollow() {
+    this.props.unfollowUser(this.props.article.User.username);
   }
 
   /**
@@ -116,6 +128,7 @@ class ViewArticle extends Component {
    */
   componentDidMount() {
     this.props.viewArticle(this.props.match.params.articleslug);
+    this.props.getFollowings();
     this.props.getAllComment(this.props.match.params.articleslug);
     this.props.allBookmarks();
   }
@@ -294,38 +307,34 @@ class ViewArticle extends Component {
                   </div>
                 </Row>
               </div>
-              <div className="col s4">
-                <button
+              {this.props.user.username !== article.User.username
+              && <div className="col s4">
+              {!this.props.followings.find(author => author.username === article.User.username)
+                ? <button
+                  onClick={this.follow}
                   className="btn waves-effect waves-light followButton"
                   type="submit"
                   name="action">Follow
-                </button>
-              </div>
-            </Row>
-            <div className="center-align activity-icons">
-              <div className="col s2">
-                <i className={likeClassName} onClick={this.likeArticle}></i> {likes.length}
-              </div>
-              <div className="col s2">
-                <i className={dislikeClassName} onClick={this.dislikeArticle}></i> {dislikes.length}
-              </div>
-              {
-                (!this.props.user.isAuth || article.User.username === this.props.user.username)
-                && <div className="col s1">
-                  <i className="fas fa-bookmark no-bookmark bookmarkButton"></i>
-                </div>
+              </button>
+                : <button
+                  onClick={this.unfollow}
+                  className="btn waves-effect waves-light followButton"
+                  type="submit"
+                  name="action">Unfollow
+              </button>
               }
-              {
-                (this.props.user.isAuth && article.User.username !== this.props.user.username)
-                && <div className="col s1" onClick={this.bookmark}>
-                  {this.showBookmarkIcon()}
-                </div>
-              }
-                <div className="col s1 social-share">
-                  <i
-                    onClick={this.toggleSocialIcons}
-                    className="fas fa-share-alt shareButton">
-                  </i>
+              </div>
+            }
+          </Row>
+          <div className="center-align activity-icons">
+            <div className="col s2"><i className={likeClassName} onClick={this.likeArticle}></i> {likes.length}</div>
+            <div className="col s2"><i className={dislikeClassName} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
+            {(!this.props.user.isAuth || article.User.username === this.props.user.username) && <div className="col s2"><i className="fas fa-bookmark no-bookmark bookmarkButton"></i></div> }
+            {(this.props.user.isAuth && article.User.username !== this.props.user.username) && <div className="col s2" onClick={this.bookmark}>{this.showBookmarkIcon()}</div> }
+              </div>
+                <div className="col s2 social-share">
+              <i className="fas fa-share-alt shareButton" onClick={this.toggleSocialShareIcons}>
+              </i>
                   {
                     this.state.showSocialShareIcons
                       && <div
@@ -365,26 +374,22 @@ class ViewArticle extends Component {
                   }
                 </div>
                 {(!this.props.user.isAuth
-                  || article.User.username === this.props.user.username)
-                    && <StarRatings
-                      rating={article.ratingAverage}
-                      starDimension="20px"
-                      className="col s4"
-                      starSpacing="5px"
-                    />
-                }
-                {
-                  (this.props.user.isAuth
-                    && article.User.username !== this.props.user.username)
-                    && <StarRatings
-                      rating={article.ratingAverage}
-                      starDimension="20px"
-                      starRatedColor="#5e5f63"
-                      className="col s4"
-                      changeRating={this.addRating}
-                      starSpacing="5px"
-                      name='rating'
-                    />}
+                  || article.User.username === this.props.user.username) && <StarRatings
+                    rating={article.ratingAverage}
+                    starDimension="20px"
+                    className="col s4"
+                    starSpacing="5px"
+                  /> }
+                  {(this.props.user.isAuth
+                  && article.User.username !== this.props.user.username) && <StarRatings
+                    rating={article.ratingAverage}
+                    starDimension="20px"
+                    starRatedColor="#5e5f63"
+                    className="col s4"
+                    changeRating={this.addRating}
+                    starSpacing="5px"
+                    name='rating'
+                  />}
                   </div>
                   {
                     (this.props.user.isAuth
@@ -396,8 +401,7 @@ class ViewArticle extends Component {
                       </Link>
                   }
                 </div>
-              </div>
-              <div className="col s12 ">
+                <div className="col s12 ">
                 {
                   ReactHtmlParser(article.body)
                 }
@@ -472,6 +476,10 @@ ViewArticle.propTypes = {
   failure: PropTypes.bool,
   match: PropTypes.object,
   user: PropTypes.object,
+  followUser: PropTypes.func.isRequired,
+  unfollowUser: PropTypes.func.isRequired,
+  followings: PropTypes.array,
+  getFollowings: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -481,7 +489,8 @@ const mapStateToProps = state => ({
   failure: state.article.failure,
   article: state.article.article,
   comments: state.comments.comment,
-  user: state.user
+  user: state.user,
+  followings: state.followUser.followings
 });
 
 export default connect(mapStateToProps, {
@@ -489,6 +498,9 @@ export default connect(mapStateToProps, {
   createComment,
   getAllComment,
   rateArticle,
+  followUser,
+  getFollowings,
+  unfollowUser,
   likeArticle,
   dislikeArticle,
   bookmarkArticle,

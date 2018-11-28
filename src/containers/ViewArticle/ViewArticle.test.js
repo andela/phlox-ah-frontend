@@ -19,14 +19,34 @@ let component;
 let myComponent;
 
 describe('<ViewArticle/>', () => {
-  test('renders the ArticlePage Container', () => {
+  beforeEach(() => {
     component = shallow(
       <Provider store={store}>
         <ViewArticle match={{ params: { articleslug: '' } }} />
       </Provider>
     );
     myComponent = component.dive({ context: { store } }).dive();
-    expect(component.exists()).toBe(true);
+  });
+  it('should have a follow button', () => {
+    expect(myComponent.find('button.followButton').exists()).toBe(true);
+  });
+  it('should have a star rating', () => {
+    expect(myComponent.find('StarRatings').exists()).toBe(true);
+  });
+  it('should have a thumbs-up button', () => {
+    expect(myComponent.find('i.fa-thumbs-up').exists()).toBe(true);
+  });
+  it('should have a thumbs-down button', () => {
+    expect(myComponent.find('i.fa-thumbs-down').exists()).toBe(true);
+  });
+  it('should have a bookmark button', () => {
+    expect(myComponent.find('i.fa-bookmark').exists()).toBe(true);
+  });
+  it('should have a share button', () => {
+    expect(myComponent.find('i.fa-share-alt').exists()).toBe(true);
+  });
+  it('should have a report article link', () => {
+    expect(myComponent.find('a.red-text').exists()).toBe(true);
   });
   it('should create an action to set rating in the store', () => {
     const payload = {
