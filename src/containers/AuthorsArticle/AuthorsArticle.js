@@ -83,7 +83,7 @@ class AuthorsArticle extends Component {
         <ArticleCard
           placeholderImg={placeholderImg}
           deleteArticle={this.deleteArticle}
-          key={ article.id }
+          key={ article.slug }
           article={ article }
           {...this.props}
         />
