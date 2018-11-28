@@ -47,7 +47,7 @@ describe('<ViewArticle/>', () => {
     expect(myComponent.find('i.fa-share-alt').exists()).toBe(true);
   });
   it('should have a report article link', () => {
-    expect(myComponent.find('a.red-text').exists()).toBe(true);
+    expect(myComponent.find('span.red-text').exists()).toBe(true);
   });
   it('should create an action to set rating in the store', () => {
     const payload = {
