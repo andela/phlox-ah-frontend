@@ -117,6 +117,31 @@ describe('<ViewArticle/>', () => {
         success: payload.success,
       });
     });
+    it('should handle an action type of REPORT_ARTICLE_FAILING', () => {
+      const payload = {
+        report: {},
+        message: 'Report could not be added',
+        success: false,
+        loading: false,
+        error: true
+      };
+      const action = {
+        type: 'REPORT_ARTICLE_FAILING',
+        payload
+      };
+      const newState = ReportArticleReducer({}, action);
+
+      expect(newState).toEqual({
+        error: undefined,
+        message: {
+          report: payload.report,
+          message: payload.message,
+          error: payload.error,
+          success: payload.success,
+          loading: payload.loading
+        }
+      });
+    });
   });
 
   describe('GET_ALL_COMMENT Action Type', () => {
