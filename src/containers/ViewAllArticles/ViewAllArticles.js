@@ -104,7 +104,8 @@ class ViewAllArticles extends Component {
                 items={pages}
                 activePage={Number(currentPage)}
                 maxButtons={pages}
-                select={this.select} />
+                select={this.select}
+              />
               </Col>
               <Col s={12} m={9} l={4} xl={3} className="sidebar">
                 <Sidebar />

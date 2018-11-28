@@ -37,16 +37,19 @@ class Header extends Component {
       isAuth: false,
       showMobileDropDown: false,
       showDropDown: false,
-      showSettingsOption: false
+      showSettingsOption: false,
+      query: ''
     };
 
     this.blur = this.blur.bind(this);
+    this.change = this.change.bind(this);
     this.onMobileBlur = this.onMobileBlur.bind(this);
     this.showDropDown = this.showDropDown.bind(this);
     this.showMobileDropDown = this.showMobileDropDown.bind(this);
     this.signIn = this.signIn.bind(this);
     this.signOut = this.signOut.bind(this);
     this.signUp = this.signUp.bind(this);
+    this.submit = this.submit.bind(this);
     this.timeoutID = null;
     this.timeoutMobileID = null;
     this.toggleDropDown = this.toggleDropDown.bind(this);
@@ -221,6 +224,27 @@ class Header extends Component {
   }
 
   /**
+   * @memberOf handleChangeEvent
+   * @method handleChangeEvent
+   * @param {*} e
+   * @return {*} setstate
+   */
+  change(e) {
+    this.setState({ query: e.target.value });
+  }
+
+  /**
+   * @description - This method runs when search form is submitted
+   * @param {objecj} e
+   * @returns {object} null
+   * @memberof Header
+   */
+  submit(e) {
+    e.preventDefault();
+    history.push(`/search?article=${this.state.query}`);
+  }
+
+  /**
    *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
@@ -231,6 +255,7 @@ class Header extends Component {
       showDropDown,
       showMobileDropDown,
       showSettingsOption,
+      query,
       isAuth
     } = this.state;
 
@@ -254,10 +279,18 @@ class Header extends Component {
                 && <DropDown blur={this.blur} />
               }
             </div>
-            <div className="input hide-on-med-and-down">
-              <input type="text" placeholder="Search" />
-              <i className="fas fa-search"></i>
-            </div>
+            <form onSubmit={this.submit}>
+              <div className="input hide-on-med-and-down">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  onChange={this.change}
+                  name={'query'}
+                  value={query}
+                  />
+                <i className="fas fa-search"></i>
+              </div>
+            </form>
           </div>
           {
             !isAuth

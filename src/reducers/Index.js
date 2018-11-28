@@ -9,6 +9,7 @@ import category from './CategoryReducer';
 import password from './PasswordReducer';
 import comments from './CommentReducer';
 import profile from './ProfileReducer';
+import search from './SearchReducer';
 import signup from './SignupReducer';
 import tags from './TagReducer';
 import verifyUser from './VerifyUserReducer';
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   password,
   profile,
   report,
+  search,
   signup,
   tags,
   user,
