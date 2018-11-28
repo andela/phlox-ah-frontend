@@ -100,7 +100,12 @@ class ViewAllArticles extends Component {
                 <Row>
                   {success ? this.showAllArticles() : <h5 className="center no-tags">There are no articles at the moment</h5>}
                 </Row>
-              <Pagination items={pages} activePage={Number(currentPage)} maxButtons={pages} select={this.select}/>
+              <Pagination
+                items={pages}
+                activePage={Number(currentPage)}
+                maxButtons={pages}
+                select={this.select}
+              />
               </Col>
               <Col s={12} m={9} l={4} xl={3} className="sidebar">
                 <Sidebar />
