@@ -196,6 +196,33 @@
         }
       }
     }
+
+    div.social-share  {
+
+      position: relative;
+
+      div.social-network-wrapper {
+        display: flex;
+        width: 120px;
+        height: auto;
+        overflow: hidden;
+        justify-content: space-between;
+        border: 1px solid #ccc;
+        padding:  4px;
+        border-radius: 4px;
+        background: #fff;
+        position: absolute;
+        bottom: 33px;
+        left: -34px;
+        z-index: 10;
+
+        div.social-network {
+          cursor: pointer;
+          outline: none;
+        }
+      }
+
+    }
     @media only screen and (min-width: 993px) {
       .hide-on-small-only {
         display: block;

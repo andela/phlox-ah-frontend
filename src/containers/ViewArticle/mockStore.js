@@ -62,5 +62,12 @@ export const articleStore = {
   },
   bookmark: {
     bookmarks: []
+  },
+  report: {
+    report: {},
+    error: null,
+    message: '',
+    success: false,
+    loading: false
   }
 };

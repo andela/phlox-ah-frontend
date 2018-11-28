@@ -11,6 +11,7 @@ import {
 } from '../../actionTypes';
 import CommentReducer from '../../reducers/CommentReducer';
 import BookmarkReducer from '../../reducers/BookmarkReducer';
+import ReportArticleReducer from '../../reducers/ReportArticleReducer';
 
 const mockStore = configureMockStore([thunk]);
 const store = mockStore(articleStore);
@@ -94,6 +95,28 @@ describe('<ViewArticle/>', () => {
   });
   it('should have bookmarks state as array', () => {
     expect(myComponent.instance().state.bookmarks).toEqual([]);
+  });
+
+  describe('REPORT_ARTICLE Action Type', () => {
+    it('should handle an action type of REPORT_ARTICLE_SUCCESS', () => {
+      const payload = {
+        report: {},
+        message: 'Report added successfully',
+        success: true,
+        loading: false
+      };
+      const action = {
+        type: 'REPORT_ARTICLE_SUCCESS',
+        payload
+      };
+      const newState = ReportArticleReducer({}, action);
+
+      expect(newState).toEqual({
+        report: payload.report,
+        message: payload.message,
+        success: payload.success,
+      });
+    });
   });
 
   describe('GET_ALL_COMMENT Action Type', () => {
