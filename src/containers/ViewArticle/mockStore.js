@@ -1,6 +1,6 @@
 export const articleStore = {
   article: {
-    loading: true,
+    loading: false,
     success: true,
     failure: false,
     article: {
@@ -56,6 +56,33 @@ export const articleStore = {
   user: {
     isAuth: true,
     loading: false
+  },
+  followUser: {
+    followers: [{
+      Profile: {
+        firstName: 'Jackson', lastName: 'John', profileImage: null, gender: 'male', contact: '1239093737484738'
+      },
+      email: 'jackson@something.com',
+      id: 5,
+      username: 'jackson'
+    }
+    ],
+    followings: [
+      {
+        id: 4,
+        username: 'jackdoe',
+        email: 'jack@something.com',
+        Profile: null
+      },
+      {
+        id: 3,
+        username: 'jannny',
+        email: 'jane@something.com',
+        Profile: null
+      }
+    ],
+    loading: false,
+    success: false
   },
   params: {
     articleslug: 'article-slxug'

@@ -23,7 +23,11 @@ const props = {
 };
 
 const mockStore = configureMockStore([thunk]);
-const store = mockStore({ ...props, viewProfile: jest.fn() });
+const store = mockStore({
+  ...props,
+  viewProfile: jest.fn(),
+  followUser: { followings: [{}], followers: [{}] }
+});
 
 let component;
 let myComponent;

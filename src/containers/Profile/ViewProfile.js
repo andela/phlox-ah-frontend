@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { viewProfile } from '../../requests/ProfileRequest';
 import FollowList from '../../components/FollowList/FollowList';
 import Tags from '../../components/Tags/Tags';
+import { getFollowings, getFollowers } from '../../requests/FollowRequests';
 import AuthorsArticle from '../AuthorsArticle/AuthorsArticle';
 
 import './ViewProfile.scss';
@@ -18,17 +19,31 @@ import './Profile.scss';
  */
 class ViewProfile extends Component {
   /**
+   * @description - This method runs after component has been mounted
+   * @returns {object} articles
+   * @memberof ViewProfile
+   */
+  componentDidMount() {
+    this.props.getFollowings();
+    this.props.getFollowers();
+  }
+
+  /**
    *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
    * @memberof ViewProfile
    */
   render() {
-    const followers = ['James Author', 'Chris Daughtry', 'Luke Bryan', 'Sam Hunt', 'Elie Goulding'];
     const tags = ['Religion', 'Sports', 'Technology', 'Music', 'Art', 'Software', 'Finance'];
-
+    const listOfFollowings = (
+      this.props.followings.slice(0, 3).map((following, i) => <FollowList
+      key={i}>{following.Profile && following.Profile.profileImage ? <img src={following.Profile.profileImage} alt="Profile Image" className="circle responsive-img follow-pic"/>
+        : <Avatar name={following.username} size="50" round={true} />}{following.username}</FollowList>));
     const listOfFollowers = (
-      followers.map((follower, i) => <FollowList key={i}>{follower}</FollowList>));
+      this.props.followers.slice(0, 3).map((followers, i) => <FollowList
+      key={i}>{followers.Profile && followers.Profile.profileImage ? <img src={followers.Profile.profileImage} alt="Profile Image" className="circle responsive-img follow-pic"/>
+        : <Avatar name={followers.username} size="50" round={true} />}{followers.username}</FollowList>));
     const tagList = tags.map((tag, i) => <Tags key={i}>{tag}</Tags>);
 
     return (
@@ -77,10 +92,11 @@ class ViewProfile extends Component {
                   Authors I Follow
                 </span>
                 <ul className="authors">
-                  {listOfFollowers}
+                  {listOfFollowings}
+                  {!this.props.followings.length && <p>You are not following any author</p>}
                 </ul>
                 <div className="more">
-                  <Link to="#">View more</Link>
+                  <Link to="/following">View more</Link>
                 </div>
               </div>
               {/* end of follow */}
@@ -90,9 +106,10 @@ class ViewProfile extends Component {
                 </span>
                 <ul className="authors">
                   {listOfFollowers}
+                  {!this.props.followers.length && <p>You do not have any followers</p>}
                 </ul>
-                <div className="more">
-                <Link to="#">View more</Link>
+                 <div className="more">
+                  <Link to="/followers">View more</Link>
                 </div>
               </div>
               {/* end of following */}
@@ -126,7 +143,9 @@ class ViewProfile extends Component {
 
 const mapStateToProps = state => ({
   profile: state.profile,
-  user: state.user
+  user: state.user,
+  followings: state.followUser.followings,
+  followers: state.followUser.followers
 });
 
 ViewProfile.propTypes = {
@@ -138,9 +157,13 @@ ViewProfile.propTypes = {
   contact: PropTypes.string,
   profileImage: PropTypes.string,
   profile: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
+  getFollowings: PropTypes.func.isRequired,
+  getFollowers: PropTypes.func.isRequired,
+  followings: PropTypes.array,
+  followers: PropTypes.array,
 };
 
 export default connect(mapStateToProps, {
-  viewProfile
+  viewProfile, getFollowings, getFollowers
 })(ViewProfile);

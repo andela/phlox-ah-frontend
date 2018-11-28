@@ -20,6 +20,12 @@ export const profileConstant = {
   PROFILE_URL: `${BASE_URL}/profile`
 };
 
+export const followUserConstant = {
+  FOLLOW_USER_CONSTANT: `${BASE_URL}/profiles`,
+  GET_FOLLOWINGS_CONSTANT: `${BASE_URL}/followings`,
+  GET_FOLLOWERS_CONSTANT: `${BASE_URL}/followers`,
+};
+
 export const loginConstant = {
   LOGIN_URL: `${BASE_URL}/login`,
   GOOGLE_LOGIN_URL: `${BASE_URL}/login/google`,

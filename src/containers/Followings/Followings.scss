@@ -1,0 +1,22 @@
+li.author{
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+}
+.followAuthor {
+  text-decoration: none;
+  color: #fff;
+  background-color: #06576D;
+  text-align: center;
+  letter-spacing: .5px;
+  transition: background-color .2s ease-out;
+  cursor: pointer;
+  float: right;
+  position: relative;
+  bottom: 40px;
+  border-radius: 20px;
+}
+div.name{
+  height: 50px
+}

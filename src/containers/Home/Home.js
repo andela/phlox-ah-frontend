@@ -77,6 +77,14 @@ class Home extends Component {
    * @memberof Home
    */
   componentDidUpdate() {
+    this.slideCarousel();
+  }
+
+  /**
+   * @returns {func} article
+   * @memberof Home
+   */
+  slideCarousel() {
     if (document.querySelector('.carousel') && !this.state.sliderStarted) {
       const elem = document.querySelector('.carousel');
       const instance = M.Carousel.getInstance(elem);

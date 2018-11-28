@@ -12,6 +12,7 @@ import profile from './ProfileReducer';
 import signup from './SignupReducer';
 import tags from './TagReducer';
 import verifyUser from './VerifyUserReducer';
+import followUser from './FollowUserReducer';
 import notification from './NotificationReducer';
 import bookmark from './BookmarkReducer';
 import report from './ReportArticleReducer';
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   tags,
   user,
   verifyUser,
+  followUser,
   notification
 });
 
