@@ -5,7 +5,8 @@ import { Row, Col } from 'react-materialize';
 
 import { ArticleCard } from '../../components/ArticleCard/ArticleCard';
 import Sidebar from '../Sidebar/Sidebar';
-import { getArticles } from '../../requests/ArticleRequests';
+import { getArticles, getArticlesByPages } from '../../requests/ArticleRequests';
+import Pagination from '../../components/Pagination/Pagination';
 import './ViewAllArticles.scss';
 
 
@@ -23,8 +24,12 @@ class ViewAllArticles extends Component {
     super();
     this.state = {
       success: false,
-      articles: []
+      articles: [],
+      currentPage: '',
+      pages: 0
     };
+
+    this.select = this.select.bind(this);
   }
 
   /**
@@ -40,7 +45,19 @@ class ViewAllArticles extends Component {
    * @returns {func} tag
    */
   componentDidMount() {
-    this.props.getArticles();
+    const { search } = this.props.location;
+    const currentPage = search ? search.split('=')[1] : '1';
+    this.setState({ currentPage });
+    this.props.getArticlesByPages(currentPage);
+  }
+
+  /**
+  * @description - This method sets the page
+  * @param {integer} pageNumber
+  * @returns {obj} articles
+  */
+  select(pageNumber) {
+    this.props.getArticlesByPages(pageNumber);
   }
 
 
@@ -73,7 +90,7 @@ class ViewAllArticles extends Component {
    * @returns {jsx} - jsx
    */
   render() {
-    const { success } = this.state;
+    const { success, pages, currentPage } = this.state;
     return (
       <div>
         <main>
@@ -83,6 +100,7 @@ class ViewAllArticles extends Component {
                 <Row>
                   {success ? this.showAllArticles() : <h5 className="center no-tags">There are no articles at the moment</h5>}
                 </Row>
+              <Pagination items={pages} activePage={Number(currentPage)} maxButtons={pages} select={this.select}/>
               </Col>
               <Col s={12} m={9} l={4} xl={3} className="sidebar">
                 <Sidebar />
@@ -97,14 +115,20 @@ class ViewAllArticles extends Component {
 
 const mapStateToProps = state => ({
   articles: state.article.articles,
+  pages: state.article.pages,
   success: state.article.success
 });
 
 ViewAllArticles.propTypes = {
   articles: PropTypes.array,
+  pages: PropTypes.number,
   getArticles: PropTypes.func,
+  getArticlesByPages: PropTypes.func,
   match: PropTypes.object,
-  success: PropTypes.bool
+  success: PropTypes.bool,
+  location: PropTypes.shape({
+    search: PropTypes.string
+  })
 };
 
-export default connect(mapStateToProps, { getArticles })(ViewAllArticles);
+export default connect(mapStateToProps, { getArticles, getArticlesByPages })(ViewAllArticles);

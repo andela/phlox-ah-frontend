@@ -120,7 +120,7 @@ class Home extends Component {
                 </Row>
                 <Row>
                   { this.followings() }
-                  {this.state.followings.length === 0 && <h3>You are not following any author</h3>}
+                  {!this.state.followings.length && <h3>You are not following any author</h3>}
                 </Row>
               </Col>
               <Col s={0} m={1} l={0} xl={0} ></Col>

@@ -5,6 +5,12 @@ import { Link } from 'react-router-dom';
 import Moment from 'moment';
 import { Row } from 'react-materialize';
 import StarRatings from 'react-star-ratings';
+import {
+  FacebookIcon, FacebookShareButton,
+  TwitterIcon, TwitterShareButton,
+  EmailIcon, EmailShareButton
+} from 'react-share';
+
 import './ViewArticle.scss';
 import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
@@ -31,7 +37,7 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: {}, comment: '', followings: [], user: {}, bookmarks: []
+      success: false, loading: false, failure: false, article: {}, comment: '', followings: [], user: {}, bookmarks: [], showSocialShareIcons: false
     };
 
     this.addComment = this.addComment.bind(this);
@@ -42,6 +48,7 @@ class ViewArticle extends Component {
     this.dislikeArticle = this.dislikeArticle.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.bookmark = this.bookmark.bind(this);
+    this.toggleSocialShareIcons = this.toggleSocialShareIcons.bind(this);
   }
 
   // eslint-disable-next-line require-jsdoc
@@ -203,16 +210,27 @@ class ViewArticle extends Component {
     }
 
     return (<div className={className}>
-    <div className="col s12 l6 lighten-5 img-div">
-    <div className="dummyPicture"></div>
-    </div>
-    <div className="col s12 l6 lighten-5">
-    <div className="dummyRight"><div></div><div></div><div></div></div>
-    </div>
-    <div className="col s12 article-body">
-    <div className="dummyBody"><div></div><div></div><div></div></div>
-    </div>
-    </div>);
+      <div className="col s12 l6 lighten-5 img-div">
+        <div className="dummyPicture"></div>
+      </div>
+      <div className="col s12 l6 lighten-5">
+        <div className="dummyRight"><div></div><div></div><div></div></div>
+      </div>
+      <div className="col s12 article-body">
+        <div className="dummyBody"><div></div><div></div><div></div></div>
+      </div>
+  </div>);
+  }
+
+  /**
+    * @description - This method toggles the display of share social icons
+    * @returns {object} - null
+    * @memberofk ViewArticle
+    */
+  toggleSocialShareIcons() {
+    this.setState({
+      showSocialShareIcons: !this.state.showSocialShareIcons
+    });
   }
 
   /**
@@ -254,29 +272,40 @@ class ViewArticle extends Component {
     } else {
       articlePic = article.imgUrl;
     }
-    return (<div>
-      <div className="col s12 l6 img-div">
+
+
+    const shareUrl = `https://phlox-ah-frontend-staging.herokuapp.com/articles/${article.slug}`;
+
+    return (
+      <div>
+        <div className="col s12 l6 img-div">
           <img src={articlePic}/>
-      </div>
-      <div className="col s12 l6">
+        </div>
+        <div className="col s12 l6">
           <div>
-          <h4 className="capitalize">{article.title}</h4>
-          <p className="articleDescription">{article.description}</p>
-          <Row className="margin-top-10">
+            <h4 className="capitalize">{article.title}</h4>
+            <p className="articleDescription">{article.description}</p>
+            <Row className="margin-top-10">
               <div className="col s8">
-              <Row className="valign-wrapper">
+                <Row className="valign-wrapper">
                   <div className="col s4 m3 l4">
-                  {
-                    !article.User.Profile || !article.User.Profile.profileImage ? <Avatar name={article.User.username} size="75" round={true} />
-                      : <img className="profileImage" src={article.User.Profile.profileImage}/>
-                  }
+                    {
+                      !article.User.Profile || !article.User.Profile.profileImage
+                        ? <Avatar name={article.User.username} size="75" round={true} />
+                        : <img className="profileImage" src={article.User.Profile.profileImage}/>
+                    }
                   </div>
                   <div className="col s8 m9 l8">
-                  <span className="writer capitalize">{article.User.username}</span><br/>
-                  <span className="date-written capitalize"><small>{Moment.duration(article.createdAt, 'hours').humanize() }</small></span><br/>
-                  <span className="readTime"><small>{article.readTime} Minutes Read</small></span>
+                    <span className="writer capitalize">{article.User.username}</span><br/>
+                    <span className="date-written capitalize">
+                      <small>{Moment.duration(article.createdAt, 'hours').humanize() }</small>
+                    </span>
+                    <br/>
+                    <span className="readTime">
+                      <small>{article.readTime} Minutes Read</small>
+                    </span>
                   </div>
-              </Row>
+                </Row>
               </div>
               {this.props.user.username !== article.User.username
               && <div className="col s4">
@@ -300,10 +329,51 @@ class ViewArticle extends Component {
           <div className="center-align activity-icons">
             <div className="col s2"><i className={likeClassName} onClick={this.likeArticle}></i> {likes.length}</div>
             <div className="col s2"><i className={dislikeClassName} onClick={this.dislikeArticle}></i> {dislikes.length}</div>
-            {(!this.props.user.isAuth || article.User.username === this.props.user.username) && <div className="col s1"><i className="fas fa-bookmark no-bookmark bookmarkButton"></i></div> }
-            {(this.props.user.isAuth && article.User.username !== this.props.user.username) && <div className="col s1" onClick={this.bookmark}>{this.showBookmarkIcon()}</div> }
-            <div className="col s1"><i className="fas fa-share-alt shareButton"></i></div>
-            {(!this.props.user.isAuth
+            {(!this.props.user.isAuth || article.User.username === this.props.user.username) && <div className="col s2"><i className="fas fa-bookmark no-bookmark bookmarkButton"></i></div> }
+            {(this.props.user.isAuth && article.User.username !== this.props.user.username) && <div className="col s2" onClick={this.bookmark}>{this.showBookmarkIcon()}</div> }
+              </div>
+                <div className="col s2 social-share">
+              <i className="fas fa-share-alt shareButton" onClick={this.toggleSocialShareIcons}>
+              </i>
+                  {
+                    this.state.showSocialShareIcons
+                      && <div
+                        className="social-network-wrapper">
+                        <div className="social-network">
+                          <FacebookShareButton
+                            url={shareUrl}
+                            quote={article.title}
+                            className="social-network__share-button">
+                            <FacebookIcon
+                              size={32}
+                              round />
+                          </FacebookShareButton>
+                        </div>
+                        <div className="social-network">
+                          <TwitterShareButton
+                            url={shareUrl}
+                            title={article.title}
+                            className="social-network__share-button">
+                            <TwitterIcon
+                              size={32}
+                              round />
+                          </TwitterShareButton>
+                        </div>
+                        <div className="social-network">
+                          <EmailShareButton
+                            url={shareUrl}
+                            subject={article.title}
+                            body={article.body}
+                            className="social-network__share-button">
+                            <EmailIcon
+                              size={32}
+                              round />
+                          </EmailShareButton>
+                        </div>
+                      </div>
+                  }
+                </div>
+                {(!this.props.user.isAuth
                   || article.User.username === this.props.user.username) && <StarRatings
                     rating={article.ratingAverage}
                     starDimension="20px"
@@ -320,19 +390,27 @@ class ViewArticle extends Component {
                     starSpacing="5px"
                     name='rating'
                   />}
+                  </div>
+                  {
+                    (this.props.user.isAuth
+                      && article.User.username === this.props.user.username)
+                      && <Link
+                        className="btn waves-effect waves-light editButton"
+                        to={`/articles/${article.slug}/${article.status}/edit`}>
+                        Edit Articles
+                      </Link>
+                  }
+                </div>
+                <div className="col s12 ">
+                {
+                  ReactHtmlParser(article.body)
+                }
               </div>
-              {(this.props.user.isAuth && article.User.username === this.props.user.username) && <Link className="btn waves-effect waves-light editButton" to={`/articles/${article.slug}/${article.status}/edit`}>Edit Articles</Link> }
+              <div className="col l4 s12 bold tag-div">
+                {<a className="red-text"href="#">Report Article</a>}
               </div>
-          </div>
-          <div className="col s12 ">
-          {
-          ReactHtmlParser(article.body)
-          }
-          </div>
-      <div className="col l4 s12 bold tag-div">
-          {<a className="red-text"href="#">Report Article</a>}
-      </div>
-      </div>);
+            </div>
+    );
   }
 
   /**
@@ -355,26 +433,26 @@ class ViewArticle extends Component {
   render() {
     const { failure } = this.state;
     return (
-    <div className="MainWrapper2">
+      <div className="MainWrapper2">
         <div className="container">
-        <Row className="containerRow">
+          <Row className="containerRow">
             <div className="col s12 mainContainer ">
-            <Row>
+              <Row>
                 {
-                    failure
-                    && <div className="center failure">
-                         <h1><i className="fas fa-exclamation-triangle"></i></h1>
-                         <h1>404</h1>
-                         <h2 className="capitalize">We couldn’t find this page.</h2>
-                      </div>
+                  failure
+                  && <div className="center failure">
+                    <h1><i className="fas fa-exclamation-triangle"></i></h1>
+                    <h1>404</h1>
+                    <h2 className="capitalize">We couldn’t find this page.</h2>
+                  </div>
                 }
                 { this.showContent() }
-            </Row>
+              </Row>
             {this.renderCommentInput()}
             {this.renderCommentList()}
           </div>
         </Row>
-        </div>
+      </div>
     </div>
     );
   }

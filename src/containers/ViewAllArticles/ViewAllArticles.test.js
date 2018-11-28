@@ -9,6 +9,12 @@ import { articleStore } from './mockStore';
 const mockStore = configureMockStore([thunk]);
 const store = mockStore(articleStore);
 
+const props = {
+  location: {
+    search: ''
+  }
+};
+
 let component;
 let myComponent;
 
@@ -16,7 +22,7 @@ describe('<ViewAllArticles/>', () => {
   test('renders the ArticlePage Container', () => {
     component = shallow(
       <Provider store={store}>
-        <ViewAllArticles />
+        <ViewAllArticles { ...props } />
       </Provider>
     );
     myComponent = component.dive({ context: { store } }).dive();
