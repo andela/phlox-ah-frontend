@@ -18,10 +18,6 @@ import './styles/style.scss';
 import App from './App';
 import rootReducer from './reducers/Index';
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
-
 const parsedToken = queryString.parse(window.location.search);
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(createLogger(), thunk)));
