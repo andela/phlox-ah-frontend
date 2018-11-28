@@ -18,6 +18,17 @@ import './Profile.scss';
  */
 class ViewProfile extends Component {
   /**
+   * @description - This method runs when component mount
+   * @returns {object} null
+   * @memberof Header
+   */
+  componentDidMount() {
+    if (!this.props.profile.firstName) {
+      this.props.viewProfile();
+    }
+  }
+
+  /**
    *
    * @description - This method renders the jsx for this component
    * @returns {jsx} - jsx
