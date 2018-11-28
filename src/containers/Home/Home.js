@@ -36,6 +36,7 @@ class Home extends Component {
       failure: true,
       featuredArticles: [],
       popularArticles: [],
+      sliderStarted: false,
       success: false,
       trendingArticles: []
     };
@@ -49,13 +50,6 @@ class Home extends Component {
    * @memberof Header
    */
   static getDerivedStateFromProps(props, state) {
-    if (document.querySelector('.carousel')) {
-      const elem = document.querySelector('.carousel');
-      const instance = M.Carousel.getInstance(elem);
-      setInterval(() => {
-        instance.next();
-      }, 5000);
-    }
     return {
       categories: props.categories,
       failure: props.failure,
@@ -76,6 +70,21 @@ class Home extends Component {
     this.props.getFeaturedArticles();
     this.props.getPopularArticles();
     this.props.getAllCategory();
+  }
+
+  /**
+   * @returns {func} article
+   * @memberof Home
+   */
+  componentDidUpdate() {
+    if (document.querySelector('.carousel') && !this.state.sliderStarted) {
+      const elem = document.querySelector('.carousel');
+      const instance = M.Carousel.getInstance(elem);
+      this.setState({ sliderStarted: true });
+      setInterval(() => {
+        instance.next();
+      }, 7000);
+    }
   }
 
   /**
