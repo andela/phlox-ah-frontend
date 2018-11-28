@@ -6,6 +6,7 @@ export const articleConstant = {
   FEATURED_ARTICLES_URL: `${BASE_URL}/articles/featured`,
   POPULAR_ARTICLES_URL: `${BASE_URL}/articles/popular`,
   ARTICLES_URL: `${BASE_URL}/articles`,
+  SEARCH_ARTICLES_URL: `${BASE_URL}/search`,
 };
 
 export const bookmarkConstant = {
