@@ -16,6 +16,7 @@ import {
 
 import './ViewArticle.scss';
 import MsgInfo from '../MsgInfo/MsgInfo';
+import { msgInfoActions } from '../BasePath';
 import CommentTextArea from '../../components/CommentTextArea/CommentTextArea';
 import CommentButton from '../../components/CommentButton/CommentButton';
 import CommentDisplayBox from '../../components/CommentDisplayBox/CommentDisplayBox';
@@ -85,6 +86,7 @@ class ViewArticle extends Component {
    * @memberof ViewArticle
    */
   closeModal() {
+    this.props.clearMsgInfo();
     this.setState({ open: false });
   }
 
@@ -497,7 +499,9 @@ class ViewArticle extends Component {
         </Row>
         </div>
         <Modal open={this.state.open} onClose={this.closeModal} center>
-          <MsgInfo />
+          <div className="center">
+            <MsgInfo />
+          </div>
           <div className="report-box">
             <input placeholder="Report title" id="title" value={this.state.title} onChange={this.handleChange} />
             <textarea id="body" rows="10" onChange={this.handleChange} value={this.state.body} placeholder="Write your report..."></textarea>
@@ -514,6 +518,7 @@ class ViewArticle extends Component {
 ViewArticle.propTypes = {
   allBookmarks: PropTypes.func.isRequired,
   bookmarkArticle: PropTypes.func.isRequired,
+  clearMsgInfo: PropTypes.func.isRequired,
   deleteBookmark: PropTypes.func.isRequired,
   viewArticle: PropTypes.func.isRequired,
   rateArticle: PropTypes.func.isRequired,
@@ -554,5 +559,6 @@ export default connect(mapStateToProps, {
   bookmarkArticle,
   allBookmarks,
   deleteBookmark,
-  createReport
+  createReport,
+  clearMsgInfo: msgInfoActions.clear
 })(ViewArticle);

@@ -251,7 +251,7 @@
 }
 
 .report-box {
-  padding-top: 40px;
+  padding-top: 20px;
   width: 450px;
   height: 250px;
 }
@@ -287,6 +287,11 @@
   width: 150px;
   cursor: pointer;
   margin-top: 20px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
 }
 
 

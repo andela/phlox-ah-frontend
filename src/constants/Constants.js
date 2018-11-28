@@ -1,4 +1,6 @@
-const BASE_URL = 'https://phlox-ah-staging.herokuapp.com/api/v1';
+// const BASE_URL = 'https://phlox-ah-staging.herokuapp.com/api/v1';
+
+const BASE_URL = 'http://localhost:3000/api/v1';
 
 export const articleConstant = {
   ALL_ARTICLES_URL: `${BASE_URL}/articles/feed`,
