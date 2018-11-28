@@ -50,7 +50,7 @@ describe('<SearchArticles/>', () => {
     expect(myComponent.instance().showSearchedArticles).toBeDefined();
   });
   it('should have function that changes the search filter', () => {
-    expect(myComponent.instance().swithSearchBy).toBeDefined();
+    expect(myComponent.instance().switchSearchBy).toBeDefined();
   });
   it('should have a function  that handles input change event', () => {
     expect(myComponent.instance().change).toBeDefined();

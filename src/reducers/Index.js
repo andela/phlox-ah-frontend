@@ -13,6 +13,7 @@ import search from './SearchReducer';
 import signup from './SignupReducer';
 import tags from './TagReducer';
 import verifyUser from './VerifyUserReducer';
+import notification from './NotificationReducer';
 import bookmark from './BookmarkReducer';
 
 
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
   signup,
   tags,
   user,
-  verifyUser
+  verifyUser,
+  notification
 });
 
 export default rootReducer;

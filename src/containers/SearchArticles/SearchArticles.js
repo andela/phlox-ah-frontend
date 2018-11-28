@@ -27,7 +27,7 @@ class SearchArticles extends Component {
 
     this.change = this.change.bind(this);
     this.submit = this.submit.bind(this);
-    this.swithSearchBy = this.swithSearchBy.bind(this);
+    this.switchSearchBy = this.switchSearchBy.bind(this);
   }
 
   /**
@@ -58,7 +58,7 @@ class SearchArticles extends Component {
    * @returns {object} null
    * @memberof SearchArticles
    */
-  swithSearchBy(e) {
+  switchSearchBy(e) {
     const searchBy = e.target.value;
     const searchQuery = `?${searchBy}=${this.state.query}`;
     this.props.searchArticles({ query: searchQuery, searchBy });
@@ -129,7 +129,7 @@ class SearchArticles extends Component {
                         type="text"
                         onChange={this.change}
                         placeholder="Search authors heaven"
-                        name={'query'}
+                        name="query"
                         value={query}
                         className="searchInput"
                         id="searchInput"
@@ -141,21 +141,21 @@ class SearchArticles extends Component {
                         <Col s={10}>
                           <input
                             className={searchBy === 'author' ? 'active' : ''}
-                            type="button" value={'author'} onClick={this.swithSearchBy}
+                            type="button" value={'author'} onClick={this.switchSearchBy}
                             name="myname"
                           /><span className="divider">|</span>
                           <input
                             className={searchBy === 'article' ? 'active' : ''}
                             type="button"
-                            value={'article'}
-                            onClick={this.swithSearchBy}
+                            value="article"
+                            onClick={this.switchSearchBy}
                             name="myname"
                           /><span className="divider">|</span>
                           <input
                             className={searchBy === 'tag' ? 'active' : ''}
                             type="button"
-                            value={'tag'}
-                            onClick={this.swithSearchBy}
+                            value="tag"
+                            onClick={this.switchSearchBy}
                             name="myname"
                           />
                         </Col>
