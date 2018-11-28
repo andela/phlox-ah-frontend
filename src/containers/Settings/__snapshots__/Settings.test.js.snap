@@ -55,7 +55,6 @@ exports[`should render without throwing an error 1`] = `
           }
           disabled={false}
           height={30}
-          id="notificationStatus"
           offColor="#888"
           offHandleColor="#fff"
           onChange={[Function]}
