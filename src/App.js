@@ -18,7 +18,6 @@ import VerifyUser from './containers/VerifyUser/VerifyUser';
 import ViewTagCategory from './containers/ViewTagCategory/ViewTagCategory';
 import SearchArticles from './containers/SearchArticles/SearchArticles';
 import Settings from './containers/Settings/Settings';
-// import ViewTag from './containers/Tag/ViewTag';
 import ViewAllArticles from './containers/ViewAllArticles/ViewAllArticles';
 
 import './App.scss';
@@ -62,7 +61,6 @@ class App extends Component {
             <Route path="/tags/:name" component={ViewTagCategory} />
             <Route path="/:category/articles" component={ViewTagCategory} />
             <Route path="/search" component={SearchArticles} />
-            {/* <Route path="/tags/:name" component={ViewTag} /> */}
             <Route path="/user/verify/:verificationToken" component={VerifyUser} />
             <Redirect to="/" />
             </Switch>

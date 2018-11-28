@@ -85,9 +85,10 @@
       height: 150px;
       padding-top: 3%;
     }
-    a.red-text {
+    span.red-text {
       float: right;
       text-decoration: none;
+      cursor: pointer;
     }
     a.btn.waves-effect.waves-light.editButton {
       position: relative;
@@ -247,6 +248,49 @@
     bottom: 0;
     margin-top: 10%;
   }
+}
+
+.report-box {
+  padding-top: 20px;
+  width: 450px;
+  height: 250px;
+}
+
+.report-box textarea {
+  width: 100%;
+  height: 11rem;
+  border: #E5E5E5 solid 1px;
+  padding: 13px;
+  font-size: 16px;
+  resize: none;
+  border-radius: 3px;
+}
+
+.report-box textarea::placeholder {
+  color: #C4C4C4;
+  opacity: 1;
+  font-size: 18px;
+}
+
+.report-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.report-button button {
+  border: 1px solid #0e718c;
+  color: #0e718c;
+  font-size: 15px;
+  background-color: #fff;
+  padding: 8px 8px;
+  outline: none;
+  width: 150px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.center {
+  display: flex;
+  justify-content: center;
 }
 
 

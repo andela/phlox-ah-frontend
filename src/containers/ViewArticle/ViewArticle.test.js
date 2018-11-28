@@ -11,6 +11,7 @@ import {
 } from '../../actionTypes';
 import CommentReducer from '../../reducers/CommentReducer';
 import BookmarkReducer from '../../reducers/BookmarkReducer';
+import ReportArticleReducer from '../../reducers/ReportArticleReducer';
 
 const mockStore = configureMockStore([thunk]);
 const store = mockStore(articleStore);
@@ -46,7 +47,7 @@ describe('<ViewArticle/>', () => {
     expect(myComponent.find('i.fa-share-alt').exists()).toBe(true);
   });
   it('should have a report article link', () => {
-    expect(myComponent.find('a.red-text').exists()).toBe(true);
+    expect(myComponent.find('span.red-text').exists()).toBe(true);
   });
   it('should create an action to set rating in the store', () => {
     const payload = {
@@ -128,6 +129,53 @@ describe('<ViewArticle/>', () => {
   });
   it('should have bookmarks state as array', () => {
     expect(myComponent.instance().state.bookmarks).toEqual([]);
+  });
+
+  describe('REPORT_ARTICLE Action Type', () => {
+    it('should handle an action type of REPORT_ARTICLE_SUCCESS', () => {
+      const payload = {
+        report: {},
+        message: 'Report added successfully',
+        success: true,
+        loading: false
+      };
+      const action = {
+        type: 'REPORT_ARTICLE_SUCCESS',
+        payload
+      };
+      const newState = ReportArticleReducer({}, action);
+
+      expect(newState).toEqual({
+        report: payload.report,
+        message: payload.message,
+        success: payload.success,
+      });
+    });
+    it('should handle an action type of REPORT_ARTICLE_FAILING', () => {
+      const payload = {
+        report: {},
+        message: 'Report could not be added',
+        success: false,
+        loading: false,
+        error: true
+      };
+      const action = {
+        type: 'REPORT_ARTICLE_FAILING',
+        payload
+      };
+      const newState = ReportArticleReducer({}, action);
+
+      expect(newState).toEqual({
+        error: undefined,
+        message: {
+          report: payload.report,
+          message: payload.message,
+          error: payload.error,
+          success: payload.success,
+          loading: payload.loading
+        }
+      });
+    });
   });
 
   describe('GET_ALL_COMMENT Action Type', () => {

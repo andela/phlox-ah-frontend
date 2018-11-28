@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import Moment from 'moment';
 import { Row } from 'react-materialize';
 import StarRatings from 'react-star-ratings';
+import Modal from 'react-responsive-modal';
+import ReactHtmlParser from 'react-html-parser';
+import { connect } from 'react-redux';
 import {
   FacebookIcon, FacebookShareButton,
   TwitterIcon, TwitterShareButton,
@@ -12,8 +15,8 @@ import {
 } from 'react-share';
 
 import './ViewArticle.scss';
-import { connect } from 'react-redux';
-import ReactHtmlParser from 'react-html-parser';
+import MsgInfo from '../MsgInfo/MsgInfo';
+import { msgInfoActions } from '../BasePath';
 import CommentTextArea from '../../components/CommentTextArea/CommentTextArea';
 import CommentButton from '../../components/CommentButton/CommentButton';
 import CommentDisplayBox from '../../components/CommentDisplayBox/CommentDisplayBox';
@@ -24,6 +27,7 @@ import { followUser, unfollowUser, getFollowings } from '../../requests/FollowRe
 import {
   viewArticle, rateArticle, likeArticle, dislikeArticle
 } from '../../requests/ArticleRequests';
+import { createReport } from '../../requests/ReportArticleRequest';
 
 /**
  * @class ViewAnArticle
@@ -37,7 +41,17 @@ class ViewArticle extends Component {
   constructor() {
     super();
     this.state = {
-      success: false, loading: false, failure: false, article: {}, comment: '', followings: [], user: {}, bookmarks: [], showSocialShareIcons: false
+      success: false,
+      loading: false,
+      failure: false,
+      article: {},
+      user: {},
+      comment: '',
+      bookmarks: [],
+      open: false,
+      title: '',
+      body: '',
+      showSocialShareIcons: false
     };
 
     this.addComment = this.addComment.bind(this);
@@ -48,6 +62,9 @@ class ViewArticle extends Component {
     this.dislikeArticle = this.dislikeArticle.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.bookmark = this.bookmark.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleReport = this.handleReport.bind(this);
     this.toggleSocialShareIcons = this.toggleSocialShareIcons.bind(this);
   }
 
@@ -64,6 +81,38 @@ class ViewArticle extends Component {
   // eslint-disable-next-line require-jsdoc
   unfollow() {
     this.props.unfollowUser(this.props.article.User.username);
+  }
+
+  /**
+   *
+   * @returns {func} - bookmark
+   * @memberof ViewArticle
+   */
+  openModal() {
+    this.setState({ open: true });
+  }
+
+  /**
+   *
+   * @returns {func} - bookmark
+   * @memberof ViewArticle
+   */
+  closeModal() {
+    this.props.clearMsgInfo();
+    this.setState({ open: false });
+  }
+
+  /**
+   *
+   * @returns {func} - bookmark
+   * @memberof ViewArticle
+   */
+  handleReport() {
+    const { title, body, article } = this.state;
+    this.props.createReport(article.slug, title, body)
+      .then((res) => {
+        this.setState({ title: '', body: '' });
+      });
   }
 
   /**
@@ -421,7 +470,7 @@ class ViewArticle extends Component {
                 }
               </div>
               <div className="col l4 s12 bold tag-div">
-                {<a className="red-text"href="#">Report Article</a>}
+              {<span className="red-text" onClick={this.openModal}>Report Article</span>}
               </div>
             </div>
     );
@@ -466,7 +515,19 @@ class ViewArticle extends Component {
             {this.renderCommentList()}
           </div>
         </Row>
-      </div>
+        </div>
+        <Modal open={this.state.open} onClose={this.closeModal} center>
+          <div className="center">
+            <MsgInfo />
+          </div>
+          <div className="report-box">
+            <input placeholder="Report title" id="title" value={this.state.title} onChange={this.handleChange} />
+            <textarea id="body" rows="10" onChange={this.handleChange} value={this.state.body} placeholder="Write your report..."></textarea>
+          </div>
+          <div className="report-button">
+              <button onClick={this.handleReport}>Report { this.props.report.loading && <i className="fas fa-spinner fa-spin"></i> }</button>
+          </div>
+        </Modal>
     </div>
     );
   }
@@ -475,6 +536,7 @@ class ViewArticle extends Component {
 ViewArticle.propTypes = {
   allBookmarks: PropTypes.func.isRequired,
   bookmarkArticle: PropTypes.func.isRequired,
+  clearMsgInfo: PropTypes.func.isRequired,
   deleteBookmark: PropTypes.func.isRequired,
   viewArticle: PropTypes.func.isRequired,
   rateArticle: PropTypes.func.isRequired,
@@ -484,11 +546,13 @@ ViewArticle.propTypes = {
   success: PropTypes.bool,
   article: PropTypes.object,
   articleslug: PropTypes.string,
+  createReport: PropTypes.func,
   comments: PropTypes.array,
   createComment: PropTypes.func,
   getAllComment: PropTypes.func.isRequired,
   failure: PropTypes.bool,
   match: PropTypes.object,
+  report: PropTypes.object,
   user: PropTypes.object,
   followUser: PropTypes.func.isRequired,
   unfollowUser: PropTypes.func.isRequired,
@@ -504,6 +568,7 @@ const mapStateToProps = state => ({
   article: state.article.article,
   comments: state.comments.comment,
   user: state.user,
+  report: state.report,
   followings: state.followUser.followings
 });
 
@@ -519,5 +584,7 @@ export default connect(mapStateToProps, {
   dislikeArticle,
   bookmarkArticle,
   allBookmarks,
-  deleteBookmark
+  deleteBookmark,
+  createReport,
+  clearMsgInfo: msgInfoActions.clear
 })(ViewArticle);
