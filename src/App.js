@@ -13,7 +13,7 @@ import PrivateRoute from './PrivateRoute';
 import { SentResetPasswordMail } from './components/SentResetPasswordMail/SentResetPasswordMail';
 import ViewArticle from './containers/ViewArticle/ViewArticle';
 import VerifyUser from './containers/VerifyUser/VerifyUser';
-import ViewTag from './containers/Tag/ViewTag';
+import ViewTagCategory from './containers/ViewTagCategory/ViewTagCategory';
 import ViewAllArticles from './containers/ViewAllArticles/ViewAllArticles';
 
 import './App.scss';
@@ -51,7 +51,8 @@ class App extends Component {
             <Route path="/articles/feed" exact component={ViewAllArticles} />
             <Route path="/articles/:articleslug" exact component={ViewArticle} />
             <Route path="/articles" component={CreateArticle} />
-            <Route path="/tags/:name" component={ViewTag} />
+            <Route path="/tags/:name" component={ViewTagCategory} />
+            <Route path="/:category/articles" component={ViewTagCategory} />
             <Route path="/user/verify/:verificationToken" component={VerifyUser} />
             <Redirect to="/" />
             </Switch>

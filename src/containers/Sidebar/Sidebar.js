@@ -144,13 +144,15 @@ class Sidebar extends Component {
       <div>
         <h6 className=""><b>Latest Articles</b></h6>
         { this.showSidebarArticles() }
-        <h6 className=""><b>Tags</b></h6>
-        <div className="sidebar-tag-container">
-          { this.showTags() }
-        </div>
-        {this.state.tags.length > this.state.limit &&// eslint-disable-line
-          <a className="more-tags" onClick={this.moreTags}>see more tags</a>
-        }
+          <span>
+            <h6 className=""><b>Tags</b></h6>
+            <div className="sidebar-tag-container">
+              { this.showTags() }
+            </div>
+            {this.state.tags.length > this.state.limit &&// eslint-disable-line
+              <a className="more-tags" onClick={this.moreTags}>see more tags</a>
+            }
+          </span>
       </div>);
   }
 }
@@ -174,7 +176,7 @@ Sidebar.propTypes = {
   getTag: PropTypes.func,
   sidebarArticles: PropTypes.array,
   sidebarTitle: PropTypes.string,
-  success: PropTypes.bool,
+  success: PropTypes.bool
 };
 
 export default connect(mapStateToProps, {

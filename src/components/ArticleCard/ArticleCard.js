@@ -25,7 +25,6 @@ export const ArticleCard = (props) => {
             </Link>
           </CardTitle>}
         actions={[
-          <Link to={'#'} key={props.slug}>Share</Link>,
           <Link key={props.slug} to={`/articles/${props.slug}`}>View Article</Link>,
           <span key={props.slug}>{moment(props.createdAt).format('D MMMM YYYY')}</span>,
           <span key={props.slug}>{props.author}</span>

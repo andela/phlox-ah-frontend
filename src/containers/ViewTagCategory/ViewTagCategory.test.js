@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
-import ViewTagCategory from './ViewTag';
+import ViewTagCategory from './ViewTagCategory';
 import TagReducer from '../../reducers/TagReducer';
 
 const mockStore = configureMockStore([thunk]);

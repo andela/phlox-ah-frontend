@@ -8,7 +8,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import { getOneTag } from '../../requests/TagRequests';
 import { getCategoryArticle } from '../../requests/CategoryRequests';
 import { getArticles } from '../../requests/ArticleRequests';
-import './ViewTag.scss';
+import './ViewTagCategory.scss';
 
 
 /**
@@ -140,7 +140,7 @@ class ViewTagCategory extends Component {
           <Row>
               <Col s={12} m={12} l={8} xl={9} className="column-1">
                 <Row>
-                  <h5 className="center capitalize">{this.state.categorySelected ? 'Category' : 'Tag'}: { this.props.match.params.name }</h5>
+                  <h5 className="center capitalize">{this.state.categorySelected ? 'Category' : 'Tag'}: { this.state.categorySelected ? this.props.match.params.category : this.props.match.params.name }</h5>
                   { this.state.categorySelected ? this.showCategoryArticles() : this.showTagArticles() }
                 </Row>
               </Col>

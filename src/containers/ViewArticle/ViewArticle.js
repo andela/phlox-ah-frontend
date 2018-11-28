@@ -323,7 +323,7 @@ class ViewArticle extends Component {
               }
                 <div className="col s1 social-share">
                   <i
-                    onClick={this.toggleSocialIcons}
+                    onClick={this.toggleSocialShareIcons}
                     className="fas fa-share-alt shareButton">
                   </i>
                   {
