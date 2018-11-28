@@ -16,6 +16,7 @@ import verifyUser from './VerifyUserReducer';
 import followUser from './FollowUserReducer';
 import notification from './NotificationReducer';
 import bookmark from './BookmarkReducer';
+import report from './ReportArticleReducer';
 
 
 const rootReducer = combineReducers({
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   myArticle,
   password,
   profile,
+  report,
   search,
   signup,
   tags,

@@ -6,6 +6,7 @@ export const articleConstant = {
   FEATURED_ARTICLES_URL: `${BASE_URL}/articles/featured`,
   POPULAR_ARTICLES_URL: `${BASE_URL}/articles/popular`,
   ARTICLES_URL: `${BASE_URL}/articles`,
+  SEARCH_ARTICLES_URL: `${BASE_URL}/search`
 };
 
 export const bookmarkConstant = {
@@ -58,4 +59,8 @@ export const notificationConstant = {
 
 export const userConstant = username => ({
   GET_ONE_USER_URL: `${BASE_URL}/users/${username}`
+});
+
+export const reportConstant = articleSlug => ({
+  REPORT_ARTICLE_URL: `${BASE_URL}/articles/${articleSlug}/reports`
 });
