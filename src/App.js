@@ -13,6 +13,7 @@ import PrivateRoute from './PrivateRoute';
 import { SentResetPasswordMail } from './components/SentResetPasswordMail/SentResetPasswordMail';
 import ViewArticle from './containers/ViewArticle/ViewArticle';
 import VerifyUser from './containers/VerifyUser/VerifyUser';
+import Settings from './containers/Settings/Settings';
 import ViewTag from './containers/Tag/ViewTag';
 import ViewAllArticles from './containers/ViewAllArticles/ViewAllArticles';
 
@@ -50,6 +51,7 @@ class App extends Component {
             <Route path="/password/reset/:token" component={Home} />
             <Route path="/articles/feed" exact component={ViewAllArticles} />
             <Route path="/articles/:articleslug" exact component={ViewArticle} />
+            <Route path="/settings" component={Settings} />
             <Route path="/articles" component={CreateArticle} />
             <Route path="/tags/:name" component={ViewTag} />
             <Route path="/user/verify/:verificationToken" component={VerifyUser} />

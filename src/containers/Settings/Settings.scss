@@ -1,0 +1,34 @@
+div.settings {
+  font-family: Fira Mono;
+  margin: 0px auto;
+  margin: 50px;
+  background: #ffffff;
+  padding: 130px;
+  padding-top: 25px;
+  .title {
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+  .notification {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  .notification-content {
+    display: flex;
+    align-items: center;
+  }
+  .notification-content .button {
+    flex-grow: 1;
+    text-align: right;
+  }
+  .subtitle {
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+  hr {
+    margin-top: 20px;
+    border: 0.5px solid #CCCCCC;
+  }
+}
