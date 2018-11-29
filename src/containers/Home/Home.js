@@ -168,7 +168,7 @@ class Home extends Component {
       }
       return (<Col s={12} m={12}
       l={12} xl={6} key={article.id}>
-      <ArticleCard key={article.id} size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} />
+      <ArticleCard key={article.id} size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} tags={article.Tags} />
       </Col>);
     });
   }

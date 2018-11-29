@@ -1,6 +1,11 @@
 @import '../../styles/variables';
 
 .MainWrapper2 {
+  .article-body-text {
+    padding-top: 30px;
+    line-height: 40px;
+    text-align: justify;
+  }
   background-color: #f8f9fa;
   .dummyBody {
     div {
@@ -127,9 +132,19 @@
       color: #3b8ca1;
     }
     .article-body, .tag-div {
+      display: flex;
+      span {
+        padding-right: 5px;
+        padding-left: 2px;
+      }
+    }
+    .article-body, .tag-list a {
+      color: #00bcd4;
+    }
+    .article-body, .report-div {
       margin-top: 50px;
       text-align: justify;
-      width: 80%;
+      // width: 80%;
       position: relative;
       left: 10%;
       right: 10%;

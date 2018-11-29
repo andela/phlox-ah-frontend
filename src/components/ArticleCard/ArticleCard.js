@@ -9,6 +9,10 @@ import './ArticleCard.scss';
 
 let articlePic = '';
 
+const showTags = (tags) => {
+  return tags.map(tag => <span className="tag-list"><Link to={`/tags/${tag.name}`}>{tag.name}</Link></span>);
+}
+
 export const ArticleCard = (props) => {
   if (props.pic === 'null') {
     articlePic = `https://via.placeholder.com/50?text=AuthorsHaven-${props.title.substring(0, 20)}`;
@@ -32,6 +36,9 @@ export const ArticleCard = (props) => {
         ]}>
         <span className="hide-on-large-only">{props.description.substring(0, 120)}</span>
         <span className="hide-on-med-and-down">{props.description.substring(0, 90)}</span>
+        <div className="tag-div">
+          Tags: {showTags(props.tags)}
+        </div>
       </Card>
     </div>);
 };
@@ -43,7 +50,8 @@ ArticleCard.propTypes = {
   title: PropTypes.string,
   pic: PropTypes.string,
   size: PropTypes.string,
-  slug: PropTypes.string
+  slug: PropTypes.string,
+  tags: PropTypes.array
 };
 
 export default ArticleCard;

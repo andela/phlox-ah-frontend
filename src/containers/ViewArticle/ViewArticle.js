@@ -212,6 +212,15 @@ class ViewArticle extends Component {
     $('#login-modal').modal('open');
   }
 
+   /**
+    * @description - This method showa article tags
+    * @returns {object} - return jsx
+    * @memberof Comment
+    */
+  showTags () {
+    return this.state.article.Tags.map(tag => <span className="tag-list"><Link to={`/tags/${tag.name}`}>{tag.name}</Link></span>);
+  }
+
   /**
     * @description - This method is used to render comment input for authenticated users
     * @returns {object} - return jsx
@@ -450,12 +459,15 @@ class ViewArticle extends Component {
                       </Link>
                   }
                 </div>
-                <div className="col s12 ">
+                <div className="col s12 article-body-text">
                 {
                   ReactHtmlParser(article.body)
                 }
               </div>
-              <div className="col l4 s12 bold tag-div">
+              <div className="col l6 s12 bold tag-div">
+                Tags: {this.showTags()}
+              </div>
+              <div className="col l4 s12 bold report-div">
               {<span className="red-text" onClick={this.openModal}>Report Article</span>}
               </div>
             </div>
