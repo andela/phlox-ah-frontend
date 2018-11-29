@@ -212,13 +212,13 @@ class ViewArticle extends Component {
     $('#login-modal').modal('open');
   }
 
-   /**
+  /**
     * @description - This method showa article tags
     * @returns {object} - return jsx
     * @memberof Comment
     */
-  showTags () {
-    return this.state.article.Tags.map(tag => <span className="tag-list"><Link to={`/tags/${tag.name}`}>{tag.name}</Link></span>);
+  showTags() {
+    return this.state.article.Tags.map(tag => <span key={tag.id} className="tag-list"><Link to={`/tags/${tag.name}`}>{tag.name}</Link></span>);
   }
 
   /**

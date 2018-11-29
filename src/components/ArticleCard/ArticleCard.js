@@ -9,9 +9,7 @@ import './ArticleCard.scss';
 
 let articlePic = '';
 
-const showTags = (tags) => {
-  return tags.map(tag => <span className="tag-list"><Link to={`/tags/${tag.name}`}>{tag.name}</Link></span>);
-}
+const showTags = tags => tags.map(tag => <span key={tag.id} className="tag-list"><Link to={`/tags/${tag.name}`}>{tag.name}</Link></span>);
 
 export const ArticleCard = (props) => {
   if (props.pic === 'null') {
