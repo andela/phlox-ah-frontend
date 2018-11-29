@@ -98,6 +98,7 @@ class SearchArticles extends Component {
             createdAt={article.createdAt}
             author={username}
             slug={article.slug}
+            tags={article.Tags}
           />
         </Col>);
     });
