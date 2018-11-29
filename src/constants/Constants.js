@@ -35,6 +35,7 @@ export const loginConstant = {
 };
 
 export const categoryConstant = {
+  CATEGORY_URL: `${BASE_URL}/api/v1`,
   GET_ALL_CATEGORY_URL: `${BASE_URL}/categories`
 };
 

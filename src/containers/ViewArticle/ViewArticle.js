@@ -381,9 +381,23 @@ class ViewArticle extends Component {
             {(!this.props.user.isAuth || article.User.username === this.props.user.username) && <div className="col s2"><i className="fas fa-bookmark no-bookmark bookmarkButton"></i></div> }
             {(this.props.user.isAuth && article.User.username !== this.props.user.username) && <div className="col s2" onClick={this.bookmark}>{this.showBookmarkIcon()}</div> }
               </div>
-                <div className="col s2 social-share">
-              <i className="fas fa-share-alt shareButton" onClick={this.toggleSocialShareIcons}>
-              </i>
+              {
+                (!this.props.user.isAuth || article.User.username === this.props.user.username)
+                && <div className="col s1">
+                  <i className="fas fa-bookmark no-bookmark bookmarkButton"></i>
+                </div>
+              }
+              {
+                (this.props.user.isAuth && article.User.username !== this.props.user.username)
+                && <div className="col s1" onClick={this.bookmark}>
+                  {this.showBookmarkIcon()}
+                </div>
+              }
+                <div className="col s1 social-share">
+                  <i
+                    onClick={this.toggleSocialShareIcons}
+                    className="fas fa-share-alt shareButton">
+                  </i>
                   {
                     this.state.showSocialShareIcons
                       && <div
