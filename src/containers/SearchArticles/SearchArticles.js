@@ -16,10 +16,9 @@ import './SearchArticles.scss';
 class SearchArticles extends Component {
   /**
    *Creates an instance of Home.
-   * @param {object} props
-   * @memberof ViewAllArticles
+   * @memberof SearchArticles
    */
-  constructor(props) {
+  constructor() {
     super();
     this.initialState = { searchBy: 'article', query: '' };
 

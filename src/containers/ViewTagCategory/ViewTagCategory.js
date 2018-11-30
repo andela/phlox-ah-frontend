@@ -97,7 +97,7 @@ class ViewTagCategory extends Component {
         }
         return (<Col s={12} m={12}
         l={12} xl={6} key={article.id}>
-        <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} />
+        <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} tags={article.Tags} />
         </Col>);
       });
     }
@@ -119,7 +119,7 @@ class ViewTagCategory extends Component {
         }
         return (<Col s={12} m={12}
         l={12} xl={6} key={article.id}>
-        <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} />
+        <ArticleCard size="medium" pic={article.imgUrl} title={article.title} description={article.description} createdAt={article.createdAt} author={username} slug={article.slug} tags={article.Tags} />
         </Col>);
       });
     }
